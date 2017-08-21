@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css?family=Arimo')
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro')
+
+html, body
+  background-color $color-lighter-grey
+  font-family 'Avenir', Helvetica, Arial, sans-serif
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+
+hr
+  border none
+  border-bottom $color-border 1px solid
+  height 0
+  margin 10px
+
+.pull-left
+  float left !important
+
+.pull-right
+  float right !important
+
+.clearfix
+  clear both
+  float none
+
+.fa-icon
+  width auto
+  height 1em
+
+.no-margin
+  margin 0 !important
+
+.no-padding
+  padding 0 !important
+
+.background-white
+  background-color white !important
+
+.text-white
+  color white
+
+// Transitions
+.left-fade-enter-active, .left-fade-leave-active
+  transition(all 0.3s ease-out)
+  transform translateY(-30%)
+.left-fade-leave-to
+  opacity 0
+  transform translateY(-30%)
+.left-fade-enter
+  opacity 0
+  transform translateY(-30%)
+.left-fade-enter-to, .left-fade-leave
+  opacity 1
+  transform translateY(0%)
+
+.right-fade-enter-active, .right-fade-leave-active
+  transition(all 0.3s ease-out)
+  transform translateY(-30%)
+.right-fade-leave-to
+  opacity 0
+  transform translateY(0%)
+  transform translateY(-30%)
+.right-fade-enter
+  opacity 0
+  transform translateY(-30%)
+.right-fade-enter-to, .right-fade-leave
+  opacity 1
+  transform translateY(0%)
+
+// Row
+
+.row
+  margin 0 auto
+  max-width $page-width
+  position relative
+
+// Content block
+
+.main-container
+  radius(4px)
+  position relative
+  &.main-container-padded
+    padding 20px
+
+.content-block
+  box-shadow 0 0 5px 5px alpha(black, 0.005)
+  margin 20px 0 0 0
+  position relative
+  &.pull-up
+    margin-top -40px
+  &.white-block
+    background-color white
+  .content-block--body
+    padding 20px
+  .content-block--footer
+      border-top $color-border 1px solid
+      padding 15px
+
+// Tabs
+
+.tabs
+  .tabs--selector
+    background-color white
+    position relative
+    &:before
+      pinned()
+      content ''
+      background-color $color-border
+      height 1px
+      position absolute
+      top auto
+      z-index 0
+    .tabs--selector--item
+      animate()
+      border-box()
+      border-bottom transparent 3px solid
+      color $color-text-grey
+      cursor pointer
+      font-weight bold
+      float left
+      line-height 60px
+      padding 0 30px
+      position relative
+      text-align center
+      z-index 1
+      @media(max-width: 680px)
+        padding 0
+        position relative
+        width calc(100% / 3)
+      .notification-bubble
+        radius(10px)
+        background-color $color-design
+        color white
+        font-size 0.8em
+        height 20px
+        width 20px
+        line-height 20px
+        position absolute
+        text-align center
+        top 8px
+        right 5px
+
+      &.active
+        border-bottom-color $color-primary
+        color black
+  
+  .tabs--page
+    text-align left
+        
+    h1.tab--header
+      reset()
+      animate()
+      background-color white
+      font-size 1.3em
+      min-height 29px
+      padding 25px
+      padding-left 55px
+      position relative
+      text-transform capitalize
+      position relative
+      z-index 1
+      border-bottom $color-border 1px solid
+
+      input
+        animate()
+        background-color transparent
+        border none
+        box-sizing border-box
+        font-size 1em
+        font-weight 500
+        outline 0
+        text-transform capitalize
+        width 80%
+
+      &.editing
+        background-color $color-lightest-grey
+        input
+          border-left $color-primary 3px solid
+          padding-left 10px
+
+      .tab--header--previous
+        animate()
+        color $color-text-grey
+        pointer-events all
+        position absolute
+        left 25px
+        top 25px
+        opacity 1
+        .fa-icon
+          padding-right 10px
+          position relative
+          top 2px
+        &:hover
+          cursor pointer      
+          color $color-primary
+      .tab--header--action
+        animate()
+        color $color-text-light-grey
+        font-size 0.8em
+        position absolute
+        top 28px
+        right 25px
+        .fa-icon
+          height 25px
+        &:hover
+          cursor pointer
+          color $color-primary
+
+      &.no-parent
+        padding-left 25px
+        .tab--header--previous
+          opacity 0
+          pointer-events none
+
+    .tab--footer
+      border-top $color-border 1px solid
+      margin-top 20px
+      padding-top 20px
+
+// Icons
+
+.icon-margin
+  margin 0 5px
+
+// Forms
+
+form
+  text-align left
+  .input-wrapper
+    padding 10px
+    label
+      display block
+      margin 5px 0
+    input
+      outline 0
+      padding 15px 10px
+      max-width 100%
+      width 260px
+
+// Design tasks
+
+p.design-task--description
+  reset()
+  color alpha(black, 0.9)
+  background-color alpha($color-primary, 0.075)
+  border-left $color-primary 3px solid
+  margin-bottom 20px
+  padding 15px

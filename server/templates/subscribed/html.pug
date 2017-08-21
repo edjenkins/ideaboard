@@ -1,0 +1,13 @@
+extends ../main
+
+block content
+
+  h1(style="margin-bottom: 30px") You Subscribed
+
+  p Hey #{ user.profile.name },
+
+  p You are now subscribed to updates for - <a style="color: #0B9BD0" href="http://localhost:8080/idea/#{ idea.id }">#{ idea.title }</a>.
+
+  p We will let you know when interesting things happen like people ask questions in the design area or you receive replies to your comments.
+
+  p If you no longer want to receive updates from this idea then just visit the idea page <a style="color: #0B9BD0" href="http://localhost:8080/idea/#{ idea.id }">here</a> and unsubscribe.

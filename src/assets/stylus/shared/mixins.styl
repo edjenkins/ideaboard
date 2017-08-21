@@ -1,0 +1,91 @@
+transition()
+  -webkit-transition: arguments;
+  -moz-transition: arguments;
+  -o-transition: arguments;
+  transition: arguments;
+
+transform()
+  -webkit-transform: arguments;
+  -moz-transform: arguments;
+  -o-transform: arguments;
+  transform: arguments;
+
+segment-animate()
+  -webkit-transition: all 0.6s ease;
+  -moz-transition: all 0.6s ease;
+  -o-transition: all 0.6s ease;
+  transition: all 0.6s ease;
+
+animate()
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+
+center-align()
+  position absolute
+  left 50%
+  top 50%
+  -webkit-transform translate(-50%, -50%)
+  -ms-transform translate(-50%, -50%)
+  transform translate(-50%, -50%)
+
+vertical-align()
+  position relative
+  top 50%
+  -webkit-transform translateY(-50%)
+  -ms-transform translateY(-50%)
+  transform translateY(-50%)
+
+pinned()
+  top 0
+  bottom 0
+  left 0
+  right 0
+
+nomargin()
+  margin 0
+
+nopadding()
+  padding 0
+
+reset()
+  nomargin()
+  nopadding()
+
+cleanlist()
+  nomargin()
+  nopadding()
+  list-style none
+
+radius()
+  -webkit-border-radius: arguments;
+  -moz-border-radius: arguments;
+  -o-border-radius: arguments;
+  border-radius: arguments;
+
+background-image()
+  background-size cover
+  background-repeat no-repeat
+  background-position center
+
+border-box()
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+
+placeholderColor()
+  &::-webkit-input-placeholder { /* Chrome */
+    color: arguments;
+  }
+  &:-ms-input-placeholder { /* IE 10+ */
+    color: arguments;
+  }
+  &::-moz-placeholder { /* Firefox 19+ */
+    color: arguments;
+    opacity: 1;
+  }
+  &:-moz-placeholder { /* Firefox 4 - 18 */
+    color: arguments;
+    opacity: 1;
+  }

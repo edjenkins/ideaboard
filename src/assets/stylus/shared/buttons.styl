@@ -1,0 +1,38 @@
+// Buttons
+
+.btn
+  animate()
+  background-color $color-darker-grey
+  border transparent 1px solid
+  box-sizing: border-box
+  color white
+  line-height 50px
+  padding 0 30px
+  max-width 260px
+  text-align center
+  &:hover
+    background-color darken($color-darker-grey, 10%)
+    cursor pointer
+  &.btn-primary
+    background-color $color-primary
+    &:hover
+      background-color darken($color-primary, 10%)
+  &.btn-success
+    background-color $color-success
+    &:hover
+      background-color darken($color-success, 10%)
+  &.btn-danger-subtle
+    background-color transparent
+    color $color-danger
+    &:hover
+      background-color $color-danger
+      color white
+  &.btn-grey
+    background-color $color-grey
+    &:hover
+      background-color darken($color-grey, 10%)
+  &.btn-danger
+    background-color $color-danger
+    &:hover
+      background-color darken($color-danger, 10%)
+      cursor pointer
