@@ -6,7 +6,7 @@
           .content-block--body
             h1 Communities designing 
               span {{ examples[exampleIndex] }}
-            h3 Kick off a new idea and start building a community through discussion and debate.
+            h3 Kick off a new idea and start building a community through lots of discussion and debate.
     .row
       .content-block.pull-up.white-block
         .content-block--body
