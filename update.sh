@@ -19,10 +19,10 @@ npm run build
 cd ..
 
 # Remove existing docker containers
-sudo docker-compose rm -f app
+docker-compose rm -f app
 
 # Initialise and up docker containers
-sudo docker-compose up -d app
+docker-compose up -d app
 
 # Output logs
-sudo docker-compose logs -f app
+docker-compose logs -f app
