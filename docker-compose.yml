@@ -3,7 +3,7 @@ version: "2"
 services:
 
   api:
-    build: .
+    build: ./api
     volumes:
       - ./api:/app
     ports:
