@@ -1,7 +1,13 @@
 #!/bin/bash
 
+# Move into api dir
+cd ~/sites/ideaboard/api
+
+# Run npm install process
+npm install
+
 # Move into app dir
-cd ~/sites/ideaboard/app
+cd ../app
 
 # Run npm build process
 npm run build
