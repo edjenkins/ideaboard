@@ -6,29 +6,19 @@
 </template>
 
 <script>
-import Instances from '@/components/instances'
+import * as Instances from '@/components/instances'
 
 export default {
   name: 'home',
   components: {
     Instances
   },
-  data () {
-    return {
-    }
-  },
   computed: {
     parts () {
       return window.location.hostname.split('.')
     },
     instance () {
-      const parts = window.location.hostname.split('.')
-      const subdomain = parts.shift()
-      if ((subdomain === 'localhost') || (subdomain === 'eventspark')) {
-        return 'master'
-      } else {
-        return parts.shift() // subdomain
-      }
+      return 'master'
     }
   }
 }

@@ -7,7 +7,6 @@ import Join from '@/components/auth/Join'
 import Reset from '@/components/auth/Reset'
 
 // Pages
-import Home from '@/components/pages/Home'
 import Profile from '@/components/pages/Profile'
 
 // Ideas
@@ -23,7 +22,11 @@ const router = new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: function (resolve) {
+        const subdomain = window.location.hostname.split('.').shift()
+        const instance = ((subdomain === 'localhost') || (subdomain === 'eventspark')) ? 'Master' : subdomain.toUpperCase() // subdomain
+        require([`@/components/instances/${instance}.vue`], resolve)
+      }
     },
     {
       path: '/profile/:id?',
