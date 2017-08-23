@@ -10,6 +10,7 @@
     .row
       .content-block.pull-up.white-block
         .content-block--body
+          p {{ instance }}
     site-footer
 </template>
 
@@ -34,6 +35,12 @@ export default {
     return {
       exampleIndex: 0,
       examples: ['events', 'courses', 'products', 'protests', 'services', 'meetups']
+    }
+  },
+  computed: {
+    instance () {
+      var subdomain = /:\/\/([^\/]+)/.exec(window.location.href)[1]
+      return subdomain
     }
   },
   methods: {
