@@ -23,8 +23,8 @@ const router = new Router({
       path: '/',
       name: 'Home',
       component: function (resolve) {
-        const subdomain = window.location.hostname.split('.').shift()
-        const instance = ((subdomain === 'localhost') || (subdomain === 'eventspark')) ? 'Master' : subdomain.toUpperCase() // subdomain
+        const subdomain = window.location.hostname.split('.')[0]
+        const instance = ((subdomain === 'localhost') || (subdomain === 'eventspark')) ? 'Master' : subdomain.toLowerCase() // subdomain
         require([`@/components/instances/${instance}.vue`], resolve)
       }
     },
