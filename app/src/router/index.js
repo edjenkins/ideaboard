@@ -14,6 +14,8 @@ import Create from '@/components/ideas/Create'
 import Explore from '@/components/ideas/Explore'
 import Idea from '@/components/ideas/Idea'
 
+import instances from '@/instances'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -24,7 +26,7 @@ const router = new Router({
       name: 'Home',
       component: function (resolve) {
         const subdomain = window.location.hostname.split('.')[0]
-        const instance = ((subdomain === 'localhost') || (subdomain === 'eventspark')) ? 'master' : subdomain.toLowerCase() // subdomain
+        const instance = ((subdomain === 'localhost') || (subdomain === 'eventspark')) ? instances.default : subdomain.toLowerCase() // subdomain
         require([`@/components/instances/${instance}.vue`], resolve)
       }
     },
@@ -64,8 +66,6 @@ const router = new Router({
     }
   ]
 })
-
-console.log(Store)
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {

@@ -1,6 +1,6 @@
 <template lang="pug">
   #home
-    .row-wrapper#welcome
+    .row-wrapper#welcome(v-bind:style="{ 'background-color': navColor }")
       .row
         .content-block
           .content-block--body
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import PageHeader from '@/components/PageHeader'
 import SiteFooter from '@/components/navigation/SiteFooter'
 
@@ -33,6 +35,9 @@ export default {
       exampleIndex: 0,
       examples: ['events', 'courses', 'products', 'protests', 'services', 'meetups']
     }
+  },
+  computed: {
+    ...mapGetters(['navColor'])
   }
 }
 </script>

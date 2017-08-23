@@ -1,17 +1,22 @@
 <template lang="pug">
-  #page-header
+  #page-header(v-bind:style="{ 'background-color': navColor }")
     .row
       h1(v-if="title") {{ title }}
       h4(v-if="subtitle") {{ subtitle }}
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'page-header',
   props: ['title', 'subtitle'],
   data () {
     return {
     }
+  },
+  computed: {
+    ...mapGetters(['navColor'])
   }
 }
 </script>

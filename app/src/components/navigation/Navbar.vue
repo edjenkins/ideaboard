@@ -1,5 +1,5 @@
 <template lang="pug">
-  #navbar(:class="authState")
+  #navbar(v-bind:class="authState" v-bind:style="{ 'background-color': navColor }")
     .row
       router-link#logo(to="/") ideaboard.io
       #menu
@@ -21,7 +21,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuthenticated'])
+    ...mapGetters(['isAuthenticated', 'navColor'])
   },
   watch: {
     isAuthenticated (nV) {
@@ -46,13 +46,13 @@ export default {
   border-bottom alpha(black, 0.1) 1px solid
   min-height $navigation-height
   &.authenticating
-    background-color $color-success
+    background-color $color-success !important
   &.authenticated
-    background-color $color-primary
+    background-color $color-primary !important
   &.unauthenticating
-    background-color $color-danger
+    background-color $color-danger !important
   &.unauthenticated
-    background-color $color-primary
+    background-color $color-primary !important
   #logo
     reset()
     color white
