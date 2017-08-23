@@ -1,6 +1,7 @@
 <template lang="pug">
   #home
     pre {{ instance }}
+    pre {{ parts }}
     component(v-bind:is="instance")
 </template>
 
@@ -17,6 +18,9 @@ export default {
     }
   },
   computed: {
+    parts () {
+      return window.location.hostname.split('.')
+    },
     instance () {
       const parts = window.location.hostname.split('.')
       const subdomain = parts.shift()
