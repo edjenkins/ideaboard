@@ -1,101 +1,38 @@
 <template lang="pug">
   #home
-    .row-wrapper#welcome
-      .row
-        .content-block
-          .content-block--body
-            h1 Communities designing 
-              span {{ examples[exampleIndex] }}
-            h3 Start a new idea and build your community through discussion and debate.
-    .row
-      .content-block.pull-up.white-block
-        .content-block--body
-          pre {{ instance }}
-    site-footer
+    component(v-bind:is="instance")
 </template>
 
 <script>
-import _ from 'lodash'
-
-import PageHeader from '@/components/PageHeader'
-import SiteFooter from '@/components/navigation/SiteFooter'
+import Master from '@/components/pages/instances/Master'
+import WEA from '@/components/pages/instances/WEA'
 
 export default {
   name: 'home',
   components: {
-    PageHeader,
-    SiteFooter
-  },
-  created () {
-    setInterval(() => {
-      this.exampleIndex = (this.exampleIndex === this.examples.length - 1) ? 0 : this.exampleIndex + 1
-    }, 2000)
+    Master,
+    WEA
   },
   data () {
     return {
-      exampleIndex: 0,
-      examples: ['events', 'courses', 'products', 'protests', 'services', 'meetups']
     }
   },
   computed: {
     instance () {
-      var parts = location.hostname.split('.')
-      var subdomain = parts.shift()
-      var upperleveldomain = parts.join('.')
-
-      var domains = [
-        /:\/\/([^\/]+)/.exec(window.location.href)[1],
-        subdomain,
-        upperleveldomain,
-        parts.slice(-2).join('.'),
-      ]
-      return domains
-    }
-  },
-  methods: {
-    randomColor () {
-      let rand = []
-      while (!_.inRange(_.sum(rand), 600, 700)) {
-        rand = [_.random(0, 255), _.random(0, 255), _.random(0, 255)]
+      const parts = location.hostname.split('.')
+      const subdomain = parts.shift()
+      if ((subdomain === 'localhost') || (subdomain === 'eventspark')) {
+        return 'master'
+      } else {
+        return parts.shift() // subdomain
       }
-
-      return `rgb(${rand[0]}, ${rand[1]}, ${rand[2]})`
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+
 @import '~stylus/shared'
 
-#home
-  position relative
-  text-align center
-
-  .content-block--body
-    min-height 800px
-
-  .row-wrapper
-    &#welcome
-      background-color $color-primary
-      .content-block
-        reset()
-        .content-block--body
-          min-height auto
-          padding-top 100px
-          padding-bottom 120px
-          h1, h3
-            reset()
-            color white
-            font-weight normal
-          h1 span
-            color white
-            display inline-block
-            font-weight bold
-            overflow visible
-            width 100px
-            text-align left
-            @media(max-width: 580px)
-              display block
-              text-align center
 </style>
