@@ -8,6 +8,11 @@ citylit.eventspark.co.uk {
   tls eventspark@edjenkins.co.uk
 }
 
+wea.eventspark.co.uk {
+  root /var/www/html
+  tls eventspark@edjenkins.co.uk
+}
+
 api.eventspark.co.uk {
   proxy / api:3000
 }
