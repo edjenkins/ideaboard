@@ -10,7 +10,7 @@
     .row
       .content-block.pull-up.white-block
         .content-block--body
-          p {{ instance }}
+          pre {{ instance }}
     site-footer
 </template>
 
@@ -39,8 +39,17 @@ export default {
   },
   computed: {
     instance () {
-      var subdomain = /:\/\/([^\/]+)/.exec(window.location.href)[1]
-      return subdomain
+      var parts = location.hostname.split('.')
+      var subdomain = parts.shift()
+      var upperleveldomain = parts.join('.')
+
+      var domains = [
+        /:\/\/([^\/]+)/.exec(window.location.href)[1],
+        subdomain,
+        upperleveldomain,
+        parts.slice(-2).join('.'),
+      ]
+      return domains
     }
   },
   methods: {
