@@ -4,7 +4,7 @@
       .row
         .content-block
           .content-block--body
-            h1 CityLit designing 
+            h1 People design 
               span {{ examples[exampleIndex] }}
             h3 Start a new idea and build your community through discussion and debate.
     .row
@@ -18,7 +18,7 @@ import PageHeader from '@/components/PageHeader'
 import SiteFooter from '@/components/navigation/SiteFooter'
 
 export default {
-  name: 'citylit',
+  name: 'master',
   components: {
     PageHeader,
     SiteFooter
