@@ -4,7 +4,7 @@
       .row
         .content-block
           .content-block--body
-            h1 WEA designing 
+            h1 WEA designs
               span {{ examples[exampleIndex] }}
             h3 Start a new idea and build your community through discussion and debate.
     .row
