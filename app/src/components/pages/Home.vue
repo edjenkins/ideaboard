@@ -1,5 +1,6 @@
 <template lang="pug">
   #home
+    pre {{ instance }}
     component(v-bind:is="instance")
 </template>
 
@@ -19,7 +20,7 @@ export default {
   },
   computed: {
     instance () {
-      const parts = location.hostname.split('.')
+      const parts = window.location.hostname.split('.')
       const subdomain = parts.shift()
       if ((subdomain === 'localhost') || (subdomain === 'eventspark')) {
         return 'master'
