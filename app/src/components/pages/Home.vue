@@ -5,14 +5,12 @@
 </template>
 
 <script>
-import Master from '@/components/pages/instances/Master'
-import WEA from '@/components/pages/instances/WEA'
+import Instances from '@/components/instances'
 
 export default {
   name: 'home',
   components: {
-    Master,
-    WEA
+    Instances
   },
   data () {
     return {
