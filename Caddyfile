@@ -10,11 +10,19 @@ eventspark.co.uk {
 citylit.eventspark.co.uk {
   root /var/www/html
   tls eventspark@edjenkins.co.uk
+
+  rewrite {
+    to {path} {path}/ /index.html
+  }
 }
 
 wea.eventspark.co.uk {
   root /var/www/html
   tls eventspark@edjenkins.co.uk
+
+  rewrite {
+    to {path} {path}/ /index.html
+  }
 }
 
 api.eventspark.co.uk {
