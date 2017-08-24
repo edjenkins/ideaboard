@@ -2,7 +2,8 @@
   #navbar(v-bind:class="authState" v-bind:style="{ 'background-color': navColor }")
     .row
       router-link#logo(to="/") ideaboard.io
-      #menu
+      #menu-toggle(@click="active = !active") MENU
+      #menu(v-bind:class="{ active: active }")
         router-link(to="/create") create
         router-link(to="/explore") explore
         router-link.primary(to="/profile" v-if="isAuthenticated") my profile
@@ -17,6 +18,7 @@ export default {
   name: 'navbar',
   data () {
     return {
+      active: false,
       authState: undefined
     }
   },
@@ -45,6 +47,8 @@ export default {
   background-color $color-primary
   border-bottom alpha(black, 0.1) 1px solid
   min-height $navigation-height
+  @media(max-width: 568px)
+    min-height $mobile-navigation-height
   &.authenticating
     background-color $color-success !important
   &.authenticated
@@ -64,9 +68,30 @@ export default {
     text-decoration none
     @media(max-width: ($page-width + 10px))
       padding 0 20px
+    @media(max-width: 568px)
+      float none
+      line-height $mobile-navigation-height
+  #menu-toggle
+    color white
+    display none
+    position absolute
+    top 0
+    right 0
+    padding 0 20px
+    @media(max-width: 568px)
+      display block
+      line-height $mobile-navigation-height
   #menu
     float right
     line-height $navigation-height
+    @media(max-width: 568px)
+      border-top alpha(black, 0.1) 1px solid
+      display none
+      float none
+      line-height $mobile-navigation-height
+      padding 0 10px
+      &.active
+        display block
     a
       reset()
       animate()
@@ -81,9 +106,10 @@ export default {
       &.primary
         border white 1px solid
         margin 0 15px
-      @media(max-width: 460px)
-        margin 0
-        padding 6px 10px
+      @media(max-width: 568px)
+        margin 0 5px
+        padding 6px 15px
+        width calc(100% / 3)
         &.primary
           border none
           margin 0

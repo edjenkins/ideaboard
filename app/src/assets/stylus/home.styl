@@ -1,0 +1,35 @@
+@import '~stylus/shared'
+
+#home
+  position relative
+  text-align center
+
+  .content-block--body
+    min-height 800px
+
+  .row-wrapper
+    &#welcome
+      background-color $color-primary
+      .content-block
+        reset()
+        .content-block--body
+          min-height auto
+          padding-top 100px
+          padding-bottom 120px
+          h1, h3
+            reset()
+            color white
+            font-weight normal
+            text-align center
+          .example
+            color white
+            display inline
+            font-weight bold
+            margin 0 auto
+            overflow visible
+            width 100px
+            text-align left
+            @media(max-width: 580px)
+              display block
+              text-align center
+              width auto
