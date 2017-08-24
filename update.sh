@@ -4,13 +4,13 @@
 cd ~/sites/ideaboard/api
 
 # Run npm install process
-# npm install
+npm install
 
 # Move into app dir
 cd ../app
 
 # Run npm install process
-# npm install
+npm install
 
 # Run npm build process
 npm run build
