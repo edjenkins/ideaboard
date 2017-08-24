@@ -81,6 +81,7 @@ module.exports = function (passport) {
             return done(err);
 
           console.log(profile)
+          console.log(token)
 
           // if the user is found, then log them in
           if (user) {
