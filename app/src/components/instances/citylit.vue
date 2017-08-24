@@ -4,12 +4,13 @@
       .row
         .content-block
           .content-block--body
-            h1 CityLit designs 
+            h1 CityLit 
               .example {{ examples[exampleIndex] }}
             h3 Start a new idea and build your community through discussion and debate.
-    .row
-      .content-block.pull-up.white-block
-        .content-block--body
+    
+    featured-ideas
+    splash-image
+
     site-footer
 </template>
 

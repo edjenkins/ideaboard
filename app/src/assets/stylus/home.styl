@@ -4,10 +4,8 @@
   position relative
   text-align center
 
-  .content-block--body
-    min-height 80px
-
   .row-wrapper
+    margin-bottom 50px
     &#welcome
       background-color $color-primary
       .content-block
@@ -36,3 +34,13 @@
               display block
               text-align center
               width auto
+
+#showcase, #featured-ideas
+  .content-block--body
+    min-height 80px
+    padding 0
+    h3
+      color $color-text-grey
+      text-align left
+      @media(max-width: ($page-width + 10px))
+        padding 0 10px
