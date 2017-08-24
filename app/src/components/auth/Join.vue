@@ -187,6 +187,7 @@ $side-block-width = 340px
       margin 10px
       padding 0 20px
       text-align center
+      text-decoration none
       width calc(100% - 60px)
       &.minimal
         background-color $color-lighter-grey
