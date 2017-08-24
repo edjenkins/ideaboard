@@ -89,8 +89,8 @@ module.exports = function (app, passport) {
   // FACEBOOK ROUTES
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: '/profile',
-      failureRedirect: '/'
+      successRedirect: 'https://eventspark.co.uk/profile',
+      failureRedirect: 'https://eventspark.co.uk/join'
     }));
 
   app.get('/auth/facebook/login', passport.authenticate('facebook', { scope: 'email' }));
