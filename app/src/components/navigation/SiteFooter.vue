@@ -3,6 +3,8 @@
     .row
       ul
         li Copyright 2017
+        li Terms
+        li Privacy
       .clearfix
 </template>
 
@@ -29,7 +31,8 @@ export default {
     li
       cleanlist()
       reset()
-      color alpha(black, 0.1)
+      color alpha(black, 0.2)
+      display inline
       line-height $footer-height
       padding 0 20px
       text-decoration none

@@ -30,12 +30,12 @@ services:
     volumes_from:
       - mongodata
 
-  mongoui:
-    image: twnel/mongo-express
-    ports:
-      - "8081:8081"
-    links:
-      - mongo
+  # mongoui:
+  #   image: twnel/mongo-express
+  #   ports:
+  #     - "8081:8081"
+  #   links:
+  #     - mongo
 
   mongodata:
     image: tianon/true
