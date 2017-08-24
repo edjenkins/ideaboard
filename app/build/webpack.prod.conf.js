@@ -112,6 +112,20 @@ if (config.build.productionGzip) {
   )
 }
 
+if (config.build.preRendering) {
+  var PrerenderSpaPlugin = require('prerender-spa-plugin')
+
+  webpackConfig.plugins.push(
+    new CopyWebpackPlugin([{
+      from: 'src/static'
+    }]),
+    new PrerenderSpaPlugin(
+      path.join(__dirname, 'dist'),
+      ['/', '/explore']
+    )
+  )
+}
+
 if (config.build.bundleAnalyzerReport) {
   var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
