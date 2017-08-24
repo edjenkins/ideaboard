@@ -12,6 +12,10 @@ export default {
     wea: {
       color: '#006172',
       subdomain: 'wea'
+    },
+    ncl: {
+      color: '#003865',
+      subdomain: 'ncl'
     }
   }
 }
