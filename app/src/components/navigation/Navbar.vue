@@ -2,7 +2,8 @@
   #navbar(v-bind:class="authState" v-bind:style="{ 'background-color': navColor }")
     .row
       router-link#logo(to="/") ideaboard.io
-      #menu-toggle(@click="active = !active") MENU
+      #menu-toggle(@click="active = !active")
+        icon(name="bars")
       #menu(v-bind:class="{ active: active }")
         router-link(to="/create") create
         router-link(to="/explore") explore
@@ -14,8 +15,13 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import Icon from 'vue-awesome/components/Icon'
+
 export default {
   name: 'navbar',
+  components: {
+    Icon
+  },
   data () {
     return {
       active: false,
@@ -109,7 +115,6 @@ export default {
       @media(max-width: 568px)
         margin 0 5px
         padding 6px 15px
-        width calc(100% / 3)
         &.primary
           border none
           margin 0
