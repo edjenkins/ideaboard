@@ -3,16 +3,21 @@
   .row
     .content-block
       .splash-image(v-bind:class="align" v-bind:style="{ 'background-image': `url(${image})` }")
-        .splash-image--content
+        .splash-image--content(v-bind:style="{ 'background-color': navColor }")
           h2 {{ title }}
           p {{ subtitle }}
           router-link.splash-image--action(v-bind:to="link") {{ action }}
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'splash-image',
-  props: ['align', 'title', 'subtitle', 'action', 'link', 'image']
+  props: ['align', 'title', 'subtitle', 'action', 'link', 'image'],
+  computed: {
+    ...mapGetters(['navColor'])
+  }
 }
 </script>
 
@@ -29,7 +34,7 @@ export default {
   &.right .splash-image--content
     margin-left 50%
   .splash-image--content
-    background-color alpha($color-primary, 1)
+    background-color $color-primary
     padding 50px 30px
     h2
       reset()
