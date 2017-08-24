@@ -7,6 +7,9 @@ import Join from '@/components/auth/Join'
 import Reset from '@/components/auth/Reset'
 
 // Pages
+import About from '@/components/pages/About'
+import Terms from '@/components/pages/Terms'
+import Privacy from '@/components/pages/Privacy'
 import Profile from '@/components/pages/Profile'
 
 // Ideas
@@ -29,6 +32,21 @@ const router = new Router({
         const instance = ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : subdomain.toLowerCase() // subdomain
         require([`@/components/instances/${instance}.vue`], resolve)
       }
+    },
+    {
+      path: '/learn',
+      name: 'About',
+      component: About
+    },
+    {
+      path: '/terms',
+      name: 'Terms',
+      component: Terms
+    },
+    {
+      path: '/privacy',
+      name: 'Privacy',
+      component: Privacy
     },
     {
       path: '/profile/:id?',
