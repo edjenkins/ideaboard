@@ -48,7 +48,7 @@ export default {
       animate()
       radius(30px)
       background-color transparent
-      border white 2px solid
+      border white 1px solid
       color white
       display inline-block
       font-weight bold

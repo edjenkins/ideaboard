@@ -120,7 +120,7 @@ if (config.build.preRendering) {
       from: 'src/static'
     }]),
     new PrerenderSpaPlugin(
-      path.join(__dirname, 'dist'),
+      path.join(__dirname, '../dist'),
       ['/', '/explore']
     )
   )
