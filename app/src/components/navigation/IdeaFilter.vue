@@ -11,7 +11,7 @@
           #search(v-bind:class="{ active: searchVisible }" @click="toggleSearch()") {{ searchVisible ? 'Cancel' : 'Search' }}
           .clearfix
 
-        .category-wrapper
+        //- .category-wrapper
           ul#category-tabs
             li.active All
             li Design

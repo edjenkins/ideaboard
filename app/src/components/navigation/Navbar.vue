@@ -48,11 +48,11 @@ export default {
   &.authenticating
     background-color $color-success !important
   &.authenticated
-    background-color $color-primary !important
+    background-color $color-primary
   &.unauthenticating
     background-color $color-danger !important
   &.unauthenticated
-    background-color $color-primary !important
+    background-color $color-primary
   #logo
     reset()
     color white

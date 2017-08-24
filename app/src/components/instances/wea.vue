@@ -21,6 +21,9 @@ import SiteFooter from '@/components/navigation/SiteFooter'
 
 export default {
   name: 'wea',
+  metaInfo: {
+    title: 'WEA'
+  },
   components: {
     PageHeader,
     SiteFooter

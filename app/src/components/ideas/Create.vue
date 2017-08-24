@@ -47,6 +47,9 @@ import IdeaTile from '@/components/ideas/IdeaTile'
 
 export default {
   name: 'create-idea',
+  metaInfo: {
+    title: 'Create Idea'
+  },
   components: {
     Quill,
     quillEditor,

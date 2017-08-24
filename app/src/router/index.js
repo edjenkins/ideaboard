@@ -14,7 +14,7 @@ import Create from '@/components/ideas/Create'
 import Explore from '@/components/ideas/Explore'
 import Idea from '@/components/ideas/Idea'
 
-import instances from '@/instances'
+import config from '@/config'
 
 Vue.use(Router)
 
@@ -26,7 +26,7 @@ const router = new Router({
       name: 'Home',
       component: function (resolve) {
         const subdomain = window.location.hostname.split('.')[0]
-        const instance = ((subdomain === 'localhost') || (subdomain === 'eventspark')) ? instances.default : subdomain.toLowerCase() // subdomain
+        const instance = ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : subdomain.toLowerCase() // subdomain
         require([`@/components/instances/${instance}.vue`], resolve)
       }
     },

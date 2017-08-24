@@ -21,6 +21,9 @@ import SiteFooter from '@/components/navigation/SiteFooter'
 
 export default {
   name: 'master',
+  metaInfo: {
+    title: 'Home'
+  },
   components: {
     PageHeader,
     SiteFooter

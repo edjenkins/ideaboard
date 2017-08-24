@@ -29,6 +29,9 @@ import PageHeader from '@/components/PageHeader'
 
 export default {
   name: 'reset',
+  metaInfo: {
+    title: 'Reset'
+  },
   props: ['code'],
   components: {
     PageHeader

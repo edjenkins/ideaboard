@@ -67,6 +67,9 @@ import PageHeader from '@/components/PageHeader'
 
 export default {
   name: 'join',
+  metaInfo: {
+    title: 'Join'
+  },
   components: {
     PageHeader
   },

@@ -9,6 +9,17 @@ import Navbar from '@/components/navigation/Navbar'
 
 export default {
   name: 'app',
+  metaInfo: {
+    title: 'Welcome',
+    titleTemplate: 'IdeaBoard - %s',
+    htmlAttrs: {
+      lang: 'en'
+    },
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    ]
+  },
   components: {
     Navbar
   },

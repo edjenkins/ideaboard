@@ -21,6 +21,9 @@ import SiteFooter from '@/components/navigation/SiteFooter'
 
 export default {
   name: 'citylit',
+  metaInfo: {
+    title: 'CityLit'
+  },
   components: {
     PageHeader,
     SiteFooter

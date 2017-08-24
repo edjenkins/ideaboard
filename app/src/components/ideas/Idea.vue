@@ -36,6 +36,15 @@ import OutcomeTab from '@/components/ideas/tabs/OutcomeTab'
 
 export default {
   name: 'idea',
+  metaInfo () {
+    return {
+      title: (this.idea && this.idea.title) ? this.idea.title : 'Idea',
+      meta: [
+        { p: 'og:title', c: (this.idea && this.idea.title) ? this.idea.title : 'Idea' },
+        { p: 'og:image', c: (this.idea && this.idea.banner) ? this.idea.banner : '' }
+      ]
+    }
+  },
   props: ['id'],
   components: {
     PageHeader,

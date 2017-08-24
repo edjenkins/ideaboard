@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Store from '@/store'
 
-import instances from '@/instances'
+import config from '@/config'
 import auth from '@/store/modules/auth'
 import idea from '@/store/modules/idea'
 
@@ -19,10 +19,10 @@ export default new Vuex.Store({
   getters: {
     instance () {
       const subdomain = window.location.hostname.split('.')[0]
-      return ((subdomain === 'localhost') || (subdomain === 'eventspark')) ? instances.default : subdomain.toLowerCase() // subdomain
+      return ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : subdomain.toLowerCase() // subdomain
     },
     navColor () {
-      return instances[Store.getters.instance].color
+      return config.instances[Store.getters.instance].color
     }
   }
 })

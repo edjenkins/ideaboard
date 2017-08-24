@@ -4,6 +4,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 import vueLogger from 'vue-logger'
+import Meta from 'vue-meta'
 import { sync } from 'vuex-router-sync'
 
 import App from '@/App'
@@ -16,6 +17,7 @@ Vue.config.productionTip = false
 
 Vue.use(Vuex)
 Vue.use(VueResource)
+Vue.use(Meta)
 
 Vue.use(vueLogger, {
   prefix: new Date(),

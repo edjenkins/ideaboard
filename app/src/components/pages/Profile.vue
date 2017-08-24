@@ -30,6 +30,9 @@ import ActivityTab from '@/components/user/tabs/ActivityTab'
 
 export default {
   name: 'profile',
+  metaInfo: {
+    title: 'Profile'
+  },
   props: ['id'],
   components: {
     PageHeader,
