@@ -93,5 +93,5 @@ module.exports = function (app, passport) {
       failureRedirect: '/'
     }));
 
-  app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
+  app.get('/auth/facebook/login', passport.authenticate('facebook', { scope: 'email' }));
 }

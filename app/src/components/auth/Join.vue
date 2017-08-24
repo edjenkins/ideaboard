@@ -4,7 +4,7 @@
     .row
       .content-block.content-block--side.pull-up.pull-left.white-block
         .content-block--body.auth-panel
-          a.oauth-button#facebook(href="https://api.eventspark.co.uk/auth/facebook" target="_self") Continue with Facebook
+          a.oauth-button#facebook(href="https://api.eventspark.co.uk/auth/facebook/login" target="_self") Continue with Facebook
           //- .oauth-button#twitter Continue with Twitter
           .oauth-button.minimal.split(@click="state = 'join'" :class="{ active: (state === 'join') }") Sign Up
           .oauth-button.minimal.split(@click="state = 'login'" :class="{ active: (state === 'login') }") Login
