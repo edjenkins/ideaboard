@@ -8,6 +8,9 @@ import PageHeader from '@/components/PageHeader'
 import SiteFooter from '@/components/navigation/SiteFooter'
 
 export default {
+  metaInfo: {
+    title: 'Home'
+  },
   components: {
     FeaturedIdeas,
     Showcase,

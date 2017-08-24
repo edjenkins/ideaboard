@@ -20,9 +20,6 @@ import Home from '@/mixins/Home'
 
 export default {
   name: 'master',
-  metaInfo: {
-    title: 'Home'
-  },
   mixins: [Home]
 }
 </script>

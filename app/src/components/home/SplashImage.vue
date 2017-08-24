@@ -63,5 +63,6 @@ export default {
 
   @media(max-width: 640px)
     .splash-image--content
-      margin-right auto
+      margin-right auto !important
+      margin-left auto !important
 </style>

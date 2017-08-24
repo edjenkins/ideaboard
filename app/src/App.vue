@@ -11,13 +11,16 @@ export default {
   name: 'app',
   metaInfo: {
     title: 'Welcome',
+    description: 'Learn how IdeaBoard can help turn your idea into a reality through the power of online communities',
     titleTemplate: 'IdeaBoard - %s',
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'og:title', content: 'IdeaBoard' },
+      { name: 'og:image', content: '~images/banners/design.jpg' }
     ]
   },
   components: {

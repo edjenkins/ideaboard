@@ -127,7 +127,8 @@ import SiteFooter from '@/components/navigation/SiteFooter'
 export default {
   name: 'terms',
   metaInfo: {
-    title: 'Terms and Conditions'
+    title: 'Terms and Conditions',
+    description: 'Read the terms and conditions.'
   },
   components: {
     PageHeader,

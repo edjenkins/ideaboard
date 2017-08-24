@@ -17,7 +17,8 @@ import SiteFooter from '@/components/navigation/SiteFooter'
 export default {
   name: 'about',
   metaInfo: {
-    title: 'About'
+    title: 'About',
+    description: 'Learn about IdeaBoard and the service it provides.'
   },
   components: {
     PageHeader,

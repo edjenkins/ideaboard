@@ -19,7 +19,8 @@ import IdeaTile from '@/components/ideas/IdeaTile'
 export default {
   name: 'explore',
   metaInfo: {
-    title: 'Explore'
+    title: 'Explore',
+    description: 'Explore the communities ideas'
   },
   components: {
     PageHeader,

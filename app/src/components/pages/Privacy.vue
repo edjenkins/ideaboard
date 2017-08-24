@@ -94,7 +94,8 @@ import SiteFooter from '@/components/navigation/SiteFooter'
 export default {
   name: 'privacy',
   metaInfo: {
-    title: 'Privacy Policy'
+    title: 'Privacy Policy',
+    description: 'Ready the privacy policy.'
   },
   components: {
     PageHeader,
