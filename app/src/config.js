@@ -6,7 +6,7 @@ export default {
       color: '#0099D0'
     },
     citylit: {
-      color: '#80349B',
+      color: '#7e179f',
       subdomain: 'citylit'
     },
     wea: {
