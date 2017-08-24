@@ -3,16 +3,18 @@
   .btn(@click="toggleSubscription" :class="{ active: isSubscribing, subscribed: isSubscribed }")
     span(v-if="isSubscribed") {{ isSubscribing ? 'One moment..' : 'Subscribed' }}
     span(v-else) {{ isSubscribing ? 'One moment..' : 'Subscribe' }}
-  .social(:class="{ active: isSubscribed }")
-    .social--link
-      icon(name="twitter")
-    .social--link
-      icon(name="facebook")
-    .social--link
-      icon(name="envelope")
-    .social--link
-      icon(name="link")
-    .clearfix
+  .social(v-bind:class="{ active: isSubscribed }")
+    social-sharing(v-bind:url="shareLink" inline-template)
+      div
+        network.social--link(network="twitter")
+          i.fa.fa-twitter
+        network.social--link(network="facebook")
+          i.fa.fa-facebook
+        network.social--link(network="googleplus")
+          i.fa.fa-google-plus
+        network.social--link(network="linkedin")
+          i.fa.fa-linkedin
+        .clearfix
     p.subscription-stats
       span(v-if="idea._subscribers.length === 1") You are the only subscriber
       span(v-else) You and {{ (idea._subscribers.length - 1) }} {{ (idea._subscribers.length === 2) ? 'other' : 'others' }} subscribed
@@ -20,6 +22,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import Icon from 'vue-awesome/components/Icon'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/facebook'
@@ -30,14 +33,21 @@ import API from '@/api'
 import { mapGetters } from 'vuex'
 import _ from 'lodash'
 
+var SocialSharing = require('vue-social-sharing')
+Vue.use(SocialSharing)
+
 export default {
   name: 'subscribe-button',
   props: ['idea'],
   components: {
     Icon
   },
+  created () {
+    this.shareLink = window.location.href
+  },
   data () {
     return {
+      shareLink: '',
       isSubscribing: false
     }
   },
@@ -104,7 +114,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 
 @import '~stylus/shared'
 
@@ -159,7 +169,7 @@ export default {
       position relative
       text-align center
       width 50px
-      .fa-icon
+      i
         color $color-dark-grey
         height 18px
         margin 15px 5px
