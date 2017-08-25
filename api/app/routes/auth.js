@@ -96,10 +96,9 @@ module.exports = function (app, passport) {
       successRedirect: 'https://eventspark.co.uk/profile',
       failureRedirect: 'https://eventspark.co.uk/join'
     })
-    // passport.authenticate('facebook', { callbackURL: (req.params.instanceId) ? `https://${req.params.instanceId}.eventspark.co.uk/${configAuth.facebookAuth.callbackURL}` : `https://eventspark.co.uk/${configAuth.facebookAuth.callbackURL}` })(req, res, next)
   });
 
   app.get('/auth/facebook/login/:instanceId', function (req, res, next) {
-    passport.authenticate('facebook', { callbackURL: (req.params.instanceId) ? `https://${req.params.instanceId}.eventspark.co.uk/${configAuth.facebookAuth.callbackURL}` : `https://eventspark.co.uk/${configAuth.facebookAuth.callbackURL}` })(req, res, next)
+    passport.authenticate('facebook', { callbackURL: `${configAuth.facebookAuth.callbackURL}?instance=${req.params.instanceId}` })(req, res, next)
   });
 }

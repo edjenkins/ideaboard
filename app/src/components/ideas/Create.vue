@@ -38,8 +38,10 @@
 
 <script>
 import API from '@/api'
+import * as types from '@/store/mutation-types'
 import Quill from 'quill'
 import { quillEditor } from 'vue-quill-editor'
+import _ from 'lodash'
 
 import UnsplashSearch from '@/components/UnsplashSearch'
 import FileUpload from '@/components/FileUpload'
@@ -60,6 +62,23 @@ export default {
     IdeaTile
   },
   created () {
+    if (!this.$session.exists()) this.$session.start()
+    if (this.$session.has('draft-idea')) {
+      const draftIdea = JSON.parse(this.$session.get('draft-idea'))
+      console.log(draftIdea)
+      if (!_.isEmpty(draftIdea)) this.idea = draftIdea
+    }
+  },
+  watch: {
+    'idea': {
+      handler: function (nV, oV) {
+        if (!this.$session.exists()) this.$session.start()
+        this.$log(nV)
+        this.$log('Saving draft...')
+        this.$session.set('draft-idea', JSON.stringify(nV))
+      },
+      deep: true
+    }
   },
   data () {
     return {
@@ -100,6 +119,9 @@ export default {
       }
     },
     createIdea () {
+      if (!this.isAuthenticated) {
+        this.$store.commit(types.SHOW_AUTH_MODAL)
+      }
       if (this.creatingIdea) return
       this.creatingIdea = true
       API.idea.create({ idea: this.idea, uploadType: this.uploadType },
