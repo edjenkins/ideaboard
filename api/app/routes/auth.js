@@ -94,6 +94,6 @@ module.exports = function (app, passport) {
     }));
 
   app.get('/auth/facebook/login/:instanceId', function (req, res, next) {
-    passport.authenticate('facebook', { scope: 'email' })(req, res, next)
+    passport.authenticate('facebook', { callbackUrl: (req.params.instanceId) ? `https://${req.params.instanceId}.eventspark.co.uk/${configAuth.facebookAuth.callbackURL}` : `https://eventspark.co.uk/${configAuth.facebookAuth.callbackURL}` })(req, res, next)
   });
 }

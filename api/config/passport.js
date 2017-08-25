@@ -60,7 +60,6 @@ module.exports = function (passport) {
 
     clientID: configAuth.facebookAuth.clientID,
     clientSecret: configAuth.facebookAuth.clientSecret,
-    callbackURL: (req.params.instanceId) ? `https://${req.params.instanceId}.eventspark.co.uk/${configAuth.facebookAuth.callbackURL}` : `https://eventspark.co.uk/${configAuth.facebookAuth.callbackURL}`,
     profileFields: ['id', 'email', 'name', 'timezone', 'updated_time'] // 'gender', 'link', 'locale', 'verified'
   },
 
