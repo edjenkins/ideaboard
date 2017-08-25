@@ -94,12 +94,15 @@ module.exports = function (app, passport) {
     // console.log(req)
     passport.authenticate('facebook', {
       successRedirect: `https://wea.eventspark.co.uk/profile`,
-      failureRedirect: 'https://wea.eventspark.co.uk/join'
+      failureRedirect: 'https://wea.eventspark.co.uk/join',
+      callbackURL: `${configAuth.facebookAuth.callbackURL}?instance=${req.query.instance}`
     })
   })
 
-  app.get('/auth/facebook/login/:instanceId', (req, res, next) => {
-    passport.authenticate('facebook', { callbackURL: `${configAuth.facebookAuth.callbackURL}?instance=${req.params.instanceId}` })(req, res, next)
+  app.get('/auth/facebook/login', (req, res, next) => {
+    passport.authenticate('facebook', {
+      callbackURL: `${configAuth.facebookAuth.callbackURL}?instance=${req.query.instance}`
+    })(req, res, next)
   })
 }
 
