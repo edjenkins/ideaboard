@@ -1,4 +1,4 @@
-const configAuth = require('../../auth')
+const configAuth = require('../../config/auth')
 
 const User = require('../../app/models/user')
 const mail = require('../services/mail')
