@@ -90,11 +90,9 @@ module.exports = function (app, passport) {
 
   // FACEBOOK ROUTES
   app.get('/auth/facebook/callback', function (req, res, next) {
-    console.log('Logging callback req')
-    console.log(req)
     passport.authenticate('facebook', {
-      successRedirect: 'https://eventspark.co.uk/profile',
-      failureRedirect: 'https://eventspark.co.uk/join'
+      successRedirect: (req.query.instance) ? `https://${req.query.instance}.eventspark.co.uk/profile` : 'https://eventspark.co.uk/profile',
+      failureRedirect: (req.query.instance) ? `https://${req.query.instance}.eventspark.co.uk/join` : 'https://eventspark.co.uk/join'
     })
   });
 
