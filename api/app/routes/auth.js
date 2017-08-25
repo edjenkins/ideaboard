@@ -1,3 +1,5 @@
+const configAuth = require('../../auth')
+
 const User = require('../../app/models/user')
 const mail = require('../services/mail')
 

@@ -26,6 +26,7 @@
               file-upload(v-if="uploadType === 'upload'" v-bind:uploaded-file.sync="idea.banner")
 
         .content-block--footer
+          .btn.btn-danger-subtle.pull-left(@click="startOver") Reset
           .btn.btn-success.pull-right(@click="createIdea")
             span(v-if="creatingIdea") Creating Idea...
             span(v-else) Continue
@@ -90,6 +91,14 @@ export default {
     }
   },
   methods: {
+    startOver () {
+      this.idea = {
+        title: undefined,
+        tagline: undefined,
+        description: undefined,
+        banner: undefined
+      }
+    },
     createIdea () {
       if (this.creatingIdea) return
       this.creatingIdea = true
