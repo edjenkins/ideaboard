@@ -22,6 +22,7 @@
 import _ from 'lodash'
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 import API from '@/api'
 
 import VotingButtons from '@/components/voting/VotingButtons'
@@ -126,7 +127,9 @@ export default {
       )
     },
     checkAuth () {
-      if (!this.isAuthenticated) { alert('You need to be logged in to do that!') }
+      if (!this.isAuthenticated) {
+        this.$store.commit(types.SHOW_AUTH_MODAL)
+      }
     }
   }
 }

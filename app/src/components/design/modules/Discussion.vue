@@ -46,6 +46,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 import _ from 'lodash'
 import Icon from 'vue-awesome/components/Icon'
 import 'vue-awesome/icons/arrow-left'
@@ -75,7 +76,9 @@ export default {
       return _.replace(name, ' ', '')
     },
     checkAuth () {
-      if (!this.isAuthenticated) { alert('You need to be logged in to do that!') }
+      if (!this.isAuthenticated) {
+        this.$store.commit(types.SHOW_AUTH_MODAL)
+      }
     }
   }
 }

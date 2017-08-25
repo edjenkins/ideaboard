@@ -5,9 +5,8 @@
       .content-block.content-block--side.pull-up.pull-left.white-block
         .content-block--body.auth-panel
           a.oauth-button#facebook(href="https://api.eventspark.co.uk/auth/facebook/login" target="_self") Continue with Facebook
-          //- .oauth-button#twitter Continue with Twitter
-          .oauth-button.minimal.split(@click="state = 'join'" :class="{ active: (state === 'join') }") Sign Up
-          .oauth-button.minimal.split(@click="state = 'login'" :class="{ active: (state === 'login') }") Login
+          .oauth-button.minimal.split(@click="state = 'join'" v-bind:class="{ active: (state === 'join') }") Sign Up
+          .oauth-button.minimal.split(@click="state = 'login'" v-bind:class="{ active: (state === 'login') }") Login
           .clearfix
       .content-block.content-block--main.pull-up.pull-right.white-block
         .auth-form(v-if="state === 'login'")
@@ -146,7 +145,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '~stylus/shared'
+@import '~stylus/auth'
 
 $side-block-width = 340px
 
@@ -167,50 +166,6 @@ $side-block-width = 340px
       width 100%
     .content-block--footer
       padding 0
-
-  .auth-panel
-    border-left $color-border 1px solid
-    border-right $color-border 1px solid
-    box-sizing border-box
-    margin 0 auto
-    padding 20px
-    text-align left
-
-    .oauth-button
-      animate()
-      radius(25px)
-      background-color $color-dark-grey
-      color white
-      display block
-      line-height 50px
-      float left
-      margin 10px
-      padding 0 20px
-      text-align center
-      text-decoration none
-      width calc(100% - 60px)
-      &.minimal
-        background-color $color-lighter-grey
-        color $color-text-dark-grey
-        &.split
-          float left
-          width calc(50% - 60px)
-        &:hover
-          background-color darken($color-lighter-grey, 10%)
-        &.active
-          background-color $color-success
-          color white
-      &:hover
-        cursor pointer
-        background-color darken($color-dark-grey, 10%)
-      &#facebook
-        background-color $color-facebook
-        &:hover
-          background-color darken($color-facebook, 10%)
-      &#twitter
-        background-color $color-twitter
-        &:hover
-          background-color darken($color-twitter, 10%)
     
   .auth-form
     text-align left

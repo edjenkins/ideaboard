@@ -2,10 +2,12 @@
   #app
     navbar
     router-view
+    auth-modal
 </template>
 
 <script>
 import Navbar from '@/components/navigation/Navbar'
+import AuthModal from '@/components/auth/AuthModal'
 
 export default {
   name: 'app',
@@ -24,7 +26,8 @@ export default {
     ]
   },
   components: {
-    Navbar
+    Navbar,
+    AuthModal
   },
   created () {
     this.$store.dispatch('checkAuthStatus')

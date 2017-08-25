@@ -43,6 +43,12 @@ export default {
   },
   created () {
     this.loadProfile()
+
+    if (this.$session.has('auth-redirect')) {
+      const redirect = this.$session.get('auth-redirect')
+      this.$session.remove('auth-redirect')
+      window.location = redirect
+    }
   },
   watch: {
     isAuthenticated (nV) {

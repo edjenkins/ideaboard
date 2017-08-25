@@ -20,6 +20,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 import Icon from 'vue-awesome/components/Icon'
 import 'vue-awesome/icons/arrow-left'
 import 'vue-awesome/icons/plus'
@@ -70,7 +71,9 @@ export default {
       this.activeComponent = 'dashboard'
     },
     addTask () {
-      if (!this.isAuthenticated) { alert('You need to be logged in to do that!') } else {
+      if (!this.isAuthenticated) {
+        this.$store.commit(types.SHOW_AUTH_MODAL)
+      } else {
         if (!this.activeTask) {
           this.activeComponent = 'add-task'
         }

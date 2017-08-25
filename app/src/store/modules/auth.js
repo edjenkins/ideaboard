@@ -11,7 +11,8 @@ const state = {
       bio: undefined
     }
   },
-  status: 'unauthenticated'
+  status: 'unauthenticated',
+  authModalVisible: false
 }
 
 // getters
@@ -21,6 +22,9 @@ const getters = {
   },
   isAuthenticated () {
     return (state.status === 'authenticated')
+  },
+  authModalVisible () {
+    return state.authModalVisible
   }
 }
 
@@ -71,6 +75,12 @@ const mutations = {
   [types.LOGOUT_FAILURE] () { },
   [types.UPDATE_PROFILE] (initialState, profile) {
     state.user.profile = profile
+  },
+  [types.SHOW_AUTH_MODAL] () {
+    state.authModalVisible = true
+  },
+  [types.HIDE_AUTH_MODAL] () {
+    state.authModalVisible = false
   }
 }
 

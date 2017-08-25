@@ -24,13 +24,10 @@
 <script>
 import Vue from 'vue'
 import Icon from 'vue-awesome/components/Icon'
-import 'vue-awesome/icons/twitter'
-import 'vue-awesome/icons/facebook'
-import 'vue-awesome/icons/envelope'
-import 'vue-awesome/icons/link'
 
 import API from '@/api'
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 import _ from 'lodash'
 
 var SocialSharing = require('vue-social-sharing')
@@ -66,7 +63,7 @@ export default {
   methods: {
     toggleSubscription () {
       if (!this.isAuthenticated) {
-        this.$router.push('/join')
+        this.$store.commit(types.SHOW_AUTH_MODAL)
       } else {
         if (this.isSubscribing) return
 
