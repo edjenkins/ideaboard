@@ -19,7 +19,7 @@
                 input(v-model="user.email" name="email" placeholder="Your email")
               .input-wrapper
                 label Your password
-                input(v-model="user.password" name="password" placeholder="Your password")
+                input(v-model="user.password" name="password" type="password" placeholder="Your password")
                 p#forgot-link(@click="state = 'forgot'") Forgot your password?
           .content-block--footer
             .btn.btn-success.pull-right(@click="login") {{ (isAuthenticating) ? 'Please wait..' : 'Login' }}
@@ -38,7 +38,7 @@
                 input(v-model="user.email" name="email" placeholder="Your email")
               .input-wrapper
                 label Create a password
-                input(v-model="user.password" name="password" placeholder="Create a password")
+                input(v-model="user.password" name="password" type="password" placeholder="Create a password")
           .content-block--footer
             .btn.btn-success.pull-right(@click="join") {{ (isAuthenticating) ? 'Creating account..' : 'Create Account' }}
             .clearfix
