@@ -89,7 +89,7 @@ module.exports = function (app, passport) {
   })
 
   // FACEBOOK ROUTES
-  app.get('/auth/facebook/callback', function (req, res, next) {
+  app.get('/auth/facebook/callback', function (req, res) {
     // console.log('Logging callback req')
     // console.log(req)
     passport.authenticate('facebook', {
