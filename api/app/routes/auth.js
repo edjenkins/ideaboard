@@ -89,18 +89,18 @@ module.exports = function (app, passport) {
   })
 
   // FACEBOOK ROUTES
-  app.get('/auth/facebook/callback', function (req, res) {
+  app.get('/auth/facebook/callback', (req, res) => {
     // console.log('Logging callback req')
     // console.log(req)
     passport.authenticate('facebook', {
       successRedirect: `https://wea.eventspark.co.uk/profile`,
       failureRedirect: 'https://wea.eventspark.co.uk/join'
     })
-  });
+  })
 
-  app.get('/auth/facebook/login/:instanceId', function (req, res, next) {
+  app.get('/auth/facebook/login/:instanceId', (req, res, next) => {
     passport.authenticate('facebook', { callbackURL: `${configAuth.facebookAuth.callbackURL}?instance=${req.params.instanceId}` })(req, res, next)
-  });
+  })
 }
 
 // FACEBOOK ROUTES

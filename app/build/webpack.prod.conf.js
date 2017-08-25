@@ -117,10 +117,10 @@ if (config.build.preRendering) {
 
   webpackConfig.plugins.push(
     new CopyWebpackPlugin([{
-      from: path.join(__dirname, 'src/static')
+      from: path.join(__dirname, '../src/static')
     }]),
     new PrerenderSpaPlugin(
-      path.join(__dirname, 'dist'),
+      path.join(__dirname, '../dist'),
       ['/', '/explore']
     )
   )
