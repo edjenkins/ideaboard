@@ -93,7 +93,7 @@ module.exports = function (app, passport) {
     passport.authenticate('facebook', {
       successRedirect: (req.query.instance) ? `https://${req.query.instance}.eventspark.co.uk/profile` : 'https://eventspark.co.uk/profile',
       failureRedirect: (req.query.instance) ? `https://${req.query.instance}.eventspark.co.uk/join` : 'https://eventspark.co.uk/join'
-    })
+    })(req, res, next)
   });
 
   app.get('/auth/facebook/login/:instanceId', function (req, res, next) {
