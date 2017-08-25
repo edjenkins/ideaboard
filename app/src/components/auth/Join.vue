@@ -4,7 +4,7 @@
     .row
       .content-block.content-block--side.pull-up.pull-left.white-block
         .content-block--body.auth-panel
-          a.oauth-button#facebook(href="https://api.eventspark.co.uk/auth/facebook/login" target="_self") Continue with Facebook
+          a.oauth-button#facebook(v-bind:href="oAuthLink('facebook')" target="_self") Continue with Facebook
           .oauth-button.minimal.split(@click="state = 'join'" v-bind:class="{ active: (state === 'join') }") Sign Up
           .oauth-button.minimal.split(@click="state = 'login'" v-bind:class="{ active: (state === 'login') }") Login
           .clearfix
@@ -139,6 +139,13 @@ export default {
           // Reset fail
           this.$log(error)
         })
+    },
+    oAuthLink (network) {
+      switch (network) {
+        case 'facebook':
+          const instance = 'wea'
+          return `https://api.eventspark.co.uk/auth/facebook/login/${instance}`
+      }
     }
   }
 }

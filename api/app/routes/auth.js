@@ -93,5 +93,7 @@ module.exports = function (app, passport) {
       failureRedirect: 'https://eventspark.co.uk/join'
     }));
 
-  app.get('/auth/facebook/login', passport.authenticate('facebook', { scope: 'email' }));
+  app.get('/auth/facebook/login/:instanceId', function (req, res, next) {
+    passport.authenticate('facebook', { scope: 'email' })(req, res, next)
+  });
 }

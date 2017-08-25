@@ -1,11 +1,13 @@
 <template lang="pug">
   #auth-modal(v-if="authModalVisible")
     .auth-panel
+      #close-button(@click="closeAuthModal")
+        icon(name="times")
       h1 Woah
       h3 Looks like you aren't signed in!
       p Please create an account or login to get started
 
-      a.oauth-button#facebook(href="https://api.eventspark.co.uk/auth/facebook/login" target="_self") Continue with Facebook
+      a.oauth-button#facebook(v-bind:href="oAuthLink('facebook')" target="_self") Continue with Facebook
       .oauth-button.minimal.split(@click="redirectToJoin") Sign Up
       .oauth-button.minimal.split(@click="redirectToJoin") Login
       .clearfix
@@ -15,9 +17,14 @@
 <script>
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
+import Icon from 'vue-awesome/components/Icon'
+import 'vue-awesome/icons/times'
 
 export default {
   name: 'auth-modal',
+  components: {
+    Icon
+  },
   data () {
     return {
       state: undefined
@@ -48,6 +55,16 @@ export default {
     redirectToJoin () {
       this.$store.commit(types.HIDE_AUTH_MODAL)
       this.$router.push('/join')
+    },
+    closeAuthModal () {
+      this.$store.commit(types.HIDE_AUTH_MODAL)
+    },
+    oAuthLink (network) {
+      switch (network) {
+        case 'facebook':
+          const instance = 'wea'
+          return `https://api.eventspark.co.uk/auth/facebook/login/${instance}`
+      }
     }
   }
 }
@@ -61,15 +78,23 @@ export default {
   pinned()
   position fixed
   z-index 50
+
   &:before
     pinned()
     background-color alpha(black, 0.7)
     content ''
     position fixed
 
+  #close-button
+    position absolute
+    top 0
+    right 0
+    padding 20px
+
   .auth-panel
     center-align()
     background-color white
+    max-width calc(100% - 20px)
     width 320px
     box-sizing border-box
     margin 0 auto
