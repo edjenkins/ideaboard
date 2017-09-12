@@ -1,39 +1,39 @@
-eventspark.co.uk {
+ideaboard.co.uk {
   root /var/www/html
-  tls eventspark@edjenkins.co.uk
+  tls hello@ideaboard.co.uk
 
   rewrite {
     to {path} {path}/ /index.html
   }
 }
 
-citylit.eventspark.co.uk {
+citylit.ideaboard.co.uk {
   root /var/www/html
-  tls eventspark@edjenkins.co.uk
+  tls citylit@ideaboard.co.uk
 
   rewrite {
     to {path} {path}/ /index.html
   }
 }
 
-wea.eventspark.co.uk {
+wea.ideaboard.co.uk {
   root /var/www/html
-  tls eventspark@edjenkins.co.uk
+  tls wea@ideaboard.co.uk
 
   rewrite {
     to {path} {path}/ /index.html
   }
 }
 
-ncl.eventspark.co.uk {
+ncl.ideaboard.co.uk {
   root /var/www/html
-  tls eventspark@edjenkins.co.uk
+  tls ncl@ideaboard.co.uk
 
   rewrite {
     to {path} {path}/ /index.html
   }
 }
 
-api.eventspark.co.uk {
+api.ideaboard.co.uk {
   proxy / api:3000
 }
