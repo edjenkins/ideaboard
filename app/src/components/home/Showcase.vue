@@ -22,19 +22,19 @@ export default {
         {
           title: 'WEA',
           description: 'IdeaBoard proved to be a great way to connect with our adult learners.',
-          link: 'https://wea.eventspark.co.uk',
+          link: 'https://wea.ideaboard.co.uk',
           image: 'https://images.pexels.com/photos/509799/pexels-photo-509799.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
         },
         {
           title: 'CityLit',
           description: 'We collected ideas from our students for new courses using IdeaBoard.',
-          link: 'https://citylit.eventspark.co.uk',
+          link: 'https://citylit.ideaboard.co.uk',
           image: 'https://images.pexels.com/photos/7096/people-woman-coffee-meeting.jpg?w=940&h=650&auto=compress&cs=tinysrgb'
         },
         {
           title: 'Newcastle University',
           description: 'We used IdeaBoard to dynamically organise study sessions for students.',
-          link: 'https://ncl.eventspark.co.uk',
+          link: 'https://ncl.ideaboard.co.uk',
           image: 'https://images.pexels.com/photos/7374/startup-photos.jpg?w=940&h=650&auto=compress&cs=tinysrgb'
         }
       ]

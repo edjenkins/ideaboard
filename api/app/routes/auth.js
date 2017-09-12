@@ -93,8 +93,8 @@ module.exports = function (app, passport) {
     // console.log('Logging callback req')
     // console.log(req)
     passport.authenticate('facebook', {
-      successRedirect: `https://wea.eventspark.co.uk/profile`,
-      failureRedirect: 'https://wea.eventspark.co.uk/join',
+      successRedirect: `https://wea.ideaboard.co.uk/profile`,
+      failureRedirect: 'https://wea.ideaboard.co.uk/join',
       callbackURL: `${configAuth.facebookAuth.callbackURL}?instance=${req.query.instance}`
     })
   })
@@ -109,8 +109,8 @@ module.exports = function (app, passport) {
 // FACEBOOK ROUTES
 // app.get('/auth/facebook/callback', function (req, res, next) {
 //   passport.authenticate('facebook', {
-//     successRedirect: (req.query.instance) ? `https://${req.query.instance}.eventspark.co.uk/profile` : 'https://eventspark.co.uk/profile',
-//     failureRedirect: (req.query.instance) ? `https://${req.query.instance}.eventspark.co.uk/join` : 'https://eventspark.co.uk/join'
+//     successRedirect: (req.query.instance) ? `https://${req.query.instance}.ideaboard.co.uk/profile` : 'https://ideaboard.co.uk/profile',
+//     failureRedirect: (req.query.instance) ? `https://${req.query.instance}.ideaboard.co.uk/join` : 'https://ideaboard.co.uk/join'
 //   })(req, res, next)
 // });
 

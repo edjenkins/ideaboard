@@ -144,7 +144,7 @@ export default {
       switch (network) {
         case 'facebook':
           const instance = 'wea'
-          return `https://api.eventspark.co.uk/auth/facebook/login?instance=${instance}`
+          return `https://api.ideaboard.co.uk/auth/facebook/login?instance=${instance}`
       }
     }
   }

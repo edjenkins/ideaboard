@@ -1,5 +1,5 @@
 export default {
-  domain: 'eventspark.co.uk',
+  domain: 'ideaboard.co.uk',
   instances: {
     default: 'master',
     master: {
