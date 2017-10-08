@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import * as config from '@/api/config'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import Icon from 'vue-awesome/components/Icon'
@@ -63,7 +64,7 @@ export default {
       switch (network) {
         case 'facebook':
           const instance = 'wea'
-          return `https://api.ideaboard.co.uk/auth/facebook/login?instance=${instance}`
+          return `${config.API_ADDRESS}/auth/facebook/login?instance=${instance}`
       }
     }
   }

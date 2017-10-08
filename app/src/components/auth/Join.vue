@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import * as config from '@/api/config'
 import API from '@/api'
 import { mapGetters } from 'vuex'
 import PageHeader from '@/components/PageHeader'
@@ -144,7 +145,7 @@ export default {
       switch (network) {
         case 'facebook':
           const instance = 'wea'
-          return `https://api.ideaboard.co.uk/auth/facebook/login?instance=${instance}`
+          return `${config.API_ADDRESS}/auth/facebook/login?instance=${instance}`
       }
     }
   }

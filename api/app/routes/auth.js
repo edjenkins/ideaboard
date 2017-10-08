@@ -89,20 +89,34 @@ module.exports = function (app, passport) {
   })
 
   // FACEBOOK ROUTES
-  app.get('/auth/facebook/callback', (req, res) => {
-    // console.log('Logging callback req')
-    // console.log(req)
-    passport.authenticate('facebook', {
-      successRedirect: `https://wea.ideaboard.co.uk/profile`,
-      failureRedirect: 'https://wea.ideaboard.co.uk/join',
-      callbackURL: `${configAuth.facebookAuth.callbackURL}?instance=${req.query.instance}`
-    })
+  app.get('/auth/facebook/callback', (req, res, next) => {
+    // Check if localhost
+    if (true) {
+      passport.authenticate('facebook', {
+        successRedirect: 'http://localhost:8080/profile',
+        failureRedirect: 'http://localhost:8080/join',
+        callbackURL: configAuth.facebookAuth.callbackURL
+      })(req, res, next)
+    } else {
+      passport.authenticate('facebook', {
+        successRedirect: (req.query.instance) ? `https://${req.query.instance}.ideaboard.co.uk/profile` : 'https://ideaboard.co.uk/profile', // `https://${req.query.instance}.ideaboard.co.uk/profile`,
+        failureRedirect: (req.query.instance) ? `https://${req.query.instance}.ideaboard.co.uk/join` : 'https://ideaboard.co.uk/join', // `https://${req.query.instance}.ideaboard.co.uk/join`,
+        callbackURL: (req.query.instance) ? `${configAuth.facebookAuth.callbackURL}?instance=${req.query.instance}` : configAuth.facebookAuth.callbackURL
+      })(req, res, next)
+    }
   })
 
   app.get('/auth/facebook/login', (req, res, next) => {
-    passport.authenticate('facebook', {
-      callbackURL: `${configAuth.facebookAuth.callbackURL}?instance=${req.query.instance}`
-    })(req, res, next)
+    // Check if localhost
+    if (true) {
+      passport.authenticate('facebook', {
+        callbackURL: configAuth.facebookAuth.callbackURL
+      })(req, res, next)
+    } else {
+      passport.authenticate('facebook', {
+        callbackURL: `${configAuth.facebookAuth.callbackURL}?instance=${req.query.instance}`
+      })(req, res, next)
+    }
   })
 }
 
