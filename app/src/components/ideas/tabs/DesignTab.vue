@@ -43,7 +43,7 @@ export default {
   data () {
     return {
       titles: {
-        'dashboard': 'Popular Discussions',
+        'dashboard': 'Discussions',
         'add-task': 'Add New'
       },
       transitionType: 'left-fade',

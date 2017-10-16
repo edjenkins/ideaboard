@@ -1,7 +1,7 @@
 <template lang="pug">
   #navbar(v-bind:class="authState" v-bind:style="{ 'background-color': navColor }")
     .row
-      router-link#logo(to="/") ideaboard.io
+      router-link#logo(to="/") ideaboard
       #menu-toggle(@click="active = !active")
         icon(name="bars")
       #menu(v-bind:class="{ active: active }")

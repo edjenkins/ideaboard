@@ -106,7 +106,7 @@ export default {
       return 'IdeaBoard'
     },
     siteContact () {
-      return 'hello@ideaboard.io'
+      return 'hello@ideaboard.co.uk'
     }
   }
 }

@@ -1,5 +1,5 @@
 <template lang="pug">
-.design-dashboard
+.design-dashboard(v-show="tasks.length > 0")
 
   .design-dashboard--tasks
     .design-dashboard--task(v-for="(task, index) in orderedTasks" v-bind:key="index" @click="loadTask(task)")

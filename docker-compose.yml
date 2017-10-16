@@ -5,8 +5,10 @@ services:
   app:
     image: zzrot/alpine-caddy
     ports:
-      - 80:80
+      - 8083:80
       - 443:443
+    environment:
+      - API_ADDRESS
     volumes:
       - ./Caddyfile:/etc/Caddyfile
       - ./app/dist:/var/www/html

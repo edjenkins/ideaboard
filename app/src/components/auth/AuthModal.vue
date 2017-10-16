@@ -63,8 +63,9 @@ export default {
     oAuthLink (network) {
       switch (network) {
         case 'facebook':
-          const instance = 'wea'
-          return `${config.API_ADDRESS}/auth/facebook/login?instance=${instance}`
+          // const instance = 'wea'
+          // ?instance=${instance}
+          return `${config.API_ADDRESS}/auth/facebook/login`
       }
     }
   }

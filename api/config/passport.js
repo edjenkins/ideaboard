@@ -60,28 +60,26 @@ module.exports = function (passport) {
 
     clientID: configAuth.facebookAuth.clientID,
     clientSecret: configAuth.facebookAuth.clientSecret,
+    callbackURL: configAuth.facebookAuth.callbackURL,
     profileFields: ['id', 'email', 'name', 'timezone', 'updated_time'] // 'gender', 'link', 'locale', 'verified'
   },
 
-    function (req, token, refreshToken, profile, done) {
+    function (accessToken, refreshToken, profile, cb) {
 
       process.nextTick(function () {
 
-        User.findOne({ 'facebook.id': profile.id }, function (err, user) {
+        User.findOne({ 'facebook.id': profile.id  }, function (err, user) {
 
           if (err)
-            return done(err)
+            return cb(err, user)
 
-          console.log(profile)
-          console.log(token)
-
-          if (user) {
-            return done(null, user)
+            if (user) {
+            return cb(null, user)
           } else {
             var newUser = new User()
 
             newUser.facebook.id = profile.id
-            newUser.facebook.token = token
+            newUser.facebook.token = accessToken
             newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName
             newUser.facebook.email = profile.emails[0].value
 
@@ -92,7 +90,7 @@ module.exports = function (passport) {
               if (err)
                 throw err;
 
-              return done(null, newUser)
+              return cb(err, newUser)
             })
           }
         })

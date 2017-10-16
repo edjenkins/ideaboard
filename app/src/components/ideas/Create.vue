@@ -41,7 +41,8 @@ import API from '@/api'
 import * as types from '@/store/mutation-types'
 import Quill from 'quill'
 import { quillEditor } from 'vue-quill-editor'
-import _ from 'lodash'
+import _isEmpty from 'lodash/isEmpty'
+import { mapGetters } from 'vuex'
 
 import UnsplashSearch from '@/components/UnsplashSearch'
 import FileUpload from '@/components/FileUpload'
@@ -66,7 +67,7 @@ export default {
     if (this.$session.has('draft-idea')) {
       const draftIdea = JSON.parse(this.$session.get('draft-idea'))
       console.log(draftIdea)
-      if (!_.isEmpty(draftIdea)) this.idea = draftIdea
+      if (!_isEmpty(draftIdea)) this.idea = draftIdea
     }
   },
   watch: {
@@ -105,6 +106,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isAuthenticated']),
     editor () {
       return this.$refs.myQuillEditor.quill
     }

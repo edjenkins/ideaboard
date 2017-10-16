@@ -97,7 +97,7 @@ export default {
   .no-comments
     color $color-text-grey
     margin 0 0 20px 0
-    padding 60px 20px
+    padding 28px 20px
     text-align center
   
   .comment-composer

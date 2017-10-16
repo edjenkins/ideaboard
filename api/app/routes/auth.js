@@ -89,46 +89,46 @@ module.exports = function (app, passport) {
   })
 
   // FACEBOOK ROUTES
-  app.get('/auth/facebook/callback', (req, res, next) => {
-    // Check if localhost
-    if (true) {
-      passport.authenticate('facebook', {
-        successRedirect: 'http://localhost:8080/profile',
-        failureRedirect: 'http://localhost:8080/join',
-        callbackURL: configAuth.facebookAuth.callbackURL
-      })(req, res, next)
-    } else {
-      passport.authenticate('facebook', {
-        successRedirect: (req.query.instance) ? `https://${req.query.instance}.ideaboard.co.uk/profile` : 'https://ideaboard.co.uk/profile', // `https://${req.query.instance}.ideaboard.co.uk/profile`,
-        failureRedirect: (req.query.instance) ? `https://${req.query.instance}.ideaboard.co.uk/join` : 'https://ideaboard.co.uk/join', // `https://${req.query.instance}.ideaboard.co.uk/join`,
-        callbackURL: (req.query.instance) ? `${configAuth.facebookAuth.callbackURL}?instance=${req.query.instance}` : configAuth.facebookAuth.callbackURL
-      })(req, res, next)
-    }
-  })
 
-  app.get('/auth/facebook/login', (req, res, next) => {
-    // Check if localhost
-    if (true) {
-      passport.authenticate('facebook', {
-        callbackURL: configAuth.facebookAuth.callbackURL
-      })(req, res, next)
-    } else {
-      passport.authenticate('facebook', {
-        callbackURL: `${configAuth.facebookAuth.callbackURL}?instance=${req.query.instance}`
-      })(req, res, next)
-    }
-  })
-}
+
+  app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+      successRedirect: 'http://localhost:8080/profile',
+      failureRedirect: 'http://localhost:8080/join'
+    }),
+    function (req, res) {
+      // Successful authentication, redirect home.
+      res.redirect('http://localhost:8080/join');
+    });
+
+  // app.get('/auth/facebook/callback', (req, res, next) => {
+  //   // Check if localhost
+  //   if (true) {
+  //     passport.authenticate('facebook', {
+  //       successRedirect: 'http://localhost:8080/profile',
+  //       failureRedirect: 'http://localhost:8080/join',
+  //       callbackURL: configAuth.facebookAuth.callbackURL
+  //     })(req, res, next)
+  //   } else {
+  //     passport.authenticate('facebook', {
+  //       successRedirect: (req.query.instance) ? `https://${req.query.instance}.ideaboard.co.uk/profile` : 'https://ideaboard.co.uk/profile', // `https://${req.query.instance}.ideaboard.co.uk/profile`,
+  //       failureRedirect: (req.query.instance) ? `https://${req.query.instance}.ideaboard.co.uk/join` : 'https://ideaboard.co.uk/join', // `https://${req.query.instance}.ideaboard.co.uk/join`,
+  //       callbackURL: (req.query.instance) ? `${configAuth.facebookAuth.callbackURL}?instance=${req.query.instance}` : configAuth.facebookAuth.callbackURL
+  //     })(req, res, next)
+  //   }
+  // })
+
+  app.get('/auth/facebook/login', passport.authenticate('facebook'));
+// }
 
 // FACEBOOK ROUTES
-// app.get('/auth/facebook/callback', function (req, res, next) {
-//   passport.authenticate('facebook', {
-//     successRedirect: (req.query.instance) ? `https://${req.query.instance}.ideaboard.co.uk/profile` : 'https://ideaboard.co.uk/profile',
-//     failureRedirect: (req.query.instance) ? `https://${req.query.instance}.ideaboard.co.uk/join` : 'https://ideaboard.co.uk/join'
-//   })(req, res, next)
-// });
+app.get('/auth/facebook/callback', 
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function (req, res) {
+    res.redirect('/');
+  });
 
 // app.get('/auth/facebook/login/:instanceId', function (req, res, next) {
 //   passport.authenticate('facebook', { callbackURL: `${configAuth.facebookAuth.callbackURL}?instance=${req.params.instanceId}` })(req, res, next)
 // });
-// }
+}
