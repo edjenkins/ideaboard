@@ -93,8 +93,8 @@ module.exports = function (app, passport) {
 
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: 'http://localhost:8080/profile',
-      failureRedirect: 'http://localhost:8080/join'
+      successRedirect: configAuth.facebookAuth.successRedirect,
+      failureRedirect: configAuth.facebookAuth.failureRedirect
     }),
     function (req, res) {
       // Successful authentication, redirect home.
