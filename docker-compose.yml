@@ -28,7 +28,7 @@ services:
   mongo:
     image: aashreys/mongo-auth:latest
     environment:
-      - AUTH=yes
+      - AUTH=no
       - MONGODB_ADMIN_USER
       - MONGODB_ADMIN_PASS
       - MONGODB_APPLICATION_DATABASE
