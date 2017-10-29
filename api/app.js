@@ -27,10 +27,13 @@ app.use(cors({
 
 // Instance middleware
 app.use(function (req, res, next) {
-  const referrer = req.get('Referrer')
-  const matches = referrer.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i)
-  const domain = matches && matches[1]
-  req.instance = domain
+  const url = req.get('Referrer')
+  const matches = url.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i)
+  const domain = matches[1]
+  const subdomain = domain.split('.')[0]
+  const instance = (!subdomain) ? 'localhost' : subdomain
+
+  req.instance = instance
   next()
 })
 

@@ -2,7 +2,12 @@
 .unsplash-search
   .input-wrapper
     input(type="text" v-model="searchQuery" placeholder="Search Unsplash photos (e.g. Cats, People, City)" @keyup.enter="search()")
-    .btn.btn-primary(@click="search") Search
+    .btn.btn-primary(@click="search")
+      span(v-if="loading")
+        | Searching...
+        //- icon(v-if="loading" name="refresh" spin)
+      span(v-else)
+        | Search
   ul.unsplash-search--results
     li.unsplash-search--results--result(v-for="(result, index) in results" v-bind:key="index" v-bind:class="{ active: (selectedImage && (selectedImage.id === result.id)) }" v-bind:style="{ 'background-image': `url(${result.urls.thumb})` }" @click="selectImage(result)")
       a.credit(v-bind:href="result.user.links.self" target="_blank") Credit - {{ result.user.first_name }} {{ result.user.last_name }}
@@ -13,24 +18,35 @@
 <script>
 import API from '@/api'
 
+import Icon from 'vue-awesome/components/Icon'
+
+import 'vue-awesome/icons/refresh'
+
 export default {
   name: 'unsplash-search',
+  components: {
+    Icon
+  },
   data () {
     return {
       searchQuery: '',
       results: [],
-      selectedImage: undefined
+      selectedImage: undefined,
+      loading: false
     }
   },
   methods: {
     search () {
+      this.loading = true
       API.unsplash.search(this.searchQuery,
         (response) => {
           this.$log(response)
           this.results = response.data
+          this.loading = false
         },
         (error) => {
           this.$log(error)
+          this.loading = false
         }
       )
     },
@@ -65,6 +81,8 @@ export default {
       padding 0
       text-align center
       width 100px
+      .fa-icon
+        margin-left 8px
   ul.unsplash-search--results
     cleanlist()
     margin 0 -10px
