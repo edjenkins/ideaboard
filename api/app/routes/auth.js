@@ -91,7 +91,7 @@ module.exports = function (app, passport) {
   // FACEBOOK ROUTES
 
   app.get('/auth/facebook/login/:instance', function (req, res, next) {
-    passport.authenticate('facebook', { callbackURL: '/auth/facebook/callback/' + req.params.instance })(req, res, next);
+    passport.authenticate('facebook', { callbackURL: 'https://api.ideaboard.co.uk/auth/facebook/callback/' + req.params.instance })(req, res, next);
   });
 
   app.get('/auth/facebook/callback/:instance', function (req, res, next) {
