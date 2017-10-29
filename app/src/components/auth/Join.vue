@@ -60,9 +60,11 @@
 </template>
 
 <script>
-import * as config from '@/api/config'
 import API from '@/api'
 import { mapGetters } from 'vuex'
+
+import AuthMixin from '@/mixins/AuthMixin'
+
 import PageHeader from '@/components/PageHeader'
 
 export default {
@@ -70,6 +72,9 @@ export default {
   metaInfo: {
     title: 'Join'
   },
+  mixins: [
+    AuthMixin
+  ],
   components: {
     PageHeader
   },
@@ -140,13 +145,6 @@ export default {
           // Reset fail
           this.$log(error)
         })
-    },
-    oAuthLink (network) {
-      switch (network) {
-        case 'facebook':
-          const instance = 'wea'
-          return `${config.API_ADDRESS}/auth/facebook/login?instance=${instance}`
-      }
     }
   }
 }

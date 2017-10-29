@@ -57,43 +57,41 @@ module.exports = function (passport) {
 
   // FACEBOOK ROUTES
   passport.use(new FacebookStrategy({
-
     clientID: configAuth.facebookAuth.clientID,
     clientSecret: configAuth.facebookAuth.clientSecret,
-    callbackURL: configAuth.facebookAuth.callbackURL,
-    profileFields: ['id', 'email', 'name', 'timezone', 'updated_time'] // 'gender', 'link', 'locale', 'verified'
+    callbackURL: `${configAuth.facebookAuth.callbackURL}`,
+    profileFields: ['id', 'email', 'name', 'timezone', 'updated_time'], // 'gender', 'link', 'locale', 'verified'
+    passReqToCallback: true
   },
 
-    function (accessToken, refreshToken, profile, cb) {
+  function (req, accessToken, refreshToken, profile, cb) {
 
-      process.nextTick(function () {
+    process.nextTick(function () {
 
-        User.findOne({ 'facebook.id': profile.id  }, function (err, user) {
+      User.findOne({ 'facebook.id': profile.id  }, function (err, user) {
 
+        if (err)
+          return cb(err, user, req.query.instance)
+
+        if (user)
+          return cb(null, user, req.query.instance)
+        
+        let newUser = new User()
+
+        newUser.facebook.id = profile.id
+        newUser.facebook.token = accessToken
+        newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName
+        newUser.facebook.email = profile.emails[0].value
+
+        newUser.profile.name = newUser.facebook.name
+
+        newUser.save(function (err) {
           if (err)
-            return cb(err, user)
+            throw err;
 
-            if (user) {
-            return cb(null, user)
-          } else {
-            var newUser = new User()
-
-            newUser.facebook.id = profile.id
-            newUser.facebook.token = accessToken
-            newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName
-            newUser.facebook.email = profile.emails[0].value
-
-            // Update user profile
-            newUser.profile.name = newUser.facebook.name
-
-            newUser.save(function (err) {
-              if (err)
-                throw err;
-
-              return cb(err, newUser)
-            })
-          }
+          return cb(err, newUser, req.query.instance)
         })
       })
-    }))
+    })
+  }))
 }

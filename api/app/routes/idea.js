@@ -42,7 +42,7 @@ module.exports = function (app, passport) {
   app.post('/idea',
     (req, res) => {
       if (req.isAuthenticated()) {
-        var data = req.body
+        let data = req.body
         data.idea._user = req.user._id
         const idea = new Idea(data.idea)
 

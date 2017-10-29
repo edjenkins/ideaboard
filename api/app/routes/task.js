@@ -27,7 +27,7 @@ module.exports = function (app, passport) {
   app.post('/task',
     (req, res) => {
       if (req.isAuthenticated()) {
-        var data = req.body
+        let data = req.body
         data.task._user = req.user._id
         data.task._idea = data.idea_id
         const task = new Task(data.task)

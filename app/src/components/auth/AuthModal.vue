@@ -15,14 +15,20 @@
 </template>
 
 <script>
-import * as config from '@/api/config'
-import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
+
+import AuthMixin from '@/mixins/AuthMixin'
+
 import Icon from 'vue-awesome/components/Icon'
+
 import 'vue-awesome/icons/times'
 
 export default {
   name: 'auth-modal',
+  mixins: [
+    AuthMixin
+  ],
   components: {
     Icon
   },
@@ -47,8 +53,6 @@ export default {
         // Store current url in cookie for redirect after auth
         this.$session.start()
         this.$session.set('auth-redirect', window.location.href)
-        console.log('Setting auth-redirect..')
-        console.log(this.$session.get('auth-redirect'))
       }
     }
   },
@@ -59,14 +63,6 @@ export default {
     },
     closeAuthModal () {
       this.$store.commit(types.HIDE_AUTH_MODAL)
-    },
-    oAuthLink (network) {
-      switch (network) {
-        case 'facebook':
-          // const instance = 'wea'
-          // ?instance=${instance}
-          return `${config.API_ADDRESS}/auth/facebook/login`
-      }
     }
   }
 }

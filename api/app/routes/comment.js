@@ -28,7 +28,7 @@ module.exports = function (app, passport) {
   app.post('/comment',
     (req, res) => {
       if (req.isAuthenticated()) {
-        var data = req.body
+        let data = req.body
         data._user = req.user._id
         const comment = new Comment(data)
 
