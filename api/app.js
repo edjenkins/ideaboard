@@ -25,6 +25,15 @@ app.use(cors({
   methods: ['GET', 'PUT', 'POST']
 }))
 
+// Instance middleware
+app.use(function (req, res, next) {
+  const referrer = req.get('Referrer')
+  const matches = referrer.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i)
+  const domain = matches && matches[1]
+  req.instance = domain
+  next()
+})
+
 mongoose.connect(configDB.url) // connect to our database
 
 // set up our express application

@@ -8,6 +8,7 @@ const ideaSchema = mongoose.Schema({
   tagline: String,
   description: String,
   banner: String,
+  instance: String,
   created: Date,
   _subscribers: [{
     _user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

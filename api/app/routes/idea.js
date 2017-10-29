@@ -21,7 +21,7 @@ module.exports = function (app, passport) {
   // Get ideas
   app.get('/ideas',
     (req, res) => {
-      Idea.find({}).exec((err, ideas) => {
+      Idea.find({ instance: req.instance }).exec((err, ideas) => {
         if (err) { return console.error(err) }
         res.json(ideas)
       })
@@ -44,6 +44,10 @@ module.exports = function (app, passport) {
       if (req.isAuthenticated()) {
         let data = req.body
         data.idea._user = req.user._id
+        
+        // Set instance
+        data.idea.instance = req.instance
+
         const idea = new Idea(data.idea)
 
         if (data.uploadType === 'unsplash') {
