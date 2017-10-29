@@ -98,7 +98,7 @@ module.exports = function (app, passport) {
     let redirectUri = req.params.instance ? `https://${req.params.instance}.ideaboard.co.uk` : 'https://ideaboard.co.uk'
     redirectUri = (req.params.instance === 'localhost') ? 'http://localhost:8080' : redirectUri
     passport.authenticate('facebook', {
-      callbackURL: "/auth/facebook/callback/" + req.params.instance,
+      callbackURL: "https://api.ideaboard.co.uk/auth/facebook/callback/" + req.params.instance,
       successRedirect: `${redirectUri}/profile`,
       failureRedirect: `${redirectUri}/join`
     })(req, res, next);

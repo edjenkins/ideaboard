@@ -20,7 +20,7 @@
             .clearfix
 
         .search-wrapper
-          input(v-model="searchQuery" type="text" placeholder="Search Ideas...")
+          input(v-model="searchQuery" type="text" placeholder="Search Ideas..." autofocus)
 
         .clearfix
 </template>
