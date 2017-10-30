@@ -22,7 +22,7 @@ module.exports = function (app, passport) {
   app.get('/user/:id/ideas',
     (req, res) => {
       if (req.isAuthenticated()) {
-        Idea.find({ _user: req.params.id }).exec((err, ideas) => {
+        Idea.find({ _user: req.params.id, instance: req.instance }).exec((err, ideas) => {
           if (err) return console.error(err)
           res.json(ideas)
         })

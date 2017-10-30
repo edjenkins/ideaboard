@@ -31,7 +31,7 @@ module.exports = function (app, passport) {
     (req, res) => {
       async.series({
         idea: function (callback) {
-          Idea.findOne({ _id: req.params.id }).exec(callback)
+          Idea.findOne({ _id: req.params.id, instance: req.instance }).exec(callback)
         }
       }, function (err, results) {
         if (err) console.error(err)
@@ -89,7 +89,7 @@ module.exports = function (app, passport) {
     (req, res) => {
       if (req.isAuthenticated()) {
         Idea.findOneAndUpdate(
-          { _id: req.body._id },
+          { _id: req.body._id, instance: req.instance },
           req.body, (err, idea) => {
             if (err) console.error(err)
             res.json({ idea })
@@ -104,7 +104,7 @@ module.exports = function (app, passport) {
       if (req.isAuthenticated()) {
         async.waterfall([
           function (callback) {
-            Idea.count({ _id: req.body.idea_id, '_subscribers._user': req.user._id }, (err, result) => {
+            Idea.count({ _id: req.body.idea_id, instance: req.instance, '_subscribers._user': req.user._id }, (err, result) => {
               callback(null, result, err)
             })
           },
@@ -119,7 +119,7 @@ module.exports = function (app, passport) {
                 subscribedAt: new Date()
               }
               Idea.findOneAndUpdate(
-                { _id: req.body.idea_id },
+                { _id: req.body.idea_id, instance: req.instance },
                 { $push: { _subscribers: subscriber } },
                 (err, idea) => {
                   mail.sendMail(req.user.local.email, 'You Subscribed', 'subscribed', { user: req.user, idea: idea })
@@ -131,7 +131,7 @@ module.exports = function (app, passport) {
           // result now equals 'done'
           if (err) console.error(err)
           Idea.findOne(
-            { _id: req.body.idea_id },
+            { _id: req.body.idea_id, instance: req.instance },
             (err, idea) => {
               if (err) console.error(err)
               res.json({ idea })
@@ -146,12 +146,12 @@ module.exports = function (app, passport) {
     (req, res) => {
       if (req.isAuthenticated()) {
         Idea.findOneAndUpdate(
-          { _id: req.body.idea_id },
+          { _id: req.body.idea_id, instance: req.instance },
           { $pull: { _subscribers: { _user: req.user._id } } },
           (err, idea) => {
             if (err) console.error(err)
             Idea.findOne(
-              { _id: req.body.idea_id },
+              { _id: req.body.idea_id, instance: req.instance },
               (err, idea) => {
                 if (err) console.error(err)
                 res.json({ idea })

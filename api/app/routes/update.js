@@ -6,7 +6,7 @@ module.exports = function (app, passport) {
   // Get updates
   app.get('/idea/:idea_id/updates',
     (req, res) => {
-      Idea.findOne({ _id: req.params.idea_id }).exec((err, idea) => {
+      Idea.findOne({ _id: req.params.idea_id, instance: req.instance }).exec((err, idea) => {
         if (err) { return console.error(err) }
         res.json(idea._updates)
       })
@@ -27,7 +27,7 @@ module.exports = function (app, passport) {
           if (err) console.error(err)
           // res.json(update)
           Idea.findOneAndUpdate(
-            { _id: req.params.idea_id },
+            { _id: req.params.idea_id, instance: req.instance },
             { $push: { _updates: update } },
             (err, idea) => {
               if (err) console.error(err)
