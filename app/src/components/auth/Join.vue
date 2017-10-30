@@ -4,15 +4,14 @@
     .row
       .content-block.content-block--side.pull-up.pull-left.white-block
         .content-block--body.auth-panel
-          a.oauth-button#facebook(v-bind:href="oAuthLink('facebook')" target="_self") Continue with Facebook
-          .oauth-button.minimal.split(@click="state = 'join'" v-bind:class="{ active: (state === 'join') }") Sign Up
           .oauth-button.minimal.split(@click="state = 'login'" v-bind:class="{ active: (state === 'login') }") Login
+          .oauth-button.minimal.split(@click="state = 'join'" v-bind:class="{ active: (state === 'join') }") Sign Up
+          a.oauth-button#facebook(v-bind:href="oAuthLink('facebook')" target="_self") Continue with Facebook
           .clearfix
       .content-block.content-block--main.pull-up.pull-right.white-block
         .auth-form(v-if="state === 'login'")
         
           .content-block--body
-            h2 Login
             form
               .input-wrapper
                 label Your email
@@ -22,13 +21,12 @@
                 input(v-model="user.password" name="password" type="password" placeholder="Your password" v-on:keydown.enter="login")
                 p#forgot-link(@click="state = 'forgot'") Forgot your password?
           .content-block--footer
-            button.btn.btn-success.pull-right(type="submit" @click="login") {{ (isAuthenticating) ? 'Please wait..' : 'Login' }}
+            .btn.btn-success.pull-right(@click="login") {{ (isAuthenticating) ? 'Please wait..' : 'Login' }}
             .clearfix
           
         .auth-form(v-if="state === 'join'")
         
           .content-block--body
-            h2 Create Account
             form
               .input-wrapper
                 label Your name

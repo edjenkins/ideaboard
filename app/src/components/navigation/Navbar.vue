@@ -7,7 +7,7 @@
       #menu(v-bind:class="{ active: active }")
         router-link(to="/create") create
         router-link(to="/explore") explore
-        router-link.primary(to="/profile" v-if="isAuthenticated") my profile
+        router-link.primary(to="/profile" v-if="isAuthenticated") profile
         router-link.primary(to="/join" v-if="!isAuthenticated") get started
       .clearfix
 </template>
