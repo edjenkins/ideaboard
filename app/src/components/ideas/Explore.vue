@@ -41,7 +41,7 @@ export default {
   },
   data () {
     return {
-      sortType: 'recent',
+      sortType: 'Recent',
       searchQuery: '',
       ideas: []
     }
@@ -49,7 +49,7 @@ export default {
   computed: {
     orderedIdeas () {
       let ideas = _.sortBy(this.ideas, (idea) => {
-        switch (this.sortType) {
+        switch (this.sortType.toLowerCase()) {
           case 'recent':
             return idea.created
           case 'popular':

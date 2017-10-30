@@ -5,18 +5,15 @@
 
         .sort-wrapper
           ul#sort-tabs
-            li(v-bind:class="{ active: (sortType === 'recent') }" @click="updateSortType('recent')") Recent
-            li(v-bind:class="{ active: (sortType === 'popular') }" @click="updateSortType('popular')") Popular
-            //- li(v-bind:class="{ active: categoriesVisible }" @click="toggleCategories()") Categories
+            li.active(@click="toggleSortType()") {{ sortType }}
+            li(v-bind:class="{ active: categoriesVisible }" @click="toggleCategories()") Categories
           #search(v-bind:class="{ active: searchVisible }" @click="toggleSearch()") {{ searchVisible ? 'Cancel' : 'Search' }}
           .clearfix
 
-        //- .category-wrapper
+        .category-wrapper
           ul#category-tabs
-            li.active All
-            li Design
-            li Programming
-            li Management
+            li All
+            li(v-for="(category, index) in categories") {{ category.name }}
             .clearfix
 
         .search-wrapper
@@ -33,7 +30,14 @@ export default {
     return {
       categoriesVisible: false,
       searchVisible: false,
-      searchQuery: ''
+      searchQuery: '',
+      sortTypeIndex: 0,
+      sortTypes: ['Recent', 'Popular'],
+      categories: [
+        { name: 'Design' },
+        { name: 'Programming' },
+        { name: 'Management' }
+      ]
     }
   },
   watch: {
@@ -49,8 +53,10 @@ export default {
       this.searchQuery = '' // Reset search query
       this.searchVisible = !this.searchVisible // Toggle search
     },
-    updateSortType (newSortType) {
-      this.$emit('update:sortType', newSortType)
+    toggleSortType () {
+      this.sortTypeIndex = this.sortTypeIndex + 1
+      this.sortTypeIndex = (this.sortTypeIndex > (this.sortTypes.length - 1)) ? 0 : this.sortTypeIndex
+      this.$emit('update:sortType', this.sortTypes[this.sortTypeIndex])
     },
     updateSearchQuery (newSearchQuery) {
       this.$emit('update:searchQuery', newSearchQuery)
