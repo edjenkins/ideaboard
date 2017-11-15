@@ -17,7 +17,7 @@
             .clearfix
 
         .search-wrapper
-          input(v-model="searchQuery" type="text" placeholder="Search Ideas..." autofocus)
+          input(ref="search" v-model="searchQuery" type="text" placeholder="Search Ideas...")
 
         .clearfix
 </template>
@@ -48,10 +48,13 @@ export default {
   methods: {
     toggleCategories () {
       this.categoriesVisible = !this.categoriesVisible
+      this.searchVisible = this.categoriesVisible ? false : this.searchVisible
     },
     toggleSearch () {
       this.searchQuery = '' // Reset search query
       this.searchVisible = !this.searchVisible // Toggle search
+      this.categoriesVisible = this.searchVisible ? false : this.categoriesVisible
+      this.$refs.search.focus()
     },
     toggleSortType () {
       this.sortTypeIndex = this.sortTypeIndex + 1
