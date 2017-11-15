@@ -95,7 +95,7 @@ module.exports = function (app, passport) {
   });
 
   app.get('/auth/facebook/callback/:instance', function (req, res, next) {
-    let redirectUri = req.params.instance ? `https://${req.params.instance}.ideaboard.co.uk` : 'https://ideaboard.co.uk'
+    let redirectUri = (req.params.instance === 'ideaboard') ? `https://${req.params.instance}.ideaboard.co.uk` : 'https://ideaboard.co.uk'
     redirectUri = (req.params.instance === 'localhost') ? 'http://localhost:8080' : redirectUri
     passport.authenticate('facebook', {
       callbackURL: "https://api.ideaboard.co.uk/auth/facebook/callback/" + req.params.instance,

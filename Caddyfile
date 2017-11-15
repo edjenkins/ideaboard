@@ -7,10 +7,6 @@ ideaboard.co.uk {
   }
 }
 
-http://ideaboard.co.uk {  
-  redir https://ideaboard.co.uk
-}
-
 citylit.ideaboard.co.uk {
   root /var/www/html
   tls citylit@ideaboard.co.uk
