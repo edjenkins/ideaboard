@@ -2,7 +2,7 @@
 
 > A Vue.js project
 
-## Build Setup
+## Build setup
 
 ``` bash
 # install dependencies
@@ -29,11 +29,22 @@ npm test
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-## Push Changes
+## Push changes
 
 ``` bash
 # Push to origin
 git push origin master
+# Pull changes in hook
+sudo ./hooks/post-receive
+```
+
+## Push changes to production
+
+``` bash
+# Push to origin
+git push production
+# Move into repo folder
+sudo cd /home/edjenkins/repos/ideaboard
 # Pull changes in hook
 sudo ./hooks/post-receive
 ```
