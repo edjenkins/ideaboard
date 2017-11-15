@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Move into api dir
-cd ~/sites/ideaboard/api
+cd /home/edjenkins/sites/ideaboard/api
 
 # Run npm install process
 # npm install
