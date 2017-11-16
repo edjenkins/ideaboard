@@ -28,11 +28,13 @@ app.use(cors({
 // Instance middleware
 app.use(function (req, res, next) {
   const url = req.get('Referrer')
-  const matches = url.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i)
-  const domain = matches[1]
-  const subdomain = domain.split('.')[0]
-  const instance = (!subdomain) ? 'localhost' : subdomain
-
+  let instance = 'ideaboard'
+  if (url) {
+    const matches = url.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i)
+    const domain = matches[1]
+    const subdomain = domain.split('.')[0]
+    instance = (!subdomain) ? 'localhost' : subdomain
+  }
   req.instance = instance
   next()
 })
@@ -51,6 +53,11 @@ app.use(session({ secret: process.env.PASSPORT_SESSION_SECRET })) // session sec
 app.use(passport.initialize())
 app.use(passport.session()) // persistent login sessions
 app.use(flash()) // use connect-flash for flash messages stored in session
+
+app.get('/',
+  (req, res) => {
+    res.send('Ideaboard API')
+  })
 
 require('./app/routes/auth.js')(app, passport)
 require('./app/routes/unsplash.js')(app, passport)

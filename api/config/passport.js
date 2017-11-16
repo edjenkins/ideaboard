@@ -22,18 +22,20 @@ module.exports = function (passport) {
     passReqToCallback: true
   },
     (req, email, password, done) => {
-      User.findOne({ 'local.email': email }, (err, user) => {
-        if (err) { return done(err) }
-        if (user) { return done(null, false, 'That email is already taken.') }
+      process.nextTick(function () {
+        User.findOne({ 'local.email': email }, (err, user) => {
+          if (err) { return done(err) }
+          if (user) { return done(null, false, 'That email is already taken.') }
 
-        const newUser = new User()
-        newUser.profile.name = req.body.name
-        newUser.local.email = email
-        newUser.local.password = newUser.generateHash(password)
+          const newUser = new User()
+          newUser.profile.name = req.body.name
+          newUser.local.email = email
+          newUser.local.password = newUser.generateHash(password)
 
-        newUser.save((saveErr) => {
-          if (saveErr) { throw saveErr }
-          return done(null, newUser)
+          newUser.save((saveErr) => {
+            if (saveErr) { throw saveErr }
+            return done(null, newUser)
+          })
         })
       })
     }))

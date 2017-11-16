@@ -9,10 +9,12 @@
           a.oauth-button#facebook(v-bind:href="oAuthLink('facebook')" target="_self") Continue with Facebook
           .clearfix
       .content-block.content-block--main.pull-up.pull-right.white-block
+        
         .auth-form(v-if="state === 'login'")
         
           .content-block--body
             form
+              splash-messages(v-bind:messages="splashmessages['login']")
               .input-wrapper
                 label Your email
                 input(v-model="user.email" name="email" placeholder="Your email")
@@ -28,6 +30,7 @@
         
           .content-block--body
             form
+              splash-messages(v-bind:messages="splashmessages['join']")
               .input-wrapper
                 label Your name
                 input(v-model="user.name" name="name" placeholder="Your name")
@@ -46,6 +49,7 @@
           .content-block--body
             h2 Forgot Password
             form
+              splash-messages(v-bind:messages="splashmessages['forgot']")
               .input-wrapper
                 label Your email
                 input(v-model="user.email" name="email" placeholder="Your email")
@@ -64,6 +68,7 @@ import { mapGetters } from 'vuex'
 import AuthMixin from '@/mixins/AuthMixin'
 
 import PageHeader from '@/components/PageHeader'
+import SplashMessages from '@/components/shared/SplashMessages'
 
 export default {
   name: 'join',
@@ -74,7 +79,8 @@ export default {
     AuthMixin
   ],
   components: {
-    PageHeader
+    PageHeader,
+    SplashMessages
   },
   data () {
     return {
@@ -84,7 +90,13 @@ export default {
         name: '',
         email: '',
         password: ''
-      }
+      },
+      splashmessages: {
+        login: [],
+        join: [],
+        forgot: []
+      },
+      errorDump: undefined
     }
   },
   computed: {
@@ -109,11 +121,13 @@ export default {
           this.$log(response)
           this.$store.dispatch('checkAuthStatus')
           setTimeout(() => { this.isAuthenticating = false }, 500)
+          this.splashmessages.join = response.data.errors
         },
         (error) => {
           // Join fail
           this.$log(error)
           this.isAuthenticating = false
+          this.splashmessages.join = [{ text: 'Something went wrong', type: 'error' }]
         })
     },
     login () {
@@ -122,14 +136,19 @@ export default {
       API.auth.login(this.user,
         (response) => {
           // Login redirect
+          this.$log('response')
           this.$log(response)
           this.$store.dispatch('checkAuthStatus')
           setTimeout(() => { this.isAuthenticating = false }, 500)
+          // if (response.data && response.data.errors) {
+          //   this.splashmessages.join = response.data.errors
+          // }
         },
         (error) => {
           // Login fail
           this.$log(error)
           this.isAuthenticating = false
+          this.splashmessages.login = [{ text: 'Login failed', type: 'error' }]
         })
     },
     forgotPassword () {
@@ -181,5 +200,7 @@ $side-block-width = 340px
       color $color-text-grey
       font-size 0.9em
       padding 10px 0
-      text-decoration underline
+      &:hover
+        cursor pointer
+        text-decoration underline
 </style>

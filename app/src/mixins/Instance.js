@@ -3,7 +3,10 @@ export const instance = () => {
   const matches = url.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i)
   const domain = matches[1]
   const subdomain = domain.split('.')[0]
-  const instance = (!subdomain) ? 'localhost' : subdomain
+  let instance = (subdomain.includes('localhost')) ? 'localhost' : subdomain
 
+  if (typeof instance === 'undefined') {
+    instance = 'localhost'
+  }
   return instance
 }
