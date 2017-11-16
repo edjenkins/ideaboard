@@ -29,11 +29,20 @@ module.exports = function (app, passport) {
 
     // Check if user exists..
     let errors = []
+
+    // Check name exists
+    if (req.body.name.length < 3) {
+      errors.push({
+        text: 'Name should be longer than 3 characters',
+        type: 'error'
+      })
+    }
+
     User.findOne({ 'local.email': email }, (err, user) => {
       if (err) { return done(err) }
       if (user) {
         errors.push({
-          text: 'Email exists',
+          text: 'That email has already been taken',
           type: 'error'
         })
       }
