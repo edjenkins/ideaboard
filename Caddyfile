@@ -34,6 +34,15 @@ ncl.ideaboard.co.uk {
   }
 }
 
+openlab.ideaboard.co.uk {
+  root /var/www/html
+  tls openlab@ideaboard.co.uk
+
+  rewrite {
+    to {path} {path}/ /index.html
+  }
+}
+
 api.ideaboard.co.uk {
   proxy / api:3000
 }
