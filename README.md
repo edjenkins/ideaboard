@@ -48,3 +48,11 @@ sudo cd /home/edjenkins/repos/ideaboard
 # Pull changes in hook
 sudo ./hooks/post-receive
 ```
+
+## Adding an instance
+
+Add the appropriate configuration to the Caddyfile, this will create a subdomain for the instance (e.g. 'example.ideaboard.co.uk').
+
+Add a homepage component to the instances directory - /app/src/components/instances/example.vue.
+
+Add configuration for instance - app/src/config.js.

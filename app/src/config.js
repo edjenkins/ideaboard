@@ -16,6 +16,10 @@ export default {
     ncl: {
       color: '#003865',
       subdomain: 'ncl'
+    },
+    openlab: {
+      color: '#0099D0',
+      subdomain: 'openlab'
     }
   }
 }
