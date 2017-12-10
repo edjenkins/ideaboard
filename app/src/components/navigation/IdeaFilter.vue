@@ -5,15 +5,15 @@
 
         .sort-wrapper
           ul#sort-tabs
-            li.active(@click="toggleSortType()") {{ sortType }}
-            li(v-bind:class="{ active: categoriesVisible }" @click="toggleCategories()") Categories
+            li(v-bind:class="{ active: categoriesVisible }" @click="toggleCategories()") {{ currentCategory.name }}
+            li(@click="toggleSortType()") {{ sortType }}
           #search(v-bind:class="{ active: searchVisible }" @click="toggleSearch()") {{ searchVisible ? 'Cancel' : 'Search' }}
           .clearfix
 
         .category-wrapper
           ul#category-tabs
-            li All
-            li(v-for="(category, index) in categories") {{ category.name }}
+            router-link(tag="li" v-for="(category, index) in categories" v-bind:key="index" v-bind:to="{ name: 'explore', params: { category: category.tag } }" v-bind:class="{ active: $route.params.category === category.tag }")
+              | {{ category.name }}
             .clearfix
 
         .search-wrapper
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import _find from 'lodash/find'
+
 export default {
   name: 'idea-filter',
   props: ['sortType'],
@@ -34,15 +36,31 @@ export default {
       sortTypeIndex: 0,
       sortTypes: ['Recent', 'Popular'],
       categories: [
-        { name: 'Design' },
-        { name: 'Programming' },
-        { name: 'Management' }
+        { name: 'All Categories', tag: undefined },
+        { name: 'Computer Science', tag: 'computer-science' },
+        { name: 'Design', tag: 'design' },
+        { name: 'Programming', tag: 'programming' },
+        { name: 'Management', tag: 'management' }
       ]
     }
   },
   watch: {
+    '$route.params.category': {
+      handler: function (nV, oV) {
+        if (nV === oV) return
+        setTimeout(() => {
+          this.categoriesVisible = false
+        }, 500)
+      },
+      deep: true
+    },
     searchQuery (nV) {
       this.updateSearchQuery(nV)
+    }
+  },
+  computed: {
+    currentCategory () {
+      return _find(this.categories, { tag: this.$route.params.category })
     }
   },
   methods: {
@@ -57,6 +75,10 @@ export default {
       this.$refs.search.focus()
     },
     toggleSortType () {
+      // Hide filters
+      this.categoriesVisible = false
+      this.searchVisible = false
+
       this.sortTypeIndex = this.sortTypeIndex + 1
       this.sortTypeIndex = (this.sortTypeIndex > (this.sortTypes.length - 1)) ? 0 : this.sortTypeIndex
       this.$emit('update:sortType', this.sortTypes[this.sortTypeIndex])
@@ -98,7 +120,9 @@ $filter-height = 60px
           float left
           line-height $filter-height - 26px
           margin (26px / 2) 5px
+          min-width 60px
           padding 0 20px
+          text-align center
           &:hover
             background-color alpha(black, 0.1)
             cursor pointer

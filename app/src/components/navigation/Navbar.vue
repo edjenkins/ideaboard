@@ -5,10 +5,10 @@
       #menu-toggle(@click="active = !active")
         icon(name="bars")
       #menu(v-bind:class="{ active: active }")
-        router-link(to="/create") create
-        router-link(to="/explore") explore
-        router-link.primary(to="/profile" v-if="isAuthenticated") profile
-        router-link.primary(to="/join" v-if="!isAuthenticated") get started
+        router-link(to="/create") Create
+        router-link(to="/explore") Explore
+        router-link(to="/profile" v-if="isAuthenticated") Profile
+        router-link(to="/join" v-if="!isAuthenticated") Login
       .clearfix
 </template>
 
@@ -101,22 +101,19 @@ export default {
     a
       reset()
       animate()
-      radius(18px)
+      radius(20px)
       color white
-      line-height $navigation-height - 12px
-      padding 6px 20px
+      display block
+      float left
+      line-height $navigation-height - 40px
+      margin 20px 5px
+      padding 0 20px
       text-decoration none
       &:hover
-        background-color alpha(black, 0.1)
+        background-color alpha(black, 0.05)
         cursor pointer
-      &.primary
-        border white 1px solid
-        margin 0 15px
+      &.router-link-active
+        background-color alpha(black, 0.1)
       @media(max-width: 568px)
-        margin 0 5px
-        padding 6px 15px
-        &.primary
-          border none
-          margin 0
-          padding 6px 10px
+        margin 10px 5px 
 </style>

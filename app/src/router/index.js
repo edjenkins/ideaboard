@@ -35,50 +35,50 @@ const router = new Router({
     },
     {
       path: '/learn',
-      name: 'About',
+      name: 'about',
       component: About
     },
     {
       path: '/terms',
-      name: 'Terms',
+      name: 'terms',
       component: Terms
     },
     {
       path: '/privacy',
-      name: 'Privacy',
+      name: 'privacy',
       component: Privacy
     },
     {
       path: '/profile/:id?',
-      name: 'Profile',
+      name: 'profile',
       component: Profile,
       props: true,
       meta: { requiresAuth: true }
     },
     {
       path: '/create',
-      name: 'Create',
+      name: 'create',
       component: Create
     },
     {
-      path: '/explore',
-      name: 'Explore',
+      path: '/explore/:category?',
+      name: 'explore',
       component: Explore
     },
     {
       path: '/idea/:id',
-      name: 'Idea',
+      name: 'idea',
       component: Idea,
       props: true
     },
     {
       path: '/join',
-      name: 'Join',
+      name: 'join',
       component: Join
     },
     {
       path: '/reset/:code?',
-      name: 'Reset',
+      name: 'reset',
       component: Reset,
       props: true
     }

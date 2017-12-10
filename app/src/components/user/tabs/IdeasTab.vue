@@ -1,10 +1,11 @@
 <template lang="pug">
-.tab-content--ideas(v-if="ideas.length")
+.tab-content--ideas
   h1.tab--header.no-parent
     | Started Ideas
 
   .tab--content
-    .ideas-wrapper
+    p(v-if="ideas.length === 0") No ideas started
+    .ideas-wrapper(v-else)
       router-link.content-block.content-block--tile.pull-left(tag="div" v-for="(idea, index) in ideas" v-bind:key="index" v-bind:to="`/idea/${idea._id}`")
         idea-tile.bordered(v-bind:idea="idea")
       .clearfix

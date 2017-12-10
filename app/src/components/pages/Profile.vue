@@ -26,6 +26,7 @@ import UserCard from '@/components/user/UserCard'
 
 import BioTab from '@/components/user/tabs/BioTab'
 import IdeasTab from '@/components/user/tabs/IdeasTab'
+import CategoriesTab from '@/components/user/tabs/CategoriesTab'
 import ActivityTab from '@/components/user/tabs/ActivityTab'
 
 export default {
@@ -39,6 +40,7 @@ export default {
     UserCard,
     BioTab,
     IdeasTab,
+    CategoriesTab,
     ActivityTab
   },
   created () {
@@ -83,7 +85,8 @@ export default {
         items: [
           { title: 'Bio', component: 'bio-tab' },
           { title: 'Ideas', component: 'ideas-tab' },
-          { title: 'Activity', component: 'activity-tab' }
+          { title: 'Categories', component: 'categories-tab' }
+          // { title: 'Activity', component: 'activity-tab' }
         ]
       }
     }
@@ -146,7 +149,7 @@ $side-block-width = 260px
       width calc(100% - 240px)
     @media(max-width: 660px)
       float none
-      margin 20px auto
+      margin 0 20px
       width calc(100% - 40px)
 
   .content-block--side

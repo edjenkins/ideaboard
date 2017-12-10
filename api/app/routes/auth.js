@@ -38,6 +38,14 @@ module.exports = function (app, passport) {
       })
     }
 
+    // Check password is valid
+    if (req.body.password.length < 8) {
+      errors.push({
+        text: 'Password should be longer than 8 characters',
+        type: 'error'
+      })
+    }
+
     User.findOne({ 'local.email': email }, (err, user) => {
       if (err) { return done(err) }
       if (user) {
@@ -52,31 +60,17 @@ module.exports = function (app, passport) {
           errors: errors
         })
       }
-      // Else continue
-      else {
-        passport.authenticate('local-signup')(req, res, next)
-      }
+      
+      // Create the account and authenticate the user
+      passport.authenticate('local-signup', function(err, user) {
+        passport.authenticate('local-login')(req, res, function() {
+          return res.json({
+            success: true
+          })
+        })
+      })(req, res, next)
     })
   })
-
-  // app.post('/OLDsignup',
-  //   passport.authenticate('local-signup'),
-  //   (req, res) => {
-  //     mail.sendMail(req.body.email, 'Howdy', 'welcome', { user: req.user })
-  //     res.json({
-  //       status: 'authenticated',
-  //       user: {
-  //         _id: req.user._id,
-  //         created: req.user.created,
-  //         profile: req.user.profile
-  //       }
-  //     })
-  //   },
-  //   (req, res) => {
-  //     res.json({
-  //       status: 'oops'
-  //     })
-  //   })
 
   app.get('/logout', (req, res) => {
     req.logout()

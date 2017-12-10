@@ -156,7 +156,8 @@ export default {
         (response) => {
           // Reset redirect
           this.$log(response)
-          alert('You will receive an email shortly')
+          this.splashmessages.forgot = [{ text: 'You will receive an email with a reset link soon!', type: 'success' }]
+          // TODO: Add flash message and redirect
         },
         (error) => {
           // Reset fail
