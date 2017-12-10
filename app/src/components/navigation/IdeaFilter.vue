@@ -5,8 +5,10 @@
 
         .sort-wrapper
           ul#sort-tabs
-            li(v-bind:class="{ active: categoriesVisible }" @click="toggleCategories()") {{ currentCategory.name }}
-            li(@click="toggleSortType()") {{ sortType }}
+            li(@click="toggleCategories()")
+              | {{ currentCategory.name }}
+              icon(name="angle-down")
+            //- li(@click="toggleSortType()") {{ sortType }}
           #search(v-bind:class="{ active: searchVisible }" @click="toggleSearch()") {{ searchVisible ? 'Cancel' : 'Search' }}
           .clearfix
 
@@ -24,6 +26,8 @@
 
 <script>
 import _find from 'lodash/find'
+
+import 'vue-awesome/icons/angle-down'
 
 export default {
   name: 'idea-filter',
@@ -119,10 +123,19 @@ $filter-height = 60px
           color $color-text-grey
           float left
           line-height $filter-height - 26px
-          margin (26px / 2) 5px
+          height $filter-height - 26px
+          margin (26px / 2) 2.5px
           min-width 60px
-          padding 0 20px
+          overflow hidden
+          padding 0 28px 0 15px
+          position relative
           text-align center
+          .fa-icon
+            position absolute
+            top 9px
+            right 10px
+          @media(max-width: 568px)
+            max-width 180px
           &:hover
             background-color alpha(black, 0.1)
             cursor pointer
@@ -136,7 +149,7 @@ $filter-height = 60px
         float right
         line-height $filter-height - 26px
         margin (26px / 2) 15px
-        padding 0 20px
+        padding 0 15px
         &:hover
           background-color alpha(black, 0.1)
           cursor pointer
@@ -149,6 +162,8 @@ $filter-height = 60px
       pinned()
       bottom auto
       background-color white
+      max-height $filter-height
+      overflow hidden
       position absolute
       top 0
       pointer-events none
@@ -163,7 +178,7 @@ $filter-height = 60px
           color $color-text-grey
           float left
           line-height $filter-height - 26px
-          margin (26px / 2) 5px
+          margin (26px / 2) 2.5px
           padding 0 20px
           &:hover
             background-color alpha(black, 0.1)
@@ -200,6 +215,7 @@ $filter-height = 60px
   &.categories
     .category-wrapper
       top $filter-height
+      max-height 400px
       pointer-events all
   &.search
     .search-wrapper

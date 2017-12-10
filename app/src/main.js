@@ -11,6 +11,9 @@ import { sync } from 'vuex-router-sync'
 import App from '@/App'
 import store from '@/store'
 import router from '@/router'
+import Icon from 'vue-awesome/components/Icon'
+
+Vue.component('icon', Icon)
 
 sync(store, router)
 
