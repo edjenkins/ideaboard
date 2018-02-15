@@ -1,4 +1,4 @@
-import * as config from '@/api/config'
+const config = require('@/config');
 
 console.log(config)
 
@@ -21,4 +21,4 @@ console.log(config)
   })
 }()
 drift.SNIPPET_VERSION = '0.3.1'
-drift.load(config.DRIFT_KEY)
+drift.load(config.driftkey)

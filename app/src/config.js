@@ -1,5 +1,7 @@
 export default {
   domain: 'ideaboard.co.uk',
+  driftkey: 'msffsx6pi5gb',
+  gakey: 'UA-44963053-17',
   instances: {
     default: 'wea',
     master: {

@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 import vueLogger from 'vue-logger'
 // import Meta from 'vue-meta'
+import VueAnalytics from 'vue-analytics'
 import VueSession from 'vue-session'
 import { sync } from 'vuex-router-sync'
 
@@ -12,6 +13,8 @@ import App from '@/App'
 import store from '@/store'
 import router from '@/router'
 import Icon from 'vue-awesome/components/Icon'
+
+import config from '@/config'
 
 require('@/assets/scripts/drift.js')
 
@@ -31,6 +34,14 @@ Vue.use(vueLogger, {
   dev: true,
   shortname: true,
   levels: ['log', 'warn', 'debug', 'error', 'dir']
+})
+
+Vue.use(VueAnalytics, {
+  id: config.gakey,
+  router,
+  autoTracking: {
+    exception: true
+  }
 })
 
 /* eslint-disable no-new */
