@@ -4,7 +4,7 @@
       .row
         .content-block
           .content-block--body
-            h1 Design 
+            h1 WEA design 
               .example {{ examples[exampleIndex] }}
             h3 Create an idea and begin building a strong community through discussion.
     
