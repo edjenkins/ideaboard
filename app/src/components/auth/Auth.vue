@@ -70,6 +70,8 @@ import AuthMixin from '@/mixins/AuthMixin'
 import PageHeader from '@/components/PageHeader'
 import SplashMessages from '@/components/shared/SplashMessages'
 
+import * as config from '@/api/config'
+
 export default {
   name: 'auth',
   metaInfo: {
@@ -87,9 +89,9 @@ export default {
       isAuthenticating: false,
       state: 'login',
       user: {
-        name: 'Admin',
-        email: 'admin@ideaboard.co.uk',
-        password: 'DxUmgqAXGhden2Ut'
+        name: config.ADMIN_NAME,
+        email: config.ADMIN_EMAIL,
+        password: config.ADMIN_PASSWORD
       },
       splashmessages: {
         login: [],
