@@ -1,9 +1,12 @@
 <template lang="pug">
   #explore
     page-header(title="Explore Ideas" subtitle="Find something that interests you and begin an engaging design process with friends.")
-    idea-filter(v-bind:sort-type.sync="sortType" v-bind:search-query.sync="searchQuery")
+    idea-filter(v-on:reload="fetchIdeas" v-bind:sort-type.sync="sortType" v-bind:current-category.sync="currentCategory" v-bind:search-query.sync="searchQuery")
     .row#explore-row
-      router-link.content-block.content-block--tile.pull-left(v-for="(idea, index) in orderedIdeas" v-bind:to="`/idea/${idea._id}`" tag="div" v-bind:key="index")
+      .passcode-block(v-if="currentCategory && currentCategory.passcode && (userPasscode !== currentCategory.passcode)")
+        h2 Passcode required
+        input(type="text" v-bind:placeholder="currentCategory.passcode" v-model="userPasscode")
+      router-link.content-block.content-block--tile.pull-left(v-else v-for="(idea, index) in orderedIdeas" v-bind:to="`/idea/${idea._id}`" tag="div" v-bind:key="index")
         idea-tile(v-bind:idea="idea")
       .clearfix
 </template>
@@ -27,21 +30,15 @@ export default {
     IdeaFilter,
     IdeaTile
   },
-  created () {
-    API.idea.explore(
-      (response) => {
-        // Idea success
-        this.$log(response)
-        this.ideas = response.data
-      },
-      (error) => {
-        // Idea fail
-        this.$log(error)
-      })
+  mounted () {
+    this.fetchIdeas()
   },
   data () {
     return {
+      userPasscode: undefined,
+      currentCategory: undefined,
       sortType: 'Recent',
+      passcodeRequired: false,
       searchQuery: '',
       ideas: []
     }
@@ -60,6 +57,26 @@ export default {
       }).reverse()
 
       return (this.searchQuery.length < 2) ? ideas : ideas.filter((idea) => { return idea.title.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1 })
+    }
+  },
+  methods: {
+    fetchIdeas () {
+      const categoryId = (this.currentCategory) ? this.currentCategory._id : undefined
+      API.idea.explore(
+        categoryId,
+        (response) => {
+          // Idea success
+          this.$log(response)
+          if (response.passcodeRequired) {
+            this.passcodeRequired = true
+          } else {
+            this.ideas = response.data
+          }
+        },
+        (error) => {
+          // Idea fail
+          this.$log(error)
+        })
     }
   }
 }
@@ -88,5 +105,22 @@ export default {
         width calc((100% / 2) - 20px)
       @media(max-width: 380px)
         width calc((100% / 1) - 20px)
+
+    .passcode-block
+      background-color $color-warning
+      margin 10px
+      padding 30px
+      h2
+        reset()
+        color white
+        margin-bottom 20px
+      input
+        border none
+        background-color white
+        font-size 1.3em
+        line-height 50px
+        outline 0
+        padding 0 20px
+        text-align center
 
 </style>

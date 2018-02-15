@@ -59,7 +59,7 @@ export default {
   methods: {
     redirectToJoin () {
       this.$store.commit(types.HIDE_AUTH_MODAL)
-      this.$router.push('/join')
+      this.$router.push('/auth')
     },
     closeAuthModal () {
       this.$store.commit(types.HIDE_AUTH_MODAL)

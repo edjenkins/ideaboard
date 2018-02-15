@@ -4,7 +4,7 @@
     input(type="text" v-model="searchQuery" placeholder="Search Unsplash photos (e.g. Cats, People, City)" @keyup.enter="search()")
     .btn.btn-primary(@click="search")
       span(v-if="loading")
-        | Searching...
+        | Wait...
         //- icon(v-if="loading" name="refresh" spin)
       span(v-else)
         | Search

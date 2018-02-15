@@ -4,7 +4,7 @@
 
   .dicussion-wrapper
     // No comments
-    .no-comments(v-if="comments.length === 0") No comments posted
+    .no-comments(v-if="comments.length === 0 && !hideNoComments") No comments posted
 
     // Comments
     ul.comment-thread(v-for="(comment, index) in comments" v-bind:key="index" v-bind:class="{ 'has-replies': ((comment._replies.length > 0) || (replyTarget === comment._id)), 'is-replying': (replyTarget === comment._id) }")
@@ -55,7 +55,7 @@ import Commentable from '@/mixins/Commentable'
 
 export default {
   name: 'dicussion',
-  props: ['active-task', 'idea'],
+  props: ['activeTask', 'idea', 'hideNoComments'],
   mixins: [
     Commentable
   ],

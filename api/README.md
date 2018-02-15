@@ -1,4 +1,4 @@
-# IdeaBoard Backend
+# Ideaboard Backend
 Created by Edward Jenkins
 
 ## Get started

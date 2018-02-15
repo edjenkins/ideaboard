@@ -14,7 +14,8 @@ const ideaSchema = mongoose.Schema({
     _user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     subscribedAt: Date
   }],
-  _updates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Update' }]
+  _updates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Update' }],
+  _categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }]
 
 })
 

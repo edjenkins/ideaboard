@@ -1,14 +1,16 @@
 <template lang="pug">
   #navbar(v-bind:class="authState" v-bind:style="{ 'background-color': navColor }")
     .row
-      router-link#logo(to="/") ideaboard
+      router-link#logo(to="/") Ideaboard
       #menu-toggle(@click="active = !active")
         icon(name="bars")
       #menu(v-bind:class="{ active: active }")
         router-link(to="/create") Create
         router-link(to="/explore") Explore
-        router-link(to="/profile" v-if="isAuthenticated") Profile
-        router-link(to="/join" v-if="!isAuthenticated") Login
+        router-link(to="/auth" v-if="!isAuthenticated") Login
+        router-link(to="/profile" v-if="isAuthenticated" v-bind:class="{ 'has-notifications': hasNotifications }")
+          | Profile
+          span.notification-bubble(v-if="hasNotifications") {{ notifications.unread.length }}
       .clearfix
 </template>
 
@@ -29,13 +31,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'navColor'])
+    ...mapGetters(['isAuthenticated', 'navColor', 'notifications']),
+    hasNotifications () {
+      return this.notifications && this.notifications.unread && (this.notifications.unread.length > 0)
+    }
   },
   watch: {
     isAuthenticated (nV) {
       this.authState = nV ? 'authenticating' : 'unauthenticating'
       if (!nV) {
-        this.$router.push('/join')
+        this.$router.push('/auth')
       }
       setTimeout(() => {
         this.authState = nV ? 'authenticated' : 'unauthenticated'
@@ -50,9 +55,14 @@ export default {
 
 #navbar
   animate()
+  gradient()
+  pinned()
   background-color $color-primary
   border-bottom alpha(black, 0.1) 1px solid
+  bottom auto
   min-height $navigation-height
+  position fixed
+  z-index 2
   @media(max-width: 568px)
     min-height $mobile-navigation-height
   &.authenticating
@@ -68,7 +78,7 @@ export default {
     color white
     float left
     font-size 1.2em
-    font-weight normal
+    font-weight bold
     line-height $navigation-height
     padding 0 10px
     text-decoration none
@@ -108,7 +118,23 @@ export default {
       line-height $navigation-height - 40px
       margin 20px 5px
       padding 0 20px
+      position relative
       text-decoration none
+      &.has-notifications
+        padding-right 40px
+        span.notification-bubble
+          radius(50%)
+          background-color red
+          display block
+          font-size 0.8em
+          font-weight bold
+          height 26px
+          line-height 26px
+          position absolute 
+          right 7px
+          top 7px
+          text-align center
+          width 26px
       &:hover
         background-color alpha(black, 0.05)
         cursor pointer

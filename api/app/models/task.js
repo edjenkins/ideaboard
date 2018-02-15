@@ -23,11 +23,6 @@ taskSchema.pre('save', function (next) {
 
 taskSchema.pre('findOne', function (next) {
   this.populate('_user', 'profile')
-  this.populate({
-    path: '_subscribers._user',
-    model: 'User',
-    select: 'profile'
-  })
   next()
 })
 

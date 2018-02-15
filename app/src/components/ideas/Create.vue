@@ -6,6 +6,11 @@
         .content-block--body
           form
             .input-wrapper
+              label Idea Category
+
+              category-selector(v-bind:idea="idea" v-bind:categories="categories")
+
+            .input-wrapper
               label Idea Title
               input(type="text" v-model="idea.title" name="title" placeholder="Idea Title")
             .input-wrapper
@@ -48,6 +53,7 @@ import UnsplashSearch from '@/components/UnsplashSearch'
 import FileUpload from '@/components/FileUpload'
 import PageHeader from '@/components/PageHeader'
 import IdeaTile from '@/components/ideas/IdeaTile'
+import CategorySelector from '@/components/categories/CategorySelector'
 
 export default {
   name: 'create-idea',
@@ -55,12 +61,16 @@ export default {
     title: 'Create Idea'
   },
   components: {
+    CategorySelector,
     Quill,
     quillEditor,
     UnsplashSearch,
     FileUpload,
     PageHeader,
     IdeaTile
+  },
+  mounted () {
+    this.fetchCategories()
   },
   created () {
     if (!this.$session.exists()) this.$session.start()
@@ -83,7 +93,7 @@ export default {
   },
   data () {
     return {
-      content: '<h2>I am Example</h2>',
+      categories: [],
       editorOption: {
         modules: {
           toolbar: [
@@ -98,6 +108,7 @@ export default {
       selectedImage: undefined,
       creatingIdea: false,
       idea: {
+        category: undefined,
         title: undefined,
         tagline: undefined,
         description: undefined,
@@ -112,6 +123,18 @@ export default {
     }
   },
   methods: {
+    fetchCategories () {
+      API.category.fetchCategories(
+        (response) => {
+          // Idea success
+          this.$log(response)
+          this.categories = response.data
+        },
+        (error) => {
+          // Idea fail
+          this.$log(error)
+        })
+    },
     startOver () {
       this.idea = {
         title: undefined,

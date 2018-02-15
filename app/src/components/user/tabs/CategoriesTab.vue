@@ -1,35 +1,76 @@
 <template lang="pug">
 .tab-content--categories
-  h1.tab--header.no-parent
-    | Categories
-    .tab--header--action Refresh
 
-  .tab--content
+  h1.tab--header.no-parent
+    | Manage
+    .tab--header--action(@click="viewCategories")
+      icon(v-bind:name="viewingCategories ? 'angle-up' : 'angle-down'")
+
+  .tab--content(v-if="viewingCategories")
+
     p(v-if="categories.length === 0") No categories created
+
     .categories-wrapper(v-else)
-      ul
-        li(v-for="(category, index) in categories" v-bind:key="index")
-          router-link(v-bind:to="{ name: 'explore', params: { category: category.tag } }") {{ category.name }}
+      router-link.category-tile(tag="div" v-for="(category, index) in categories" v-bind:key="index" v-bind:to="{ name: 'explore', params: { category: category.tag } }")
+        .category-name Name: {{ category.name }}
+        .category-tag Tag: {{ category.tag }}
+
+  h1.tab--header.no-parent
+    | Add new
+    .tab--header--action(@click="addCategory")
+      icon(v-bind:name="addingCategory ? 'angle-up' : 'angle-down'")
+
+  .tab--content(v-if="addingCategory")
+    .tab-section--body
+      create-category(v-on:createdCategory="categoryCreated")
+    
 </template>
 
 <script>
+import API from '@/api'
+
+import CreateCategory from '@/components/categories/CreateCategory'
+import 'vue-awesome/icons'
+
 export default {
   name: 'categories-tab',
   props: ['currentUser'],
+  components: {
+    CreateCategory
+  },
+  created () {
+    this.fetchCategories()
+  },
   data () {
     return {
-      categories: [
-        {
-          name: 'Computer Science',
-          tag: 'computer-science',
-          passcode: 'CS12'
+      categories: [],
+      addingCategory: false,
+      viewingCategories: false
+    }
+  },
+  methods: {
+    categoryCreated () {
+      this.viewingCategories = true
+      this.addingCategory = false
+      this.fetchCategories()
+    },
+    viewCategories () {
+      this.viewingCategories = !this.viewingCategories
+    },
+    addCategory () {
+      this.addingCategory = !this.addingCategory
+    },
+    fetchCategories () {
+      API.category.fetchCategories(
+        (response) => {
+          // Idea success
+          this.$log(response)
+          this.categories = response.data
         },
-        {
-          name: 'Open Lab',
-          tag: 'open-lab',
-          passcode: undefined
-        }
-      ]
+        (error) => {
+          // Idea fail
+          this.$log(error)
+        })
     }
   }
 }
@@ -45,5 +86,22 @@ export default {
     padding 25px  
     p
       reset()
+    .categories-wrapper
+      .category-tile
+        animate()
+        background-color $color-lightest-grey
+        display block
+        margin-bottom 10px
+        padding 20px
+        text-decoration none
+        .category-name
+          color $color-text-darkest-grey
+          text-decoration none
+        .category-tag
+          color $color-text-grey
+          text-decoration none
+        &:hover
+          background-color darken($color-lightest-grey, 5%)
+          cursor pointer
 
 </style>

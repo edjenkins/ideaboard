@@ -1,6 +1,6 @@
 <template lang="pug">
 .tab-content--ideas
-  h1.tab--header.no-parent
+  //- h1.tab--header.no-parent
     | Started Ideas
 
   .tab--content

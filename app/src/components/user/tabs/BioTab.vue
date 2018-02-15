@@ -7,26 +7,20 @@
       span(v-bind:class="{ editing: isEditing }" @click="toggleEditMode(); cancelUpdate()") {{ (isEditing) ? 'Cancel' : 'Edit' }}
 
   .tab--content(v-if="editedProfile")
-
-    .profile--actions(v-if="!isEditing && ownProfile")
-      .action(v-if="!editedProfile.avatar")
-        .action--banner(@click="isEditing = true") Add a profile image
-          icon(name="plus")
-
-      .action(v-if="!editedProfile.bio")
-        .action--banner(@click="isEditing = true") Add a short bio
-          icon(name="plus")
-
     form.profile-form(v-bind:class="{ editing: isEditing }")
       .input-wrapper(v-if="isEditing")
-        label Profile Image
+        label Avatar
         
         file-upload(v-bind:uploaded-file="editedProfile.avatar" v-bind:uploaded-file.sync="editedAvatar")
       .input-wrapper(v-if="isEditing")
-        label(v-if="isEditing") Your Bio
+        label(v-if="isEditing") Bio
         textarea(v-model="editedProfile.bio" v-if="isEditing" rows="6")
       .input-wrapper
         p(v-if="!isEditing") {{ (editedProfile.bio) ? editedProfile.bio : 'No bio added yet' }}
+
+    //- .profile--actions(v-if="!isEditing && ownProfile")
+      .action(v-if="!editedProfile.avatar || !editedProfile.bio")
+        .action--banner(@click="isEditing = true") Add an avatar or bio
 
 </template>
 
@@ -67,21 +61,7 @@ export default {
       editedProfile: undefined,
       originalProfile: undefined,
       isEditing: false,
-      editedAvatar: undefined,
-      actions: [
-        {
-          id: 'profile-image',
-          action: {
-            label: 'Add a Profile Image'
-          }
-        },
-        {
-          id: 'bio',
-          action: {
-            label: 'Write a short bio'
-          }
-        }
-      ]
+      editedAvatar: undefined
     }
   },
   computed: {
@@ -150,8 +130,8 @@ export default {
       margin 10px
       .action--banner
         animate()
+        radius(20px)
         background-color $color-primary
-        border-right darken($color-primary, 10%) 40px solid
         color white
         line-height 40px
         display inline-block
@@ -160,11 +140,6 @@ export default {
         &:hover
           cursor pointer
           background-color darken($color-primary, 5%)
-        .fa-icon
-          position absolute
-          right -30px
-          height 40px
-          width 20px
 
     .profile-form
       .input-wrapper

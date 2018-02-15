@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Store from '@/store'
 
 // Auth
-import Join from '@/components/auth/Join'
+import Auth from '@/components/auth/Auth'
 import Reset from '@/components/auth/Reset'
 
 // Pages
@@ -72,9 +72,9 @@ const router = new Router({
       props: true
     },
     {
-      path: '/join',
-      name: 'join',
-      component: Join
+      path: '/auth',
+      name: 'auth',
+      component: Auth
     },
     {
       path: '/reset/:code?',
@@ -90,7 +90,7 @@ router.beforeEach((to, from, next) => {
     console.log(Store.getters.isAuthenticated)
     if (!Store.getters.isAuthenticated) {
       next({
-        path: '/join',
+        path: '/auth',
         query: {
           redirect: to.fullPath
         }

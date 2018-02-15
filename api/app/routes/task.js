@@ -32,6 +32,30 @@ module.exports = function (app, passport) {
         data.task._idea = data.idea_id
         const task = new Task(data.task)
 
+        let errors = []
+
+        // Check title length
+        if (!req.body.task.title || req.body.task.title.length < 3 || req.body.task.title.length > 20) {
+          errors.push({
+            text: 'Task title should be longer than 3 and less than 20 characters',
+            type: 'error'
+          })
+        }
+
+        // Check description is valid
+        if (!req.body.task.description || req.body.task.description.length < 8 || req.body.task.description.length > 240) {
+          errors.push({
+            text: 'Task description should be longer than 10 and less than 240 characters',
+            type: 'error'
+          })
+        }
+        
+        if (errors.length > 0) {
+          return res.json({
+            errors: errors
+          })
+        }
+
         task.save((err) => {
           if (err) console.error(err)
           // mail.sendMail(req.user.local.email, 'Task Created', 'task-created', { user: req.user, task: task })

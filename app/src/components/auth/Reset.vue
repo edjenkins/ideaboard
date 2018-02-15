@@ -63,7 +63,7 @@ export default {
         (response) => {
           // Reset redirect
           this.$log(response)
-          this.$router.push('/join')
+          this.$router.push('/auth')
         },
         (error) => {
           // Reset fail

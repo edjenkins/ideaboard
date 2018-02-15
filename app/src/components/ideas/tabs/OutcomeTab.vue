@@ -5,7 +5,7 @@
       .tab--header--previous(name="home" @click="goToDashboard")
         icon(name="arrow-left")
       span {{ (activeComponent === 'dashboard') ? titles[activeComponent] : activeComponent }}
-      .tab--header--action
+      //- .tab--header--action
         span(v-if="activeComponent && (activeComponent != 'dashboard')") {{ activeComponent }}
         span(v-else)
           icon(name="question")
@@ -36,7 +36,7 @@ export default {
   data () {
     return {
       titles: {
-        'dashboard': 'Outcome'
+        'dashboard': 'Available tools'
       },
       transitionType: 'left-fade',
       activeComponent: 'dashboard'

@@ -25,6 +25,7 @@ module.exports = {
       '@': resolve('src'),
       'stylus': resolve('src/assets/stylus'),
       'images': resolve('src/assets/images'),
+      'scripts': resolve('src/assets/scripts')
     }
   },
   module: {

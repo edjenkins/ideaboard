@@ -5,21 +5,27 @@
       .content-block.content-block--side.pull-up.pull-left.white-block
         .content-block--body
           user-card(v-bind:profile="currentUser.profile")
-        .content-block--footer
-          .btn.btn-danger-subtle(v-if="ownProfile" @click="logout") Logout
+        .content-block--footer(v-if="ownProfile")
+          .btn.btn-danger-subtle(@click="logout") Logout
       .content-block.content-block--main.pull-up.pull-right.white-block
         .tabs
           .tabs--selector
-            .tabs--selector--item(v-for="(tab, index) in tabs.items" v-bind:class="{ active: (index === tabs.active) }" @click="tabs.active = index") {{ tab.title }}
+            .tabs--selector--item(v-for="(tab, index) in tabItems" v-bind:class="{ active: (tab.component === tabs.activeComponent) }" @click="tabs.activeComponent = tab.component") {{ tab.title }}
             .clearfix
           .tabs--page
-            component(v-bind:is="tabs.items[tabs.active].component" v-bind:edited-profile.sync="editedProfile" v-bind:current-user="currentUser")
-      .clearfix
+            component(v-bind:is="tabs.activeComponent" v-bind:edited-profile.sync="editedProfile" v-bind:current-user="currentUser")
+
+        .notifications(v-if="ownProfile && tabs.activeComponent === 'bio-tab'")
+          notifications-list(type="unread" v-bind:notifications="notifications.unread")
+          notifications-list(type="read" v-bind:notifications="notifications.read")
+
 </template>
 
 <script>
 import API from '@/api'
 import { mapGetters } from 'vuex'
+
+import _filter from 'lodash/filter'
 
 import PageHeader from '@/components/PageHeader'
 import UserCard from '@/components/user/UserCard'
@@ -27,7 +33,8 @@ import UserCard from '@/components/user/UserCard'
 import BioTab from '@/components/user/tabs/BioTab'
 import IdeasTab from '@/components/user/tabs/IdeasTab'
 import CategoriesTab from '@/components/user/tabs/CategoriesTab'
-import ActivityTab from '@/components/user/tabs/ActivityTab'
+import AdminTab from '@/components/user/tabs/AdminTab'
+import NotificationsList from '@/components/user/NotificationsList'
 
 export default {
   name: 'profile',
@@ -41,9 +48,10 @@ export default {
     BioTab,
     IdeasTab,
     CategoriesTab,
-    ActivityTab
+    AdminTab,
+    NotificationsList
   },
-  created () {
+  mounted () {
     this.loadProfile()
 
     if (this.$session.has('auth-redirect')) {
@@ -81,20 +89,34 @@ export default {
         bio: ''
       },
       tabs: {
-        active: 0,
+        activeComponent: 'bio-tab',
         items: [
-          { title: 'Bio', component: 'bio-tab' },
-          { title: 'Ideas', component: 'ideas-tab' },
-          { title: 'Categories', component: 'categories-tab' }
-          // { title: 'Activity', component: 'activity-tab' }
+          { title: 'Profile', component: 'bio-tab', permission: undefined },
+          { title: 'Ideas', component: 'ideas-tab', permission: undefined },
+          { title: 'Categories', component: 'categories-tab', permission: 'organiser' },
+          { title: 'Admin', component: 'admin-tab', permission: 'admin' }
         ]
       }
     }
   },
   computed: {
     ...mapGetters([
-      'isAuthenticated', 'user'
+      'isAuthenticated', 'user', 'notifications', 'isAdmin', 'isOrganiser', 'isModerator'
     ]),
+    tabItems () {
+      return _filter(this.tabs.items, (item) => {
+        switch (item.permission) {
+          case 'admin':
+            return this.isAdmin && this.ownProfile
+          case 'organiser':
+            return this.isOrganiser && this.ownProfile
+          case 'moderator':
+            return this.isModerator && this.ownProfile
+          default:
+            return true
+        }
+      })
+    },
     ownProfile () {
       if (!this.user) return false
       if (!this.currentUser) return false
@@ -116,20 +138,16 @@ export default {
       this.$store.dispatch('logout')
     },
     loadProfile () {
-      if (!this.id) {
-        this.currentUser = this.user
-      } else {
-        API.user.fetch(
-          this.id,
-          (response) => {
-            console.log(response)
-            this.currentUser = response.data
-          },
-          (error) => {
-            console.error(error)
-          }
-        )
-      }
+      API.user.fetch(
+        this.id ? this.id : this.user._id,
+        (response) => {
+          console.log(response)
+          this.currentUser = response.data
+        },
+        (error) => {
+          console.error(error)
+        }
+      )
     }
   }
 }

@@ -20,6 +20,7 @@
     .idea-tool--title(v-bind:style="{ 'background-color': '#00BD70' }") Visit Survey Monkey
     img.idea-tool--image(src="~images/logos/survey-monkey/horizontal-green.svg")
   .clearfix
+
 </template>
 
 <script>

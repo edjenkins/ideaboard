@@ -1,6 +1,6 @@
 <template lang="pug">
 .tab-content--info
-  h1.tab--header.no-parent
+  //- h1.tab--header.no-parent
     span {{ idea.title }}
     .tab--header--action(v-if="ownIdea")
       icon(name="pencil")
@@ -8,10 +8,17 @@
     rendered-content(v-bind:content="idea.description")
   .tab--footer
     subscribe-button(v-bind:idea="idea" v-on:subscribed="$emit('show-design')")
-  .design-banner(@click="viewDesign()")
+
+  #general-discussion
+    //- h1.tab--header.no-parent
+      span General Chat
+    discussion(v-bind:idea="idea" v-bind:hide-no-comments="true" v-bind:activeTask="{ title: 'discussion', component: 'discussion' }")
+
+  //- .design-banner(@click="viewDesign()")
     span(v-if="idea._subscribers.length > 2") Join {{ idea._subscribers.length }} people in disscussing this idea!
-    span(v-else) Start the discussion around this idea!
+    span(v-else) Join the rich discussion
     icon(name="angle-right")
+
 </template>
 
 <script>
@@ -19,15 +26,18 @@ import { mapGetters } from 'vuex'
 import Icon from 'vue-awesome/components/Icon'
 import RenderedContent from '@/components/shared/RenderedContent'
 import SubscribeButton from '@/components/ideas/actions/SubscribeButton'
+import Discussion from '@/components/design/modules/Discussion'
 
 import 'vue-awesome/icons'
+
 export default {
   name: 'info-tab',
   props: ['idea'],
   components: {
     Icon,
     RenderedContent,
-    SubscribeButton
+    SubscribeButton,
+    Discussion
   },
   computed: {
     ...mapGetters(['isAuthenticated', 'user']),
@@ -60,6 +70,9 @@ export default {
   @media(max-width: 680px)
     .tab--footer
       display block
+
+  #general-discussion
+    border-top $color-border 1px solid
 
   .design-banner
     animate()

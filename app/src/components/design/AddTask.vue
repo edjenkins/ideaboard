@@ -9,6 +9,8 @@
 
     hr
 
+    splash-messages(v-bind:messages="splashmessages['task']" padded)
+
     .input-wrapper
       label Title
         span The question you would like to ask
@@ -38,13 +40,16 @@
 <script>
 import API from '@/api'
 import Icon from 'vue-awesome/components/Icon'
+import SplashMessages from '@/components/shared/SplashMessages'
+
 import 'vue-awesome/icons/chevron-up'
 import 'vue-awesome/icons/chevron-down'
 
 export default {
   name: 'add-task',
   components: {
-    Icon
+    Icon,
+    SplashMessages
   },
   props: ['idea'],
   data () {
@@ -53,15 +58,22 @@ export default {
       addingTask: false,
       types: {
         discussion: { name: 'Chat', description: 'A Discussion is great for having free flowing conversations with your community. It can be used to guage opinions or just to have a chat!' },
-        poll: { name: 'Poll', description: 'A Poll is great for tasks where there is a defined question with a set of options that you would like to gather the communities opinions around.' }
-        // media: { name: 'Media', description: 'A Media task is useful when you need people to submit photos, videos or documents as a response.' }
+        poll: { name: 'Poll', description: 'A Poll is great for tasks where there is a defined question with a set of options that you would like to gather the communities opinions around.' },
+        media: { name: 'Media', description: 'The Media task is useful when you need people to submit images as a response.' },
+        appearin: { name: 'Appear.in', description: 'Perfect for hosting a live video chat about your idea.' },
+        whiteboard: { name: 'Whiteboard', description: 'Collaborate through the power of drawing!' }
       },
       task: {
-        title: undefined,
-        description: undefined,
+        title: '',
+        description: '',
         type: 'discussion',
         pinned: false,
         locked: false
+      },
+      splashmessages: {
+        task: [],
+        title: [],
+        description: []
       }
     }
   },
@@ -76,8 +88,12 @@ export default {
         { task: this.task, idea_id: this.idea._id },
         (response) => {
           this.$log(response)
-          this.goBack()
           this.addingTask = false
+          if (response.data.errors) {
+            this.splashmessages.task = response.data.errors
+          } else {
+            this.goBack()
+          }
         },
         (error) => {
           this.$log(error)

@@ -12,7 +12,7 @@ import AuthModal from '@/components/auth/AuthModal'
 export default {
   name: 'app',
   metaInfo: {
-    titleTemplate: 'IdeaBoard - %s'
+    titleTemplate: 'Ideaboard - %s'
   },
   components: {
     Navbar,
@@ -22,6 +22,13 @@ export default {
     this.$store.dispatch('checkAuthStatus')
     // Check if authenticated every 10 seconds
     setInterval(() => { this.$store.dispatch('checkAuthStatus') }, 10000)
+    // Check for notifcations every 5 seconds
+    setInterval(() => { this.$store.dispatch('getNotifications') }, 5000)
+
+    // Load drift
+    let driftScript = document.createElement('script')
+    driftScript.setAttribute('src', '~scripts/drift.js')
+    document.head.appendChild(driftScript)
   }
 }
 </script>

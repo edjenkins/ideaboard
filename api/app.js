@@ -14,6 +14,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 
 const configDB = require('./config/database.js')
+// const seed = require('./config/seed.js')
 
 const app = express()
 
@@ -35,7 +36,8 @@ app.use(function (req, res, next) {
     const subdomain = domain.split('.')[0]
     instance = (!subdomain) ? 'localhost' : subdomain
   }
-  req.instance = instance
+  req.instance = (instance.indexOf('localhost') !== -1) ? 'default' : instance
+
   next()
 })
 
@@ -64,10 +66,14 @@ require('./app/routes/unsplash.js')(app, passport)
 require('./app/routes/upload.js')(app, passport)
 require('./app/routes/user.js')(app, passport)
 require('./app/routes/idea.js')(app, passport)
+require('./app/routes/category.js')(app, passport)
 require('./app/routes/comment.js')(app, passport)
 require('./app/routes/task.js')(app, passport)
 require('./app/routes/update.js')(app, passport)
 require('./app/routes/task-response.js')(app, passport)
+require('./app/routes/invitation.js')(app, passport)
+require('./app/routes/permission.js')(app, passport)
+require('./app/routes/notification.js')(app, passport)
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}!`)

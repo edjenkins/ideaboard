@@ -1,0 +1,13 @@
+extends ../main
+
+block content
+
+  h1(style="margin-bottom: 30px") Your permissions were updated
+
+  p Hey #{ recipient.profile.name },
+
+  p #{ user.profile.name } has updated your permissions for the instance of Ideaboard which you help manage.
+
+  p You don't need to take any action now, if you are unsure of why your permissions were updated please contact #{user.profile.name} directly.
+
+  <a style="color: #0B9BD0" href="http://localhost:8080/">Visit site</a>

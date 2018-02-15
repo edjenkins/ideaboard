@@ -1,5 +1,5 @@
 <template lang="pug">
-.design-dashboard(v-show="tasks.length > 0")
+.design-dashboard
 
   .design-dashboard--tasks
     .design-dashboard--task(v-for="(task, index) in orderedTasks" v-bind:key="index" @click="loadTask(task)")
@@ -53,6 +53,8 @@ export default {
           return 'list-ul'
         case 'discussion':
           return 'comments'
+        case 'media':
+          return 'picture-o'
         default:
           break
       }

@@ -10,12 +10,6 @@
         icon(name="plus")
   transition(v-bind:name="transitionType" mode="out-in")
     component(v-bind:is="activeComponent" v-bind:idea="idea" v-bind:activeTask.sync="activeTask" v-on:add-task="addTask" v-on:back="goToDashboard")
-
-  transition(v-bind:name="transitionType" mode="out-in")
-    #general-discussion(v-if="activeComponent === 'dashboard'")
-      h1.tab--header.no-parent
-        span General Chat
-      discussion(v-bind:idea="idea" v-bind:activeTask="{ title: 'discussion', component: 'discussion' }" v-on:add-task="addTask" v-on:back="goToDashboard")
 </template>
 
 <script>
@@ -29,6 +23,9 @@ import Dashboard from '@/components/design/Dashboard'
 import AddTask from '@/components/design/AddTask'
 import Discussion from '@/components/design/modules/Discussion'
 import Poll from '@/components/design/modules/Poll'
+import Media from '@/components/design/modules/Media'
+import Appearin from '@/components/design/modules/Appearin'
+import Whiteboard from '@/components/design/modules/Whiteboard'
 
 export default {
   name: 'design-tab',
@@ -38,12 +35,15 @@ export default {
     Dashboard,
     AddTask,
     Discussion,
-    Poll
+    Poll,
+    Media,
+    Appearin,
+    Whiteboard
   },
   data () {
     return {
       titles: {
-        'dashboard': 'Discussions',
+        'dashboard': 'Dashboard',
         'add-task': 'Add New'
       },
       transitionType: 'left-fade',
@@ -95,9 +95,5 @@ export default {
     background-color white
     border-bottom $color-border 1px solid
     padding 25px
-
-  #general-discussion
-    // border-top $color-border 1px solid
-    margin-top 20px
 
 </style>

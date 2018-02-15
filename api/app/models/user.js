@@ -31,10 +31,13 @@ const userSchema = mongoose.Schema({
     email: String,
     name: String
   },
+  _permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Permission' }],
   code: String,
   created: Date
 
 })
+
+userSchema.index({ 'local.email': 'text', 'profile.name': 'text' });
 
 userSchema
   .virtual('profile.id')
@@ -42,8 +45,15 @@ userSchema
     return this.id
   })
 
+
 userSchema.pre('save', function (next) {
   if (!this.created) this.created = new Date()
+  next()
+})
+
+userSchema.pre('findOne', function (next) {
+  this.populate('_permissions')
+  // this._permissions = _.filter(this._permissions, { instance: req.instance })
   next()
 })
 

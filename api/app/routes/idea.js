@@ -19,9 +19,10 @@ const mail = require('../../app/services/mail')
 
 module.exports = function (app, passport) {
   // Get ideas
-  app.get('/ideas',
+  app.get('/ideas/:categoryId?',
     (req, res) => {
-      Idea.find({ instance: req.instance }).exec((err, ideas) => {
+      const query = (req.params.categoryId === 'undefined') ? { instance: req.instance } : { instance: req.instance, _categories: req.params.categoryId }
+      Idea.find(query).exec((err, ideas) => {
         if (err) { return console.error(err) }
         res.json(ideas)
       })
@@ -49,6 +50,9 @@ module.exports = function (app, passport) {
         data.idea.instance = req.instance
 
         const idea = new Idea(data.idea)
+        
+        // Set category
+        idea._categories.push(data.idea.category)
 
         if (data.uploadType === 'unsplash') {
           // Upload unsplash image

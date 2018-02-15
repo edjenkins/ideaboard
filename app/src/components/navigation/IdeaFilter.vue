@@ -6,25 +6,24 @@
         .sort-wrapper
           ul#sort-tabs
             li(@click="toggleCategories()")
-              | {{ currentCategory.name }}
+              | {{ currentCategory ? currentCategory.name : '' }}
               icon(name="angle-down")
             //- li(@click="toggleSortType()") {{ sortType }}
           #search(v-bind:class="{ active: searchVisible }" @click="toggleSearch()") {{ searchVisible ? 'Cancel' : 'Search' }}
           .clearfix
 
-        .category-wrapper
-          ul#category-tabs
-            router-link(tag="li" v-for="(category, index) in categories" v-bind:key="index" v-bind:to="{ name: 'explore', params: { category: category.tag } }" v-bind:class="{ active: $route.params.category === category.tag }")
-              | {{ category.name }}
-            .clearfix
+        category-filter(v-bind:categories.sync="categories")
 
         .search-wrapper
           input(ref="search" v-model="searchQuery" type="text" placeholder="Search Ideas...")
 
         .clearfix
+
 </template>
 
 <script>
+import CategoryFilter from '@/components/filtering/CategoryFilter'
+
 import _find from 'lodash/find'
 
 import 'vue-awesome/icons/angle-down'
@@ -32,6 +31,9 @@ import 'vue-awesome/icons/angle-down'
 export default {
   name: 'idea-filter',
   props: ['sortType'],
+  components: {
+    CategoryFilter
+  },
   data () {
     return {
       categoriesVisible: false,
@@ -39,13 +41,7 @@ export default {
       searchQuery: '',
       sortTypeIndex: 0,
       sortTypes: ['Recent', 'Popular'],
-      categories: [
-        { name: 'All Categories', tag: undefined },
-        { name: 'Computer Science', tag: 'computer-science' },
-        { name: 'Design', tag: 'design' },
-        { name: 'Programming', tag: 'programming' },
-        { name: 'Management', tag: 'management' }
-      ]
+      categories: []
     }
   },
   watch: {
@@ -54,17 +50,26 @@ export default {
         if (nV === oV) return
         setTimeout(() => {
           this.categoriesVisible = false
-        }, 500)
+        }, 300)
       },
       deep: true
     },
     searchQuery (nV) {
       this.updateSearchQuery(nV)
+    },
+    currentCategory (nV) {
+      // if (nV && nV.passcode && nV.passcode.length > 0) {
+      //   alert(`Passcode required "${nV.passcode}"`)
+      // }
+      this.$emit('update:currentCategory', nV)
+      this.$emit('reload')
     }
   },
   computed: {
     currentCategory () {
-      return _find(this.categories, { tag: this.$route.params.category })
+      // Attempt to find a category from the current URL param
+      const category = _find(this.categories, { tag: this.$route.params.category })
+      return (typeof category !== 'undefined') ? category : { name: 'All Categories', tag: undefined }
     }
   },
   methods: {
@@ -89,6 +94,7 @@ export default {
     },
     updateSearchQuery (newSearchQuery) {
       this.$emit('update:searchQuery', newSearchQuery)
+      this.$emit('reload')
     }
   }
 }
@@ -96,8 +102,6 @@ export default {
 
 <style lang="stylus" scoped>
 @import '~stylus/shared'
-
-$filter-height = 60px
 
 #idea-filter
   animate()
@@ -156,36 +160,6 @@ $filter-height = 60px
         &.active
           background-color $color-primary
           color white
-
-    .category-wrapper
-      animate()
-      pinned()
-      bottom auto
-      background-color white
-      max-height $filter-height
-      overflow hidden
-      position absolute
-      top 0
-      pointer-events none
-      z-index 1
-      ul#category-tabs
-        cleanlist()
-        padding 0 10px
-        li
-          cleanlist()
-          animate()
-          radius(20px)
-          color $color-text-grey
-          float left
-          line-height $filter-height - 26px
-          margin (26px / 2) 2.5px
-          padding 0 20px
-          &:hover
-            background-color alpha(black, 0.1)
-            cursor pointer
-          &.active
-            background-color $color-primary
-            color white
 
     .search-wrapper
       animate()

@@ -3,7 +3,6 @@
   .row
     .content-block
       .content-block--body
-        h3 People using IdeaBoard
         ul.showcase
           li(v-for="(showcase, index) in showcases" v-bind:key="index")
             a(v-bind:href="showcase.link")
@@ -14,6 +13,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'showcase',
   data () {
@@ -21,24 +22,27 @@ export default {
       showcases: [
         {
           title: 'WEA',
-          description: 'IdeaBoard proved to be a great way to connect with our adult learners.',
+          description: 'Ideaboard proved to be a great way to connect with our adult learners.',
           link: 'https://wea.ideaboard.co.uk',
-          image: 'https://static.pexels.com/photos/574285/pexels-photo-574285.jpeg'
+          image: ''
         },
         {
           title: 'CityLit',
-          description: 'We collected ideas from our students for new courses using IdeaBoard.',
+          description: 'We collected ideas from our students for new courses using Ideaboard.',
           link: 'https://citylit.ideaboard.co.uk',
-          image: 'https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg'
+          image: ''
         },
         {
           title: 'Newcastle University',
-          description: 'We used IdeaBoard to dynamically organise study sessions for students.',
+          description: 'We used Ideaboard to dynamically organise study sessions for students.',
           link: 'https://ncl.ideaboard.co.uk',
-          image: 'https://static.pexels.com/photos/287335/pexels-photo-287335.jpeg'
+          image: ''
         }
       ]
     }
+  },
+  computed: {
+    ...mapGetters(['navColor'])
   }
 }
 </script>
@@ -51,20 +55,20 @@ export default {
   .content-block
     ul.showcase
       cleanlist()
-      margin -10px
+      margin 0 -10px
       li
         cleanlist()
         border-box()
         background-color white
         float left
-        margin 10px
-        width calc(calc(100% / 3) - 20px)
+        margin 20px
+        width calc(calc(100% / 3) - 40px)
         @media(max-width: 640px)
-          width calc(calc(100% / 2) - 20px)
+          width calc(calc(100% / 2) - 40px)
           &:first-child
-            width calc(calc(100% / 1) - 20px)
+            width calc(calc(100% / 1) - 40px)
         @media(max-width: 480px)
-          width calc(calc(100% / 1) - 20px)
+          width calc(calc(100% / 1) - 40px)
         a
           text-align left
           text-decoration none

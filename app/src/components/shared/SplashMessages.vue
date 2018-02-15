@@ -1,5 +1,5 @@
 <template lang="pug">
-.splash-messages
+.splash-messages(v-bind:class="{ 'padded': padded }")
   ul
     li.animated.fadeIn(v-for="(message, index) in messages" v-bind:key="index" v-bind:class="message.type") {{ message.text }}
     .clearfix
@@ -8,7 +8,7 @@
 <script>
 export default {
   name: 'splash-messsages',
-  props: ['messages']
+  props: ['messages', 'padded']
 }
 </script>
 
@@ -17,7 +17,8 @@ export default {
 @import '~stylus/shared'
 
 .splash-messages
-  padding 10px
+  &.padded
+    padding 10px
   ul
     cleanlist()
     li

@@ -1,5 +1,6 @@
 import * as types from '@/store/mutation-types'
 import API from '@/api'
+import _find from 'lodash/find'
 
 // initial state
 const state = {
@@ -9,8 +10,10 @@ const state = {
       name: undefined,
       avatar: undefined,
       bio: undefined
-    }
+    },
+    permissions: []
   },
+  notifications: [],
   status: 'unauthenticated',
   authModalVisible: false
 }
@@ -25,6 +28,21 @@ const getters = {
   },
   authModalVisible () {
     return state.authModalVisible
+  },
+  notifications () {
+    return state.notifications
+  },
+  permissions () {
+    return state.user.permissions
+  },
+  isAdmin () {
+    return _find(state.user.permissions, { type: 'admin' })
+  },
+  isModerator () {
+    return _find(state.user.permissions, { type: 'moderator' })
+  },
+  isOrganiser () {
+    return _find(state.user.permissions, { type: 'organiser' })
   }
 }
 
@@ -40,6 +58,18 @@ const actions = {
       response => commit(types.CHECK_AUTH_STATUS_FAILURE, {
         response
       }),
+    )
+  },
+  getNotifications ({
+    commit
+  }) {
+    API.notification.fetch(
+      (response) => {
+        state.notifications = response.data
+      },
+      (response) => {
+        state.notifications = []
+      },
     )
   },
   logout ({
@@ -67,6 +97,7 @@ const mutations = {
   [types.CHECK_AUTH_STATUS_FAILURE] () {
     state.status = 'unauthenticated'
     state.user = undefined
+    state.notifications = []
   },
   [types.LOGOUT_SUCCESS] () {
     state.status = 'unauthenticated'

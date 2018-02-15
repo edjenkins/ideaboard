@@ -26,8 +26,8 @@ export default {
         errorCb(error)
       })
   },
-  explore (cb, errorCb) {
-    axios.get(`${config.API_ADDRESS}/ideas`, { withCredentials: true }).then((response) => {
+  explore (categoryId, cb, errorCb) {
+    axios.get(`${config.API_ADDRESS}/ideas/${categoryId}`, { withCredentials: true }).then((response) => {
       cb(response)
     })
       .catch((error) => {

@@ -1,6 +1,8 @@
+const crypto = require('crypto')
 const configAuth = require('../../config/auth')
 
 const User = require('../../app/models/user')
+const Notification = require('../../app/models/notification')
 const mail = require('../services/mail')
 
 const DEV_URL = 'localhost:8080'
@@ -82,14 +84,18 @@ module.exports = function (app, passport) {
 
   app.post('/auth/forgot',
     (req, res) => {
-      const resetCode = 'sduhsd'
-      let resetLink = (req.params.instance !== 'ideaboard') ? `https://${req.params.instance}.${PROD_URL}/reset/${resetCode}` : `https://${PROD_URL}/reset/${resetCode}`
-      resetLink = (req.params.instance && req.params.instance !== 'localhost') ? resetLink : `http://${DEV_URL}/reset/${resetCode}`
-      User.findOneAndUpdate({ 'local.email': req.body.email }, { code: resetCode }).exec((err, user) => {
+      
+      crypto.pseudoRandomBytes(16, function (err, raw) {
         if (err) console.error(err)
-        mail.sendMail(user.local.email, 'Forgotten Password', 'forgot', { user, resetLink })
-        res.json({
-          status: 'success'
+        const resetCode = raw.toString('hex')
+        let resetLink = (req.params.instance !== 'ideaboard') ? `https://${req.params.instance}.${PROD_URL}/reset/${resetCode}` : `https://${PROD_URL}/reset/${resetCode}`
+        resetLink = (req.params.instance && req.params.instance !== 'localhost') ? resetLink : `http://${DEV_URL}/reset/${resetCode}`
+        User.findOneAndUpdate({ 'local.email': req.body.email.toLowerCase() }, { code: resetCode }).exec((err, user) => {
+          if (err) console.error(err)
+          mail.sendMail(user.local.email, 'Forgotten Password', 'forgot', { user, resetLink })
+          res.json({
+            status: 'success'
+          })
         })
       })
     }
@@ -113,13 +119,16 @@ module.exports = function (app, passport) {
 
   app.get('/auth/status', (req, res) => {
     if (req.isAuthenticated()) {
-      res.json({
-        status: 'authenticated',
-        user: {
-          _id: req.user._id,
-          created: req.user.created,
-          profile: req.user.profile
-        }
+      User.findOne({ _id: req.user._id }).exec((err, user) => {
+        res.json({
+          status: 'authenticated',
+          user: {
+            _id: req.user._id,
+            created: req.user.created,
+            profile: req.user.profile,
+            permissions: user._permissions
+          }
+        })
       })
     } else {
       res.json({
@@ -148,7 +157,7 @@ module.exports = function (app, passport) {
     passport.authenticate('facebook', {
       callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`,
       successRedirect: `${redirectUri}/profile`,
-      failureRedirect: `${redirectUri}/join`
+      failureRedirect: `${redirectUri}/auth`
     })(req, res, next);
   });
 }

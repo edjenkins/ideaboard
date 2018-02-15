@@ -5,9 +5,17 @@
   text-align center
 
   .row-wrapper
-    margin-bottom 50px
+    margin 0
+    padding 20px
+    .content-block
+      reset()
     &#welcome
+      gradient()
+      animate()
       background-color $color-primary
+      padding-top 100px
+      @media(max-width: 568px)
+        padding-top 80px
       .content-block
         reset()
         .content-block--body

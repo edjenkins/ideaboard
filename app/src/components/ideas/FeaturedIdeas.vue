@@ -3,9 +3,8 @@
   .row
     .content-block
       .content-block--body
-        h3 Featured Ideas
         #ideas
-          router-link.content-block.content-block--tile.pull-left(v-for="(idea, index) in ideas" v-bind:to="`/idea/${idea._id}`" tag="div" v-bind:key="index")
+          router-link.content-block.content-block--tile.pull-left(v-for="(idea, index) in ideas" v-bind:to="`/idea/${idea._id}`" tag="div" v-bind:key="index" v-if="index < 3")
             idea-tile(v-bind:idea="idea")
           .clearfix
 </template>
@@ -22,6 +21,7 @@ export default {
   },
   created () {
     API.idea.explore(
+      undefined,
       (response) => {
         // Idea success
         this.$log(response)
@@ -46,8 +46,11 @@ export default {
 
 #featured-ideas
   #ideas
-    margin -10px
-    max-width $page-width + 20px
+    margin -10px -10px
+    @media(max-width: $page-width)
+      margin -10px -30px
+    @media(max-width: 660px)
+      margin -10px -10px
     .content-block--tile
       box-sizing border-box
       margin 10px

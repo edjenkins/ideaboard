@@ -1,4 +1,4 @@
-FROM node:boron
+FROM node:latest
 
 RUN mkdir /app
 

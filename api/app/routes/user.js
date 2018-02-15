@@ -3,6 +3,19 @@ const User = require('../../app/models/user')
 const Idea = require('../../app/models/idea')
 
 module.exports = function (app, passport) {
+  app.get('/user/search/:query',
+    (req, res) => {
+      console.log(req.params.id)
+      if (req.isAuthenticated()) {
+        User.findOne({ _id: { $ne: req.user._id }, $text: { $search: req.params.query } }).select('profile.name').exec((err, user) => {
+          if (err) return console.error(err)
+          console.log(user)
+          res.json(user)
+        })
+      } else {
+        res.status(401)
+      }
+    })
   app.get('/user/:id',
     (req, res) => {
       console.log(req.params.id)
@@ -12,7 +25,8 @@ module.exports = function (app, passport) {
           console.log(user)
           res.json({
             _id: user._id,
-            profile: user.profile
+            profile: user.profile,
+            permissions: user._permissions
           })
         })
       } else {

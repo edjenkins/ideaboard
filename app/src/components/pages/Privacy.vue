@@ -103,7 +103,7 @@ export default {
   },
   computed: {
     siteName () {
-      return 'IdeaBoard'
+      return 'Ideaboard'
     },
     siteContact () {
       return 'hello@ideaboard.co.uk'

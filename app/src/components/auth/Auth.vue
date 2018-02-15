@@ -14,7 +14,7 @@
         
           .content-block--body
             form
-              splash-messages(v-bind:messages="splashmessages['login']")
+              splash-messages(v-bind:messages="splashmessages['login']" padded)
               .input-wrapper
                 label Your email
                 input(v-model="user.email" name="email" placeholder="Your email")
@@ -30,7 +30,7 @@
         
           .content-block--body
             form
-              splash-messages(v-bind:messages="splashmessages['join']")
+              splash-messages(v-bind:messages="splashmessages['join']" padded)
               .input-wrapper
                 label Your name
                 input(v-model="user.name" name="name" placeholder="Your name")
@@ -49,7 +49,7 @@
           .content-block--body
             h2 Forgot Password
             form
-              splash-messages(v-bind:messages="splashmessages['forgot']")
+              splash-messages(v-bind:messages="splashmessages['forgot']" padded)
               .input-wrapper
                 label Your email
                 input(v-model="user.email" name="email" placeholder="Your email")
@@ -71,9 +71,9 @@ import PageHeader from '@/components/PageHeader'
 import SplashMessages from '@/components/shared/SplashMessages'
 
 export default {
-  name: 'join',
+  name: 'auth',
   metaInfo: {
-    title: 'Join'
+    title: 'Auth'
   },
   mixins: [
     AuthMixin
@@ -87,9 +87,9 @@ export default {
       isAuthenticating: false,
       state: 'login',
       user: {
-        name: '',
-        email: '',
-        password: ''
+        name: 'Admin',
+        email: 'admin@ideaboard.co.uk',
+        password: 'DxUmgqAXGhden2Ut'
       },
       splashmessages: {
         login: [],
@@ -117,14 +117,14 @@ export default {
       this.isAuthenticating = true
       API.auth.join(this.user,
         (response) => {
-          // Join redirect
+          // Auth redirect
           this.$log(response)
           this.$store.dispatch('checkAuthStatus')
           setTimeout(() => { this.isAuthenticating = false }, 500)
           this.splashmessages.join = response.data.errors
         },
         (error) => {
-          // Join fail
+          // Auth fail
           this.$log(error)
           this.isAuthenticating = false
           this.splashmessages.join = [{ text: 'Something went wrong', type: 'error' }]
