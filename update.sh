@@ -10,13 +10,16 @@ cd /home/edjenkins/sites/ideaboard/api
 cd ../app
 
 # Run npm install process
-# npm install
+npm install
 
 # Run npm build process
 npm run build
 
 # Move back out of app dir
 cd ..
+
+# Remove existing docker containers
+docker-compose stop app
 
 # Remove existing docker containers
 docker-compose rm -f app
