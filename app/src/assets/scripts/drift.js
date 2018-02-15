@@ -1,6 +1,4 @@
-const config = require('@/config');
-
-console.log(config)
+import config from '@/config'
 
 !function() {
   var t

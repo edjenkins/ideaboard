@@ -4,7 +4,7 @@
       .row
         .content-block
           .content-block--body
-            h1 Open Lab 
+            h1 Open Lab designs 
               .example {{ examples[exampleIndex] }}
             h3 A place for suggesting ideas for events (and more!) in the lab.
     
