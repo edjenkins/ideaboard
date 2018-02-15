@@ -27,8 +27,7 @@ export default {
 
     // Load drift
     let driftScript = document.createElement('script')
-    driftScript.setAttribute('src', '~scripts/drift.js')
-    document.head.appendChild(driftScript)
+    driftScript.setAttribute('src', 'scripts/drift.js')
   }
 }
 </script>

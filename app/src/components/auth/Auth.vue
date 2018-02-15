@@ -72,6 +72,7 @@ import SplashMessages from '@/components/shared/SplashMessages'
 
 import * as config from '@/api/config'
 
+console.log(config)
 export default {
   name: 'auth',
   metaInfo: {
