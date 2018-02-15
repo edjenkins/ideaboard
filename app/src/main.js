@@ -10,11 +10,10 @@ import VueSession from 'vue-session'
 import { sync } from 'vuex-router-sync'
 
 import App from '@/App'
+import config from '@/config'
 import store from '@/store'
 import router from '@/router'
 import Icon from 'vue-awesome/components/Icon'
-
-import config from '@/config'
 
 require('@/assets/scripts/drift.js')
 
