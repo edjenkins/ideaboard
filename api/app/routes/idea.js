@@ -45,6 +45,38 @@ module.exports = function (app, passport) {
       if (req.isAuthenticated()) {
         let data = req.body
         data.idea._user = req.user._id
+
+        let errors = []
+
+        // Check title length
+        if (!data.idea.title || data.idea.title.length < 3 || data.idea.title.length > 20) {
+          errors.push({
+            text: 'Idea title should be longer than 3 and less than 20 characters',
+            type: 'error'
+          })
+        }
+
+        // Check tagline is valid
+        if (!data.idea.tagline || data.idea.tagline.length < 8 || data.idea.tagline.length > 240) {
+          errors.push({
+            text: 'Idea tagline should be longer than 10 and less than 240 characters',
+            type: 'error'
+          })
+        }
+
+        // Check description is valid
+        if (!data.idea.description || data.idea.description.length < 8 || data.idea.description.length > 240) {
+          errors.push({
+            text: 'Idea description should be longer than 10 and less than 240 characters',
+            type: 'error'
+          })
+        }
+
+        if (errors.length > 0) {
+          return res.json({
+            errors: errors
+          })
+        }
         
         // Set instance
         data.idea.instance = req.instance
@@ -52,7 +84,9 @@ module.exports = function (app, passport) {
         const idea = new Idea(data.idea)
         
         // Set category
-        idea._categories.push(data.idea.category)
+        if (typeof data.idea.category !== 'undefined') {
+          idea._categories.push(data.idea.category)
+        }
 
         if (data.uploadType === 'unsplash') {
           // Upload unsplash image

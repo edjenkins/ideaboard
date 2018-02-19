@@ -43,7 +43,7 @@ export default {
   data () {
     return {
       categories: [],
-      addingCategory: false,
+      addingCategory: true,
       viewingCategories: false
     }
   },

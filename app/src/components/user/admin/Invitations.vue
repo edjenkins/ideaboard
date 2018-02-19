@@ -4,7 +4,6 @@
       | Invitations
       .tab--header--action(@click="expanded = !expanded")
         i.fas(v-bind:class="[expanded ? 'fa-angle-up' : 'fa-angle-down']")
-        i.fas(v-bind:class="[getTaskIcon(task.type)]")        
 
     .tab--content(v-if="expanded")
       

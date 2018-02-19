@@ -9,14 +9,16 @@
     // Comments
     ul.comment-thread(v-for="(comment, index) in comments" v-bind:key="index" v-bind:class="{ 'has-replies': ((comment._replies.length > 0) || (replyTarget === comment._id)), 'is-replying': (replyTarget === comment._id) }")
       li.comment
-        .comment--avatar(v-bind:style="{ 'background-image': `url('${comment._user.profile.avatar}')` }")
+        avatar.comment--avatar(v-bind:profile="comment._user.profile")
+        //- .comment--avatar(v-bind:style="{ 'background-image': `url('${comment._user.profile.avatar}')` }")
         .comment--user {{ comment._user.profile.name }}
         .comment--text {{ comment.text }}
 
       // Replies
       ul.replies
         li.comment.reply(v-for="(reply, index) in comment._replies" v-bind:key="index")
-          .comment--avatar(v-bind:style="{ 'background-image': `url('${reply._user.profile.avatar}')` }")
+          avatar.comment--avatar(v-bind:profile="reply._user.profile")
+          //- .comment--avatar(v-bind:style="{ 'background-image': `url('${reply._user.profile.avatar}')` }")
           .comment--user {{ reply._user.profile.name }} 
             span replied to {{ comment._user.profile.name }}
           .comment--text {{ reply.text }}
@@ -35,13 +37,13 @@
       .comment-composer.reply-composer(v-if="replyTarget === comment._id")
         .input-wrapper(@click="checkAuth")
           input(v-bind:disabled="!isAuthenticated" type="text" v-model="newReply.text" placeholder="Write a reply.." v-on:keyup.enter="postComment")
-          .btn.btn-primary(@click="postComment") Reply
+          .btn.btn-primary(v-bind:class="{ active: (newReply.text && newReply.text.length > 1) }" @click="postComment") Reply
 
     // Compose comment
     .comment-composer(v-bind:class="{ subtle: replyTarget }")
       .input-wrapper(@click="checkAuth")
         input(v-bind:disabled="!isAuthenticated" type="text" v-model="newComment.text" placeholder="Write a comment.." @focus="replyTarget = undefined" v-on:keyup.enter="postComment")
-        .btn(v-bind:class="{ 'btn-primary': !replyTarget }" @click="postComment") Post
+        .btn(v-bind:class="{ active: (newComment.text && newComment.text.length > 1), 'btn-primary': !replyTarget }" @click="postComment") Post
 </template>
 
 <script>
@@ -50,6 +52,7 @@ import * as types from '@/store/mutation-types'
 import _ from 'lodash'
 
 import Commentable from '@/mixins/Commentable'
+import Avatar from '@/components/user/Avatar'
 
 export default {
   name: 'dicussion',
@@ -57,6 +60,9 @@ export default {
   mixins: [
     Commentable
   ],
+  components: {
+    Avatar
+  },
   computed: {
     ...mapGetters(['isAuthenticated', 'user']),
     commentTarget () {
@@ -109,8 +115,13 @@ export default {
       right 0
       bottom 0
       line-height 40px
+      opacity 0
       padding 0
+      pointer-events none
       width 80px
+      &.active
+        opacity 1
+        pointer-events all
     .input-wrapper
       border $color-border 1px solid
       input
@@ -130,13 +141,13 @@ export default {
       margin-top 0
     &.has-replies
       &:before
-        border-right $color-primary 4px solid
+        border-right $color-primary 2px solid
         content ''
         position absolute
         top 25px
         bottom 45px
         right auto
-        left 18px
+        left 19px
         width 0
     li.comment
       cleanlist()

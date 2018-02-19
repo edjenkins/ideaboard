@@ -1,7 +1,7 @@
 <template lang="pug">
 
   .navigation-button(@click="toggle")
-    .bar-wrapper(v-bind:class="{ 'cross': open }")
+    .bar-wrapper(v-bind:class="{ 'cross': active }")
       .bar.top-bar
       .bar.middle-bar
       .bar.bottom-bar
@@ -11,27 +11,21 @@
 <script>
 export default {
   name: 'hamburger',
+  props: ['active'],
   watch: {
     '$route.path': {
       handler: function (nV, oV) {
-        this.open = false
-        this.$emit('close')
+        this.$emit('update:active', false)
       },
       deep: true
     }
   },
-  data () {
-    return {
-      open: false
-    }
-  },
   methods: {
     toggle () {
-      this.open = !this.open
-      if (this.open) {
-        this.$emit('open')
+      if (this.active) {
+        this.$emit('update:active', false)
       } else {
-        this.$emit('close')
+        this.$emit('update:active', true)
       }
     }
   }

@@ -44,6 +44,7 @@ export default {
     },
     selectImage (result) {
       this.selectedImage = result
+      this.results = []
       this.$emit('update:selectedImage', this.selectedImage.urls.regular)
     }
   }
@@ -73,7 +74,7 @@ export default {
       padding 0
       text-align center
       width 100px
-      .fa-icon
+      svg
         margin-left 8px
   ul.unsplash-search--results
     cleanlist()

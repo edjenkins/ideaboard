@@ -2,8 +2,8 @@
   #navbar(v-bind:class="authState" v-bind:style="{ 'background-color': navColor }")
     .row
       router-link#logo(to="/") Ideaboard
-      hamburger(v-on:open="active = true" v-on:close="active = false")
-      #menu-underlay(v-bind:class="{ active: active }")
+      hamburger(v-bind:active.sync="active")
+      #menu-underlay(v-bind:class="{ active: active }" @click="active = false")
       #menu(v-bind:class="{ active: active }")
         router-link(to="/start") Start
         router-link(to="/explore") Explore

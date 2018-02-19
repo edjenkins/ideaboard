@@ -7,13 +7,13 @@
     social-sharing(v-bind:url="shareLink" inline-template)
       div
         network.social--link(network="twitter")
-          i.fab.fa-twitter
+          i.fab.fa-twitter(data-fa-transform="grow-5")
         network.social--link(network="facebook")
-          i.fab.fa-facebook
+          i.fab.fa-facebook(data-fa-transform="grow-5")
         network.social--link(network="googleplus")
-          i.fab.fa-google-plus
+          i.fab.fa-google-plus(data-fa-transform="grow-5")
         network.social--link(network="linkedin")
-          i.fab.fa-linkedin
+          i.fab.fa-linkedin(data-fa-transform="grow-5")
         .clearfix
     p.subscription-stats
       span(v-if="idea._subscribers.length === 1") You are the only subscriber
@@ -154,18 +154,23 @@ export default {
     .social--link
       radius(50%)
       animate()
-      background-color $color-lighter-grey
-      float left
+      display inline-block
       height 50px
       margin 10px 5px
       position relative
       text-align center
       width 50px
       svg
-        color $color-dark-grey
+        animate()
+        color $color-grey
         height 18px
         margin 15px 5px
       &:hover
-        background-color darken($color-lighter-grey, 10%)
+        background-color $color-lightest-grey
         cursor pointer
+        svg
+          color darken($color-grey, 10%)
+          opacity 1
+
+        
 </style>

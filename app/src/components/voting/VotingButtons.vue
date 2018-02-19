@@ -61,7 +61,7 @@ export default {
     &:hover
       cursor pointer
       color darken($color-text-light-grey, 20%)
-    .fa-icon
+    svg
       height 40px
       width 20px
     &.like

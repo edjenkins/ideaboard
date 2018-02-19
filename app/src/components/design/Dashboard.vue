@@ -5,7 +5,7 @@
     .design-dashboard--task(v-for="(task, index) in orderedTasks" v-bind:key="index" @click="loadTask(task)")
       .design-dashboard--task--title {{ task.title }}
       .design-dashboard--task--meta.design-dashboard--task--status  
-        i.fas.fa-thumb-tack(v-if="task.pinned")
+        i.fas.fa-thumbtack(v-if="task.pinned")
         i.fas.fa-lock(v-if="task.locked")
       .design-dashboard--task--meta.design-dashboard--task--type
         i.fas(v-bind:class="[getTaskIcon(task.type)]")
@@ -125,7 +125,7 @@ export default {
         &.design-dashboard--task--type
           left 50%
           text-align right
-        .fa-icon
+        svg
           margin 5px
         p
           reset()
@@ -143,7 +143,7 @@ export default {
         outline-offset -2px
         .design-dashboard--task--title
           color $color-grey
-          .fa-icon
+          svg
             height 25px
         &:hover
           background-color $color-lightest-grey

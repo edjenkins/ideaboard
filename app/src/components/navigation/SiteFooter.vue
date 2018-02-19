@@ -2,7 +2,7 @@
   #site-footer
     .row
       ul
-        li Copyright 2017
+        li Copyright 2018
         router-link.is-link(tag="li" to="/learn") About
         router-link.is-link(tag="li" to="/terms") Terms
         router-link.is-link(tag="li" to="/privacy") Privacy

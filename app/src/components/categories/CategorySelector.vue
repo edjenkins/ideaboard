@@ -1,13 +1,14 @@
 <template lang="pug">
   .category-selector
     dropdown(ref="dropdown" v-bind:class-name="'custom'")
-      template(slot="btn") {{ idea.category_name }}
+      template(slot="btn") {{ category_name || 'No Category' }}
       //- Select Category
       template(slot="body")
         .category(@click="selectCategory(undefined)")
           label No Category
         .category(slot="body" v-for="(category, index) in categories" @click="selectCategory(category)")
           label {{ category.name }}
+
 </template>
 
 <script>
@@ -15,14 +16,14 @@ import Dropdown from 'bp-vuejs-dropdown'
 
 export default {
   name: 'category-selector',
-  props: [ 'idea', 'categories' ],
+  props: [ 'category', 'category_name', 'categories' ],
   components: {
     Dropdown
   },
   methods: {
     selectCategory (category) {
-      this.idea.category = (typeof category === 'undefined') ? undefined : category._id
-      this.idea.category_name = (typeof category === 'undefined') ? 'No Category' : category.name
+      this.$emit('update:category', (typeof category === 'undefined') ? undefined : category._id)
+      this.$emit('update:category_name', (typeof category === 'undefined') ? 'No Category' : category.name)
       this.$refs.dropdown.isHidden = true
     }
   }

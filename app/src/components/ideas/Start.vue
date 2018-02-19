@@ -5,9 +5,10 @@
       .content-block.content-block--main.pull-up.pull-left.white-block
         .content-block--body
           form
+            splash-messages(v-bind:messages="splashmessages" padded)
             .input-wrapper(v-if="categories.length > 0")
               label Idea Category
-              category-selector(v-bind:idea="idea" v-bind:categories="categories")
+              category-selector(v-bind:category.sync="idea.category" v-bind:category_name.sync="idea.category_name" v-bind:categories="categories")
 
             .input-wrapper
               label Idea Title
@@ -48,6 +49,7 @@ import { quillEditor } from 'vue-quill-editor'
 import _isEmpty from 'lodash/isEmpty'
 import { mapGetters } from 'vuex'
 
+import SplashMessages from '@/components/shared/SplashMessages'
 import UnsplashSearch from '@/components/UnsplashSearch'
 import FileUpload from '@/components/FileUpload'
 import PageHeader from '@/components/PageHeader'
@@ -60,6 +62,7 @@ export default {
     title: 'Start Idea'
   },
   components: {
+    SplashMessages,
     CategorySelector,
     Quill,
     quillEditor,
@@ -112,7 +115,8 @@ export default {
         tagline: undefined,
         description: undefined,
         banner: undefined
-      }
+      },
+      splashmessages: []
     }
   },
   computed: {
@@ -153,7 +157,11 @@ export default {
           // Idea redirect
           this.$log(response)
           setTimeout(() => { this.creatingIdea = false }, 500)
-          this.$router.push(`/idea/${response.data.idea._id}`)
+          if (response.data.errors) {
+            this.splashmessages = response.data.errors
+          } else {
+            this.$router.push(`/idea/${response.data.idea._id}`)
+          }
         },
         (error) => {
           // Idea fail

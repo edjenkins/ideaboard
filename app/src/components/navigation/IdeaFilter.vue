@@ -133,7 +133,7 @@ export default {
           padding 0 28px 0 15px
           position relative
           text-align center
-          .fa-icon
+          svg
             position absolute
             top 9px
             right 10px

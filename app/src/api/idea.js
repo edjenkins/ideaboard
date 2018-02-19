@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as config from '@/api/config'
 
 export default {
-  create (idea, cb, errorCb) {
+  start (idea, cb, errorCb) {
     axios.post(`${config.API_ADDRESS}/idea`, idea, { withCredentials: true }).then((response) => {
       cb(response)
     })

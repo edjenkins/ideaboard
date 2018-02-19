@@ -81,7 +81,7 @@ export default {
     padding 20px 20px
     padding-right 60px
     position relative
-    .fa-icon
+    svg
       animate()
       color white
       position absolute
@@ -93,7 +93,7 @@ export default {
     &:hover
       cursor pointer
       background-color darken($color-design, 5%)
-      .fa-icon
+      svg
         right -5px
 
 </style>

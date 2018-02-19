@@ -3,7 +3,7 @@
     h1.tab--header.no-parent
       | Manage Permissions
       .tab--header--action(@click="expanded = !expanded")
-        i.fas(v-bind:class="[expanded ? 'angle-up' : 'angle-down']")
+        i.fas(v-bind:class="[expanded ? 'fa-angle-up' : 'fa-angle-down']")
 
     .tab--content(v-if="expanded")
       table(border="0")
@@ -130,10 +130,10 @@ export default {
         outline 0
         padding 0 10px
         width calc(100% - 20px)
-      .fa-icon
+      svg
         color $color-grey
       &.has-permission
-        .fa-icon
+        svg
           color $color-success
 
     ul.search-results
