@@ -41,7 +41,7 @@ app.use(function (req, res, next) {
   next()
 })
 
-mongoose.connect(configDB.url) // connect to our database
+mongoose.connect(configDB.url, { useMongoClient: true }) // connect to our database
 
 // set up our express application
 app.use(morgan('dev')) // log every request to the console

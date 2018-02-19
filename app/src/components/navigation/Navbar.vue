@@ -2,8 +2,8 @@
   #navbar(v-bind:class="authState" v-bind:style="{ 'background-color': navColor }")
     .row
       router-link#logo(to="/") Ideaboard
-      #menu-toggle(@click="active = !active")
-        icon(name="bars")
+      hamburger(v-on:open="active = true" v-on:close="active = false")
+      #menu-underlay(v-bind:class="{ active: active }")
       #menu(v-bind:class="{ active: active }")
         router-link(to="/create") Create
         router-link(to="/explore") Explore
@@ -11,6 +11,7 @@
         router-link(to="/profile" v-if="isAuthenticated" v-bind:class="{ 'has-notifications': hasNotifications }")
           | Profile
           span.notification-bubble(v-if="hasNotifications") {{ notifications.unread.length }}
+        .clearfix
       .clearfix
 </template>
 
@@ -18,11 +19,13 @@
 import { mapGetters } from 'vuex'
 
 import Icon from 'vue-awesome/components/Icon'
+import Hamburger from '@/components/navigation/Hamburger'
 
 export default {
   name: 'navbar',
   components: {
-    Icon
+    Icon,
+    Hamburger
   },
   data () {
     return {
@@ -97,17 +100,39 @@ export default {
     @media(max-width: 568px)
       display block
       line-height $mobile-navigation-height
+  #menu-underlay
+    animate()
+    pinned()
+    background-color alpha(black, 0.5)
+    position fixed
+    top $mobile-navigation-height
+    opacity 0
+    pointer-events none
+    &.active
+      opacity 1
+      pointer-events all
   #menu
+    animate()
     float right
     line-height $navigation-height
     @media(max-width: 568px)
+      gradient()
+      transform rotateX(90deg)
+      transform-origin 0 0
+      background-color $color-primary
       border-top alpha(black, 0.1) 1px solid
-      display none
+      border-bottom alpha(black, 0.1) 1px solid
+      opacity 0
       float none
       line-height $mobile-navigation-height
-      padding 0 10px
+      padding 10px
+      position absolute
+      pointer-events none
+      width 100%
       &.active
-        display block
+        opacity 1
+        pointer-events all
+        transform rotateX(0deg)
     a
       reset()
       animate()
@@ -115,7 +140,7 @@ export default {
       color white
       display block
       float left
-      line-height $navigation-height - 40px
+      line-height $mobile-navigation-height - 20px
       margin 20px 5px
       padding 0 20px
       position relative
@@ -141,5 +166,8 @@ export default {
       &.router-link-active
         background-color alpha(black, 0.1)
       @media(max-width: 568px)
+        border-box()
         margin 10px 5px 
+        text-align center
+        width calc( calc( calc(100% - 20px) / 3) - 10px )
 </style>

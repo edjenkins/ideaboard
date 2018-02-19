@@ -1,11 +1,13 @@
 <template lang="pug">
   #app
+    cookie-law
     navbar
     router-view
     auth-modal
 </template>
 
 <script>
+import CookieLaw from 'vue-cookie-law'
 import Navbar from '@/components/navigation/Navbar'
 import AuthModal from '@/components/auth/AuthModal'
 
@@ -15,6 +17,7 @@ export default {
     titleTemplate: 'Ideaboard - %s'
   },
   components: {
+    CookieLaw,
     Navbar,
     AuthModal
   },

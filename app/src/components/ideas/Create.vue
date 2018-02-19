@@ -5,9 +5,8 @@
       .content-block.content-block--main.pull-up.pull-left.white-block
         .content-block--body
           form
-            .input-wrapper
+            .input-wrapper(v-if="categories.length > 0")
               label Idea Category
-
               category-selector(v-bind:idea="idea" v-bind:categories="categories")
 
             .input-wrapper

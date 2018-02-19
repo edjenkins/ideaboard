@@ -26,18 +26,14 @@ services:
       - mongo
 
   mongo:
-    image: aashreys/mongo-auth:latest
+    image: mongo:latest
     environment:
-      - AUTH=no
-      - MONGODB_ADMIN_USER
-      - MONGODB_ADMIN_PASS
-      - MONGODB_APPLICATION_DATABASE
-      - MONGODB_APPLICATION_USER
-      - MONGODB_APPLICATION_PASS
-    ports:
-      - "27018:27017"
+      - MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD
     volumes_from:
       - mongodata
+    ports:
+      - "27018:27017"
 
   mongoui:
     image: twnel/mongo-express
