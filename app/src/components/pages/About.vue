@@ -13,7 +13,7 @@
           p What makes Ideaboard different?
           p Unlike other platforms, Ideaboard is designed with community at its heart. We believe that any idea can be improved by including more passionate voices. That’s why all our tools are open for everyone to use.
           p On Ideaboard, anyone who subscribes to your idea can ask questions, set polls and offer their expertise! So much better than a survey, this is genuine, real collaboration between you and your audience.
-          p So what are you waiting for? Start your idea now!
+          p So what are you waiting for? Start an Idea now!
 
       .clearfix
 

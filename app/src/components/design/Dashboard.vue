@@ -5,14 +5,14 @@
     .design-dashboard--task(v-for="(task, index) in orderedTasks" v-bind:key="index" @click="loadTask(task)")
       .design-dashboard--task--title {{ task.title }}
       .design-dashboard--task--meta.design-dashboard--task--status  
-        icon(name="thumb-tack" v-if="task.pinned") 
-        icon(name="lock" v-if="task.locked")
+        i.fas.fa-thumb-tack(v-if="task.pinned")
+        i.fas.fa-lock(v-if="task.locked")
       .design-dashboard--task--meta.design-dashboard--task--type
-        icon(v-bind:name="getTaskIcon(task.type)")
+        i.fas(v-bind:class="[getTaskIcon(task.type)]")
 
     .design-dashboard--task#add-task(@click="addTask()")
       .design-dashboard--task--title
-        icon(name="plus")
+        i.fas.fa-plus
   .clearfix
 
 </template>
@@ -20,18 +20,10 @@
 <script>
 import _ from 'lodash'
 import API from '@/api'
-import Icon from 'vue-awesome/components/Icon'
-import 'vue-awesome/icons'
-import 'vue-awesome/icons/plus'
-import 'vue-awesome/icons/lock'
-import 'vue-awesome/icons/thumb-tack'
 
 export default {
   name: 'dashboard',
   props: ['activeTask', 'idea'],
-  components: {
-    Icon
-  },
   created () {
     this.loadTasks()
   },
@@ -50,11 +42,15 @@ export default {
     getTaskIcon (type) {
       switch (type) {
         case 'poll':
-          return 'list-ul'
+          return 'fa-list-ul'
         case 'discussion':
-          return 'comments'
+          return 'fa-comments'
         case 'media':
-          return 'picture-o'
+          return 'fa-images'
+        case 'appearin':
+          return 'fa-video'
+        case 'whiteboard':
+          return 'fa-paint-brush'
         default:
           break
       }

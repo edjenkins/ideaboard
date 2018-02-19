@@ -13,11 +13,8 @@ import App from '@/App'
 import config from '@/config'
 import store from '@/store'
 import router from '@/router'
-import Icon from 'vue-awesome/components/Icon'
 
 require('@/assets/scripts/drift.js')
-
-Vue.component('icon', Icon)
 
 sync(store, router)
 

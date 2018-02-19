@@ -1,6 +1,6 @@
 <template lang="pug">
   #idea
-    page-header(v-if="idea" v-bind:title="idea.title" v-bind:subtitle="`Created by ${idea._user.profile.name}`")
+    page-header(v-if="idea" v-bind:title="idea.title" v-bind:subtitle="`Started by ${idea._user.profile.name}`")
     page-header(v-else title="Loading" subtitle="Please wait just a moment...")
     .row(v-if="idea")
 
@@ -16,7 +16,7 @@
           .tabs--selector
             .tabs--selector--item(v-for="(tab, index) in tabs.items" v-bind:class="{ active: (index === tabs.active) }" @click="tabs.active = index")
               | {{ tab.title }}
-              .notification-bubble(v-if="tab.notificationCount > 0") {{ tab.notificationCount }}
+              .notification-bubble(v-if="getNotificationCount(tab.identifier) > 0") {{ getNotificationCount(tab.identifier) }}
             .clearfix
           .tabs--page
             component(v-bind:is="tabs.items[tabs.active].component" v-bind:idea="idea" v-on:show-design="showDesign()" keep-alive)
@@ -74,9 +74,9 @@ export default {
       tabs: {
         active: 0,
         items: [
-          { title: 'About', component: 'info-tab', notificationCount: 0 },
-          { title: 'Discussion', component: 'design-tab', notificationCount: 1 },
-          { title: 'Outcome', component: 'outcome-tab', notificationCount: 0 }
+          { title: 'About', identifier: 'info', component: 'info-tab' },
+          { title: 'Discussion', identifier: 'design', component: 'design-tab' },
+          { title: 'Outcome', identifier: 'outcome', component: 'outcome-tab' }
         ]
       }
     }
@@ -85,6 +85,15 @@ export default {
     showDesign () {
       // Set active tab to design
       this.tabs.active = 1
+    },
+    getNotificationCount (identifier) {
+      switch (identifier) {
+        case 'design':
+          // Return the total number of tasks
+          return this.idea._tasks.length
+        default:
+          return 0
+      }
     }
   }
 }

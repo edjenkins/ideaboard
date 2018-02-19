@@ -48,8 +48,6 @@
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import _ from 'lodash'
-import Icon from 'vue-awesome/components/Icon'
-import 'vue-awesome/icons/arrow-left'
 
 import Commentable from '@/mixins/Commentable'
 
@@ -59,9 +57,6 @@ export default {
   mixins: [
     Commentable
   ],
-  components: {
-    Icon
-  },
   computed: {
     ...mapGetters(['isAuthenticated', 'user']),
     commentTarget () {

@@ -4,7 +4,7 @@
   h1.tab--header.no-parent
     | Manage
     .tab--header--action(@click="viewCategories")
-      icon(v-bind:name="viewingCategories ? 'angle-up' : 'angle-down'")
+      i.fas(v-bind:class="[viewingCategories ? 'fa-angle-up' : 'fa-angle-down']")
 
   .tab--content(v-if="viewingCategories")
 
@@ -18,7 +18,7 @@
   h1.tab--header.no-parent
     | Add new
     .tab--header--action(@click="addCategory")
-      icon(v-bind:name="addingCategory ? 'angle-up' : 'angle-down'")
+      i.fas(v-bind:class="[addingCategory ? 'fa-angle-up' : 'fa-angle-down']")
 
   .tab--content(v-if="addingCategory")
     .tab-section--body
@@ -30,7 +30,6 @@
 import API from '@/api'
 
 import CreateCategory from '@/components/categories/CreateCategory'
-import 'vue-awesome/icons'
 
 export default {
   name: 'categories-tab',

@@ -6,11 +6,11 @@
           .content-block--body
             h1 Newcastle University designs 
               .example {{ examples[exampleIndex] }}
-            h3 Create an idea and begin building a strong community through discussion.
+            h3 Start an idea and begin building a strong community through discussion.
     
     splash-image(align="right" title="Collaborative" subtitle="Ideaboard brings people together in an online space to ask questions and make decisions." action="Learn More" link="/learn")
     featured-ideas
-    splash-image(align="left" title="Ready when you are." subtitle="When you've had a good look around the site and you're ready to start your own idea just click the button below." action="Create your Idea" link="/create")
+    splash-image(align="left" title="Ready when you are." subtitle="When you've had a good look around the site and you're ready to start your own idea just click the button below." action="Start an Idea" link="/start")
 
     site-footer
 </template>

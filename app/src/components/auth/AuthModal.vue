@@ -2,7 +2,7 @@
   #auth-modal(v-if="authModalVisible")
     .auth-panel
       #close-button(@click="closeAuthModal")
-        icon(name="times")
+        i.fas.fa-times
       h1 Woah
       h3 Looks like you aren't signed in!
       p Please create an account or login to get started
@@ -20,18 +20,11 @@ import { mapGetters } from 'vuex'
 
 import AuthMixin from '@/mixins/AuthMixin'
 
-import Icon from 'vue-awesome/components/Icon'
-
-import 'vue-awesome/icons/times'
-
 export default {
   name: 'auth-modal',
   mixins: [
     AuthMixin
   ],
-  components: {
-    Icon
-  },
   data () {
     return {
       state: undefined

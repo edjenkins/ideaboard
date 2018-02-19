@@ -3,7 +3,8 @@
   //- h1.tab--header.no-parent
     span {{ idea.title }}
     .tab--header--action(v-if="ownIdea")
-      icon(name="pencil")
+      i.fas.fa-pencil
+      
   .tab--content
     rendered-content(v-bind:content="idea.description")
   .tab--footer
@@ -17,24 +18,21 @@
   //- .design-banner(@click="viewDesign()")
     span(v-if="idea._subscribers.length > 2") Join {{ idea._subscribers.length }} people in disscussing this idea!
     span(v-else) Join the rich discussion
-    icon(name="angle-right")
+    i.fas.fa-angle-right
+    
 
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import Icon from 'vue-awesome/components/Icon'
 import RenderedContent from '@/components/shared/RenderedContent'
 import SubscribeButton from '@/components/ideas/actions/SubscribeButton'
 import Discussion from '@/components/design/modules/Discussion'
-
-import 'vue-awesome/icons'
 
 export default {
   name: 'info-tab',
   props: ['idea'],
   components: {
-    Icon,
     RenderedContent,
     SubscribeButton,
     Discussion

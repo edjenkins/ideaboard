@@ -5,7 +5,6 @@
     .btn.btn-primary(@click="search")
       span(v-if="loading")
         | Wait...
-        //- icon(v-if="loading" name="refresh" spin)
       span(v-else)
         | Search
   ul.unsplash-search--results
@@ -18,15 +17,8 @@
 <script>
 import API from '@/api'
 
-import Icon from 'vue-awesome/components/Icon'
-
-import 'vue-awesome/icons/refresh'
-
 export default {
   name: 'unsplash-search',
-  components: {
-    Icon
-  },
   data () {
     return {
       searchQuery: '',

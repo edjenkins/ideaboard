@@ -1,24 +1,18 @@
 <template lang="pug">
 .voting-buttons
   .like(@click="like(response._id)" v-bind:class="{ 'has-voted': hasLiked }")
-    icon(name="angle-up" scale="2")
+    i.fas.fa-angle-up.fa-2x
   .dislike(@click="dislike(response._id)" v-bind:class="{ 'has-voted': hasDisliked }")
-    icon(name="angle-down" scale="2")
+    i.fas.fa-angle-down.fa-2x
 </template>
 
 <script>
 import _ from 'lodash'
 import { mapGetters } from 'vuex'
-import Icon from 'vue-awesome/components/Icon'
-import 'vue-awesome/icons/angle-up'
-import 'vue-awesome/icons/angle-down'
 
 export default {
   name: 'voting-buttons',
   props: ['response'],
-  components: {
-    Icon
-  },
   computed: {
     ...mapGetters(['user']),
     hasLiked () {

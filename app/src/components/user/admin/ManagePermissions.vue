@@ -3,7 +3,7 @@
     h1.tab--header.no-parent
       | Manage Permissions
       .tab--header--action(@click="expanded = !expanded")
-        icon(v-bind:name="expanded ? 'angle-up' : 'angle-down'")
+        i.fas(v-bind:class="[expanded ? 'angle-up' : 'angle-down']")
 
     .tab--content(v-if="expanded")
       table(border="0")
@@ -17,9 +17,10 @@
           td(v-bind:title="user.local.email")
             strong {{ user.profile.name }}
           td(v-for="(permission, index) in permissions" v-bind:class="{ 'has-permission': hasPermission(user, permission) }" align="center")
-            icon(v-bind:name="hasPermission(user, permission) ? 'check' : 'times'")
+            i.fas(v-bind:class="[hasPermission(user, permission) ? 'fa-check' : 'fa-times']")
+            
           td(align="center")
-            icon(name="ban")
+            i.fas.fa-ban
         
         tr(v-if="search.result")
           td
@@ -30,7 +31,6 @@
             input(type="checkbox" v-model="newPermissions[permission._id]")
 
           td(v-if="search.query.length > 0" align="center")
-            //- icon(name="envelope")
             .btn.btn-success(@click="updatePermissions(search.result._id)") Save
 
         tr
@@ -41,7 +41,6 @@
 
 <script>
 import API from '@/api'
-import 'vue-awesome/icons'
 
 export default {
   name: 'manage-permissions',

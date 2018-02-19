@@ -7,13 +7,13 @@
     social-sharing(v-bind:url="shareLink" inline-template)
       div
         network.social--link(network="twitter")
-          i.fa.fa-twitter
+          i.fab.fa-twitter
         network.social--link(network="facebook")
-          i.fa.fa-facebook
+          i.fab.fa-facebook
         network.social--link(network="googleplus")
-          i.fa.fa-google-plus
+          i.fab.fa-google-plus
         network.social--link(network="linkedin")
-          i.fa.fa-linkedin
+          i.fab.fa-linkedin
         .clearfix
     p.subscription-stats
       span(v-if="idea._subscribers.length === 1") You are the only subscriber
@@ -23,7 +23,6 @@
 
 <script>
 import Vue from 'vue'
-import Icon from 'vue-awesome/components/Icon'
 
 import API from '@/api'
 import { mapGetters } from 'vuex'
@@ -36,9 +35,6 @@ Vue.use(SocialSharing)
 export default {
   name: 'subscribe-button',
   props: ['idea'],
-  components: {
-    Icon
-  },
   created () {
     this.shareLink = window.location.href
   },
@@ -118,7 +114,6 @@ export default {
 #subscribe-btn
   animate()
   position relative
-  max-width 230px
   text-align center
   &.active
     padding-bottom 65px
@@ -127,7 +122,7 @@ export default {
     background-color $color-primary
     position relative
     text-align center
-    width 230px
+    max-width 100%
     z-index 1
     &:hover
       background-color darken($color-primary, 10%)
@@ -166,7 +161,7 @@ export default {
       position relative
       text-align center
       width 50px
-      i
+      svg
         color $color-dark-grey
         height 18px
         margin 15px 5px

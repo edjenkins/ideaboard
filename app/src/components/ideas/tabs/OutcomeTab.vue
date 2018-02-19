@@ -3,12 +3,14 @@
   #idea-tools
     h1.tab--header(v-bind:class="{ 'no-parent': (activeComponent === 'dashboard') }")
       .tab--header--previous(name="home" @click="goToDashboard")
-        icon(name="arrow-left")
+        i.fas.fa-arrow-left
+        
       span {{ (activeComponent === 'dashboard') ? titles[activeComponent] : activeComponent }}
       //- .tab--header--action
         span(v-if="activeComponent && (activeComponent != 'dashboard')") {{ activeComponent }}
         span(v-else)
-          icon(name="question")
+          i.fas.fa-question
+          
 
     transition(v-bind:name="transitionType" mode="out-in")
       component(v-bind:is="activeComponent" v-bind:idea="idea" v-bind:activeTool.sync="activeComponent" v-on:back="goToDashboard")
@@ -20,14 +22,10 @@ import Media from '@/components/outcome/Media'
 import Subscribers from '@/components/outcome/Subscribers'
 import Updates from '@/components/outcome/Updates'
 
-import Icon from 'vue-awesome/components/Icon'
-import 'vue-awesome/icons/arrow-left'
-
 export default {
   name: 'outcome-tab',
   props: ['idea'],
   components: {
-    Icon,
     Dashboard,
     Media,
     Subscribers,

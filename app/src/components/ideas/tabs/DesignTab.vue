@@ -2,12 +2,12 @@
 .tab-content--design
   h1.tab--header(v-bind:class="{ 'no-parent': (activeComponent === 'dashboard') }")
     .tab--header--previous(name="home" @click="goToDashboard")
-      icon(name="arrow-left")
+      i.fas.fa-arrow-left
     span {{ (activeTask) ? activeTask.title : titles[activeComponent] }}
     .tab--header--action(v-if="activeComponent != 'add-task'" @click="addTask")
       span(v-if="activeTask") {{ activeComponent }}
       span(v-else)
-        icon(name="plus")
+        i.fas.fa-plus
   transition(v-bind:name="transitionType" mode="out-in")
     component(v-bind:is="activeComponent" v-bind:idea="idea" v-bind:activeTask.sync="activeTask" v-on:add-task="addTask" v-on:back="goToDashboard")
 </template>
@@ -15,9 +15,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
-import Icon from 'vue-awesome/components/Icon'
-import 'vue-awesome/icons/arrow-left'
-import 'vue-awesome/icons/plus'
 
 import Dashboard from '@/components/design/Dashboard'
 import AddTask from '@/components/design/AddTask'
@@ -31,7 +28,6 @@ export default {
   name: 'design-tab',
   props: ['idea'],
   components: {
-    Icon,
     Dashboard,
     AddTask,
     Discussion,

@@ -5,7 +5,7 @@
       hamburger(v-on:open="active = true" v-on:close="active = false")
       #menu-underlay(v-bind:class="{ active: active }")
       #menu(v-bind:class="{ active: active }")
-        router-link(to="/create") Create
+        router-link(to="/start") Start
         router-link(to="/explore") Explore
         router-link(to="/auth" v-if="!isAuthenticated") Login
         router-link(to="/profile" v-if="isAuthenticated" v-bind:class="{ 'has-notifications': hasNotifications }")
@@ -18,13 +18,11 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import Icon from 'vue-awesome/components/Icon'
 import Hamburger from '@/components/navigation/Hamburger'
 
 export default {
   name: 'navbar',
   components: {
-    Icon,
     Hamburger
   },
   data () {

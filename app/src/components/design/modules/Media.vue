@@ -25,10 +25,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import API from '@/api'
-import Icon from 'vue-awesome/components/Icon'
 import FileUpload from '@/components/FileUpload'
-
-import 'vue-awesome/icons/arrow-left'
 
 export default {
   name: 'media',
@@ -37,7 +34,6 @@ export default {
     this.fetchResponses()
   },
   components: {
-    Icon,
     FileUpload
   },
   data () {

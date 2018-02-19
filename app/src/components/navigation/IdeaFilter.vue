@@ -7,7 +7,8 @@
           ul#sort-tabs
             li(@click="toggleCategories()")
               | {{ currentCategory ? currentCategory.name : '' }}
-              icon(name="angle-down")
+              i.fas.fa-angle-down
+              
             //- li(@click="toggleSortType()") {{ sortType }}
           #search(v-bind:class="{ active: searchVisible }" @click="toggleSearch()") {{ searchVisible ? 'Cancel' : 'Search' }}
           .clearfix
@@ -25,8 +26,6 @@
 import CategoryFilter from '@/components/filtering/CategoryFilter'
 
 import _find from 'lodash/find'
-
-import 'vue-awesome/icons/angle-down'
 
 export default {
   name: 'idea-filter',

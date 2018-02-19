@@ -9,20 +9,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Icon from 'vue-awesome/components/Icon'
-
-import 'vue-awesome/icons/arrow-left'
 
 export default {
   name: 'appearin',
   props: ['active-task'],
-  components: {
-    Icon
-  },
-  data () {
-    return {
-    }
-  },
   computed: {
     ...mapGetters(['isAuthenticated'])
   },

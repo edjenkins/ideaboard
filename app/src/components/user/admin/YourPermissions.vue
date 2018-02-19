@@ -3,7 +3,7 @@
     h1.tab--header.no-parent
       | Your Permissions
       .tab--header--action(@click="expanded = !expanded")
-        icon(v-bind:name="expanded ? 'angle-up' : 'angle-down'")
+        i.fas(v-bind:class="[expanded ? 'fa-angle-up' : 'fa-angle-down']")
     
     .tab--content(v-if="expanded")
       p(v-for="(permission, index) in user.permissions" v-bind:key="index") {{ `${permission.description} (${permission.type} - ${permission.instance})` }}

@@ -29,15 +29,12 @@ import * as types from '@/store/mutation-types'
 import API from '@/api'
 import { mapGetters } from 'vuex'
 import FileUpload from '@/components/FileUpload'
-import Icon from 'vue-awesome/components/Icon'
-import 'vue-awesome/icons'
 
 export default {
   name: 'bio-tab',
   props: ['currentUser'],
   components: {
-    FileUpload,
-    Icon
+    FileUpload
   },
   created () {
     this.editedProfile = JSON.parse(JSON.stringify(this.currentUser.profile))

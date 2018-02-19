@@ -39,7 +39,7 @@ module.exports = function (app, passport) {
         res.json({ idea: results.idea })
       })
     })
-  // Create idea
+  // Start idea
   app.post('/idea',
     (req, res) => {
       if (req.isAuthenticated()) {

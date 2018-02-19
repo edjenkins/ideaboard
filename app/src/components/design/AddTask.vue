@@ -22,7 +22,7 @@
     .input-wrapper
       label(@click="showAdvancedOptions = !showAdvancedOptions")
         | Advanced options
-        icon(v-bind:name="showAdvancedOptions ? 'chevron-up' : 'chevron-down'")
+        i.fas(v-bind:class="[showAdvancedOptions ? 'fa-chevron-up' : 'fa-chevron-down']")
       #advanced-options(v-if="showAdvancedOptions")
         label Pin this task
           input(type="checkbox" v-model="task.pinned")
@@ -39,16 +39,11 @@
 
 <script>
 import API from '@/api'
-import Icon from 'vue-awesome/components/Icon'
 import SplashMessages from '@/components/shared/SplashMessages'
-
-import 'vue-awesome/icons/chevron-up'
-import 'vue-awesome/icons/chevron-down'
 
 export default {
   name: 'add-task',
   components: {
-    Icon,
     SplashMessages
   },
   props: ['idea'],
@@ -127,7 +122,7 @@ export default {
         font-size 0.9em
         font-weight bold
         margin 10px 0
-        .fa-icon
+        svg
           margin 0 5px
           position relative
           top 1px

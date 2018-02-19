@@ -13,7 +13,7 @@ import Privacy from '@/components/pages/Privacy'
 import Profile from '@/components/pages/Profile'
 
 // Ideas
-import Create from '@/components/ideas/Create'
+import Start from '@/components/ideas/Start'
 import Explore from '@/components/ideas/Explore'
 import Idea from '@/components/ideas/Idea'
 
@@ -56,9 +56,9 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      path: '/create',
-      name: 'create',
-      component: Create
+      path: '/start',
+      name: 'start',
+      component: Start
     },
     {
       path: '/explore/:category?',

@@ -1,6 +1,6 @@
 <template lang="pug">
-  #create-idea
-    page-header(title="Create Idea" subtitle="This is where it begins, create your idea, invite some friends and start designing")
+  #start-idea
+    page-header(title="Start an Idea" subtitle="This is where it begins, start an Idea, invite some friends and begin designing!")
     .row
       .content-block.content-block--main.pull-up.pull-left.white-block
         .content-block--body
@@ -31,7 +31,7 @@
 
         .content-block--footer
           .btn.btn-danger-subtle.pull-left(@click="startOver") Reset
-          .btn.btn-success.pull-right(@click="createIdea")
+          .btn.btn-success.pull-right(@click="startIdea")
             span(v-if="creatingIdea") Creating Idea...
             span(v-else) Continue
           .clearfix
@@ -55,9 +55,9 @@ import IdeaTile from '@/components/ideas/IdeaTile'
 import CategorySelector from '@/components/categories/CategorySelector'
 
 export default {
-  name: 'create-idea',
+  name: 'start-idea',
   metaInfo: {
-    title: 'Create Idea'
+    title: 'Start Idea'
   },
   components: {
     CategorySelector,
@@ -71,7 +71,7 @@ export default {
   mounted () {
     this.fetchCategories()
   },
-  created () {
+  startd () {
     if (!this.$session.exists()) this.$session.start()
     if (this.$session.has('draft-idea')) {
       const draftIdea = JSON.parse(this.$session.get('draft-idea'))
@@ -142,13 +142,13 @@ export default {
         banner: undefined
       }
     },
-    createIdea () {
+    startIdea () {
       if (!this.isAuthenticated) {
         this.$store.commit(types.SHOW_AUTH_MODAL)
       }
       if (this.creatingIdea) return
       this.creatingIdea = true
-      API.idea.create({ idea: this.idea, uploadType: this.uploadType },
+      API.idea.start({ idea: this.idea, uploadType: this.uploadType },
         (response) => {
           // Idea redirect
           this.$log(response)
@@ -168,7 +168,7 @@ export default {
 <style lang="stylus" scoped>
 @import '~stylus/shared'
 
-#create-idea
+#start-idea
   text-align center
   h1, h2
     reset()
