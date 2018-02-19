@@ -14,7 +14,8 @@ import config from '@/config'
 import store from '@/store'
 import router from '@/router'
 
-require('@/assets/scripts/drift.js')
+// Uncomment for drift support
+// require('@/assets/scripts/drift.js')
 
 sync(store, router)
 
