@@ -2,10 +2,10 @@
   form
     .input-wrapper
       label Category name
-      input(placeholder="E.g. Computer Science" type="text" name="name" v-model="newCategory.name")
+      input(placeholder="E.g. My awesome category" type="text" name="name" v-model="newCategory.name")
     .input-wrapper
       label Category description
-      input(placeholder="E.g. A collection of ideas to improve the field of computer science" type="text" name="description" v-model="newCategory.description")
+      input(placeholder="E.g. A place for amazing ideas..." type="text" name="description" v-model="newCategory.description")
     .input-wrapper
       label Category passcode (optional)
       input(placeholder="E.g. 0934" type="text" name="passcode" v-model="newCategory.passcode")

@@ -26,10 +26,13 @@ services:
       - mongo
 
   mongo:
-    image: mongo:latest
+    build: ./docker/mongo
     environment:
-      - MONGO_INITDB_ROOT_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD
+      - MONGODB_ADMIN_USER
+      - MONGODB_ADMIN_PASS
+      - MONGODB_APPLICATION_DATABASE
+      - MONGODB_APPLICATION_USER
+      - MONGODB_APPLICATION_PASS
     volumes_from:
       - mongodata
     ports:

@@ -73,8 +73,8 @@ function setupCategories (adminId) {
   let promises = []
 
   const categories = [
-    { _user: adminId, name: 'Computer Science', tag: 'computer-science', instance: 'default' },
-    { _user: adminId, name: 'Mathematics', tag: 'mathematics', instance: 'default' }
+    { _user: adminId, name: 'Category A', tag: 'category-a', instance: 'default' },
+    { _user: adminId, name: 'Category B', tag: 'category-b', instance: 'default' }
   ]
 
   categories.forEach(data => {
@@ -123,7 +123,7 @@ const ideas = [
     description: "<p>We are running a course to allow people to pick up the basics of Python programming quickly with the help of their fellow students.</p><p>If you are interested in this course hit subscribe to stay updated.</p>",
     banner: "https://images.unsplash.com/photo-1454165205744-3b78555e5572?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNTQ1fQ&s=35f814ed36b12d9c514212a3d4afb364",
     instance: "default",
-    category: 'computer-science'
+    category: 'category-a'
   },
   {
     title: "Study Skills",
@@ -131,7 +131,7 @@ const ideas = [
     description: "<p>Do you want to learn some new study skills?</p>",
     banner: "https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNTQ1fQ&s=c6f5a82709c011430d5f28ecc50fa925",
     instance: "default",
-    category: 'computer-science'
+    category: 'category-a'
   },
   {
     title: "Presentation Practice",
@@ -139,6 +139,6 @@ const ideas = [
     description: "<p>Join in on a fun presentation skills session and level up your communications!</p>",
     banner: "https://xmovement.s3.amazonaws.com/ideaboard/52077fb64bb3f0bf9b99e2bec0bf9d0a1516981683943.jpeg",
     instance: "default",
-    category: 'mathematics'
+    category: 'category-b'
   }
 ]
