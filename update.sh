@@ -10,7 +10,7 @@ cd /home/edjenkins/sites/ideaboard/api
 cd ../app
 
 # Run npm install process
-# npm install
+npm install
 
 # Run npm build process
 npm run build
