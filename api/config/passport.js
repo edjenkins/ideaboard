@@ -68,6 +68,9 @@ module.exports = function (passport) {
 
   function (req, accessToken, refreshToken, profile, cb) {
 
+    console.log('profile:')
+    console.log(profile)
+
     process.nextTick(function () {
 
       User.findOne({ 'facebook.id': profile.id  }, function (err, user) {
@@ -79,8 +82,6 @@ module.exports = function (passport) {
           return cb(null, user, req.query.instance)
         
         let newUser = new User()
-
-        console.log(profile)
 
         newUser.facebook.id = profile.id
         newUser.facebook.token = accessToken
