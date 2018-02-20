@@ -85,6 +85,8 @@ module.exports = function (passport) {
         let newUser = new User()
 
         newUser.facebook.id = profile.id
+        newUser.facebook.avatar = profile.picture
+        newUser.profile.avatar = profile.picture
         newUser.facebook.token = accessToken
         newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName
         if (profile.emails && (profile.emails.length > 0)) {
