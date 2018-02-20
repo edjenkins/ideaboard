@@ -1,9 +1,9 @@
 <template lang="pug">
 .voting-buttons
   .like(@click="like(response._id)" v-bind:class="{ 'has-voted': hasLiked }")
-    i.fas.fa-angle-up.fa-2x
+    i.fas.fa-angle-up
   .dislike(@click="dislike(response._id)" v-bind:class="{ 'has-voted': hasDisliked }")
-    i.fas.fa-angle-down.fa-2x
+    i.fas.fa-angle-down
 </template>
 
 <script>

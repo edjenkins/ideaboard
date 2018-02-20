@@ -6,7 +6,7 @@
     transition-group(tag="ul" class="poll-responses" name="fade")
       li.poll-response(v-for="(response, index) in orderedResponses" v-bind:key="index")
         .poll-response--title {{ response.response.text }}
-        .poll-response--user(v-bind:style="{ 'background-image': `url(${response._user.profile.avatar})` }")
+        avatar.poll-response--user(v-bind:profile="response._user.profile")
         .poll-response--votes(@click="checkAuth" v-bind:class="{ positive: ((response._likes.length - response._dislikes.length) > 0), negative: ((response._likes.length - response._dislikes.length) < 0) }")
           .poll-response--votes--value {{ (response._likes.length - response._dislikes.length) }}
           voting-buttons(v-bind:response="response" v-on:like="likeResponse(response._id)" v-on:dislike="dislikeResponse(response._id)")
@@ -26,12 +26,14 @@ import * as types from '@/store/mutation-types'
 import API from '@/api'
 
 import VotingButtons from '@/components/voting/VotingButtons'
+import Avatar from '@/components/user/Avatar'
 
 export default {
   name: 'poll',
   props: ['active-task'],
   components: {
-    VotingButtons
+    VotingButtons,
+    Avatar
   },
   created () {
     this.fetchResponses()
