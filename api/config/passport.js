@@ -63,7 +63,7 @@ module.exports = function (passport) {
     clientSecret: configAuth.facebookAuth.clientSecret,
     callbackURL: `${configAuth.facebookAuth.callbackURL}`,
     scope: ['email', 'public_profile'],    
-    profileFields: ['id', 'email', 'name', 'timezone', 'updated_time', 'gender', 'link', 'locale', 'verified'],
+    profileFields: ['id', 'email', 'name', 'timezone', 'updated_time', 'gender', 'link', 'locale', 'verified', 'picture.type(large)'],
     passReqToCallback: true
   },
 
@@ -85,12 +85,15 @@ module.exports = function (passport) {
         let newUser = new User()
 
         newUser.facebook.id = profile.id
-        newUser.facebook.avatar = profile.picture
-        newUser.profile.avatar = profile.picture
         newUser.facebook.token = accessToken
         newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName
+
         if (profile.emails && (profile.emails.length > 0)) {
           newUser.facebook.email = profile.emails[0].value
+        }
+
+        if (profile.photos && (profile.photos.length > 0)) {
+          newUser.profile.avatar = profile.photos[0].value
         }
 
         newUser.profile.name = newUser.facebook.name
