@@ -1,6 +1,5 @@
 const DEV_URL = 'http://localhost:8888'
 const PROD_URL = 'https://*ideaboard.co.uk'
-const PROD_API_URL = 'https://api.ideaboard.co.uk'
 
 module.exports = {
   redirectUri: function (instance) {

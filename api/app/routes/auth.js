@@ -7,6 +7,8 @@ const Notification = require('../../app/models/notification')
 const mail = require('../services/mail')
 const utilities = require('../../app/utilities')
 
+const PROD_API_URL = 'https://api.ideaboard.co.uk'
+
 module.exports = function (app, passport) {
 
   app.post('/login',
