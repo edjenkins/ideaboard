@@ -31,9 +31,10 @@ const router = new Router({
         const subdomain = window.location.hostname.split('.')[0]
         const instance = ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : subdomain.toLowerCase() // subdomain
         try {
+          require(`@/components/instances/${instance}.vue`)
           require([`@/components/instances/${instance}.vue`], resolve)
         } catch (error) {
-          require([`@/components/instances/${config.instances.default}.vue`], resolve)
+          require(['@/components/instances/master.vue'], resolve)
         }
       }
     },
