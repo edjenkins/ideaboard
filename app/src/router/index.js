@@ -30,7 +30,12 @@ const router = new Router({
       component: function (resolve) {
         const subdomain = window.location.hostname.split('.')[0]
         const instance = ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : subdomain.toLowerCase() // subdomain
-        require([`@/components/instances/${instance}.vue`], resolve)
+        try {
+          require([`@/components/instances/${instance}.vue`], resolve)
+        } catch (error) {
+          console.log('Custom home page not found, reverting to default')
+          require(['@/components/instances/master.vue'], resolve)
+        }
       }
     },
     {
