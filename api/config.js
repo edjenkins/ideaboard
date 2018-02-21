@@ -20,6 +20,11 @@ module.exports = {
     "openlab": {
       "color": "#0099D0",
       "subdomain": "openlab"
+    },
+    "mito": {
+      "color": "#7DCE82",
+      "subdomain": "mito"
     }
   }
 }
+

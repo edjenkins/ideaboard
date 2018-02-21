@@ -43,6 +43,15 @@ openlab.ideaboard.co.uk {
   }
 }
 
+mito.ideaboard.co.uk {
+  root /var/www/html
+  tls mito@ideaboard.co.uk
+
+  rewrite {
+    to {path} {path}/ /index.html
+  }
+}
+
 api.ideaboard.co.uk {
   proxy / api:3000
 }
