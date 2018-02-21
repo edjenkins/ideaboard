@@ -3,6 +3,8 @@ const async = require('async')
 const Idea = require('../../app/models/idea')
 const Task = require('../../app/models/task')
 
+const utilities = require('../../app/utilities')
+
 module.exports = function (app, passport) {
   // Get tasks
   app.get('/tasks/:idea_id',
@@ -59,7 +61,7 @@ module.exports = function (app, passport) {
 
         task.save((err) => {
           if (err) console.error(err)
-          // mail.sendMail(req.user.local.email, 'Task Created', 'task-created', { user: req.user, task: task })
+          // mail.sendMail(req.user.local.email, 'Task Created', 'task-created', { user: req.user, task: task, url: utilities.redirectUri(req.instance) })
 
           async.series({
             idea: function (callback) {

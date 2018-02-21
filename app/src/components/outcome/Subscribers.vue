@@ -1,7 +1,11 @@
 <template lang="pug">
   #subscribers
     #loading(v-if="loading") Loading...
-    ul.subscriber-list
+
+    // No subscribers
+    .no-subscribers(v-if="subscribers.length === 0") No subscribers for idea
+
+    ul.subscriber-list(v-else)
       li.subscriber(v-for="(subscriber, index) in subscribers")
         p.subscriber--name(@click="viewProfile(subscriber._user._id)") {{ subscriber._user.profile.name }}
         p.subscriber--date {{ getDate(subscriber.subscribedAt) }}
@@ -53,6 +57,13 @@ export default {
     color color-text-light-grey
     line-height 200px
     text-align center
+  
+  .no-subscribers
+    color $color-text-grey
+    margin 0 0 20px 0
+    padding 40px 20px
+    text-align center
+
   ul.subscriber-list
     cleanlist()
     padding 25px 0

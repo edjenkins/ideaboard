@@ -16,6 +16,7 @@ const S3_BUCKET = configS3.bucket
 
 const Idea = require('../../app/models/idea')
 const mail = require('../../app/services/mail')
+const utilities = require('../../app/utilities')
 
 module.exports = function (app, passport) {
   // Get ideas
@@ -105,7 +106,7 @@ module.exports = function (app, passport) {
                 idea.banner = data.Location
                 idea.save((err) => {
                   if (err) console.error(err)
-                  mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea })
+                  mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance) })
                   res.json({ idea })
                 })
               })
@@ -160,7 +161,7 @@ module.exports = function (app, passport) {
                 { _id: req.body.idea_id, instance: req.instance },
                 { $push: { _subscribers: subscriber } },
                 (err, idea) => {
-                  mail.sendMail(req.user.local.email, 'You Subscribed', 'subscribed', { user: req.user, idea: idea })
+                  mail.sendMail(req.user.local.email, 'You Subscribed', 'subscribed', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance) })
                   callback(null, err, idea)
                 })
             }

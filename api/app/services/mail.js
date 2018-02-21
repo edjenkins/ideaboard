@@ -1,6 +1,8 @@
 'use strict'
 const configMail = require('../../config/mail.js')
-const _ = require('lodash')
+
+const _map = require('lodash/map')
+const _forEach = require('lodash/forEach')
 
 const nodemailer = require('nodemailer')
 const path = require('path')
@@ -15,6 +17,8 @@ const MAIL_FROM_NAME = configMail.fromName
 const MAIL_FROM_ADDRESS = configMail.fromAddress
 
 const User = require('../models/user')
+
+const utilities = require('../../app/utilities')
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
@@ -56,7 +60,7 @@ module.exports = {
   },
   sendUpdate: function (idea, update) {
     console.log('Sending updates...')
-    const subscriberIds = _.map(idea._subscribers, (subscriber) => {
+    const subscriberIds = _map(idea._subscribers, (subscriber) => {
       return subscriber._user
     })
     console.log('subscriberIds')
@@ -67,8 +71,8 @@ module.exports = {
       if (err) console.error(err)
       console.log('users')
       console.log(users)
-      _.forEach(users, (user) => {
-        this.sendMail(user.local.email, 'Update Received', 'update-received', { user: user, idea: idea, update: update })
+      _forEach(users, (user) => {
+        this.sendMail(user.local.email, 'Update Received', 'update-received', { user: user, idea: idea, update: update, url: utilities.redirectUri(idea.instance) })
       })
     })
   }

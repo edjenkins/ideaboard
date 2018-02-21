@@ -13,7 +13,7 @@ ul#idea-updates
   li.idea-update
     .user-wrapper
       .user-wrapper--name {{ idea._user.profile.name }} created the Idea
-      .user-wrapper--avatar(v-bind:style="{ 'background-image': `url(${idea._user.profile.avatar})` }")
+      avatar.user-wrapper--avatar(v-bind:profile="idea._user.profile")
 </template>
 
 <script>
@@ -21,9 +21,14 @@ import _ from 'lodash'
 import API from '@/api'
 import { mapGetters } from 'vuex'
 
+import Avatar from '@/components/user/Avatar'
+
 export default {
   name: 'updates',
   props: ['idea'],
+  components: {
+    Avatar
+  },
   created () {
     this.fetchUpdates()
   },

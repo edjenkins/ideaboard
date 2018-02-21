@@ -36,7 +36,7 @@
                 input(v-model="user.name" name="name" placeholder="Your name")
               .input-wrapper
                 label Your email
-                input(v-model="user.email" name="email" placeholder="Your email")
+                input(v-model="user.email" name="email" type="email" placeholder="Your email")
               .input-wrapper
                 label Create a password
                 input(v-model="user.password" name="password" type="password" placeholder="Create a password" v-on:keydown.enter="join")
@@ -52,7 +52,7 @@
               splash-messages(v-bind:messages="splashmessages['forgot']" padded)
               .input-wrapper
                 label Your email
-                input(v-model="user.email" name="email" placeholder="Your email")
+                input(v-model="user.email" name="email" type="email" placeholder="Your email" v-on:keydown.enter="forgotPassword")
           .content-block--footer
             .btn.btn-success.pull-right(@click="forgotPassword") Continue
             .clearfix
@@ -160,7 +160,6 @@ export default {
           // Reset redirect
           this.$log(response)
           this.splashmessages.forgot = [{ text: 'You will receive an email with a reset link soon!', type: 'success' }]
-          // TODO: Add flash message and redirect
         },
         (error) => {
           // Reset fail

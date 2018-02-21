@@ -3,11 +3,9 @@ const configAuth = require('../../config/auth')
 
 const User = require('../../app/models/user')
 const Notification = require('../../app/models/notification')
-const mail = require('../services/mail')
 
-const DEV_URL = 'localhost:8080'
-const PROD_URL = 'ideaboard.co.uk'
-const PROD_API_URL = 'https://api.ideaboard.co.uk'
+const mail = require('../services/mail')
+const utilities = require('../../app/utilities')
 
 module.exports = function (app, passport) {
 
@@ -84,15 +82,20 @@ module.exports = function (app, passport) {
 
   app.post('/auth/forgot',
     (req, res) => {
-      
       crypto.pseudoRandomBytes(16, function (err, raw) {
         if (err) console.error(err)
         const resetCode = raw.toString('hex')
-        let resetLink = (req.params.instance !== 'ideaboard') ? `https://${req.params.instance}.${PROD_URL}/reset/${resetCode}` : `https://${PROD_URL}/reset/${resetCode}`
-        resetLink = (req.params.instance && req.params.instance !== 'localhost') ? resetLink : `http://${DEV_URL}/reset/${resetCode}`
+        let resetLink = `${utilities.redirectUri(req.instance)}/reset/${resetCode}`
         User.findOneAndUpdate({ 'local.email': req.body.email.toLowerCase() }, { code: resetCode }).exec((err, user) => {
           if (err) console.error(err)
-          mail.sendMail(user.local.email, 'Forgotten Password', 'forgot', { user, resetLink })
+          if (!user) {
+            return res.json({
+              errors: [
+                { type: 'error', text: 'User not found!' }
+              ]
+            })
+          }
+          mail.sendMail(user.local.email, 'Forgotten Password', 'forgot', { user: user, resetLink: resetLink, url: utilities.redirectUri(req.instance) })
           res.json({
             status: 'success'
           })
@@ -141,23 +144,14 @@ module.exports = function (app, passport) {
   // FACEBOOK ROUTES
 
   app.get('/auth/facebook/login/:instance', function (req, res, next) {
-    passport.authenticate('facebook', { callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}` })(req, res, next);
+    passport.authenticate('facebook', { callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.instance}` })(req, res, next);
   });
 
   app.get('/auth/facebook/callback/:instance', function (req, res, next) {
-
-    let redirectUri = `http://${DEV_URL}`
-
-    if (req.params.instance === 'ideaboard') {
-       redirectUri = `https://${PROD_URL}`
-    }
-    else if (req.params.instance !== 'localhost') {
-      redirectUri = `https://${req.params.instance}.${PROD_URL}`
-    }
     passport.authenticate('facebook', {
-      callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`,
-      successRedirect: `${redirectUri}/profile`,
-      failureRedirect: `${redirectUri}/auth`
+      callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.instance}`,
+      successRedirect: `${utilities.redirectUri(req.instance)}/profile`,
+      failureRedirect: `${utilities.redirectUri(req.instance)}/auth`
     })(req, res, next);
   });
 }

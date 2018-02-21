@@ -63,7 +63,6 @@ export default {
       )
     },
     submitResponse () {
-      alert('submitResponse')
       if (!this.isAuthenticated) return
       API.task.submitResponse(
         'media',
@@ -101,10 +100,11 @@ export default {
       margin 0 -10px 20px -10px
       li.media-item
         cleanlist()
+        border $color-border 1px solid
         float left
         margin 10px
         .thumbnail
           background-image()
-          height 100px
-          width 140px
+          height 120px
+          width 160px
 </style>

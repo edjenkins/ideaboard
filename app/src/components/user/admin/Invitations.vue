@@ -74,9 +74,7 @@ export default {
           if (response.data.errors) {
             this.splashMessages = response.data.errors
           } else {
-            this.splashMessages = [
-                { text: 'Invite sent!', type: 'success' }
-            ]
+            this.splashMessages = [ { text: 'Invite sent!', type: 'success' } ]
           }
         },
         (error) => {

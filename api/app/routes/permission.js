@@ -3,8 +3,12 @@ const async = require('async')
 const Permission = require('../../app/models/permission')
 const Notification = require('../../app/models/notification')
 const User = require('../../app/models/user')
-const _ = require('lodash')
+
 const mail = require('../../app/services/mail')
+const utilities = require('../../app/utilities')
+
+const _filter = require('lodash/filter')
+const _forEach = require('lodash/forEach')
 
 module.exports = function (app, passport) {
   app.get('/permissions',
@@ -19,7 +23,7 @@ module.exports = function (app, passport) {
         },
         users: function (callback) {
           User.find({ _id: { $ne: req.user._id } }).exec((err, users) => {
-            const filtered = _.filter(users, (user) => {
+            const filtered = _filter(users, (user) => {
               return user._permissions.length > 0
             })
             callback(null, filtered)
@@ -43,7 +47,7 @@ module.exports = function (app, passport) {
             console.log('user._id')
             console.log(user._id)
             user._permissions = []
-            _.forEach(req.body.permissions, (value, key) => {
+            _forEach(req.body.permissions, (value, key) => {
               if (value) {
                 user._permissions.push(key)
               }
@@ -60,7 +64,7 @@ module.exports = function (app, passport) {
 
               notification.save((err, invitation) => {
                 if (err) console.error(err)
-                mail.sendMail(user.local.email, 'Permissions Updated', 'permissions', { user: req.user, recipient: user })
+                mail.sendMail(user.local.email, 'Permissions Updated', 'permissions', { user: req.user, recipient: user, url: utilities.redirectUri(req.instance) })
                 res.json({ msg: 'done' })
               })
             })

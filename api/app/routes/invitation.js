@@ -5,7 +5,9 @@ const Notification = require('../../app/models/notification')
 const Permission = require('../../app/models/permission')
 
 const mail = require('../../app/services/mail')
-const _ = require('lodash')
+const utilities = require('../../app/utilities')
+
+const _chain = require('lodash/chain')
 
 module.exports = function (app, passport) {
   // Get invitations
@@ -14,10 +16,10 @@ module.exports = function (app, passport) {
       Invitation.find({ }).exec((err, invitations) => {
         if (err) { return console.error(err) }
         res.json({
-          accepted: _.chain(invitations).filter({ status: 'accepted' }).take(5),
-          cancelled: _.chain(invitations).filter({ status: 'cancelled' }).take(5),
-          pending: _.chain(invitations).filter({ status: 'pending' }).take(5),
-          declined: _.chain(invitations).filter({ status: 'declined' }).take(5)
+          accepted: _chain(invitations).filter({ status: 'accepted' }).take(5),
+          cancelled: _chain(invitations).filter({ status: 'cancelled' }).take(5),
+          pending: _chain(invitations).filter({ status: 'pending' }).take(5),
+          declined: _chain(invitations).filter({ status: 'declined' }).take(5)
         })
       })
     })
@@ -48,7 +50,7 @@ module.exports = function (app, passport) {
 
         notification.save((err, invitation) => {
           if (err) console.error(err)
-          mail.sendMail(req.body.recipient, 'Invitation', 'invitation', { user: req.user, recipient: req.body.recipient })
+          mail.sendMail(req.body.recipient, 'Invitation', 'invitation', { user: req.user, recipient: req.body.recipient, url: utilities.redirectUri(req.instance) })
           res.json({ msg: 'done' })
         })
       } else {

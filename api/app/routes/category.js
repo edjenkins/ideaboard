@@ -2,6 +2,8 @@ const async = require('async')
 
 const Category = require('../../app/models/category')
 
+const utilities = require('../../app/utilities')
+
 module.exports = function (app, passport) {
   // Get categories
   app.get('/categories',
@@ -38,7 +40,7 @@ module.exports = function (app, passport) {
 
         category.save((err) => {
           if (err) console.error(err)
-          // mail.sendMail(req.user.local.email, 'Category Created', 'category-created', { user: req.user, category: category })
+          // mail.sendMail(req.user.local.email, 'Category Created', 'category-created', { user: req.user, category: category, url: utilities.redirectUri(req.instance) })
           res.json({ category })
         })
       } else {

@@ -6,7 +6,7 @@ block content
 
   p Hey #{ user.profile.name },
 
-  p A new update has been posted for an idea you are subscribed to - <a style="color: #0B9BD0" href="http://localhost:8080/idea/#{ idea.id }">#{ idea.title }</a>.
+  p A new update has been posted for an idea you are subscribed to - <a style="color: #0B9BD0" href="#{ url }/idea/#{ idea.id }">#{ idea.title }</a>.
   
   br
   
@@ -14,4 +14,4 @@ block content
 
   br
   
-  p If you no longer want to receive updates from this idea then just visit the idea page <a style="color: #0B9BD0" href="http://localhost:8080/idea/#{ idea.id }">here</a> and unsubscribe.
+  p If you no longer want to receive updates from this idea then just visit the idea page <a style="color: #0B9BD0" href="#{ url }/idea/#{ idea.id }">here</a> and unsubscribe.

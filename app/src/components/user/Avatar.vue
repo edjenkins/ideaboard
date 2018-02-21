@@ -27,9 +27,7 @@ export default {
   .avatar--icon
     radius(50%)
     border-box()
-    background-color $color-lightest-grey
-    background-color white
-    border $color-primary 1px solid
+    background-color alpha($color-primary, 0.1)
     color white
     overflow hidden
     position relative
