@@ -33,8 +33,7 @@ const router = new Router({
         try {
           require([`@/components/instances/${instance}.vue`], resolve)
         } catch (error) {
-          console.log('Custom home page not found, reverting to default')
-          require(['@/components/instances/master.vue'], resolve)
+          require([`@/components/instances/${config.instances.default}.vue`], resolve)
         }
       }
     },
