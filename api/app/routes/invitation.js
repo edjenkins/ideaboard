@@ -7,7 +7,8 @@ const Permission = require('../../app/models/permission')
 const mail = require('../../app/services/mail')
 const utilities = require('../../app/utilities')
 
-const _chain = require('lodash/chain')
+const _filter = require('lodash/filter')
+const _take = require('lodash/take')
 
 module.exports = function (app, passport) {
   // Get invitations
@@ -16,10 +17,10 @@ module.exports = function (app, passport) {
       Invitation.find({ }).exec((err, invitations) => {
         if (err) { return console.error(err) }
         res.json({
-          accepted: _chain(invitations).filter({ status: 'accepted' }).take(5),
-          cancelled: _chain(invitations).filter({ status: 'cancelled' }).take(5),
-          pending: _chain(invitations).filter({ status: 'pending' }).take(5),
-          declined: _chain(invitations).filter({ status: 'declined' }).take(5)
+          accepted: _take(_filter(invitations, { status: 'accepted' }), 5),
+          cancelled: _take(_filter(invitations, { status: 'cancelled' }), 5),
+          pending: _take(_filter(invitations, { status: 'pending' }), 5),
+          declined: _take(_filter(invitations, { status: 'declined' }), 5)
         })
       })
     })

@@ -66,9 +66,9 @@ module.exports = function (app, passport) {
         }
 
         // Check description is valid
-        if (!data.idea.description || data.idea.description.length < 8 || data.idea.description.length > 240) {
+        if (!data.idea.description || data.idea.description.length < 8 || data.idea.description.length > 10000) {
           errors.push({
-            text: 'Idea description should be longer than 10 and less than 240 characters',
+            text: 'Idea description should be longer than 10 and less than 10,000 characters',
             type: 'error'
           })
         }

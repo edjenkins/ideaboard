@@ -46,9 +46,9 @@ module.exports = function (app, passport) {
         }
 
         // Check description is valid
-        if (!req.body.task.description || req.body.task.description.length < 8 || req.body.task.description.length > 240) {
+        if (!req.body.task.description || req.body.task.description.length < 8 || req.body.task.description.length > 1200) {
           errors.push({
-            text: 'Task description should be longer than 10 and less than 240 characters',
+            text: 'Task description should be longer than 10 and less than 1,200 characters',
             type: 'error'
           })
         }

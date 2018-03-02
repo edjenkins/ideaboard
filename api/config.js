@@ -23,7 +23,12 @@ module.exports = {
     },
     "mito": {
       "color": "#7DCE82",
-      "subdomain": "mito"
+      "subdomain": "mito",
+      "categories": [
+        { "name": "Gaining independence/taking control" },
+        { "name": "Participating in arts/sport/recreation/music" },
+        { "name": "Connecting with people like me" }
+      ]
     }
   }
 }

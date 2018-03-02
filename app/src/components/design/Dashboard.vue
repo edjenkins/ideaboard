@@ -3,12 +3,18 @@
 
   .design-dashboard--tasks
     .design-dashboard--task(v-for="(task, index) in orderedTasks" v-bind:key="index" @click="loadTask(task)")
+
       .design-dashboard--task--title {{ task.title }}
+
       .design-dashboard--task--meta.design-dashboard--task--status  
         i.fas.fa-thumbtack(v-if="task.pinned")
         i.fas.fa-lock(v-if="task.locked")
+
       .design-dashboard--task--meta.design-dashboard--task--type
         i.fas(v-bind:class="[getTaskIcon(task.type)]")
+      
+      .design-dashboard--task--meta.design-dashboard--task--contributors
+        avatar(v-bind:profile="task._user.profile")
 
     .design-dashboard--task#add-task(@click="addTask()")
       .design-dashboard--task--title
@@ -20,10 +26,14 @@
 <script>
 import _ from 'lodash'
 import API from '@/api'
+import Avatar from '@/components/user/Avatar'
 
 export default {
   name: 'dashboard',
   props: ['activeTask', 'idea'],
+  components: {
+    Avatar
+  },
   created () {
     this.loadTasks()
   },
@@ -125,6 +135,14 @@ export default {
         &.design-dashboard--task--type
           left 50%
           text-align right
+        &.design-dashboard--task--contributors
+          pinned()
+          top auto
+          height 30px
+          padding 10px
+          .avatar
+            height 30px
+            width 30px
         svg
           margin 5px
         p

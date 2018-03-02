@@ -8,6 +8,8 @@ module.exports = {
         return DEV_URL
       case 'master':
         return PROD_URL.replace('*.', '')
+      case 'ideaboard':
+        return PROD_URL.replace('*.', '')
       default:
         return PROD_URL.replace('*', instance)
     }
