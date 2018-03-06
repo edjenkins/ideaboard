@@ -1,7 +1,7 @@
 module.exports = {
   "domain": "ideaboard.co.uk",
   "instances": {
-    "default": "wea",
+    "default": "master",
     "master": {
       "color": "#0099D0"
     },
