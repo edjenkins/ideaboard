@@ -18,9 +18,9 @@
 import Home from '@/mixins/Home'
 
 export default {
-  name: 'mito',
+  name: 'myto',
   metaInfo: {
-    title: 'Mito'
+    title: 'Myto'
   },
   mixins: [Home]
 }

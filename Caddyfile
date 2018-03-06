@@ -43,9 +43,9 @@ openlab.ideaboard.co.uk {
   }
 }
 
-mito.ideaboard.co.uk {
+myto.ideaboard.co.uk {
   root /var/www/html
-  tls mito@ideaboard.co.uk
+  tls myto@ideaboard.co.uk
 
   rewrite {
     to {path} {path}/ /index.html

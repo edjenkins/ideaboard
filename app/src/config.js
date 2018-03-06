@@ -3,7 +3,7 @@ export default {
   driftkey: 'msffsx6pi5gb',
   gakey: 'UA-44963053-17',
   instances: {
-    default: 'mito',
+    default: 'myto',
     master: {
       color: '#0099D0'
     },
@@ -23,9 +23,9 @@ export default {
       color: '#0099D0',
       subdomain: 'openlab'
     },
-    mito: {
-      color: '#7DCE82',
-      subdomain: 'mito'
+    myto: {
+      color: '#2E2D4D',
+      subdomain: 'myto'
     }
   }
 }

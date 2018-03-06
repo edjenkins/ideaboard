@@ -21,13 +21,15 @@ module.exports = {
       "color": "#0099D0",
       "subdomain": "openlab"
     },
-    "mito": {
+    "myto": {
       "color": "#7DCE82",
-      "subdomain": "mito",
+      "subdomain": "myto",
       "categories": [
-        { "name": "Gaining independence/taking control" },
-        { "name": "Participating in arts/sport/recreation/music" },
-        { "name": "Connecting with people like me" }
+        { "name": "Engaging with research" },
+        { "name": "Gaining independence and taking control" },
+        { "name": "Participating in arts / sport / recreation / music" },
+        { "name": "Connecting with people like me" },
+        { "name": "Fertility and parenthood" }
       ]
     }
   }
