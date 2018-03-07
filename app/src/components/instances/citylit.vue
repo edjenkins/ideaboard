@@ -1,6 +1,6 @@
 <template lang="pug">
   #home
-    .row-wrapper#welcome(v-bind:style="{ 'background-color': navColor }")
+    .row-wrapper#welcome(v-bind:style="[instanceBackground]")
       .row
         .content-block
           .content-block--body

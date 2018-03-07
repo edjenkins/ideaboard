@@ -1,10 +1,10 @@
 <template lang="pug">
-  #navbar(v-bind:class="authState" v-bind:style="{ 'background-color': navColor }")
+  #navbar(v-bind:class="authState" v-bind:style="[instanceBackground]")
     .row
       router-link#logo(to="/") Ideaboard
       hamburger(v-bind:active.sync="active")
       #menu-underlay(v-bind:class="{ active: active }" @click="active = false")
-      #menu(v-bind:class="{ active: active }")
+      #menu(v-bind:class="{ active: active }" v-bind:style="[instanceBackground]")
         router-link(to="/start") Start
         router-link(to="/explore") Explore
         router-link(to="/auth" v-if="!isAuthenticated") Login
@@ -32,7 +32,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'navColor', 'notifications']),
+    ...mapGetters(['isAuthenticated', 'instanceBackground', 'notifications']),
     hasNotifications () {
       return this.notifications && this.notifications.unread && (this.notifications.unread.length > 0)
     }
@@ -113,11 +113,12 @@ export default {
     animate()
     float right
     line-height $navigation-height
+    @media(min-width: 568px)
+      background-color transparent !important
     @media(max-width: 568px)
       gradient()
       transform rotateX(90deg)
       transform-origin 0 0
-      background-color $color-primary
       border-top alpha(black, 0.1) 1px solid
       border-bottom alpha(black, 0.1) 1px solid
       opacity 0

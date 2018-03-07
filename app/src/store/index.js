@@ -21,8 +21,14 @@ export default new Vuex.Store({
       const subdomain = window.location.hostname.split('.')[0]
       return ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : subdomain.toLowerCase() // subdomain
     },
-    navColor () {
+    instanceColor () {
       return config.instances[Store.getters.instance].color
+    },
+    instanceForeground () {
+      return { 'color': config.instances[Store.getters.instance].color }
+    },
+    instanceBackground () {
+      return { 'background-color': config.instances[Store.getters.instance].color }
     }
   }
 })

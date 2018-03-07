@@ -19,7 +19,7 @@ export default {
   name: 'splash-image',
   props: ['align', 'title', 'subtitle', 'action', 'link', 'image'],
   computed: {
-    ...mapGetters(['navColor'])
+    ...mapGetters(['instanceBackground'])
   }
 }
 </script>

@@ -1,0 +1,20 @@
+{
+  "name": "ideaboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "docker-compose -f docker-compose-dev.yml up -d && cd app && node build/dev-server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edjenkins/ideaboard.git"
+  },
+  "author": "Edward Jenkins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edjenkins/ideaboard/issues"
+  },
+  "homepage": "https://github.com/edjenkins/ideaboard#readme"
+}

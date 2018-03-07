@@ -1,35 +1,40 @@
 module.exports = {
-  domain: "ideaboard.co.uk",
+  domain: 'ideaboard.co.uk',
   instances: {
-    default: "master",
+    default: 'myto',
     master: {
-      color: "#0099D0"
+      color: '#0099D0'
     },
     citylit: {
-      color: "#7e179f",
-      subdomain: "citylit"
+      color: '#7e179f',
+      subdomain: 'citylit'
     },
     wea: {
-      color: "#006172",
-      subdomain: "wea"
+      color: '#006172',
+      subdomain: 'wea'
     },
     ncl: {
-      color: "#003865",
-      subdomain: "ncl"
+      color: '#003865',
+      subdomain: 'ncl'
     },
     openlab: {
-      color: "#0099D0",
-      subdomain: "openlab"
+      color: '#0099D0',
+      subdomain: 'openlab'
     },
     myto: {
-      color: "#7DCE82",
-      subdomain: "myto",
+      color: '#7DCE82',
+      subdomain: 'myto',
+      admin: {
+        name: 'Myto Admin',
+        bio: 'Admin of this site. Please get in touch if you have any issues.',
+        email: 'myto@edjenkins.co.uk'
+      },
       categories: [
-        { name: "Engaging with research" },
-        { name: "Gaining independence and taking control" },
-        { name: "Participating in arts / sport / recreation / music" },
-        { name: "Connecting with people like me" },
-        { name: "Fertility and parenthood" }
+        { tag: 'engaging-with-research', name: 'Engaging with research' },
+        { tag: 'gaining-independence', name: 'Gaining independence and taking control' },
+        { tag: 'participating-in-activities', name: 'Participating in arts / sport / recreation / music' },
+        { tag: 'connecting-with-people', name: 'Connecting with people like me' },
+        { tag: 'fertility-and-parenthood', name: 'Fertility and parenthood' }
       ]
     }
   }

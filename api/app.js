@@ -13,8 +13,10 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 
+const config = require('./config.js')
 const configDB = require('./config/database.js')
-// const seed = require('./config/seed.js')
+const seed = require('./config/seed.js')
+// const demo = require('./config/demo.js')
 
 const app = express()
 
@@ -36,7 +38,7 @@ app.use(function (req, res, next) {
     const subdomain = domain.split('.')[0]
     instance = (!subdomain) ? 'localhost' : subdomain
   }
-  req.instance = (instance.indexOf('localhost') !== -1) ? 'default' : instance
+  req.instance = (instance.indexOf('localhost') !== -1) ? config.instances.default : instance
 
   next()
 })

@@ -15,7 +15,6 @@ module.exports = function (app, passport) {
     (req, res) => {
       // TODO: Check if admin
       const instance = (req.instance.indexOf('localhost') !== -1) ? 'default' : req.instance
-      console.log(instance)
       
       async.series({
         permissions: function (callback) {

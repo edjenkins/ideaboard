@@ -1,5 +1,5 @@
 <template lang="pug">
-  #page-header(v-bind:style="{ 'background-color': navColor }")
+  #page-header(v-bind:style="[instanceBackground]")
     .row
       h1(v-if="title") {{ title }}
       h4(v-if="subtitle") {{ subtitle }}
@@ -16,7 +16,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['navColor'])
+    ...mapGetters(['instanceBackground'])
   }
 }
 </script>

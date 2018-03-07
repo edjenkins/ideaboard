@@ -45,7 +45,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['navColor'])
+    ...mapGetters(['instanceBackground'])
   }
 }
 </script>

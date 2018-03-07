@@ -1,13 +1,18 @@
 <template lang="pug">
-.avatar
+.avatar(v-bind:style="[instanceBackground]")
   .avatar--image(v-if="typeof profile.avatar !== 'undefined'" v-bind:style="{ 'background-image': `url(${profile.avatar})` }")
   .avatar--icon(v-else)
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'avatar',
-  props: ['profile']
+  props: ['profile'],
+  computed: {
+    ...mapGetters(['instanceBackground'])
+  }
 }
 </script>
 
@@ -15,27 +20,23 @@ export default {
 @import '~stylus/shared'
 
 .avatar
+  radius(50%)
   .avatar--image, .avatar--icon
     radius(50%)
     height 0
+    overflow hidden
     padding-bottom 100%
     position relative
     width 100%
   .avatar--image
     background-image()
-    background-color $color-lighter-grey
   .avatar--icon
-    radius(50%)
-    border-box()
-    background-color alpha($color-primary, 0.1)
     color white
-    overflow hidden
     position relative
     &:before, &:after
       pinned()
       radius(50%)
-      background-color darken($color-lightest-grey, 10%)
-      background-color $color-primary
+      background-color white
       content ''
       top 60%
       bottom -40%

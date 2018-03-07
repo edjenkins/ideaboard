@@ -8,7 +8,8 @@ module.exports = function (app, passport) {
   // Get categories
   app.get('/categories',
     (req, res) => {
-      Category.find({ }).exec((err, categories) => {
+      console.log(req.instance)
+      Category.find({ instance: req.instance }).exec((err, categories) => {
         if (err) { return console.error(err) }
         res.json(categories)
       })

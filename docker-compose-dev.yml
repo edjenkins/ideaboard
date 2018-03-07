@@ -1,0 +1,43 @@
+version: "2"
+
+services:
+
+  api:
+    build: ./api
+    volumes:
+      - ./api:/app
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+
+  mongo:
+    build: ./docker/mongo
+    environment:
+      - MONGODB_ADMIN_USER
+      - MONGODB_ADMIN_PASS
+      - MONGODB_APPLICATION_DATABASE
+      - MONGODB_APPLICATION_USER
+      - MONGODB_APPLICATION_PASS
+    volumes_from:
+      - mongodata
+    ports:
+      - "27018:27017"
+
+  mongoui:
+    image: twnel/mongo-express
+    environment:
+      - ME_CONFIG_BASICAUTH_USERNAME
+      - ME_CONFIG_BASICAUTH_PASSWORD
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN
+      - ME_CONFIG_MONGODB_ADMINUSERNAME
+      - ME_CONFIG_MONGODB_ADMINPASSWORD
+    ports:
+      - "8081:8081"
+    links:
+      - mongo
+
+  mongodata:
+    image: tianon/true
+    volumes:
+      - /data/db

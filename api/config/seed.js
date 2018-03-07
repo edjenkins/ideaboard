@@ -1,3 +1,5 @@
+const _get = require('lodash/get')
+
 const config = require('../config.js')
 
 const Permission = require('../app/models/permission')
@@ -5,16 +7,11 @@ const User = require('../app/models/user')
 const Idea = require('../app/models/idea')
 const Category = require('../app/models/category')
 
-// Remove old data
-Promise.all([
-  new Promise(resolve => { Idea.remove({}).exec((err) => { resolve() }) }),
-  new Promise(resolve => { User.remove({}).exec((err) => { resolve() }) }),
-  new Promise(resolve => { Category.remove({}).exec((err) => { resolve() }) })
-]).then(() => {
-  setupPermissions()
-})
+// Setup permissions
+setupPermissions()
 
 function setupPermissions () {
+
   // Setup permissions
   const permissions = [
     { type: 'admin', description: 'Administrate the system' },
@@ -27,6 +24,9 @@ function setupPermissions () {
   let adminPermissions = []
   
   for (const instance in config.instances) {
+    
+    console.log(`Setting up permissions for ${instance}...`)
+
     // Loop permissions
     for (const key in permissions) {
       let newPermission = permissions[key]
@@ -49,96 +49,52 @@ function setupPermissions () {
 }
 
 function setupAdmin(adminPermissions) {
-  const adminUser = {
-    'profile.name': process.env.ADMIN_NAME,
-    'profile.bio': process.env.ADMIN_BIO,
-    'local.email': process.env.ADMIN_EMAIL,
-    'local.password': process.env.ADMIN_PASSWORD,
-    '_permissions': adminPermissions
-  }
 
-  User.findOneAndUpdate({ 'local.email': process.env.ADMIN_EMAIL }, adminUser, { upsert: true, setDefaultsOnInsert: true }, (err) => {
-    if (err) console.error(err)
-    console.log('Admin created')
-    User.findOne({ 'local.email': process.env.ADMIN_EMAIL }, (err, admin) => {
+  
+  for (const instance in config.instances) {
+    
+    console.log(`Setting up admin for ${instance}...`)
+    
+    const adminUser = {
+      'profile.name': _get(config.instances[instance], 'admin.name', process.env.ADMIN_NAME),
+      'profile.bio': _get(config.instances[instance], 'admin.bio', process.env.ADMIN_BIO),
+      'local.email': _get(config.instances[instance], 'admin.email', process.env.ADMIN_EMAIL),
+      'local.password': _get(config.instances[instance], 'admin.password', process.env.ADMIN_PASSWORD),
+      '_permissions': adminPermissions
+    }
+
+    User.findOneAndUpdate({ 'local.email': adminUser['local.email'] }, adminUser, { upsert: true, setDefaultsOnInsert: true }, (err) => {
       if (err) console.error(err)
-      setupCategories(admin._id)
-      console.log(admin)
+      console.log(`Admin created for ${instance}...`)
+      User.findOne({ 'local.email': adminUser['local.email'] }, (err, admin) => {
+        if (err) console.error(err)
+        setupCategories(admin._id, instance)
+      })
     })
-  })
+  }
 }
 
-function setupCategories (adminId) {
+function setupCategories(adminId, instance) {
+  
+  console.log(`Setting up categories for ${instance}...`)
 
   let promises = []
 
-  const categories = [
-    { _user: adminId, name: 'Category A', tag: 'category-a', instance: 'default' },
-    { _user: adminId, name: 'Category B', tag: 'category-b', instance: 'default' }
-  ]
-
-  categories.forEach(data => {
-    promises.push(new Promise(resolve => {
-      const category = new Category(data)
-      category.save((err, result) => {
-        resolve(result)
-      })
-    }))
-  })
-
-  // Categories saved
-  Promise.all(promises).then((categories) => {
-    console.log('Categories saved')
-    console.log(categories)
-    setupIdeas(adminId, categories)
-  })
-}
-
-// const setupIdeas = async function (adminId, categories) {
-function setupIdeas(adminId, categories) {
-
-  ideas.forEach(idea => {
-
-    // delete idea.category
-    setupIdea(idea, adminId, categories)
-  })
-}
-
-async function setupIdea(idea, adminId, categories) {
-
-  const category = await Category.findOne({ tag: idea.category }).exec()
-
-  idea._categories = [category._id]
-  idea._user = adminId
-
-  const newIdea = await Idea.findOneAndUpdate({ title: idea.title }, idea, { upsert: true, setDefaultsOnInsert: true }).exec()
-
-  return newIdea
-}
-
-const ideas = [
-  {
-    title: "Python Class",
-    tagline: "I would like to run a course to teach people to use Python.",
-    description: "<p>We are running a course to allow people to pick up the basics of Python programming quickly with the help of their fellow students.</p><p>If you are interested in this course hit subscribe to stay updated.</p>",
-    banner: "https://images.unsplash.com/photo-1454165205744-3b78555e5572?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNTQ1fQ&s=35f814ed36b12d9c514212a3d4afb364",
-    instance: "default",
-    category: 'category-a'
-  },
-  {
-    title: "Study Skills",
-    tagline: "Join us for a study skills session",
-    description: "<p>Do you want to learn some new study skills?</p>",
-    banner: "https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjExNTQ1fQ&s=c6f5a82709c011430d5f28ecc50fa925",
-    instance: "default",
-    category: 'category-a'
-  },
-  {
-    title: "Presentation Practice",
-    tagline: "Learn how to present to a medium audience",
-    description: "<p>Join in on a fun presentation skills session and level up your communications!</p>",
-    banner: "https://xmovement.s3.amazonaws.com/ideaboard/52077fb64bb3f0bf9b99e2bec0bf9d0a1516981683943.jpeg",
-    instance: "default",
-    category: 'category-b'
+  if (typeof config.instances[instance].categories !== 'undefined') {
+    const categories = config.instances[instance].categories
+    categories.forEach(data => {
+      data._user = adminId
+      data.instance = instance
+      promises.push(new Promise(resolve => {
+        Category.findOneAndUpdate({ 'instance': data.instance, 'tag': data.tag }, data, { upsert: true, setDefaultsOnInsert: true }, (err) => {
+          if (err) console.error(err)
+          resolve()
+        })
+      }))
+    })
   }
-]
+
+  Promise.all(promises).then(() => {
+    console.log(`Categories created for ${instance}...`)
+  })
+}
