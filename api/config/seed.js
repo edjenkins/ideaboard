@@ -35,8 +35,11 @@ function setupPermissions () {
       promises.push(new Promise(resolve => {
         Permission.findOneAndUpdate({ instance: instance, type: newPermission.type }, newPermission, { upsert: true, setDefaultsOnInsert: true }, (err, permission) => {
           if (err) console.error(err)
-          adminPermissions.push(permission._id)
-          resolve()
+          Permission.findOne({ instance: instance, type: newPermission.type }, (err, permission) => {
+            if (err) console.error(err)
+            adminPermissions.push(permission._id)
+            resolve()
+          })
         })
       }))
     }

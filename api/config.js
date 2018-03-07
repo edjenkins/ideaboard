@@ -1,7 +1,7 @@
 module.exports = {
   domain: 'ideaboard.co.uk',
   instances: {
-    default: 'myto',
+    default: 'master',
     master: {
       color: '#0099D0'
     },
