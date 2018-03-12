@@ -3,12 +3,10 @@
   router-link.avatar-wrapper(tag="div" v-bind:to="profileLink")
     avatar(v-bind:profile="profile")
   h1.user--name {{ profile.name }}
-  h5.user--joined {{ joined }}
+  h5.user--account {{ accountType }}
 </template>
 
 <script>
-// import Moment from 'moment'
-
 import Avatar from '@/components/user/Avatar'
 
 export default {
@@ -18,7 +16,7 @@ export default {
     Avatar
   },
   computed: {
-    joined () {
+    accountType () {
       return 'Standard Account'
     },
     profileLink () {
@@ -44,7 +42,7 @@ export default {
     color $color-text-grey
     font-size 1.3em
     font-weight normal
-  h5.user--joined
+  h5.user--account
     reset()
     color $color-text-light-grey
     font-size 0.9em

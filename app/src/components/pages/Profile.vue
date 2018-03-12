@@ -66,6 +66,12 @@ export default {
         this.$router.push('/')
       }
     },
+    'user': {
+      handler: function (nV, oV) {
+        this.currentUser = this.user
+      },
+      deep: true
+    },
     'currentUser': {
       handler: function (nV) {
         this.editedProfile = {

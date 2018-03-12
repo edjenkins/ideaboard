@@ -1,9 +1,9 @@
 <template lang="pug">
 .voting-buttons
   .like(@click="like(response._id)" v-bind:class="{ 'has-voted': hasLiked }")
-    i.fas.fa-angle-up
+    i.fas.fa-caret-up
   .dislike(@click="dislike(response._id)" v-bind:class="{ 'has-voted': hasDisliked }")
-    i.fas.fa-angle-down
+    i.fas.fa-caret-down
 </template>
 
 <script>
@@ -55,7 +55,7 @@ export default {
     right 0
     color $color-text-light-grey
     position absolute
-    height 40px
+    height 30px
     line-height 40px
     text-align center
     &:hover
@@ -66,10 +66,12 @@ export default {
       width 20px
     &.like
       bottom auto
+      top 5px
       &.has-voted
         color $color-success
     &.dislike
       top auto
+      bottom 15px
       &.has-voted
         color $color-danger
 

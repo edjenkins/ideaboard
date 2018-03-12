@@ -1,7 +1,11 @@
 <template lang="pug">
-.avatar(v-bind:style="[instanceBackground]")
+.avatar
   .avatar--image(v-if="typeof profile.avatar !== 'undefined'" v-bind:style="{ 'background-image': `url(${profile.avatar})` }")
   .avatar--icon(v-else)
+    svg
+      circle(cx="50%" cy="50%" r="50%" v-bind:fill="instanceColor")
+      circle(cx="50%" cy="40%" r="25%" fill="white")
+      circle(cx="50%" cy="110%" r="50%" fill="white")
 </template>
 
 <script>
@@ -11,7 +15,12 @@ export default {
   name: 'avatar',
   props: ['profile'],
   computed: {
-    ...mapGetters(['instanceBackground'])
+    ...mapGetters(['instanceColor']),
+    initials () {
+      var initials = this.profile.name.match(/\b\w/g) || []
+      initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
+      return initials
+    }
   }
 }
 </script>
@@ -22,30 +31,19 @@ export default {
 .avatar
   radius(50%)
   .avatar--image, .avatar--icon
-    radius(50%)
     height 0
     overflow hidden
     padding-bottom 100%
     position relative
     width 100%
   .avatar--image
+    radius(50%)
     background-image()
   .avatar--icon
-    color white
     position relative
-    &:before, &:after
+    svg
       pinned()
-      radius(50%)
-      background-color white
-      content ''
-      top 60%
-      bottom -40%
-      left 10%
-      right 10%
+      height 100%
+      width 100%
       position absolute
-    &:after
-      top 15%
-      bottom 45%
-      left 30%
-      right 30%
 </style>

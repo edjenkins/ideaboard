@@ -6,6 +6,7 @@ const taskResponseSchema = mongoose.Schema({
   _task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
   type: String,
   response: mongoose.Schema.Types.Mixed,
+  response_meta: mongoose.Schema.Types.Mixed,
   created: Date,
   _likes: [{
     _user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

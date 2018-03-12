@@ -1,6 +1,7 @@
 <template lang="pug">
-.design-task--dicussion
-  p.design-task--description(v-if="activeTask.description") {{ activeTask.description }}
+.dicussion-container(v-bind:class="{ 'no-padding': notPadded }")
+
+  p.design-task--description(v-if="activeTask && activeTask.description") {{ activeTask.description }}
 
   .dicussion-wrapper
     // No comments
@@ -49,14 +50,15 @@
 <script>
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
-import _ from 'lodash'
+import _get from 'lodash/get'
+import _replace from 'lodash/replace'
 
 import Commentable from '@/mixins/Commentable'
 import Avatar from '@/components/user/Avatar'
 
 export default {
   name: 'dicussion',
-  props: ['activeTask', 'idea', 'hideNoComments'],
+  props: ['notPadded', 'activeTask', 'idea', 'hideNoComments', 'discussionTarget', 'discussionType'],
   mixins: [
     Commentable
   ],
@@ -66,15 +68,21 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'user']),
     commentTarget () {
-      return (this.activeTask && this.activeTask._id) ? this.activeTask._id : this.idea._id
+      if (typeof this.discussionTarget === 'undefined') {
+        return _get(this.activeTask, '_id', this.idea._id)
+      }
+      return this.discussionTarget
     },
     commentType () {
-      return (this.activeTask && this.activeTask._id) ? 'task' : 'idea'
+      if (typeof this.discussionType === 'undefined') {
+        return (this.activeTask && this.activeTask._id) ? 'task' : 'idea'
+      }
+      return this.discussionType
     }
   },
   methods: {
     wrap (name) {
-      return _.replace(name, ' ', '')
+      return _replace(name, ' ', '')
     },
     checkAuth () {
       if (!this.isAuthenticated) {
@@ -89,9 +97,11 @@ export default {
 
 @import '~stylus/shared'
 
-.design-task--dicussion
+.dicussion-container
   background-color white
   padding 25px
+  &.no-padding
+    padding 0
 
 // Discussion
 .dicussion-wrapper
@@ -158,8 +168,7 @@ export default {
 
       .comment--avatar
         radius(50%)
-        background-image()
-        background-color $color-lighter-grey
+        background-image($color-lighter-grey)
         border none
         left 0
         height 40px
@@ -173,6 +182,7 @@ export default {
         span
           color $color-text-light-grey
       .comment--text
+        color $color-text-grey
         font-size 1em
         font-weight normal
 

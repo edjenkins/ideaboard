@@ -1,7 +1,7 @@
 <template lang="pug">
   .invitations
     h1.tab--header.no-parent
-      | Invitations
+      .tab--header--title Invitations
       .tab--header--action(@click="expanded = !expanded")
         i.fas(v-bind:class="[expanded ? 'fa-angle-up' : 'fa-angle-down']")
 

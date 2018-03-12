@@ -2,25 +2,29 @@
 .file-upload
   form(enctype="multipart/form-data" novalidate v-if="isInitial || isSaving")
     .dropbox
-      input(type="file" multiple v-bind:name="uploadFieldName" v-bind:disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file")
+      input(type="file" multiple v-bind:name="uploadFieldName" v-bind:disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".rtf,.doc,.docx,.pdf,image/*,video/*" class="input-file")
       p(v-if="isInitial")
         | Drop files here or click to browse
       p(v-if="isSaving")
         | Uploading files...
-  
 
   // SUCCESS
-  div(v-if="isSuccess")
+  .success-wrapper(v-if="isSuccess && uploadedFile")
     ul#upload-list
       li
-        img(v-bind:src="uploadedFile.location")
-    .btn.btn-primary(@click="reset()") Upload a different file
+        .image-preview(v-if="uploadedFile.mimetype.startsWith('image')")
+          img(v-bind:src="uploadedFile.location")
+        .unknown-preview(v-else)
+          i.far.fa-file.fa-3x
+          p {{ uploadedFile.originalname }}
+        #reset-button(@click="reset()")
+          i.fas.fa-trash-alt
+      .clearfix
 
   // FAILED
-  div(v-if="isFailed")
+  .failed-wrapper(v-if="isFailed")
     h2 Upload failed.
     .btn.btn-primary(@click="reset()") Try again
-    //- pre {{ uploadError }}
 
 </template>
 
@@ -34,15 +38,22 @@ const STATUS_FAILED = 3
 
 export default {
   name: 'file-upload',
+  props: ['uploadedFile'],
   mounted () {
     this.reset()
   },
   data  () {
     return {
-      uploadedFile: undefined,
       uploadError: null,
       currentStatus: null,
       uploadFieldName: 'upload'
+    }
+  },
+  watch: {
+    uploadedFile (nV, oV) {
+      if (typeof nV === 'undefined') {
+        this.reset()
+      }
     }
   },
   computed: {
@@ -63,7 +74,6 @@ export default {
     reset () {
       // reset form to initial state
       this.currentStatus = STATUS_INITIAL
-      this.uploadedFile = undefined
       this.uploadError = null
       this.$emit('update:uploadedFile', undefined)
     },
@@ -74,9 +84,8 @@ export default {
       API.upload.upload(formData,
         (response) => {
           this.$log(response)
-          this.uploadedFile = response.data.upload
           this.currentStatus = STATUS_SUCCESS
-          this.$emit('update:uploadedFile', this.uploadedFile.location)
+          this.$emit('update:uploadedFile', response.data.upload)
         },
         (error) => {
           this.$log(error)
@@ -144,7 +153,38 @@ export default {
     cleanlist()
     li
       cleanlist()
-      img
-        max-height 100px
-        max-width 200px
+      position relative
+      .image-preview
+        img
+          max-height 100px
+          max-width 200px
+      .unknown-preview
+        background-color $color-lightest-grey
+        display inline-block
+        margin 0 10px 10px 0
+        padding 20px
+        text-align center
+        p
+          reset()
+          color $color-border
+          font-weight bold
+        svg
+          color $color-border
+
+  #reset-button
+    radius(50%)
+    background-color $color-danger
+    height 30px
+    position absolute
+    top -10px
+    left -10px
+    width 30px
+    &:hover
+      cursor pointer
+      background-color darken($color-danger, 10%)
+    svg
+      color white
+      height 16px
+      margin 7px
+      width 16px
 </style>

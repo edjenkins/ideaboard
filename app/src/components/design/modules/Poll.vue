@@ -75,7 +75,7 @@ export default {
       )
     },
     submitResponse () {
-      if (!this.isAuthenticated) return
+      // if (!this.isAuthenticated) return
       API.task.submitResponse(
         'poll',
         this.activeTask._id,
@@ -165,8 +165,7 @@ export default {
           position relative
         .poll-response--user
           radius(50%)
-          background-image()
-          background-color $color-lighter-grey
+          background-image($color-lighter-grey)
           height 40px
           width 40px
           position absolute
@@ -192,7 +191,7 @@ export default {
   
   .response-composer
     animate()
-    margin-top 0
+    margin-top 20px
     opacity 1
     position relative
     .btn

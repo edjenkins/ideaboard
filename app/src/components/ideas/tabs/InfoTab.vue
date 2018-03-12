@@ -1,7 +1,8 @@
 <template lang="pug">
 .tab-content--info
   //- h1.tab--header.no-parent
-    span {{ idea.title }}
+    //- .tab--header--title {{ idea.title }}
+    .tab--header--title About
     .tab--header--action(v-if="ownIdea")
       i.fas.fa-pencil
       
@@ -10,15 +11,15 @@
   .tab--footer
     subscribe-button(v-bind:idea="idea" v-on:subscribed="$emit('show-design')")
 
-  #general-discussion
+  //- #general-discussion
     //- h1.tab--header.no-parent
-      span General Chat
+      .tab--header--title General Chat
     discussion(v-bind:idea="idea" v-bind:hide-no-comments="true" v-bind:activeTask="{ title: 'discussion', component: 'discussion' }")
 
-  //- .design-banner(@click="viewDesign()")
+  //- #design-banner(@click="viewDesign()")
     span(v-if="idea._subscribers.length > 2") Join {{ idea._subscribers.length }} people in disscussing this idea!
-    span(v-else) Join the rich discussion
-    i.fas.fa-angle-right
+    span(v-else) Join the discussion
+    i.fas.fa-long-arrow-alt-right
     
 
 </template>
@@ -28,6 +29,7 @@ import { mapGetters } from 'vuex'
 import RenderedContent from '@/components/shared/RenderedContent'
 import SubscribeButton from '@/components/ideas/actions/SubscribeButton'
 import Discussion from '@/components/design/modules/Discussion'
+import IdeaTile from '@/components/ideas/IdeaTile'
 
 export default {
   name: 'info-tab',
@@ -35,10 +37,11 @@ export default {
   components: {
     RenderedContent,
     SubscribeButton,
-    Discussion
+    Discussion,
+    IdeaTile
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'user']),
+    ...mapGetters(['isAuthenticated', 'user', 'instanceBackground']),
     ownIdea () {
       return this.isAuthenticated && (this.user._id === this.idea._user._id)
     }
@@ -57,9 +60,11 @@ export default {
 
 .tab-content--info
   background-color white
+  border-bottom $color-border 1px solid
   text-align left
   .tab--content
-    padding 25px  
+    min-height 240px
+    padding 25px
     p
       reset()
   .tab--footer
@@ -72,15 +77,18 @@ export default {
   #general-discussion
     border-top $color-border 1px solid
 
-  .design-banner
+  #design-banner
     animate()
     background-color $color-design
     color white
     font-size 1em
+    font-weight bold
     line-height 20px
     padding 20px 20px
     padding-right 60px
     position relative
+    @media(max-width: 680px)
+      display none
     svg
       animate()
       color white

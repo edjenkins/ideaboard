@@ -16,5 +16,6 @@
   "bugs": {
     "url": "https://github.com/edjenkins/ideaboard/issues"
   },
-  "homepage": "https://github.com/edjenkins/ideaboard#readme"
+  "homepage": "https://github.com/edjenkins/ideaboard#readme",
+  "dependencies": {}
 }

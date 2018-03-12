@@ -12,7 +12,7 @@ const taskSchema = mongoose.Schema({
   locked: Boolean,
   archived: Boolean,
   created: Date,
-  _responses: [{ type: mongoose.Schema.Types.ObjectId }]
+  _responses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'TaskResponse' }]
 
 })
 
@@ -28,7 +28,14 @@ taskSchema.pre('findOne', function (next) {
 
 taskSchema.pre('find', function (next) {
   this.populate('_user', 'profile')
+  this.populate('_responses', '_user')
   next()
 })
+
+taskSchema
+  .virtual('contributors')
+  .get(function () {
+    return this._responses
+  })
 
 module.exports = mongoose.model('Task', taskSchema)

@@ -1,7 +1,7 @@
 <template lang="pug">
   .category-wrapper
     ul#category-tabs
-      router-link(tag="li" v-bind:to="{ name: 'explore' }") All Categories
+      router-link(tag="li" v-bind:to="{ name: 'explore' }") All
       router-link(tag="li" v-for="(category, index) in categories" v-bind:key="index" v-bind:to="{ name: 'explore', params: { category: category.tag } }" v-bind:class="{ active: $route.params.category === category.tag }")
         | {{ category.name }}
       .clearfix

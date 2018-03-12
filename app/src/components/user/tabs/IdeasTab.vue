@@ -1,7 +1,7 @@
 <template lang="pug">
 .tab-content--ideas
   //- h1.tab--header.no-parent
-    | Started Ideas
+    .tab--header--title Started Ideas
 
   .tab--content
     p(v-if="ideas.length === 0") No ideas started

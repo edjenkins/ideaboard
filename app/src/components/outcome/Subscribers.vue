@@ -7,6 +7,7 @@
 
     ul.subscriber-list(v-else)
       li.subscriber(v-for="(subscriber, index) in subscribers")
+        avatar.subscriber--avatar(v-bind:profile="subscriber._user.profile")
         p.subscriber--name(@click="viewProfile(subscriber._user._id)") {{ subscriber._user.profile.name }}
         p.subscriber--date {{ getDate(subscriber.subscribedAt) }}
         .clearfix
@@ -19,10 +20,14 @@
 
 <script>
 import Moment from 'moment'
+import Avatar from '@/components/user/Avatar'
 
 export default {
   name: 'subscribers',
   props: ['idea'],
+  components: {
+    Avatar
+  },
   data () {
     return {
       loading: true,
@@ -72,9 +77,16 @@ export default {
       border-top $color-border 1px solid
       line-height 60px
       margin 0 25px
-      padding 0 10px
+      padding 0 10px 0 50px
+      position relative
       &:first-child
         border-top none
+      .subscriber--avatar
+        height 40px
+        left 0
+        top 10px
+        position absolute
+        width 40px
       p.subscriber--name
         reset()
         animate()

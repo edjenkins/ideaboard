@@ -27,6 +27,7 @@ export default {
 #page-header
   animate()
   gradient()
+  background-image()
   background-color $color-primary
   box-sizing border-box
   padding 160px 20px 60px 20px

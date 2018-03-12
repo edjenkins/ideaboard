@@ -89,9 +89,11 @@ export default {
             (response) => {
               this.$log(response)
               setTimeout(() => {
-                setTimeout(() => { this.isSubscribing = false }, 500)
-                this.idea._subscribers = response.data.idea._subscribers // Update subscribers list
-                this.$emit('subscribed')
+                setTimeout(() => {
+                  this.idea._subscribers = response.data.idea._subscribers // Update subscribers list
+                  this.isSubscribing = false
+                  this.$emit('subscribed')
+                }, 500)
               }, 500)
             },
             (error) => {

@@ -28,8 +28,7 @@ export default {
 
 @import '~stylus/home'
 .row-wrapper
-  background-image()
-  background-color white
+  background-image(white)
   position relative
 .splash-image
   padding 80px 0px !important

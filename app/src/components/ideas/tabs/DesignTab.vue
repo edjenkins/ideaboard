@@ -1,15 +1,18 @@
 <template lang="pug">
+
 .tab-content--design
   h1.tab--header(v-bind:class="{ 'no-parent': (activeComponent === 'dashboard') }")
     .tab--header--previous(name="home" @click="goToDashboard")
       i.fas.fa-arrow-left
-    span {{ (activeTask) ? activeTask.title : titles[activeComponent] }}
-    .tab--header--action(v-if="activeComponent != 'add-task'" @click="addTask")
-      span(v-if="activeTask") {{ activeComponent }}
-      span(v-else)
-        i.fas.fa-plus
+    .tab--header--title
+      | {{ (activeTask) ? activeTask.title : titles[activeComponent] }}
+    .tab--header--action(@click="toggleMaximise")
+      span
+        i.fas.fa-arrows-alt-h
+
   transition(v-bind:name="transitionType" mode="out-in")
     component(v-bind:is="activeComponent" v-bind:idea="idea" v-bind:activeTask.sync="activeTask" v-on:add-task="addTask" v-on:back="goToDashboard")
+
 </template>
 
 <script>
@@ -39,12 +42,13 @@ export default {
   data () {
     return {
       titles: {
-        'dashboard': 'Dashboard',
-        'add-task': 'Add New'
+        'dashboard': '',
+        'add-task': 'Add new task'
       },
-      transitionType: 'left-fade',
+      transitionType: '',
       activeComponent: 'dashboard',
-      activeTask: undefined
+      activeTask: undefined,
+      disableTransitions: true
     }
   },
   computed: {
@@ -54,10 +58,10 @@ export default {
     activeTask (nV) {
       if (!nV) {
         this.activeComponent = 'dashboard'
-        this.transitionType = 'left-fade'
+        this.transitionType = this.disableTransitions ? '' : 'left-fade'
       } else {
         this.activeComponent = this.activeTask.type
-        this.transitionType = 'right-fade'
+        this.transitionType = this.disableTransitions ? '' : 'right-fade'
       }
     }
   },
@@ -74,6 +78,9 @@ export default {
           this.activeComponent = 'add-task'
         }
       }
+    },
+    toggleMaximise () {
+      this.$emit('toggle-maximise')
     }
   }
 }
@@ -87,9 +94,13 @@ export default {
   min-height 600px
   margin-bottom 30px
   overflow hidden
+  h1.tab--header.no-parent
+    height 0 !important
+    border-color transparent !important
+    .tab--header--title
+      opacity 0
   .tab--content
     background-color white
     border-bottom $color-border 1px solid
     padding 25px
-
 </style>

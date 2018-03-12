@@ -1,6 +1,6 @@
 <template lang="pug">
-  #idea
-    page-header(v-if="idea" v-bind:title="idea.title" v-bind:subtitle="`Started by ${idea._user.profile.name}`")
+  #idea(v-bind:class="{ maximised: maximised }")
+    page-header(v-if="idea" v-bind:title="idea.title" v-bind:subtitle="`Started by ${idea._user.profile.name}`" v-bind:image="idea.banner")
     page-header(v-else title="Loading" subtitle="Please wait just a moment...")
     .row(v-if="idea")
 
@@ -8,7 +8,7 @@
         .content-block--body
           user-card(v-bind:profile="idea._user.profile" v-bind:id="idea._user._id")
         .content-block--footer
-          subscribe-button(v-bind:idea="idea" v-on:subscribed="showDesign()")
+          subscribe-button(v-bind:idea="idea" v-on:subscribed="showDesign(2000)")
 
       .content-block.content-block--main.pull-up.pull-left
         .content-block--banner(v-bind:style="{ 'background-image': `url(${idea.banner})` }")
@@ -19,7 +19,7 @@
               .notification-bubble(v-if="getNotificationCount(tab.identifier) > 0") {{ getNotificationCount(tab.identifier) }}
             .clearfix
           .tabs--page
-            component(v-bind:is="tabs.items[tabs.active].component" v-bind:idea="idea" v-on:show-design="showDesign()" keep-alive)
+            component(v-bind:is="tabs.items[tabs.active].component" v-bind:idea="idea" v-on:show-design="showDesign(0)" v-on:toggle-maximise="maximisedView = !maximisedView" keep-alive)
       .clearfix
 
 </template>
@@ -55,8 +55,30 @@ export default {
     OutcomeTab
   },
   created () {
-    setTimeout(() => {
-      API.idea.view(this.id,
+    this.loadIdea()
+  },
+  data () {
+    return {
+      maximisedView: false,
+      idea: undefined,
+      tabs: {
+        active: 0,
+        items: [
+          { title: 'Overview', identifier: 'info', component: 'info-tab' },
+          { title: 'Discussions', identifier: 'design', component: 'design-tab' },
+          { title: 'Outcome', identifier: 'outcome', component: 'outcome-tab' }
+        ]
+      }
+    }
+  },
+  computed: {
+    maximised () {
+      return this.tabs.active === 1 && this.maximisedView
+    }
+  },
+  methods: {
+    loadIdea () {
+      API.idea.view(this.$route.params.id,
         (response) => {
           // Idea success
           this.$log(response.data.idea)
@@ -66,25 +88,12 @@ export default {
           // Idea fail
           this.$log(error)
         })
-    }, 200)
-  },
-  data () {
-    return {
-      idea: undefined,
-      tabs: {
-        active: 0,
-        items: [
-          { title: 'About', identifier: 'info', component: 'info-tab' },
-          { title: 'Discussion', identifier: 'design', component: 'design-tab' },
-          { title: 'Outcome', identifier: 'outcome', component: 'outcome-tab' }
-        ]
-      }
-    }
-  },
-  methods: {
-    showDesign () {
+    },
+    showDesign (delay) {
       // Set active tab to design
-      this.tabs.active = 1
+      setTimeout(() => {
+        this.tabs.active = 1
+      }, delay)
     },
     getNotificationCount (identifier) {
       switch (identifier) {
@@ -110,19 +119,36 @@ export default {
     color $color-text-grey
     font-weight normal 
   .content-block--side
+    animate()
+    position absolute
+    right 0
     width 260px
+    .content-block--footer
+      border-top none
+      padding-top 0
     @media(max-width: 680px)
       display none
   .content-block--main
+    animate()
     margin-bottom 40px
     width calc(100% - 280px)
     .content-block--banner
-      background-image()
-      background-color white
+      animate()
+      background-image(white)
       height 200px
     @media(max-width: 680px)
       width 100%
       .content-block--banner
         height 140px
+  &.maximised
+    .content-block--side
+      transform scale(0.8)
+      opacity 0
+    .content-block--main
+      width 100%
+      .content-block--banner
+        height 0
+      // .tabs .tabs--selector
+        // display none
 
 </style>

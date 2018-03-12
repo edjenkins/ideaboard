@@ -1,7 +1,7 @@
 <template lang="pug">
   .your-permissions
     h1.tab--header.no-parent
-      | Your Permissions
+      .tab--header--title Your Permissions
       .tab--header--action(@click="expanded = !expanded")
         i.fas(v-bind:class="[expanded ? 'fa-angle-up' : 'fa-angle-down']")
     

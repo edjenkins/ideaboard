@@ -3,38 +3,39 @@
   form
     .input-wrapper
       ul.task-types
-        li.task-types--type(v-for="(type, key) in types" v-bind:key="key" v-bind:value="key" @click="task.type = key" v-bind:class="{ active: key === task.type }") {{ type.name }}
+        li.task-types--type(v-for="(type, key) in types" v-bind:key="key" v-bind:value="key" @click="task.type = key" v-bind:class="{ active: task.type && key === task.type }")
+          i.fas(v-bind:class="type.icon")
+          | {{ type.name }}
         .clearfix
-      p.type-tip Tip: {{ types[task.type].description }}
 
-    hr
+    .task-wrapper(v-if="task.type")
 
-    splash-messages(v-bind:messages="splashmessages['task']" padded)
+      p.type-tip(v-if="task.type") {{ types[task.type].description }}
 
-    .input-wrapper
-      label Title
-        span The question you would like to ask
-      input(type="text" v-model="task.title" name="title" placeholder="Task title")
-    .input-wrapper
-      label Description 
-        span Futher details that will help people particpate
-      input(v-model="task.description" name="description" placeholder="Task description" v-on:keyup.enter="addTask")
-    .input-wrapper
-      label(@click="showAdvancedOptions = !showAdvancedOptions")
-        | Advanced options
-        i.fas(v-bind:class="[showAdvancedOptions ? 'fa-chevron-up' : 'fa-chevron-down']")
-      #advanced-options(v-if="showAdvancedOptions")
-        label Pin this task
-          input(type="checkbox" v-model="task.pinned")
-          span This will keep it at the top of the dashboard page
+      splash-messages(v-if="task.type && splashmessages['task'].length" v-bind:messages="splashmessages['task']" padded)
 
-        label Lock this task
-          input(type="checkbox" v-model="task.locked")
-          span This means only you will be able to add responses to it
+      .input-wrapper
+        label(title="Give your task a snappy title") Title
+        input(type="text" v-model="task.title" name="title" placeholder="Task title")
+      .input-wrapper
+        label(title="Futher details that will help people particpate") Description 
+        input(v-model="task.description" name="description" placeholder="Task description" v-on:keyup.enter="addTask")
+      .input-wrapper
+        label.clickable(@click="showAdvancedOptions = !showAdvancedOptions")
+          | Advanced options
+          i.fas(v-bind:class="[showAdvancedOptions ? 'fa-chevron-up' : 'fa-chevron-down']")
+        #advanced-options(v-if="showAdvancedOptions")
+          label Pin this task
+            input(type="checkbox" v-model="task.pinned")
+            span This will keep it at the top of the dashboard page
 
-    .input-wrapper
-      .btn.btn-success.pull-left#add-task-btn(@click="addTask") {{ (addingTask) ? 'Please wait...' : 'Create ' + task.type }}
-      .clearfix
+          label Lock this task
+            input(type="checkbox" v-model="task.locked")
+            span This means only you will be able to add responses to it
+
+      .input-wrapper
+        .btn.btn-success.pull-left#add-task-btn(@click="addTask") {{ (addingTask) ? 'Please wait...' : 'Create ' + task.type }}
+        .clearfix
 </template>
 
 <script>
@@ -52,16 +53,17 @@ export default {
       showAdvancedOptions: false,
       addingTask: false,
       types: {
-        discussion: { name: 'Chat', description: 'A Discussion is great for having free flowing conversations with your community. It can be used to guage opinions or just to have a chat!' },
-        poll: { name: 'Poll', description: 'A Poll is great for tasks where there is a defined question with a set of options that you would like to gather the communities opinions around.' },
-        media: { name: 'Media', description: 'The Media task is useful when you need people to submit images as a response.' },
-        appearin: { name: 'Appear.in', description: 'Perfect for hosting a live video chat about your idea.' },
-        whiteboard: { name: 'Whiteboard', description: 'Collaborate through the power of drawing!' }
+        discussion: { name: 'Chat', icon: 'fa-comments', description: 'A Discussion is great for having free flowing conversations with your community. It can be used to guage opinions or just to have a chat!' },
+        media: { name: 'Media', icon: 'fa-images', description: 'The Media task is useful when you want people to share images and documents.' },
+        poll: { name: 'Poll', icon: 'fa-list-ul', description: 'A Poll is great for tasks where there is a defined question with a set of options that you would like to gather the communities opinions around.' },
+        appearin: { name: 'Video Call', icon: 'fa-video', description: 'Perfect for hosting a live video chat via Appear.in.' },
+        whiteboard: { name: 'Whiteboard', icon: 'fa-paint-brush', description: 'An interactive whiteboard for sketching ideas together.' }
       },
       task: {
         title: '',
         description: '',
-        type: 'discussion',
+        icon: '',
+        type: '',
         pinned: false,
         locked: false
       },
@@ -108,6 +110,12 @@ export default {
 .design-task--add
   background-color white
   padding 25px
+  p.type-tip
+    reset()
+    color $color-text-grey
+    font-size 0.9em
+    max-width 480px
+    padding 10px
   form
     margin -10px
     .input-wrapper
@@ -130,12 +138,6 @@ export default {
           color $color-text-grey
           display block
           font-size 0.8em
-      p.type-tip
-        reset()
-        color $color-text-grey
-        font-size 0.9em
-        max-width 480px
-        padding 10px 0
       ul.task-types
         cleanlist()
         display inline-block
@@ -143,22 +145,32 @@ export default {
         li.task-types--type
           animate()
           cleanlist()
+          radius(25px)
+          border $color-border 1px solid
           color $color-text-grey
           float left
-          line-height 50px
+          font-weight bold
+          line-height 30px
           margin 5px
-          padding 0 30px
-          min-width 30px
-          outline $color-border 1px solid
-          outline-offset -1px
-          text-align center
+          min-width 70px
+          padding 10px 40px 10px 45px
+          position relative
+          text-align left
+          text-overflow ellipsis
           white-space nowrap
+          svg
+            position absolute
+            left 15px
+            top 16px
           &:hover
-            cursor pointer
             background-color $color-lighter-grey
+            cursor pointer
           &.active
             background-color $color-primary
+            border-color $color-primary
             color white
-            outline $color-primary 1px solid
+          @media(max-width: 568px)
+            width calc(100% - 90px)
+          
 
 </style>

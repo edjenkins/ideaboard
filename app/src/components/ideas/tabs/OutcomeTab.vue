@@ -5,12 +5,11 @@
       .tab--header--previous(name="home" @click="goToDashboard")
         i.fas.fa-arrow-left
         
-      span {{ (activeComponent === 'dashboard') ? titles[activeComponent] : activeComponent }}
+      .tab--header--title {{ (activeComponent === 'dashboard') ? titles[activeComponent] : activeComponent }}
       //- .tab--header--action
         span(v-if="activeComponent && (activeComponent != 'dashboard')") {{ activeComponent }}
         span(v-else)
           i.fas.fa-question
-          
 
     transition(v-bind:name="transitionType" mode="out-in")
       component(v-bind:is="activeComponent" v-bind:idea="idea" v-bind:activeTool.sync="activeComponent" v-on:back="goToDashboard")
@@ -34,20 +33,21 @@ export default {
   data () {
     return {
       titles: {
-        'dashboard': 'Available tools'
+        'dashboard': ''
       },
-      transitionType: 'left-fade',
-      activeComponent: 'dashboard'
+      transitionType: '',
+      activeComponent: 'dashboard',
+      disableTransitions: true
     }
   },
   watch: {
     activeTool (nV) {
       if (!nV) {
         this.activeComponent = 'dashboard'
-        this.transitionType = 'left-fade'
+        this.transitionType = this.disableTransitions ? 'true' : 'left-fade'
       } else {
         this.activeComponent = this.activeTool.type
-        this.transitionType = 'right-fade'
+        this.transitionType = this.disableTransitions ? 'true' : 'right-fade'
       }
     }
   },
@@ -65,11 +65,16 @@ export default {
 
 .tab-content--outcome
   background-color white
-
+  h1.tab--header.no-parent
+    height 0 !important
+    padding-top 0 !important
+    padding-bottom 0 !important
+    min-height 0 !important
+    border none !important
+    opacity 0 !important
   .tab--content
     border-bottom $color-border 1px solid
     padding 20px
     p
       reset()
-
 </style>

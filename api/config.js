@@ -34,7 +34,8 @@ module.exports = {
         { tag: 'gaining-independence', name: 'Gaining independence and taking control' },
         { tag: 'participating-in-activities', name: 'Participating in arts / sport / recreation / music' },
         { tag: 'connecting-with-people', name: 'Connecting with people like me' },
-        { tag: 'fertility-and-parenthood', name: 'Fertility and parenthood' }
+        { tag: 'fertility-and-parenthood', name: 'Fertility and parenthood' },
+        { tag: 'other', name: 'Other' }
       ]
     }
   }

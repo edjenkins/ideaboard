@@ -45,7 +45,6 @@ userSchema
     return this.id
   })
 
-
 userSchema.pre('save', function (next) {
   if (!this.created) this.created = new Date()
   next()

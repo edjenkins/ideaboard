@@ -3,7 +3,7 @@
   p.design-task--description(v-if="activeTask.description") {{ activeTask.description }}
 
   .whiteboard-wrapper
-    iframe(v-bind:src="`https://witeboard.com/${activeTask._id}`" frameborder="0" width="100%" height="400")
+    iframe(v-bind:src="`https://witeboard.com/${activeTask._id}`" frameborder="0" width="100%" height="600")
   
 </template>
 
@@ -36,6 +36,15 @@ export default {
   background-color white
   padding 25px
   .whiteboard-wrapper
+    position relative
+    width 100%
+    height 0
+    padding-bottom 75%
     iframe
       border none
+      position absolute
+      width 100%
+      height 100%
+      left 0
+      top 0
 </style>

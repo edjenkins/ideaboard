@@ -2,7 +2,7 @@
 .tab-content--categories
 
   h1.tab--header.no-parent
-    | Manage
+    .tab--header--title Manage
     .tab--header--action(@click="viewCategories")
       i.fas(v-bind:class="[viewingCategories ? 'fa-angle-up' : 'fa-angle-down']")
 
@@ -16,7 +16,7 @@
         .category-tag Tag: {{ category.tag }}
 
   h1.tab--header.no-parent
-    | Add new
+    .tab--header--title Add new
     .tab--header--action(@click="addCategory")
       i.fas(v-bind:class="[addingCategory ? 'fa-angle-up' : 'fa-angle-down']")
 

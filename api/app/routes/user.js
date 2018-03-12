@@ -47,7 +47,9 @@ module.exports = function (app, passport) {
   app.put('/user',
     (req, res) => {
       if (req.isAuthenticated()) {
-        console.log(req.body)
+        if (req.body.profile.avatar && req.body.profile.avatar.location) {
+          req.body.profile.avatar = req.body.profile.avatar.location
+        }
         User.findOneAndUpdate(
           { _id: req.user._id },
           { profile: req.body.profile },

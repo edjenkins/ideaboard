@@ -42,7 +42,7 @@ module.exports = function (app, passport) {
     })
   // Start idea
   app.post('/idea',
-    (req, res) => {
+    async (req, res) => {
       if (req.isAuthenticated()) {
         let data = req.body
         data.idea._user = req.user._id
@@ -50,9 +50,9 @@ module.exports = function (app, passport) {
         let errors = []
 
         // Check title length
-        if (!data.idea.title || data.idea.title.length < 3 || data.idea.title.length > 20) {
+        if (!data.idea.title || data.idea.title.length < 3 || data.idea.title.length > 30) {
           errors.push({
-            text: 'Idea title should be longer than 3 and less than 20 characters',
+            text: 'Idea title should be longer than 3 and less than 30 characters',
             type: 'error'
           })
         }
@@ -82,6 +82,10 @@ module.exports = function (app, passport) {
         // Set instance
         data.idea.instance = req.instance
 
+        // Set banner
+        data.idea.banner = (data.uploadType === 'unsplash') ? data.idea.banner : data.idea.banner.location
+
+        // Create idea
         const idea = new Idea(data.idea)
         
         // Set category
@@ -103,6 +107,7 @@ module.exports = function (app, passport) {
                 ACL: 'public-read'
               }, function (err, data) {
                 if (err) console.error(err, err.stack)
+                console.log(data)
                 idea.banner = data.Location
                 idea.save((err) => {
                   if (err) console.error(err)
@@ -113,11 +118,20 @@ module.exports = function (app, passport) {
             })
           })
         } else {
-          idea.save((err) => {
-            if (err) console.error(err)
-            mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea })
-            res.json({ idea })
-          })
+          let updatedIdea = await idea.save()
+          console.log(updatedIdea)
+
+          // Set children of parent idea
+          if (typeof idea._parent !== 'undefined') {
+            let parentIdea = await Idea.findOne(idea._parent)
+            console.log(parentIdea)
+            parentIdea._children.push(idea._id)
+            let updatedParentIdea = await parentIdea.save()
+            console.log(updatedParentIdea)
+          }
+
+          mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea })
+          res.json({ idea })
         }
       } else {
         res.status(401)

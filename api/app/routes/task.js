@@ -38,17 +38,17 @@ module.exports = function (app, passport) {
         let errors = []
 
         // Check title length
-        if (!req.body.task.title || req.body.task.title.length < 3 || req.body.task.title.length > 20) {
+        if (!req.body.task.title || req.body.task.title.length < 3 || req.body.task.title.length > 40) {
           errors.push({
-            text: 'Task title should be longer than 3 and less than 20 characters',
+            text: 'Task title should be longer than 3 and less than 40 characters',
             type: 'error'
           })
         }
 
         // Check description is valid
-        if (!req.body.task.description || req.body.task.description.length < 8 || req.body.task.description.length > 1200) {
+        if (req.body.task.description && req.body.task.description.length > 1200) {
           errors.push({
-            text: 'Task description should be longer than 10 and less than 1,200 characters',
+            text: 'Task description should be less than 1,200 characters',
             type: 'error'
           })
         }

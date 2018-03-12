@@ -69,7 +69,8 @@ radius()
   -o-border-radius: arguments;
   border-radius: arguments;
 
-background-image()
+background-image($color = 'transparent')
+  background-color $color
   background-size cover
   background-repeat no-repeat
   background-position center
@@ -78,6 +79,11 @@ border-box()
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+
+box-shadow()
+  box-shadow: 0 0 5px 5px alpha(black, 0.2);
+  -moz-box-shadow: 0 5px 5 5px alpha(black, 0.2);
+  -webkit-box-shadow: 0 5px 5 5px alpha(black, 0.2);
 
 placeholderColor()
   &::-webkit-input-placeholder { /* Chrome */

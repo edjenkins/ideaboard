@@ -20,11 +20,15 @@ module.exports = function (app, passport) {
   app.post('/task/:type/:task_id/response',
     (req, res) => {
       if (req.isAuthenticated()) {
-        const response = {
+        let response = {
           response: req.body.response,
           _user: req.user._id,
           type: req.params.type,
           _task: req.params.task_id
+        }
+        if (req.params.type === 'media') {
+          response.response_meta = req.body.response
+          response.response = req.body.response.location
         }
         const taskResponse = new TaskResponse(response)
 

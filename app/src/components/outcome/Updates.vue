@@ -103,8 +103,7 @@ ul#idea-updates
         line-height 40px
       .user-wrapper--avatar
         radius(50%)
-        background-image()
-        background-color $color-light-grey
+        background-image($color-light-grey)
         height 40px
         width 40px
         position absolute

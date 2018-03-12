@@ -32,6 +32,15 @@ export default {
   background-color white
   padding 25px
   .appearin-wrapper
+    position relative
+    width 100%
+    height 0
+    padding-bottom 75%
     iframe
       border none
+      position absolute
+      width 100%
+      height 100%
+      left 0
+      top 0
 </style>

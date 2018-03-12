@@ -6,21 +6,24 @@
         .content-block--body
           form
             splash-messages(v-bind:messages="splashmessages" padded)
+
+            splash-messages(v-if="$route.query.idea" v-bind:messages="[{type:'success', text: `You are starting a follow on idea. Subscribers of the original idea will be invited to participate.` }]" padded)
+
             .input-wrapper(v-if="categories.length > 0")
-              label Idea Category
+              label Category
               category-selector(v-bind:category.sync="idea.category" v-bind:category_name.sync="idea.category_name" v-bind:categories="categories")
 
             .input-wrapper
-              label Idea Title
-              input(type="text" v-model="idea.title" name="title" placeholder="Idea Title")
+              label Title
+              input(type="text" v-model="idea.title" name="title" placeholder="A catchy title for your idea")
             .input-wrapper
-              label Idea Tagline
-              input(type="text" v-model="idea.tagline" name="tagline" placeholder="Idea Tagline")
+              label Tagline
+              input(type="text" v-model="idea.tagline" name="tagline" placeholder="A snappy tagline for your idea")
             .input-wrapper
-              label Idea Description
+              label Description
               quill-editor(v-model="idea.description" ref="myQuillEditor" v-bind:options="editorOption")
             .input-wrapper
-              label Idea Banner
+              label Banner Image
               input(type="hidden" v-model="idea.banner" name="banner")
               input(type="hidden" v-model="uploadType" name="uploadType")
               ul.upload-options
@@ -36,9 +39,11 @@
             span(v-if="creatingIdea") Creating Idea...
             span(v-else) Continue
           .clearfix
+
       .content-block.content-block--side.pull-up.pull-right
-        idea-tile(v-bind:idea="idea" v-if="idea.title || idea.tagline || idea.description || idea.banner")
+        idea-tile(v-bind:idea="idea")
       .clearfix
+
 </template>
 
 <script>
@@ -74,7 +79,7 @@ export default {
   mounted () {
     this.fetchCategories()
   },
-  startd () {
+  created () {
     if (!this.$session.exists()) this.$session.start()
     if (this.$session.has('draft-idea')) {
       const draftIdea = JSON.parse(this.$session.get('draft-idea'))
@@ -97,6 +102,7 @@ export default {
     return {
       categories: [],
       editorOption: {
+        placeholder: 'A longer description to explain your idea in detail',
         modules: {
           toolbar: [
             [{ 'size': ['small', false, 'large'] }],
@@ -152,6 +158,8 @@ export default {
       }
       if (this.creatingIdea) return
       this.creatingIdea = true
+      // If an idea id was passed, set the parent of the idea to be created
+      this.idea._parent = this.$route.query.idea
       API.idea.start({ idea: this.idea, uploadType: this.uploadType },
         (response) => {
           // Idea redirect

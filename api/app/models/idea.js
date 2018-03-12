@@ -10,6 +10,8 @@ const ideaSchema = mongoose.Schema({
   banner: String,
   instance: String,
   created: Date,
+  _parent: { type: mongoose.Schema.Types.ObjectId, ref: 'Idea' },
+  _children: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Idea' }],
   _subscribers: [{
     _user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     subscribedAt: Date
@@ -33,11 +35,13 @@ ideaSchema.pre('findOne', function (next) {
     select: 'profile'
   })
   this.populate('_updates')
+  this.populate('_children')
   next()
 })
 
 ideaSchema.pre('find', function (next) {
   this.populate('_user', 'profile')
+  this.populate('_children')
   next()
 })
 

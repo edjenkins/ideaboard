@@ -81,7 +81,7 @@ export default {
     margin 0 -10px
     li.unsplash-search--results--result
       cleanlist()
-      background-image()
+      background-image($color-lightest-grey)
       float left
       height 0
       margin 10px
