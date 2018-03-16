@@ -40,6 +40,6 @@ export default {
 
 @import '~stylus/shared'
 
-#document
+#outcome-document
   padding 20px
 </style>
