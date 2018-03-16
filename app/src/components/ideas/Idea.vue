@@ -14,12 +14,12 @@
         .content-block--banner(v-bind:style="{ 'background-image': `url(${idea.banner})` }")
         .tabs
           .tabs--selector
-            .tabs--selector--item(v-for="(tab, index) in tabs.items" v-bind:class="{ active: (index === tabs.active) }" @click="tabs.active = index")
+            router-link.tabs--selector--item(v-for="(tab, index) in tabs.items" v-bind:key="index" v-bind:to="{ name: tab.route }")
               | {{ tab.title }}
-              .notification-bubble(v-if="getNotificationCount(tab.identifier) > 0") {{ getNotificationCount(tab.identifier) }}
+              .notification-bubble(v-if="getNotificationCount(tab.route) > 0") {{ getNotificationCount(tab.route) }}
             .clearfix
           .tabs--page
-            component(v-bind:is="tabs.items[tabs.active].component" v-bind:idea="idea" v-on:show-design="showDesign(0)" v-on:toggle-maximise="maximisedView = !maximisedView" keep-alive)
+            router-view(v-bind:idea="idea" v-on:show-design="showDesign(0)" v-on:toggle-maximise="maximisedView = !maximisedView" keep-alive)
       .clearfix
 
 </template>
@@ -29,10 +29,6 @@ import API from '@/api'
 import PageHeader from '@/components/PageHeader'
 import UserCard from '@/components/user/UserCard'
 import SubscribeButton from '@/components/ideas/actions/SubscribeButton'
-
-import InfoTab from '@/components/ideas/tabs/InfoTab'
-import DesignTab from '@/components/ideas/tabs/DesignTab'
-import OutcomeTab from '@/components/ideas/tabs/OutcomeTab'
 
 export default {
   name: 'idea',
@@ -49,10 +45,7 @@ export default {
   components: {
     PageHeader,
     UserCard,
-    SubscribeButton,
-    InfoTab,
-    DesignTab,
-    OutcomeTab
+    SubscribeButton
   },
   created () {
     this.loadIdea()
@@ -62,18 +55,17 @@ export default {
       maximisedView: false,
       idea: undefined,
       tabs: {
-        active: 0,
         items: [
-          { title: 'Overview', identifier: 'info', component: 'info-tab' },
-          { title: 'Discussions', identifier: 'design', component: 'design-tab' },
-          { title: 'Outcome', identifier: 'outcome', component: 'outcome-tab' }
+          { title: 'Overview', route: 'idea', component: 'info-tab' },
+          { title: 'Discussions', route: 'designdashboard', component: 'design-tab' },
+          { title: 'Outcome', route: 'outcomedashboard', component: 'outcome-tab' }
         ]
       }
     }
   },
   computed: {
     maximised () {
-      return this.tabs.active === 1 && this.maximisedView
+      return this.$route.name === 'designdashboard' && this.maximisedView
     }
   },
   methods: {
@@ -92,11 +84,11 @@ export default {
     showDesign (delay) {
       // Set active tab to design
       setTimeout(() => {
-        this.tabs.active = 1
+        this.$router.push({ name: 'designdashboard', params: { id: this.idea._id } })
       }, delay)
     },
-    getNotificationCount (identifier) {
-      switch (identifier) {
+    getNotificationCount (route) {
+      switch (route) {
         case 'design':
           // Return the total number of tasks
           return this.idea._tasks.length

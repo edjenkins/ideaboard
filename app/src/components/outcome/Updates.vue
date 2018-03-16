@@ -25,11 +25,12 @@ import Avatar from '@/components/user/Avatar'
 
 export default {
   name: 'updates',
-  props: ['idea'],
+  props: ['idea', 'title'],
   components: {
     Avatar
   },
   created () {
+    this.$emit('update:title', 'Idea updates')
     this.fetchUpdates()
   },
   data () {

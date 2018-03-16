@@ -1,11 +1,12 @@
 const _get = require('lodash/get')
+const _uniq = require('lodash/uniq')
 
 const config = require('../config.js')
 
 const Permission = require('../app/models/permission')
-const User = require('../app/models/user')
 const Idea = require('../app/models/idea')
 const Category = require('../app/models/category')
+const User = require('../app/models/user')
 
 // Setup permissions
 setupPermissions()
@@ -77,8 +78,8 @@ function setupAdmin(adminPermissions) {
   }
 }
 
-function setupCategories(adminId, instance) {
-  
+function setupCategories(admin, instance) {
+
   console.log(`Setting up categories for ${instance}...`)
 
   let promises = []
@@ -86,7 +87,7 @@ function setupCategories(adminId, instance) {
   if (typeof config.instances[instance].categories !== 'undefined') {
     const categories = config.instances[instance].categories
     categories.forEach(data => {
-      data._user = adminId
+      data._user = admin._id
       data.instance = instance
       promises.push(new Promise(resolve => {
         Category.findOneAndUpdate({ 'instance': data.instance, 'tag': data.tag }, data, { upsert: true, setDefaultsOnInsert: true }, (err) => {

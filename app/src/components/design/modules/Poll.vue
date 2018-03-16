@@ -1,6 +1,6 @@
 <template lang="pug">
 .design-task--poll
-  p.design-task--description(v-if="activeTask.description") {{ activeTask.description }}
+  //- p.design-task--description(v-if="activeTask.description") {{ activeTask.description }}
 
   .poll-wrapper
     transition-group(tag="ul" class="poll-responses" name="fade")
@@ -25,12 +25,14 @@ import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import API from '@/api'
 
+import DesignTask from '@/mixins/DesignTask'
+
 import VotingButtons from '@/components/voting/VotingButtons'
 import Avatar from '@/components/user/Avatar'
 
 export default {
   name: 'poll',
-  props: ['active-task'],
+  mixins: [DesignTask],
   components: {
     VotingButtons,
     Avatar
@@ -64,7 +66,7 @@ export default {
     fetchResponses () {
       API.task.fetchResponses(
         'poll',
-        this.activeTask._id,
+        this.$route.params.task_id,
         (response) => {
           this.$log(response)
           this.responses = response.data
@@ -78,7 +80,7 @@ export default {
       // if (!this.isAuthenticated) return
       API.task.submitResponse(
         'poll',
-        this.activeTask._id,
+        this.$route.params.task_id,
         { response: this.newResponse },
         (response) => {
           this.$log(response)

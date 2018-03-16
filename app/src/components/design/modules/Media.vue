@@ -1,6 +1,6 @@
 <template lang="pug">
 .design-task--media
-  p.design-task--description(v-if="activeTask.description") {{ activeTask.description }}
+  p.design-task--description(v-if="task.description") {{ task.description }}
 
   .media-wrapper
     // No media
@@ -27,13 +27,16 @@
 <script>
 import { mapGetters } from 'vuex'
 import API from '@/api'
+
+import DesignTask from '@/mixins/DesignTask'
+
 import FileUpload from '@/components/FileUpload'
 import Avatar from '@/components/user/Avatar'
 import MediaResponse from '@/components/design/components/MediaResponse'
 
 export default {
   name: 'media',
-  props: ['active-task', 'idea'],
+  mixins: [DesignTask],
   created () {
     this.fetchResponses()
   },
@@ -52,13 +55,10 @@ export default {
     ...mapGetters(['isAuthenticated'])
   },
   methods: {
-    goBack () {
-      this.$emit('back')
-    },
     fetchResponses () {
       API.task.fetchResponses(
         'media',
-        this.activeTask._id,
+        this.task._id,
         (response) => {
           this.$log(response)
           this.responses = response.data
@@ -72,7 +72,7 @@ export default {
       if (!this.isAuthenticated) return
       API.task.submitResponse(
         'media',
-        this.activeTask._id,
+        this.task._id,
         { response: this.newResponse },
         (response) => {
           this.$log(response)

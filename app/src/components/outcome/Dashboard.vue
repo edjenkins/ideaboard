@@ -2,13 +2,13 @@
   
 #outcome-dashboard
 
-  .idea-tool.internal-tool(@click="loadTool('updates')")
+  router-link.idea-tool.internal-tool(v-bind:to="{ name: 'outcomeupdates', params: { id: idea._id } }")
     .idea-tool--title Idea updates
-  .idea-tool.internal-tool(@click="loadTool('subscribers')")
+  router-link.idea-tool.internal-tool(v-bind:to="{ name: 'outcomesubscribers', params: { id: idea._id } }")
     .idea-tool--title Subscribers list
-  .idea-tool.internal-tool(@click="loadTool('outcome-document')")
-    .idea-tool--title Submit an outcome document
-  .idea-tool.internal-tool(@click="startFollowOnIdea")
+  router-link.idea-tool.internal-tool(v-bind:to="{ name: 'outcomedocument', params: { id: idea._id } }")
+    .idea-tool--title Contribute to outcome document
+  router-link.idea-tool.internal-tool(v-bind:to="{ name: 'start', query: { idea: this.idea._id } }")
     .idea-tool--title Start a follow on Idea
   .clearfix
 
@@ -30,15 +30,7 @@
 <script>
   export default {
     name: 'dashboard',
-    props: ['activeTool', 'idea'],
-    methods: {
-      loadTool (tool) {
-        this.$emit('update:activeTool', tool)
-      },
-      startFollowOnIdea () {
-        this.$router.push({ name: 'start', query: { idea: this.idea._id } })
-      }
-    }
+    props: ['activeTool', 'idea']
   }
 </script>
 
@@ -55,12 +47,14 @@
     margin 10px
     overflow hidden
     position relative
+    text-decoration none
     width calc(calc(100% / 3) - 20px)
     .idea-tool--title
       radius(10px)
       pinned()
       animate()
       color white
+      font-weight bold
       line-height 30px
       padding 40px
       text-align center
@@ -69,14 +63,6 @@
       center-align()
       max-width 80%
       max-height 25px
-    &.external-tool
-      height 100px
-      .idea-tool--title
-        line-height 100px
-        opacity 0
-      &:hover
-        .idea-tool--title
-          opacity 1
     &.internal-tool
       width calc(calc(100% / 2) - 20px)
       @media(max-width: 480px)

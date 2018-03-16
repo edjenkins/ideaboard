@@ -17,6 +17,27 @@ import Start from '@/components/ideas/Start'
 import Explore from '@/components/ideas/Explore'
 import Idea from '@/components/ideas/Idea'
 
+// Idea Tabs
+import InfoTab from '@/components/ideas/tabs/InfoTab'
+import DesignTab from '@/components/ideas/tabs/DesignTab'
+import OutcomeTab from '@/components/ideas/tabs/OutcomeTab'
+
+// Idea Design Tab
+import DesignDashboard from '@/components/design/Dashboard'
+import AddDesignTask from '@/components/design/AddTask'
+import Discussion from '@/components/design/modules/Discussion'
+import Poll from '@/components/design/modules/Poll'
+import Media from '@/components/design/modules/Media'
+import Appearin from '@/components/design/modules/Appearin'
+import Whiteboard from '@/components/design/modules/Whiteboard'
+
+// Idea Outcome Tab
+import OutcomeDashboard from '@/components/outcome/Dashboard'
+import OutcomeMedia from '@/components/outcome/Media'
+import OutcomeSubscribers from '@/components/outcome/Subscribers'
+import OutcomeUpdates from '@/components/outcome/Updates'
+import OutcomeDocument from '@/components/outcome/Document'
+
 import config from '@/config'
 
 Vue.use(Router)
@@ -72,9 +93,89 @@ const router = new Router({
     },
     {
       path: '/idea/:id',
-      name: 'idea',
       component: Idea,
-      props: true
+      props: true,
+      children: [
+        {
+          name: 'idea',
+          path: 'info',
+          component: InfoTab
+        },
+        {
+          name: 'design',
+          path: 'design',
+          component: DesignTab,
+          children: [
+            {
+              name: 'designdashboard',
+              path: '/',
+              component: DesignDashboard
+            },
+            {
+              name: 'addtask',
+              path: 'add',
+              component: AddDesignTask
+            },
+            {
+              name: 'discussion',
+              path: 'discussion/:task_id',
+              component: Discussion
+            },
+            {
+              name: 'poll',
+              path: 'poll/:task_id',
+              component: Poll
+            },
+            {
+              name: 'media',
+              path: 'media/:task_id',
+              component: Media
+            },
+            {
+              name: 'appearin',
+              path: 'appearin/:task_id',
+              component: Appearin
+            },
+            {
+              name: 'whiteboard',
+              path: 'whiteboard/:task_id',
+              component: Whiteboard
+            }
+          ]
+        },
+        {
+          name: 'outcome',
+          path: 'outcome',
+          component: OutcomeTab,
+          children: [
+            {
+              name: 'outcomedashboard',
+              path: '/',
+              component: OutcomeDashboard
+            },
+            {
+              name: 'outcomemedia',
+              path: 'media',
+              component: OutcomeMedia
+            },
+            {
+              name: 'outcomesubscribers',
+              path: 'subscribers',
+              component: OutcomeSubscribers
+            },
+            {
+              name: 'outcomeupdates',
+              path: 'updates',
+              component: OutcomeUpdates
+            },
+            {
+              name: 'outcomedocument',
+              path: 'document',
+              component: OutcomeDocument
+            }
+          ]
+        }
+      ]
     },
     {
       path: '/auth',

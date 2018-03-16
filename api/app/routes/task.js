@@ -1,4 +1,5 @@
 const async = require('async')
+const mail = require('../../app/services/mail')
 
 const Idea = require('../../app/models/idea')
 const Task = require('../../app/models/task')
@@ -61,20 +62,8 @@ module.exports = function (app, passport) {
 
         task.save((err) => {
           if (err) console.error(err)
-          // mail.sendMail(req.user.local.email, 'Task Created', 'task-created', { user: req.user, task: task, url: utilities.redirectUri(req.instance) })
-
-          async.series({
-            idea: function (callback) {
-              Idea.findOne({ _id: data.idea_id }).exec(callback)
-            }
-          }, function (err, results) {
-            if (err) console.error(err)
-            results.idea._tasks.push(task)
-            results.idea.save((err) => {
-              res.json({ task })
-            })
-          })
-
+          mail.sendMail(req.user.local.email, 'Task Created', 'task-created', { user: req.user, task: task, url: utilities.redirectUri(req.instance) })
+          res.json({ task })
         })
       } else {
         res.status(401)

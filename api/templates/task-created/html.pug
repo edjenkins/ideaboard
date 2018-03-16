@@ -1,0 +1,15 @@
+extends ../main
+
+block content
+
+  h1(style="margin-bottom: 30px") Task Added
+
+  p Hey #{ user.profile.name },
+
+  p Big news! #{ user.profile.name } has just added a new task to the idea - <a style="color: #0B9BD0" href="#{ url }/idea/#{ task._idea }">#{ task._idea }</a>.
+
+  p Don't miss out on the live conversation, head over to Ideaboard now to get involved.
+
+  p You are subscrived to this idea so you will continue to receive updates like this one. Should you wish to unsubscribe from this idea just head over to the <a style="color: #0B9BD0" href="#{ url }/idea/#{ task._idea }">idea page</a> and hot unsubscribe.
+
+  p Got questions? Reply to this email and we will be happy to help out.

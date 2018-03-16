@@ -1,25 +1,22 @@
 <template lang="pug">
 .design-task--appearin
-  p.design-task--description(v-if="activeTask.description") {{ activeTask.description }}
+  p.design-task--description(v-if="task.description") {{ task.description }}
 
   .appearin-wrapper
-    iframe(v-bind:src="`https://appear.in/${activeTask._id}`" frameborder="0" width="100%" height="400")
+    iframe(v-bind:src="`https://appear.in/${task._id}`" frameborder="0" width="100%" height="400")
   
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 
+import DesignTask from '@/mixins/DesignTask'
+
 export default {
   name: 'appearin',
-  props: ['active-task'],
+  mixins: [DesignTask],
   computed: {
     ...mapGetters(['isAuthenticated'])
-  },
-  methods: {
-    goBack () {
-      this.$emit('back')
-    }
   }
 }
 </script>

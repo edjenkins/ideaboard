@@ -1,4 +1,8 @@
 const mongoose = require('mongoose')
+const mail = require('../../app/services/mail')
+
+const Idea = require('./idea')
+const User = require('./user')
 
 const taskSchema = mongoose.Schema({
 

@@ -6,7 +6,7 @@
   .tab--content
     p(v-if="ideas.length === 0") No ideas started
     .ideas-wrapper(v-else)
-      router-link.content-block.content-block--tile.pull-left(tag="div" v-for="(idea, index) in ideas" v-bind:key="index" v-bind:to="`/idea/${idea._id}`")
+      router-link.content-block.content-block--tile.pull-left(tag="div" v-for="(idea, index) in ideas" v-bind:key="index" v-bind:to="{ name: 'idea', params: { id: idea._id } }")
         idea-tile.bordered(v-bind:idea="idea")
       .clearfix
 </template>

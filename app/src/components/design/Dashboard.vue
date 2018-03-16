@@ -8,8 +8,7 @@
     .clearfix
 
   .actions-wrapper
-    #add-task(@click="addTask()") Add new task
-    //- #add-task(@click="addTask()") Start a live session
+    router-link#add-task(v-bind:to="{ name: 'addtask', params: { id: idea._id} }") Add new task
 
 </template>
 
@@ -101,6 +100,7 @@ export default {
       text-align center
       // flex-basis calc(50% - 20px)
       flex-basis 100%
+      text-decoration none
       svg
         animate()
         display none

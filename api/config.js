@@ -1,7 +1,7 @@
 module.exports = {
   domain: 'ideaboard.co.uk',
   instances: {
-    default: 'master',
+    default: 'myto',
     master: {
       color: '#0099D0'
     },
@@ -36,6 +36,13 @@ module.exports = {
         { tag: 'connecting-with-people', name: 'Connecting with people like me' },
         { tag: 'fertility-and-parenthood', name: 'Fertility and parenthood' },
         { tag: 'other', name: 'Other' }
+      ],
+      tasks: [
+        { type: 'discussion', title: 'Implications', description: 'What implications might your team face should you implement your idea?' },
+        { type: 'media', title: 'Design photos', description: 'Add photos throughout the day to show the progression of your design' },
+        { type: 'poll', title: 'Name your personas', description: 'Add a brief description for each of your team\'s personas' },
+        { type: 'appearin', title: 'Live chat', description: 'Have a live discussion about your idea with another group, shout across to their table to get things started!' },
+        { type: 'whiteboard', title: 'Draw your subject', description: 'Work together to draw a good image of your subject' }
       ]
     }
   }

@@ -1,6 +1,6 @@
 <template lang="pug">
 
-  .design-dashboard--task(@click="loadTask")
+  router-link.design-dashboard--task(v-bind:to="{ name: task.type, params: { id: task._idea, task_id: task._id } }")
     .design-dashboard--task--title {{ task.title }}
 
     .design-dashboard--task--subtitle(v-if="task._responses.length > 0") {{ `${task._responses.length} contributon${(task._responses.length === 1) ? '' : 's'}` }}
@@ -74,6 +74,7 @@ export default {
   position relative
   text-align center
   flex-basis 220px
+  text-decoration none
   &:first-child
     flex 1 100%
   &:not(:first-child)

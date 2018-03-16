@@ -1,29 +1,22 @@
 <template lang="pug">
 .design-task--whiteboard
-  p.design-task--description(v-if="activeTask.description") {{ activeTask.description }}
+  p.design-task--description(v-if="task.description") {{ task.description }}
 
   .whiteboard-wrapper
-    iframe(v-bind:src="`https://witeboard.com/${activeTask._id}`" frameborder="0" width="100%" height="600")
+    iframe(v-bind:src="`https://witeboard.com/${task._id}`" frameborder="0" width="100%" height="600")
   
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 
+import DesignTask from '@/mixins/DesignTask'
+
 export default {
   name: 'whiteboard',
-  props: ['active-task'],
-  data () {
-    return {
-    }
-  },
+  mixins: [DesignTask],
   computed: {
     ...mapGetters(['isAuthenticated'])
-  },
-  methods: {
-    goBack () {
-      this.$emit('back')
-    }
   }
 }
 </script>

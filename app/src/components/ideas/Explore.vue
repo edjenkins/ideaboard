@@ -6,7 +6,7 @@
       .passcode-block(v-if="currentCategory && currentCategory.passcode && (userPasscode !== currentCategory.passcode)")
         h2 Passcode required
         input(type="text" v-bind:placeholder="currentCategory.passcode" v-model="userPasscode")
-      router-link.content-block.content-block--tile.pull-left(v-else v-for="(idea, index) in orderedIdeas" v-bind:to="`/idea/${idea._id}`" tag="div" v-bind:key="index")
+      router-link.content-block.content-block--tile.pull-left(v-else v-for="(idea, index) in orderedIdeas" v-bind:to="{ name: 'idea', params: { id: idea._id } }" tag="div" v-bind:key="index")
         idea-tile(v-bind:idea="idea")
       .clearfix
 </template>

@@ -11,7 +11,7 @@
   .tab--footer
     subscribe-button(v-bind:idea="idea" v-on:subscribed="$emit('show-design')")
 
-  //- #general-discussion
+  #general-discussion
     //- h1.tab--header.no-parent
       .tab--header--title General Chat
     discussion(v-bind:idea="idea" v-bind:hide-no-comments="true" v-bind:activeTask="{ title: 'discussion', component: 'discussion' }")

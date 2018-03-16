@@ -24,7 +24,7 @@ import Avatar from '@/components/user/Avatar'
 
 export default {
   name: 'subscribers',
-  props: ['idea'],
+  props: ['idea', 'title'],
   components: {
     Avatar
   },
@@ -35,6 +35,7 @@ export default {
     }
   },
   created () {
+    this.$emit('update:title', 'Subscribers list')
     this.loading = true
     this.getSubscribers()
   },

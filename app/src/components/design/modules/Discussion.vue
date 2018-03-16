@@ -53,13 +53,15 @@ import * as types from '@/store/mutation-types'
 import _get from 'lodash/get'
 import _replace from 'lodash/replace'
 
+import DesignTask from '@/mixins/DesignTask'
 import Commentable from '@/mixins/Commentable'
 import Avatar from '@/components/user/Avatar'
 
 export default {
   name: 'dicussion',
-  props: ['notPadded', 'activeTask', 'idea', 'hideNoComments', 'discussionTarget', 'discussionType'],
+  props: ['notPadded', 'hideNoComments', 'discussionTarget', 'discussionType'],
   mixins: [
+    DesignTask,
     Commentable
   ],
   components: {

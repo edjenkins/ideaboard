@@ -83,7 +83,9 @@ module.exports = function (app, passport) {
         data.idea.instance = req.instance
 
         // Set banner
-        data.idea.banner = (data.uploadType === 'unsplash') ? data.idea.banner : data.idea.banner.location
+        if (data.idea.banner) {
+          data.idea.banner = (data.uploadType === 'unsplash') ? data.idea.banner : data.idea.banner.location
+        }
 
         // Create idea
         const idea = new Idea(data.idea)
