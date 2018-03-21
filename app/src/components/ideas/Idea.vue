@@ -8,8 +8,7 @@
         .content-block--body
           user-card(v-bind:profile="idea._user.profile" v-bind:id="idea._user._id")
         .content-block--footer
-          .admin-tools(v-if="isAdmin")
-            .btn.btn-danger(@click="destroyIdea") Delete Idea
+          idea-actions(v-if="isAdmin" v-bind:idea="idea")
           subscribe-button(v-bind:idea="idea" v-on:subscribed="showDesign(2000)")
 
       .content-block.content-block--main.pull-up.pull-left
@@ -31,6 +30,7 @@ import API from '@/api'
 import { mapGetters } from 'vuex'
 import _get from 'lodash/get'
 
+import IdeaActions from '@/components/admin/IdeaActions'
 import PageHeader from '@/components/PageHeader'
 import UserCard from '@/components/user/UserCard'
 import SubscribeButton from '@/components/ideas/actions/SubscribeButton'
@@ -48,6 +48,7 @@ export default {
   },
   props: ['id'],
   components: {
+    IdeaActions,
     PageHeader,
     UserCard,
     SubscribeButton
@@ -79,18 +80,6 @@ export default {
     }
   },
   methods: {
-    destroyIdea () {
-      API.idea.destroy(this.$route.params.id,
-        (response) => {
-          // Destroyed
-          this.$log(response)
-          this.$router.push({ name: 'explore' })
-        },
-        (error) => {
-          // Failed to destroy
-          this.$log(error)
-        })
-    },
     loadIdea () {
       API.idea.view(this.$route.params.id,
         (response) => {
@@ -137,10 +126,6 @@ export default {
     position absolute
     right 0
     width 260px
-    .admin-tools
-      padding-bottom 20px
-      .btn
-        radius(30px)
     .content-block--footer
       border-top none
       padding-top 0
