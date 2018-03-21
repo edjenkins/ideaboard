@@ -1,6 +1,7 @@
 import * as types from '@/store/mutation-types'
 import API from '@/api'
 import _find from 'lodash/find'
+import _get from 'lodash/get'
 
 // initial state
 const state = {
@@ -36,13 +37,13 @@ const getters = {
     return state.user.permissions
   },
   isAdmin () {
-    return _find(state.user.permissions, { type: 'admin' })
+    return _get(state.user, 'permissions') ? _find(state.user.permissions, { type: 'admin' }) : undefined
   },
   isModerator () {
-    return _find(state.user.permissions, { type: 'moderator' })
+    return _get(state.user, 'permissions') ? _find(state.user.permissions, { type: 'moderator' }) : undefined
   },
   isOrganiser () {
-    return _find(state.user.permissions, { type: 'organiser' })
+    return _get(state.user, 'permissions') ? _find(state.user.permissions, { type: 'organiser' }) : undefined
   }
 }
 

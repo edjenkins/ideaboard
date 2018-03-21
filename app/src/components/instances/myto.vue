@@ -37,9 +37,11 @@
             router-link.btn.btn-rounded.get-involved(v-bind:to="{ name: 'explore', params: { category: 'rome' } }") Explore Ideas
           .clearfix
 
-    splash-image(align="left" title="What is Ideaboard?" subtitle="This website is a tool to help the Mito community – online and offline – to engage in ideation around the design ideas from each of these events." action="Read More" link="/learn" image="")
-
-    //- featured-ideas
+    #ideaboard-banner(v-bind:class="align" )
+      #ideaboard-banner--content
+        h2 Ideaboard
+        p Ideaboard is a tool that allows anyone to share and discuss ideas online. Getting started is simple!
+        router-link#ideaboard-banner--action(v-bind:to="{ name: 'about' }") Learn more
 
     site-footer
 </template>
@@ -161,5 +163,56 @@ export default {
         max-width 100%
       h3
         margin-bottom 10px
+
+
+#ideaboard-banner
+  margin 0 auto
+  padding 0 10px 60px 10px !important
+  position relative
+  max-width 800px
+  #ideaboard-banner--image
+    position absolute
+    text-align center
+    width 50%
+    img
+      height 320px
+  #ideaboard-banner--content
+    radius(30px)
+    background-color white
+    margin 0 10px
+    padding 50px 30px
+    h2
+      reset()
+      color $color-text-grey
+      font-size 2em
+    p
+      reset()
+      color $color-text-grey
+      margin 20px auto 30px auto
+      max-width 500px
+    #ideaboard-banner--action
+      animate()
+      radius(30px)
+      background-color transparent
+      border $color-text-grey 1px solid
+      color $color-text-grey
+      display inline-block
+      font-weight bold
+      line-height 60px
+      margin 0 20px
+      padding 0 40px
+      text-align center
+      text-decoration none
+      &:hover
+        cursor pointer
+        background-color alpha(black, 0.05)
+
+  @media(max-width: 640px)
+    padding 0 !important
+    #ideaboard-banner--image
+      display none
+    #ideaboard-banner--content
+      margin-right auto !important
+      margin-left auto !important
 
 </style>

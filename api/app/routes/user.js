@@ -1,4 +1,4 @@
-
+const _filter = require('lodash/filter')
 const User = require('../../app/models/user')
 const Idea = require('../../app/models/idea')
 
@@ -23,6 +23,7 @@ module.exports = function (app, passport) {
         User.findOne({ _id: req.params.id }).exec((err, user) => {
           if (err) return console.error(err)
           console.log(user)
+          user._permissions = _filter(user._permissions, { instance: req.instance })
           res.json({
             _id: user._id,
             profile: user.profile,

@@ -2,14 +2,14 @@
   
 #outcome-dashboard
 
-  router-link.idea-tool.internal-tool(v-bind:to="{ name: 'outcomeupdates', params: { id: idea._id } }")
-    .idea-tool--title Idea updates
-  router-link.idea-tool.internal-tool(v-bind:to="{ name: 'outcomesubscribers', params: { id: idea._id } }")
-    .idea-tool--title Subscribers list
-  router-link.idea-tool.internal-tool(v-bind:to="{ name: 'outcomedocument', params: { id: idea._id } }")
-    .idea-tool--title Contribute to outcome document
-  router-link.idea-tool.internal-tool(v-bind:to="{ name: 'start', query: { idea: this.idea._id } }")
-    .idea-tool--title Start a follow on Idea
+  router-link.idea-tool(v-bind:to="{ name: 'outcomedocument', params: { id: idea._id } }")
+    .idea-tool--title Document Idea
+  router-link.idea-tool(v-bind:to="{ name: 'start', query: { idea: this.idea._id } }")
+    .idea-tool--title Start follow on Idea
+  //- router-link.idea-tool.internal-tool(v-bind:to="{ name: 'outcomeupdates', params: { id: idea._id } }")
+  //-   .idea-tool--title Creator updates
+  //- router-link.idea-tool.internal-tool(v-bind:to="{ name: 'outcomesubscribers', params: { id: idea._id } }")
+  //-   .idea-tool--title Subscribers list
   .clearfix
 
   //- hr
@@ -48,30 +48,29 @@
     overflow hidden
     position relative
     text-decoration none
-    width calc(calc(100% / 3) - 20px)
+    width calc(calc(100% / 2) - 20px)
+    @media(max-width: 480px)
+      width calc((100% / 1) - 20px)
     .idea-tool--title
       radius(10px)
       pinned()
       animate()
-      color white
+      background-color white
+      border $color-border 1px solid
+      color $color-text-dark-grey
       font-weight bold
       line-height 30px
-      padding 40px
+      padding 40px 20px
       text-align center
       pointer-events none
+      &:hover
+        cursor pointer
     img.idea-tool--image
       center-align()
       max-width 80%
       max-height 25px
     &.internal-tool
-      width calc(calc(100% / 2) - 20px)
-      @media(max-width: 480px)
-        width calc((100% / 1) - 20px)
       .idea-tool--title
-        border $color-border 1px solid
-        color $color-text-dark-grey
-        
-      &:hover
-        cursor pointer
+        padding 15px 20px
 
 </style>

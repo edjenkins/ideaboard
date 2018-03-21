@@ -49,6 +49,8 @@ export default {
           return 'fa-images'
         case 'appearin':
           return 'fa-video'
+        case 'webcam':
+          return 'fa-camera'
         case 'whiteboard':
           return 'fa-paint-brush'
         default:
@@ -90,7 +92,7 @@ export default {
   .design-dashboard--task--title
     color $color-text-dark-grey
     line-height 24px
-    max-height 48px
+    max-height 72px
     overflow hidden
   .design-dashboard--task--subtitle
     color $color-text-light-grey

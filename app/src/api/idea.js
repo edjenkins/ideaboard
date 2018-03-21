@@ -26,6 +26,14 @@ export default {
         errorCb(error)
       })
   },
+  destroy (id, cb, errorCb) {
+    axios.post(`${config.API_ADDRESS}/idea/destroy`, { id: id }, { withCredentials: true }).then((response) => {
+      cb(response)
+    })
+      .catch((error) => {
+        errorCb(error)
+      })
+  },
   explore (categoryId, cb, errorCb) {
     axios.get(`${config.API_ADDRESS}/ideas/${categoryId}`, { withCredentials: true }).then((response) => {
       cb(response)

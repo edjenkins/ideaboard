@@ -6,11 +6,8 @@
       i.fas.fa-arrow-left
     .tab--header--title
       | {{ title || '' }}
-    .tab--header--action(@click="toggleMaximise")
-      span
-        i.fas.fa-arrows-alt-h
 
-  router-view(v-bind:idea="idea" v-bind:title.sync="title" v-on:add-task="addTask" v-on:back="goToDashboard" keep-alive)
+  router-view(v-bind:idea="idea" v-bind:title.sync="title" v-on:back="goToDashboard" keep-alive)
 
 </template>
 

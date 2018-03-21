@@ -2,6 +2,9 @@ const configS3 = require('../../config/s3.js')
 
 var fetchUrl = require('fetch').fetchUrl
 
+const _get = require('lodash/get')
+const _find = require('lodash/find')
+
 const async = require('async')
 const aws = require('aws-sdk')
 const crypto = require('crypto')
@@ -39,6 +42,20 @@ module.exports = function (app, passport) {
         if (err) console.error(err)
         res.json({ idea: results.idea })
       })
+    })
+  // Destroy idea
+  app.post('/idea/destroy',
+    (req, res) => {
+      const isAdmin = _get(req.user, '_permissions') ? _find(req.user._permissions, { type: 'admin', instance: req.instance }) : undefined
+      if (!isAdmin) return res.json({ errors: [] })
+      
+      Idea.findOneAndUpdate(
+        { _id: req.body.id },
+        { destroyed: new Date() },
+        (err, idea) => {
+          // mail.sendMail(req.user.local.email, 'You Subscribed', 'subscribed', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance) })
+          res.json({ idea: idea })
+        })
     })
   // Start idea
   app.post('/idea',

@@ -49,10 +49,11 @@
 <script>
 import API from '@/api'
 import * as types from '@/store/mutation-types'
-import Quill from 'quill'
-import { quillEditor } from 'vue-quill-editor'
 import _isEmpty from 'lodash/isEmpty'
 import { mapGetters } from 'vuex'
+
+import 'quill/dist/quill.bubble.css'
+import { quillEditor } from 'vue-quill-editor'
 
 import SplashMessages from '@/components/shared/SplashMessages'
 import UnsplashSearch from '@/components/UnsplashSearch'
@@ -69,7 +70,6 @@ export default {
   components: {
     SplashMessages,
     CategorySelector,
-    Quill,
     quillEditor,
     UnsplashSearch,
     FileUpload,
@@ -102,7 +102,8 @@ export default {
     return {
       categories: [],
       editorOption: {
-        placeholder: 'A longer description to explain your idea in detail',
+        theme: 'bubble',
+        placeholder: 'Describe your idea in detail',
         modules: {
           toolbar: [
             [{ 'size': ['small', false, 'large'] }],
@@ -168,7 +169,7 @@ export default {
           if (response.data.errors) {
             this.splashmessages = response.data.errors
           } else {
-            this.$router.push(`/idea/${response.data.idea._id}`)
+            this.$router.push({ name: 'idea', params: { id: response.data.idea._id } })
           }
         },
         (error) => {
@@ -201,6 +202,9 @@ export default {
     width calc(100% - 300px)
     @media(max-width: 660px)
       width 100%
+
+  .quill-editor
+    border $color-border 1px solid
 
   ul.upload-options
     cleanlist()

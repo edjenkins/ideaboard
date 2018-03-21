@@ -1,7 +1,7 @@
 <template lang="pug">
 .dicussion-container(v-bind:class="{ 'no-padding': notPadded }")
 
-  p.design-task--description(v-if="activeTask && activeTask.description") {{ activeTask.description }}
+  p.design-task--description(v-if="task && task.description") {{ task.description }}
 
   .dicussion-wrapper
     // No comments

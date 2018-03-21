@@ -1,20 +1,12 @@
 <template lang="pug">
 .tab-content--info
-  //- h1.tab--header.no-parent
-    //- .tab--header--title {{ idea.title }}
-    .tab--header--title About
-    .tab--header--action(v-if="ownIdea")
-      i.fas.fa-pencil
-      
   .tab--content
     rendered-content(v-bind:content="idea.description")
   .tab--footer
     subscribe-button(v-bind:idea="idea" v-on:subscribed="$emit('show-design')")
 
   #general-discussion
-    //- h1.tab--header.no-parent
-      .tab--header--title General Chat
-    discussion(v-bind:idea="idea" v-bind:hide-no-comments="true" v-bind:activeTask="{ title: 'discussion', component: 'discussion' }")
+    discussion(v-bind:idea="idea" v-bind:hide-no-comments="true" v-bind:task="{ title: 'discussion', component: 'discussion' }")
 
   //- #design-banner(@click="viewDesign()")
     span(v-if="idea._subscribers.length > 2") Join {{ idea._subscribers.length }} people in disscussing this idea!
@@ -60,7 +52,6 @@ export default {
 
 .tab-content--info
   background-color white
-  border-bottom $color-border 1px solid
   text-align left
   .tab--content
     min-height 240px

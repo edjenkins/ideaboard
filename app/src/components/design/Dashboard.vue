@@ -3,6 +3,9 @@
 
   .design-dashboard--tasks
 
+    // No tasks
+    .no-tasks(v-if="orderedTasks.length === 0") No tasks added yet!
+    
     design-task-tile(v-for="(task, index) in orderedTasks" v-bind:key="index" v-bind:task="task" v-on:loadTask="loadTask(task)")
 
     .clearfix
@@ -73,11 +76,18 @@ export default {
   background-color white
   padding 25px
   position relative
+
   .design-dashboard--tasks
     display flex
     justify-content space-between
     flex-wrap wrap
     margin -10px
+
+    .no-tasks
+      color $color-text-grey
+      margin 30px auto
+      padding 28px 20px
+      text-align center
   
   .actions-wrapper
     display flex
@@ -98,7 +108,6 @@ export default {
       padding 0 60px
       position relative
       text-align center
-      // flex-basis calc(50% - 20px)
       flex-basis 100%
       text-decoration none
       svg

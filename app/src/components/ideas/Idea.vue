@@ -8,6 +8,8 @@
         .content-block--body
           user-card(v-bind:profile="idea._user.profile" v-bind:id="idea._user._id")
         .content-block--footer
+          .admin-tools(v-if="isAdmin")
+            .btn.btn-danger(@click="destroyIdea") Delete Idea
           subscribe-button(v-bind:idea="idea" v-on:subscribed="showDesign(2000)")
 
       .content-block.content-block--main.pull-up.pull-left
@@ -26,6 +28,9 @@
 
 <script>
 import API from '@/api'
+import { mapGetters } from 'vuex'
+import _get from 'lodash/get'
+
 import PageHeader from '@/components/PageHeader'
 import UserCard from '@/components/user/UserCard'
 import SubscribeButton from '@/components/ideas/actions/SubscribeButton'
@@ -64,11 +69,28 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isAdmin']),
     maximised () {
-      return this.$route.name === 'designdashboard' && this.maximisedView
+      const maximisedViews = ['outcomedocument']
+      return (maximisedViews.indexOf(this.$route.name) !== -1)
+    },
+    ownIdea () {
+      return _get(this.idea, 'user._id') === _get(this.user, '_id', 'anonymous')
     }
   },
   methods: {
+    destroyIdea () {
+      API.idea.destroy(this.$route.params.id,
+        (response) => {
+          // Destroyed
+          this.$log(response)
+          this.$router.push({ name: 'explore' })
+        },
+        (error) => {
+          // Failed to destroy
+          this.$log(error)
+        })
+    },
     loadIdea () {
       API.idea.view(this.$route.params.id,
         (response) => {
@@ -115,6 +137,10 @@ export default {
     position absolute
     right 0
     width 260px
+    .admin-tools
+      padding-bottom 20px
+      .btn
+        radius(30px)
     .content-block--footer
       border-top none
       padding-top 0

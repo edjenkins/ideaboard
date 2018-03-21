@@ -1,6 +1,6 @@
 <template lang="pug">
 .design-task--poll
-  //- p.design-task--description(v-if="activeTask.description") {{ activeTask.description }}
+  p.design-task--description(v-if="task.description") {{ task.description }}
 
   .poll-wrapper
     transition-group(tag="ul" class="poll-responses" name="fade")

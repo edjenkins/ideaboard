@@ -35,7 +35,7 @@ export default {
     }
   },
   created () {
-    this.$emit('update:title', 'Subscribers list')
+    this.$emit('update:title', 'Subscribers')
     this.loading = true
     this.getSubscribers()
   },
@@ -67,7 +67,7 @@ export default {
   .no-subscribers
     color $color-text-grey
     margin 0 0 20px 0
-    padding 40px 20px
+    padding 80px 20px
     text-align center
 
   ul.subscriber-list

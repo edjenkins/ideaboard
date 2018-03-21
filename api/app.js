@@ -76,6 +76,7 @@ require('./app/routes/task-response.js')(app, passport)
 require('./app/routes/invitation.js')(app, passport)
 require('./app/routes/permission.js')(app, passport)
 require('./app/routes/notification.js')(app, passport)
+require('./app/routes/document.js')(app, passport)
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}!`)

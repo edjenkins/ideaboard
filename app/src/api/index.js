@@ -5,6 +5,7 @@ import user from './user'
 import idea from './idea'
 import category from './category'
 import invitation from './invitation'
+import document from './document'
 import notification from './notification'
 import permission from './permission'
 import update from './update'
@@ -19,6 +20,7 @@ export default {
   idea,
   category,
   invitation,
+  document,
   notification,
   permission,
   task,

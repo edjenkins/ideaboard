@@ -1,7 +1,7 @@
 module.exports = {
   domain: 'ideaboard.co.uk',
   instances: {
-    default: 'myto',
+    default: 'master',
     master: {
       color: '#0099D0'
     },
@@ -25,7 +25,7 @@ module.exports = {
       color: '#7DCE82',
       subdomain: 'myto',
       admin: {
-        name: 'Myto Admin',
+        name: 'Myto Admin', 
         bio: 'Admin of this site. Please get in touch if you have any issues.',
         email: 'myto@edjenkins.co.uk'
       },

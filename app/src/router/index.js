@@ -30,6 +30,7 @@ import Poll from '@/components/design/modules/Poll'
 import Media from '@/components/design/modules/Media'
 import Appearin from '@/components/design/modules/Appearin'
 import Whiteboard from '@/components/design/modules/Whiteboard'
+import Webcam from '@/components/design/modules/Webcam'
 
 // Idea Outcome Tab
 import OutcomeDashboard from '@/components/outcome/Dashboard'
@@ -140,6 +141,11 @@ const router = new Router({
               name: 'whiteboard',
               path: 'whiteboard/:task_id',
               component: Whiteboard
+            },
+            {
+              name: 'webcam',
+              path: 'webcam/:task_id',
+              component: Webcam
             }
           ]
         },

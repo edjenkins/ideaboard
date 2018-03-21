@@ -30,7 +30,7 @@ export default {
     Avatar
   },
   created () {
-    this.$emit('update:title', 'Idea updates')
+    this.$emit('update:title', 'Updates')
     this.fetchUpdates()
   },
   data () {

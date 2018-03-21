@@ -27,6 +27,7 @@ export default {
 <style lang="stylus" scoped>
 
 @import '~stylus/home'
+
 .row-wrapper
   background-image(white)
   position relative

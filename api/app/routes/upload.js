@@ -18,21 +18,14 @@ const s3 = new aws.S3({
 const S3_DIR = configS3.dir
 const S3_BUCKET = configS3.bucket
 
-const getContentType = function (req, file, cb) {
-  switch (file.mimetype) {
-    case 'image/svg+xml':
-      return 'image/svg+xml'
-  
-    default:
-      return 'auto'
-  }
-}
-
 const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: S3_BUCKET,
     contentType: (req, file, cb) => {
+      // console.log(req.file)
+      console.log('***file***')
+      console.log(file)
       switch (file.mimetype) {
         case 'image/svg+xml':
           return cb(null, 'image/svg+xml')
@@ -60,6 +53,7 @@ module.exports = function (app, passport) {
     async (req, res, next) => {
 
       // Log uploaded file details
+      console.log(req.file)
       console.log(req.file.mimetype)
       
       if (req.file.mimetype.startsWith('image')) {

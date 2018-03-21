@@ -52,7 +52,6 @@ userSchema.pre('save', function (next) {
 
 userSchema.pre('findOne', function (next) {
   this.populate('_permissions')
-  // this._permissions = _.filter(this._permissions, { instance: req.instance })
   next()
 })
 

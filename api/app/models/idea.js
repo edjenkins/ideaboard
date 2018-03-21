@@ -15,6 +15,7 @@ const ideaSchema = mongoose.Schema({
   banner: String,
   instance: String,
   created: Date,
+  destroyed: Date,
   _parent: { type: mongoose.Schema.Types.ObjectId, ref: 'Idea' },
   _children: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Idea' }],
   _subscribers: [{
@@ -23,7 +24,8 @@ const ideaSchema = mongoose.Schema({
   }],
   _tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
   _updates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Update' }],
-  _categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }]
+  _categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
+  _documents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Document' }]
 
 })
 
@@ -35,6 +37,7 @@ ideaSchema.pre('save', function (next) {
 })
 
 ideaSchema.pre('findOne', function (next) {
+  this.where({ destroyed: null })
   this.populate('_user', 'profile')
   this.populate({
     path: '_subscribers._user',
@@ -47,6 +50,7 @@ ideaSchema.pre('findOne', function (next) {
 })
 
 ideaSchema.pre('find', function (next) {
+  this.where({ destroyed: null })
   this.populate('_user', 'profile')
   this.populate('_children')
   next()
