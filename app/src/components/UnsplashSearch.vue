@@ -1,7 +1,7 @@
 <template lang="pug">
 .unsplash-search
   .input-wrapper
-    input(type="text" v-model="searchQuery" placeholder="Search Unsplash photos (e.g. Cats, People, City)" @keyup.enter="search()")
+    input(type="text" v-model="searchQuery" placeholder="Tech, People, Cats etc." @keyup.enter="search()")
     .btn.btn-primary(@click="search")
       span(v-if="loading")
         | Wait...

@@ -24,10 +24,8 @@
               quill-editor(v-model="idea.description" ref="myQuillEditor" v-bind:options="editorOption")
             .input-wrapper
               label Banner Image
-              input(type="hidden" v-model="idea.banner" name="banner")
-              input(type="hidden" v-model="uploadType" name="uploadType")
               ul.upload-options
-                li.upload-options--option(@click="uploadType = 'unsplash'" v-bind:class="{ 'active': (uploadType === 'unsplash') }") Browse
+                li.upload-options--option(@click="uploadType = 'unsplash'" v-bind:class="{ 'active': (uploadType === 'unsplash') }") Search
                 li.upload-options--option(@click="uploadType = 'upload'" v-bind:class="{ 'active': (uploadType === 'upload') }") Upload
                 .clearfix
               unsplash-search(v-if="uploadType === 'unsplash'" v-bind:selected-image.sync="idea.banner")
@@ -84,7 +82,10 @@ export default {
     if (this.$session.has('draft-idea')) {
       const draftIdea = JSON.parse(this.$session.get('draft-idea'))
       console.log(draftIdea)
-      if (!_isEmpty(draftIdea)) this.idea = draftIdea
+      if (!_isEmpty(draftIdea)) {
+        this.idea = draftIdea
+        this.uploadType = draftIdea.uploadType
+      }
     }
   },
   watch: {
@@ -93,6 +94,7 @@ export default {
         if (!this.$session.exists()) this.$session.start()
         this.$log(nV)
         this.$log('Saving draft...')
+        nV.uploadType = this.uploadType
         this.$session.set('draft-idea', JSON.stringify(nV))
         console.log('Idea updated')
         this.ideaTile = nV
@@ -104,6 +106,7 @@ export default {
     return {
       categories: [],
       ideaTile: undefined,
+      uploadType: undefined,
       editorOption: {
         theme: 'bubble',
         placeholder: 'Describe your idea in detail',
@@ -115,7 +118,6 @@ export default {
           ]
         }
       },
-      uploadType: undefined,
       selectedImage: undefined,
       creatingIdea: false,
       idea: {
@@ -123,7 +125,8 @@ export default {
         title: undefined,
         tagline: undefined,
         description: undefined,
-        banner: undefined
+        banner: undefined,
+        uploadType: 'upload'
       },
       splashmessages: []
     }
