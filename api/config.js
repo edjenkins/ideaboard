@@ -39,11 +39,6 @@ module.exports = {
         { tag: 'other', name: 'Other' }
       ],
       tasks: [
-        // { type: 'discussion', title: 'Implications', description: 'What implications might your team face should you implement your idea?' },
-        // { type: 'media', title: 'Design photos', description: 'Add photos throughout the day to show the progression of your design' },
-        // { type: 'poll', title: 'Name your personas', description: 'Add a brief description for each of your team\'s personas' },
-        // { type: 'appearin', title: 'Live chat', description: 'Have a live discussion about your idea with another group, shout across to their table to get things started!' },
-        // { type: 'whiteboard', title: 'Draw your subject', description: 'Work together to draw a good image of your subject' }
         { type: 'webcam', title: 'Video of your group chat', description: 'Record a short 5 minute video clip of your group having a chat about your idea.' },
         { type: 'discussion', title: 'Discarded ideas', description: 'Share the ideas that were discussed that helped your group to reach the current idea.' },
         { type: 'poll', title: 'Who will your user/audience be?', description: 'Make a note of who will be the audience for your idea. This might be a group of people or a specific demographic.' },

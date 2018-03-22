@@ -6,12 +6,15 @@
       i.fas.fa-arrow-left
     .tab--header--title
       | {{ title || '' }}
+    .tab--header--action(v-if="isModerator && $route.params.task_id" @click="destroyTask")
+      i.fas.fa-trash
 
   router-view(v-bind:idea="idea" v-bind:title.sync="title" v-on:back="returnToDash" keep-alive)
 
 </template>
 
 <script>
+import API from '@/api'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -23,7 +26,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'user'])
+    ...mapGetters(['isAuthenticated', 'isModerator', 'user'])
   },
   methods: {
     returnToDash () {
@@ -31,6 +34,18 @@ export default {
     },
     toggleMaximise () {
       this.$emit('toggle-maximise')
+    },
+    destroyTask () {
+      API.task.destroy(
+        this.$route.params.task_id,
+        (response) => {
+          this.$log(response)
+          this.$router.push({ name: 'designdashboard' })
+        },
+        (response) => {
+          this.$log(response)
+        }
+      )
     }
   }
 }

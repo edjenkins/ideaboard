@@ -6,14 +6,19 @@ class TaskBlot extends Embed {
     let node = super.create()
     node.setAttribute('idea-id', value.idea_id)
     node.setAttribute('task-id', value.task_id)
+    node.setAttribute('task-type', value.task_type)
 
     node.contenteditable = false
 
-    let link = document.createElement('div')
+    let link = document.createElement('a')
     link.title = link.href = `/idea/${value.idea_id}/design/${value.task_type}/${value.task_id}`
     link.target = '_blank'
-    link.setAttribute('class', 'btn btn-primary')
-    link.appendChild(document.createTextNode(`Link to ${value.task_type}...`))
+
+    let linkbtn = document.createElement('div')
+    linkbtn.setAttribute('class', 'btn btn-primary')
+    linkbtn.appendChild(document.createTextNode(`Link to ${value.task_type}...`))
+
+    link.appendChild(linkbtn)
 
     node.appendChild(link)
 

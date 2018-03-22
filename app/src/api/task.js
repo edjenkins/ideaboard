@@ -26,14 +26,14 @@ export default {
         errorCb(error)
       })
   },
-  // update (user, cb, errorCb) {
-  //   axios.put(`${config.API_ADDRESS}/task`, user, { withCredentials: true }).then((response) => {
-  //     cb(response)
-  //   })
-  //     .catch((error) => {
-  //       errorCb(error)
-  //     })
-  // },
+  destroy (id, cb, errorCb) {
+    axios.post(`${config.API_ADDRESS}/task/destroy`, { id: id }, { withCredentials: true }).then((response) => {
+      cb(response)
+    })
+      .catch((error) => {
+        errorCb(error)
+      })
+  },
   fetchResponses (type, id, cb, errorCb) {
     axios.get(`${config.API_ADDRESS}/task/${type}/${id}/responses`, { withCredentials: true }).then((response) => {
       cb(response)

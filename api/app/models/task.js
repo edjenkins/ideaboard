@@ -16,6 +16,7 @@ const taskSchema = mongoose.Schema({
   locked: Boolean,
   archived: Boolean,
   created: Date,
+  destroyed: Date,
   _responses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'TaskResponse' }]
 
 })
@@ -26,11 +27,13 @@ taskSchema.pre('save', function (next) {
 })
 
 taskSchema.pre('findOne', function (next) {
+  this.where({ destroyed: null })
   this.populate('_user', 'profile')
   next()
 })
 
 taskSchema.pre('find', function (next) {
+  this.where({ destroyed: null })
   this.populate('_user', 'profile')
   this.populate('_responses', '_user')
   next()

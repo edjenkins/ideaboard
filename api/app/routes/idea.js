@@ -47,8 +47,8 @@ module.exports = function (app, passport) {
   // Destroy idea
   app.post('/idea/destroy',
     (req, res) => {
-      const isAdmin = _get(req.user, '_permissions') ? _find(req.user._permissions, { type: 'admin', instance: req.instance }) : undefined
-      if (!isAdmin) return res.json({ errors: [] })
+      const isAdmin = _find(_get(req.user, '_permissions'), { type: 'admin', instance: req.instance })
+      if (!isAdmin) return res.status(401)
       
       Idea.findOneAndUpdate(
         { _id: req.body.id },

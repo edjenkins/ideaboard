@@ -1,4 +1,7 @@
 const async = require('async')
+const _get = require('lodash/get')
+const _find = require('lodash/find')
+
 const mail = require('../../app/services/mail')
 
 const Idea = require('../../app/models/idea')
@@ -70,12 +73,17 @@ module.exports = function (app, passport) {
       }
     })
   // Update task
-  app.put('/task',
+  app.post('/task/destroy',
     (req, res) => {
+      // Check permissions
       if (req.isAuthenticated()) {
+        const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
+        if (!isModerator) return res.status(401)
         Task.findOneAndUpdate(
-          { _id: req.body._id },
-          req.body, (err, task) => {
+          { _id: req.body.id },
+          { destroyed: new Date() },
+          { upsert: true },
+          (err, task) => {
             if (err) console.error(err)
             res.json({ task })
           })

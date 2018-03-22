@@ -281,6 +281,12 @@ export default {
       border none
     .ql-toolbar.ql-snow
       border-bottom $color-border 1px solid
+  .ql-snow a
+    font-size 1em
+    text-decoration none
+    .btn
+      font-size 1em
+      text-decoration none
 
 
 </style>
