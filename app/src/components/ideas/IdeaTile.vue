@@ -5,7 +5,6 @@
       .idea-tile--title(v-bind:class="{ 'is-placeholder': !idea.title }") {{ idea.title || 'Title...' }}
       .idea-tile--author(v-if="idea._user") {{ idea._user.profile.name }}
       .idea-tile--tagline(v-bind:class="{ 'is-placeholder': !idea.tagline }") {{ idea.tagline || 'Tagline...' }}
-      pre {{ idea._parent }}
     .idea-tile--footer {{ idea._subscribers ? `${idea._subscribers.length} Subscribers` : 'No Subscribers' }} 
 </template>
 

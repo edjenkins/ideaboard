@@ -41,7 +41,7 @@
           .clearfix
 
       .content-block.content-block--side.pull-up.pull-right
-        idea-tile(v-bind:idea="idea")
+        idea-tile(v-bind:idea="ideaTile")
       .clearfix
 
 </template>
@@ -94,6 +94,8 @@ export default {
         this.$log(nV)
         this.$log('Saving draft...')
         this.$session.set('draft-idea', JSON.stringify(nV))
+        console.log('Idea updated')
+        this.ideaTile = nV
       },
       deep: true
     }
@@ -101,6 +103,7 @@ export default {
   data () {
     return {
       categories: [],
+      ideaTile: undefined,
       editorOption: {
         theme: 'bubble',
         placeholder: 'Describe your idea in detail',
@@ -108,7 +111,6 @@ export default {
           toolbar: [
             [{ 'size': ['small', false, 'large'] }],
             ['bold', 'italic'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             ['link']
           ]
         }
