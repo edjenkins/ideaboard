@@ -151,7 +151,8 @@ module.exports = function (app, passport) {
           }
 
           // Create outcome document
-          const document = new Document({ _idea: idea._id, _user: req.user._id, text: '' })
+          const documentText = _get(config.instances[idea.instance], 'document', '')
+          const document = new Document({ _idea: idea._id, _user: req.user._id, text: documentText })
           const outcomeDocument = await document.save()
 
           console.log(outcomeDocument)

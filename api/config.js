@@ -1,7 +1,7 @@
 module.exports = {
   domain: 'ideaboard.co.uk',
   instances: {
-    default: 'master',
+    default: 'myto',
     master: {
       color: '#0099D0'
     },
@@ -29,6 +29,7 @@ module.exports = {
         bio: 'Admin of this site. Please get in touch if you have any issues.',
         email: 'myto@edjenkins.co.uk'
       },
+      document: '<h1>Idea title here...</h1><br /><p>Idea description here...</p>',
       categories: [
         { tag: 'engaging-with-research', name: 'Engaging with research' },
         { tag: 'gaining-independence', name: 'Gaining independence and taking control' },

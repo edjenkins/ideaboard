@@ -11,7 +11,9 @@
     .clearfix
 
   .actions-wrapper
-    router-link#add-task(v-bind:to="{ name: 'addtask', params: { id: idea._id} }") Add new task
+
+    router-link#add-task(v-if="isAuthenticated" v-bind:to="{ name: 'addtask', params: { id: idea._id} }") Add new task
+    #add-task(v-else @click="checkAuth") Add new task
 
 </template>
 
@@ -20,6 +22,8 @@ import _ from 'lodash'
 import API from '@/api'
 import Avatar from '@/components/user/Avatar'
 import DesignTaskTile from '@/components/design/components/DesignTaskTile'
+import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 
 export default {
   name: 'dashboard',
@@ -38,11 +42,15 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isAuthenticated']),
     orderedTasks () {
       return _.sortBy(this.tasks, ['pinned', '_responses.length']).reverse()
     }
   },
   methods: {
+    checkAuth () {
+      this.$store.commit(types.SHOW_AUTH_MODAL)
+    },
     loadTasks () {
       this.loadingTasks = true
       API.task.dashboard(

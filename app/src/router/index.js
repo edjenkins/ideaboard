@@ -103,7 +103,6 @@ const router = new Router({
           component: InfoTab
         },
         {
-          name: 'design',
           path: 'design',
           component: DesignTab,
           children: [
@@ -115,7 +114,8 @@ const router = new Router({
             {
               name: 'addtask',
               path: 'add',
-              component: AddDesignTask
+              component: AddDesignTask,
+              meta: { requiresAuth: true }
             },
             {
               name: 'discussion',
@@ -150,7 +150,6 @@ const router = new Router({
           ]
         },
         {
-          name: 'outcome',
           path: 'outcome',
           component: OutcomeTab,
           children: [

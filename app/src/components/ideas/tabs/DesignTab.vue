@@ -2,12 +2,12 @@
 
 .tab-content--design
   h1.tab--header(v-bind:class="{ 'no-parent': (!$route.params.task_id) }")
-    .tab--header--previous(name="home" @click="goToDashboard")
+    .tab--header--previous(name="home" @click="returnToDash")
       i.fas.fa-arrow-left
     .tab--header--title
       | {{ title || '' }}
 
-  router-view(v-bind:idea="idea" v-bind:title.sync="title" v-on:back="goToDashboard" keep-alive)
+  router-view(v-bind:idea="idea" v-bind:title.sync="title" v-on:back="returnToDash" keep-alive)
 
 </template>
 
@@ -26,8 +26,8 @@ export default {
     ...mapGetters(['isAuthenticated', 'user'])
   },
   methods: {
-    goToDashboard () {
-      this.$router.back()
+    returnToDash () {
+      this.$router.push({ name: 'designdashboard' })
     },
     toggleMaximise () {
       this.$emit('toggle-maximise')

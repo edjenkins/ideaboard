@@ -3,7 +3,7 @@ export default {
   driftkey: 'msffsx6pi5gb',
   gakey: 'UA-44963053-17',
   instances: {
-    default: 'master',
+    default: 'myto',
     master: {
       color: '#0099D0'
     },

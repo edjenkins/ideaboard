@@ -34,7 +34,7 @@
             span This means only you will be able to add responses to it
 
       .input-wrapper
-        .btn.btn-success.pull-left#add-task-btn(@click="addTask") {{ (addingTask) ? 'Please wait...' : 'Create ' + task.type }}
+        .btn.btn-success.pull-left#add-task-btn(@click="addTask") {{ (addingTask) ? 'Please wait...' : 'Add Task' }}
         .clearfix
 </template>
 
@@ -56,9 +56,9 @@ export default {
         discussion: { name: 'Chat', icon: 'fa-comments', description: 'A Discussion is great for having free flowing conversations with your community. It can be used to guage opinions or just to have a chat!' },
         media: { name: 'Media', icon: 'fa-images', description: 'The Media task is useful when you want people to share images and documents.' },
         poll: { name: 'Poll', icon: 'fa-list-ul', description: 'A Poll is great for tasks where there is a defined question with a set of options that you would like to gather the communities opinions around.' },
-        appearin: { name: 'Video Call', icon: 'fa-video', description: 'Perfect for hosting a live video chat via Appear.in.' },
+        appearin: { name: 'Video Call', icon: 'fa-users', description: 'Perfect for hosting a live video chat via Appear.in.' },
         whiteboard: { name: 'Whiteboard', icon: 'fa-paint-brush', description: 'An interactive whiteboard for sketching ideas together.' },
-        webcam: { name: 'Webcam', icon: 'fa-camera', description: 'Record videos through your webcam and share them.' }
+        webcam: { name: 'Record Video', icon: 'fa-video', description: 'Record videos through your webcam and share them.' }
       },
       task: {
         title: '',
@@ -76,9 +76,6 @@ export default {
     }
   },
   methods: {
-    goBack () {
-      this.$emit('back')
-    },
     addTask () {
       if (this.addingTask) return
       this.addingTask = true
@@ -90,7 +87,7 @@ export default {
           if (response.data.errors) {
             this.splashmessages.task = response.data.errors
           } else {
-            this.goBack()
+            this.$router.push({ name: response.data.task.type, params: { task_id: response.data.task._id } })
           }
         },
         (error) => {

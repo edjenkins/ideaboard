@@ -48,9 +48,9 @@ export default {
         case 'media':
           return 'fa-images'
         case 'appearin':
-          return 'fa-video'
+          return 'fa-users'
         case 'webcam':
-          return 'fa-camera'
+          return 'fa-video'
         case 'whiteboard':
           return 'fa-paint-brush'
         default:

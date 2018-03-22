@@ -8,7 +8,7 @@ module.exports = function (app, passport) {
   // Get categories
   app.get('/categories',
     (req, res) => {
-      console.log(req.instance)
+      console.log(`Getting categories for - ${req.instance}`)
       Category.find({ instance: req.instance }).exec((err, categories) => {
         if (err) { return console.error(err) }
         res.json(categories)
