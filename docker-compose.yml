@@ -55,3 +55,11 @@ services:
     image: tianon/true
     volumes:
       - /data/db
+
+  mongobackup:
+    build: ./utilities/backup
+    env_file: 
+      - ./.env
+      - ./api/.env
+    links:
+      - mongo

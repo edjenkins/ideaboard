@@ -17,5 +17,13 @@ export default {
       .catch((error) => {
         errorCb(error)
       })
+  },
+  destroy (postData, cb, errorCb) {
+    axios.post(`${config.API_ADDRESS}/comment/destroy`, postData, { withCredentials: true }).then((response) => {
+      cb(response)
+    })
+      .catch((error) => {
+        errorCb(error)
+      })
   }
 }

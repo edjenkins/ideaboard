@@ -7,6 +7,7 @@ const commentSchema = mongoose.Schema({
   type: String,
   text: String,
   created: Date,
+  destroyed: Date,
   _likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   _dislikes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   _replies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
@@ -19,6 +20,7 @@ commentSchema.pre('save', function (next) {
 })
 
 commentSchema.pre('findOne', function (next) {
+  this.where({ destroyed: null })
   this.populate('_user', 'profile')
   this.populate('_replies')
   this.populate({
@@ -35,6 +37,7 @@ commentSchema.pre('findOne', function (next) {
 })
 
 commentSchema.pre('find', function (next) {
+  this.where({ destroyed: null })
   this.populate('_user', 'profile')
   this.populate('_replies')
   // this.populate({

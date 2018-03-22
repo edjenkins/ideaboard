@@ -11,28 +11,34 @@
     ul.comment-thread(v-for="(comment, index) in comments" v-bind:key="index" v-bind:class="{ 'has-replies': ((comment._replies.length > 0) || (replyTarget === comment._id)), 'is-replying': (replyTarget === comment._id) }")
       li.comment
         avatar.comment--avatar(v-bind:profile="comment._user.profile")
-        //- .comment--avatar(v-bind:style="{ 'background-image': `url('${comment._user.profile.avatar}')` }")
         .comment--user {{ comment._user.profile.name }}
         .comment--text {{ comment.text }}
+
+        // Comment actions
+        ul.comment--actions(v-if="isAuthenticated")
+          li.comment--action(hidden)
+            | like
+          li.comment--action(@click="reportOrDestroy('comment', comment._id, comment._user)")
+            | {{ (isModerator || user._id === comment._user) ? 'delete' : 'report' }}
+          li.comment--action(@click="replyTarget = (replyTarget) ? undefined : comment._id" v-bind:class="{ active: (replyTarget === comment._id) }")
+            | {{ (replyTarget && (replyTarget === comment._id)) ? 'cancel' : 'reply' }}
+          .clearfix
 
       // Replies
       ul.replies
         li.comment.reply(v-for="(reply, index) in comment._replies" v-bind:key="index")
           avatar.comment--avatar(v-bind:profile="reply._user.profile")
-          //- .comment--avatar(v-bind:style="{ 'background-image': `url('${reply._user.profile.avatar}')` }")
           .comment--user {{ reply._user.profile.name }} 
             span replied to {{ comment._user.profile.name }}
           .comment--text {{ reply.text }}
 
-      // Comment actions
-      ul.comment--actions(v-if="isAuthenticated")
-        li.comment--action(hidden)
-          | like
-        li.comment--action(@click="replyTarget = (replyTarget) ? undefined : comment._id" v-bind:class="{ active: (replyTarget === comment._id) }")
-          | reply
-        li.comment--action(hidden)
-          | report
-        .clearfix
+          // Comment actions
+          ul.comment--actions(v-if="isAuthenticated")
+            li.comment--action(hidden)
+              | like
+            li.comment--action(@click="reportOrDestroy('comment', reply._id, reply._user)")
+              | {{ (isModerator || user._id === reply._user) ? 'delete' : 'report' }}
+            .clearfix
 
       // Reply composer
       .comment-composer.reply-composer(v-if="replyTarget === comment._id")
@@ -54,6 +60,7 @@ import _replace from 'lodash/replace'
 
 import DesignTask from '@/mixins/DesignTask'
 import Commentable from '@/mixins/Commentable'
+import Reportable from '@/mixins/Reportable'
 import Avatar from '@/components/user/Avatar'
 
 export default {
@@ -61,7 +68,8 @@ export default {
   props: ['notPadded', 'hideNoComments', 'discussionTarget', 'discussionType'],
   mixins: [
     DesignTask,
-    Commentable
+    Commentable,
+    Reportable
   ],
   components: {
     Avatar
@@ -211,7 +219,7 @@ export default {
     // Actions
     ul.comment--actions
       cleanlist()
-      margin -10px -10px 0 40px
+      margin 0 -10px 0 -10px
       li.comment--action
         animate()
         cleanlist()

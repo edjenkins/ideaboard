@@ -20,7 +20,8 @@ export default {
   methods: {
     destroyIdea () {
       this.$refs.dropdown.isHidden = true
-      API.idea.destroy(this.$route.params.id,
+      API.idea.destroy(
+        { id: this.$route.params.id },
         (response) => {
           // Destroyed
           this.$log(response)

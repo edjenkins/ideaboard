@@ -1,5 +1,8 @@
 const async = require('async')
 
+const _get = require('lodash/get')
+const _find = require('lodash/find')
+
 const Comment = require('../../app/models/comment')
 const Task = require('../../app/models/task')
 
@@ -80,5 +83,24 @@ module.exports = function (app, passport) {
       } else {
         res.status(401)
       }
+    })
+  // Destroy comment
+  app.post('/comment/destroy',
+    async (req, res) => {
+      // TODO: Check if user can destroy comment
+      const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
+      if (!isModerator) return res.status(401)
+
+      let comment = await Comment.findOne({ _id: req.body.id })
+      console.log('comment')
+      console.log(comment)
+      
+      Comment.findOneAndUpdate(
+        { _id: req.body.id },
+        { destroyed: new Date() },
+        { upsert: true },
+        (err, comment) => {
+          res.json({ comment: comment })
+        })
     })
 }

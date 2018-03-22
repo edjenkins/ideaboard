@@ -9,7 +9,7 @@
     .tab--header--action(v-if="isModerator && $route.params.task_id" @click="destroyTask")
       i.fas.fa-trash
 
-  router-view(v-bind:idea="idea" v-bind:title.sync="title" v-on:back="returnToDash" keep-alive)
+  router-view(v-bind:idea="idea" v-bind:title.sync="title" v-on:back="returnToDash")
 
 </template>
 
@@ -37,7 +37,7 @@ export default {
     },
     destroyTask () {
       API.task.destroy(
-        this.$route.params.task_id,
+        { id: this.$route.params.task_id },
         (response) => {
           this.$log(response)
           this.$router.push({ name: 'designdashboard' })

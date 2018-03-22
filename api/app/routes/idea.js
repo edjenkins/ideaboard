@@ -19,6 +19,7 @@ const S3_BUCKET = configS3.bucket
 
 const Idea = require('../../app/models/idea')
 const Document = require('../../app/models/document')
+const config = require('../../config')
 const mail = require('../../app/services/mail')
 const utilities = require('../../app/utilities')
 
@@ -53,8 +54,8 @@ module.exports = function (app, passport) {
       Idea.findOneAndUpdate(
         { _id: req.body.id },
         { destroyed: new Date() },
+        { upsert: true },
         (err, idea) => {
-          // mail.sendMail(req.user.local.email, 'You Subscribed', 'subscribed', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance) })
           res.json({ idea: idea })
         })
     })

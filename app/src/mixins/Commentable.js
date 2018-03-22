@@ -23,6 +23,9 @@ export default {
     ...mapGetters(['isAuthenticated', 'user'])
   },
   methods: {
+    contentChanged () {
+      this.fetchComments()
+    },
     replyToComment (target) {
       this.replyTarget = target
     },

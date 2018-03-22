@@ -1,5 +1,5 @@
 <template lang="pug">
-  .idea-tile(v-bind:class="{ 'has-banner': idea.banner }")
+  .idea-tile
     .idea-tile--banner(v-if="idea.banner" v-bind:style="{ 'background-image': `url(${(idea.banner.location) ? idea.banner.location : idea.banner})` }")
     .idea-tile--body
       .idea-tile--title(v-bind:class="{ 'is-placeholder': !idea.title }") {{ idea.title || 'Title...' }}
@@ -36,6 +36,7 @@ export default {
   .idea-tile--body
     animate()
     padding 20px
+    padding-top calc(60% + 20px)
     .idea-tile--title
       color $color-text-dark-grey
       font-size 1.2em
@@ -61,16 +62,11 @@ export default {
     bottom -32px
     position absolute
     text-align center
-  &.has-banner
-    .idea-tile--body
-      padding-top calc(60% + 20px)
   &:hover
     cursor pointer
     .idea-tile--banner
       top -20px
     .idea-tile--body
-      padding-top 15%
-    &.has-banner .idea-tile--body
       padding-top 60%
     .idea-tile--footer
       bottom 0
