@@ -6,21 +6,8 @@ module.exports = function (app, passport) {
   // Get documents
   app.get('/documents/:idea_id',
     async (req, res) => {
-      const documents = await Document.find({ _idea: req.params.idea_id })
-      
-      if (documents.length === 0) {
-        // No documents - create one
-        const data = {
-          _idea: req.params.idea_id
-        }
-        const document = new Document(data)
-        document.save().then((document) => {
-          if (err) console.error(err)
-          return res.json([document])
-        })
-      } else {
-        return res.json(documents)
-      }
+      const document = await Document.findOne({ _idea: req.params.idea_id })
+      return res.json(document)
     })
   // Get document
   app.get('/document/:id',
@@ -35,9 +22,16 @@ module.exports = function (app, passport) {
     (req, res) => {
       if (req.isAuthenticated()) {
         console.log(req.body)
+        console.log('req.user._id')
+        console.log(req.user._id)
+        
+        //, _user: req.user._id
         Document.findOneAndUpdate(
-          { _id: req.body._id, _user: req.user._id },
-          { text: req.body.text },
+          { _id: req.body._id },
+          {
+            text: req.body.text,
+            _user: req.user._id
+          },
           { upsert: true },
           (err, document) => {
             if (err) console.error(err)

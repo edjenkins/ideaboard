@@ -12,7 +12,7 @@
           subscribe-button(v-bind:idea="idea" v-on:subscribed="showDesign(2000)")
 
       .content-block.content-block--main.pull-up.pull-left
-        .content-block--banner(v-bind:style="{ 'background-image': `url(${idea.banner})` }")
+        .content-block--banner(v-if="idea.banner" v-bind:style="{ 'background-image': `url(${idea.banner})` }")
         .tabs
           .tabs--selector
             router-link.tabs--selector--item(v-for="(tab, index) in tabs.items" v-bind:key="index" v-bind:to="{ name: tab.route }")

@@ -51,5 +51,6 @@ export default {
     .action
       padding 10px
       &:hover
+        cursor pointer
         background-color $color-lightest-grey
 </style>

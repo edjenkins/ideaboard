@@ -18,6 +18,7 @@ const S3_DIR = configS3.dir
 const S3_BUCKET = configS3.bucket
 
 const Idea = require('../../app/models/idea')
+const Document = require('../../app/models/document')
 const mail = require('../../app/services/mail')
 const utilities = require('../../app/utilities')
 
@@ -148,6 +149,12 @@ module.exports = function (app, passport) {
             let updatedParentIdea = await parentIdea.save()
             console.log(updatedParentIdea)
           }
+
+          // Create outcome document
+          const document = new Document({ _idea: idea._id, _user: req.user._id, text: '' })
+          const outcomeDocument = await document.save()
+
+          console.log(outcomeDocument)
 
           mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea })
           res.json({ idea })

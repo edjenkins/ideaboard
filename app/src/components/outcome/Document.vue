@@ -245,7 +245,7 @@ export default {
         this.idea._id,
         (response) => {
           console.log(response)
-          this.document = response.data[0]
+          this.document = response.data
         },
         (response) => {
           console.log(response)

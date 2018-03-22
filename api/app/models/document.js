@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const updateSchema = mongoose.Schema({
 
-  _users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  _user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   _idea: { type: mongoose.Schema.Types.ObjectId, ref: 'Idea' },
   text: String,
   created: Date,
