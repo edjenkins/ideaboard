@@ -49,9 +49,10 @@ class TaskBlot extends Embed {
 
     node.contenteditable = false
 
-    let link = document.createElement('a')
+    let link = document.createElement('div')
     link.title = link.href = `/idea/${value.idea_id}/design/${value.task_type}/${value.task_id}`
     link.target = '_blank'
+    link.setAttribute('class', 'btn btn-primary')
     link.appendChild(document.createTextNode(`Link to ${value.task_type}...`))
 
     node.appendChild(link)
@@ -143,7 +144,7 @@ export default {
   computed: {
     ...mapGetters(['user']),
     ownIdea () {
-      return _get(this.idea, 'user._id') === _get(this.user, '_id', 'anonymous')
+      return true || _get(this.idea, 'user._id') === _get(this.user, '_id', 'anonymous')
     },
     canEdit () {
       return !this.editing && this.ownIdea
@@ -329,6 +330,7 @@ export default {
     padding 0 !important
     ul, li
       cleanlist()
+      text-transform capitalize
       label
         display block
         padding 8px 15px
