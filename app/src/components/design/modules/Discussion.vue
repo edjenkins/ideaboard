@@ -50,7 +50,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
-import _get from 'lodash/get'
 import _replace from 'lodash/replace'
 
 import DesignTask from '@/mixins/DesignTask'
@@ -71,13 +70,13 @@ export default {
     ...mapGetters(['isAuthenticated', 'user']),
     commentTarget () {
       if (typeof this.discussionTarget === 'undefined') {
-        return _get(this.activeTask, '_id', this.idea._id)
+        return this.$route.params.task_id ? this.$route.params.task_id : this.$route.params.id
       }
       return this.discussionTarget
     },
     commentType () {
       if (typeof this.discussionType === 'undefined') {
-        return (this.activeTask && this.activeTask._id) ? 'task' : 'idea'
+        return (this.$route.params.task_id) ? 'task' : 'idea'
       }
       return this.discussionType
     }

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import API from '@/api'
-import _ from 'lodash'
+import _forEach from 'lodash/forEach'
 
 export default {
   created () {
@@ -54,7 +54,7 @@ export default {
         (response) => {
           this.$log(response)
           if (comment.type === 'comment') {
-            _.forEach(this.comments, (comment) => {
+            _forEach(this.comments, (comment) => {
               if (comment._id === this.replyTarget) {
                 // Found
                 Vue.set(comment, '_replies', response.data.comment._replies)
