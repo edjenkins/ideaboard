@@ -31,11 +31,14 @@ module.exports = {
       },
       document: '<h1>Idea title here...</h1><br /><p>Idea description here...</p>',
       categories: [
-        { tag: 'engaging-with-research', name: 'Engaging with research' },
-        { tag: 'gaining-independence', name: 'Gaining independence and taking control' },
-        { tag: 'participating-in-activities', name: 'Participating in arts / sport / recreation / music' },
-        { tag: 'connecting-with-people', name: 'Connecting with people like me' },
-        { tag: 'fertility-and-parenthood', name: 'Fertility and parenthood' },
+        // { tag: 'engaging-with-research', name: 'Engaging with research' },
+        // { tag: 'gaining-independence', name: 'Gaining independence and taking control' },
+        // { tag: 'participating-in-activities', name: 'Participating in arts / sport / recreation / music' },
+        // { tag: 'connecting-with-people', name: 'Connecting with people like me' },
+        // { tag: 'fertility-and-parenthood', name: 'Fertility and parenthood' },
+        { tag: 'newcastle', name: 'Newcastle, England' },
+        { tag: 'netherlands', name: 'Lunteren, Netherlands' },
+        { tag: 'rome', name: 'Rome, Italy' },
         { tag: 'other', name: 'Other' }
       ],
       tasks: [

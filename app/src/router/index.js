@@ -7,7 +7,6 @@ import Auth from '@/components/auth/Auth'
 import Reset from '@/components/auth/Reset'
 
 // Pages
-import About from '@/components/pages/About'
 import Terms from '@/components/pages/Terms'
 import Privacy from '@/components/pages/Privacy'
 import Profile from '@/components/pages/Profile'
@@ -48,7 +47,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: function (resolve) {
         const subdomain = window.location.hostname.split('.')[0]
         const instance = ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : subdomain.toLowerCase() // subdomain
@@ -63,7 +62,16 @@ const router = new Router({
     {
       path: '/learn',
       name: 'about',
-      component: About
+      component: function (resolve) {
+        const subdomain = window.location.hostname.split('.')[0]
+        const instance = ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : subdomain.toLowerCase() // subdomain
+        try {
+          require(`@/components/instances/pages/About/${instance}.vue`)
+          require([`@/components/instances/pages/About/${instance}.vue`], resolve)
+        } catch (error) {
+          require(['@/components/pages/About.vue'], resolve)
+        }
+      }
     },
     {
       path: '/terms',

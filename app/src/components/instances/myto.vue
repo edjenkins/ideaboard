@@ -15,7 +15,7 @@
       .row
         .content-block
           .location#newcastle
-            h1 England, UK
+            h1 England
             h5 When?
             h2 24-25th  March
             h5 Where?
@@ -37,11 +37,14 @@
             router-link.btn.btn-rounded.get-involved(v-bind:to="{ name: 'explore', params: { category: 'rome' } }") Explore Ideas
           .clearfix
 
-    #ideaboard-banner(v-bind:class="align" )
-      #ideaboard-banner--content
-        h2 Ideaboard
-        p Ideaboard is a tool that allows anyone to share and discuss ideas online. Getting started is simple!
-        router-link#ideaboard-banner--action(v-bind:to="{ name: 'about' }") Learn more
+    .row-wrapper
+      .row
+        .content-block
+          #ideaboard-banner(v-bind:class="align" )
+            #ideaboard-banner--content(v-bind:style="[instanceBackground]")
+              h2 Ideaboard
+              p #[strong Ideaboard] is an online tool that allows anyone to share and discuss ideas online. #[strong Myto] is using it during a series of two day workshops to have a rich online design event.
+              router-link#ideaboard-banner--action(v-bind:to="{ name: 'about' }") Learn more
 
     site-footer
 </template>
@@ -69,14 +72,15 @@ export default {
 
 #myto-sprint.row-wrapper
   reset()
-  margin-top 60px
+  padding 20px
+  margin-top -80px
   .row
     .content-block
       gradient()
       radius(20px)
       background-color #EE3746
-      margin 0 10px
-      padding 4% 10%
+      margin 0 40px
+      padding 4% 8%
       h1, p
         reset()
         color white
@@ -156,6 +160,8 @@ export default {
       h3
         margin-bottom 10px
     @media(max-width: 560px)
+      radius(0px)
+      margin 0
       min-height 300px
       .btn.btn-rounded.get-involved
         left 30px
@@ -169,7 +175,9 @@ export default {
   margin 0 auto
   padding 0 10px 60px 10px !important
   position relative
-  max-width 800px
+  // max-width 800px
+  margin 0 40px
+  padding 4% 8%
   #ideaboard-banner--image
     position absolute
     text-align center
@@ -177,25 +185,24 @@ export default {
     img
       height 320px
   #ideaboard-banner--content
-    radius(30px)
-    background-color white
+    radius(20px)
     margin 0 10px
-    padding 50px 30px
+    padding 30px 30px
     h2
       reset()
-      color $color-text-grey
+      color white
       font-size 2em
     p
       reset()
-      color $color-text-grey
+      color white
       margin 20px auto 30px auto
-      max-width 500px
+      max-width 640px
     #ideaboard-banner--action
       animate()
       radius(30px)
       background-color transparent
-      border $color-text-grey 1px solid
-      color $color-text-grey
+      border white 1px solid
+      color white
       display inline-block
       font-weight bold
       line-height 60px

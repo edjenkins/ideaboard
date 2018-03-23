@@ -14,8 +14,8 @@
     // Submit a response
     .response-composer
       .input-wrapper(@click="checkAuth")
-        input(v-bind:disabled="!isAuthenticated" type="text" v-model="newResponse.text" placeholder="Write your poll response here.." v-on:keyup.enter="submitResponse")
-        .btn.btn-primary(@click="submitResponse") Submit
+        input(v-bind:disabled="!isAuthenticated" type="text" v-model="newResponse.text" placeholder="Write your response here.." v-on:keyup.enter="submitResponse")
+        .btn.btn-primary(@click="submitResponse") Post
 </template>
 
 <script>

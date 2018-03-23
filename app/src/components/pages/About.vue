@@ -1,6 +1,6 @@
 <template lang="pug">
   #about
-    page-header(title="About Ideaboard" subtitle="A little bit about the site and what we are trying to acheive")
+    page-header(title="About Ideaboard" subtitle="A little bit about the site and what we are trying to achieve")
     .row
       .content-block.pull-up.white-block
         .content-block--body
