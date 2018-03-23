@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CRON_SCHEDULE=${CRON_SCHEDULE:-0 1 * * *}
+CRON_SCHEDULE=0 1 * * *
 CRON_ENVIRONMENT="
 MONGODB_ADMIN_USER=${MONGODB_ADMIN_USER:?"env variable is required"}
 MONGODB_ADMIN_PASS=${MONGODB_ADMIN_PASS:?"env variable is required"}
