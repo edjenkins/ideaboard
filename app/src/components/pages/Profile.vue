@@ -18,7 +18,7 @@
         .notifications(v-if="ownProfile && tabs.activeComponent === 'bio-tab'")
           notifications-list(type="unread" v-bind:notifications="notifications.unread")
           notifications-list(type="read" v-bind:notifications="notifications.read")
-
+      .clearfix
 </template>
 
 <script>
