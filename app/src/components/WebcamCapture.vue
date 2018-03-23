@@ -112,7 +112,7 @@ export default {
         })
         this.recorder.camera = camera
       }).catch(function (error) {
-        alert('Camera unavailable!')
+        console.log('Camera unavailable!')
         console.error(error)
       })
     }

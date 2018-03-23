@@ -102,11 +102,7 @@ export default {
       )
     },
     submitResponse () {
-      alert(this.newResponse.text)
-      alert(this.newResponseText)
       this.newResponse.text = this.newResponseText
-      alert(this.newResponse.text)
-      alert(this.newResponseText)
       API.task.submitResponse(
         'webcam',
         this.$route.params.task_id,
@@ -177,7 +173,7 @@ export default {
         })
         this.recorder.camera = camera
       }).catch(function (error) {
-        alert('Camera unavailable!')
+        console.log('Camera unavailable!')
         console.error(error)
       })
     }
