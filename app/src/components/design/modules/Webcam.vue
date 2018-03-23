@@ -51,6 +51,7 @@ export default {
   mixins: [DesignTask],
   data () {
     return {
+      bitrate: 200000,
       newResponseText: '',
       recorder: undefined,
       camera: undefined,
@@ -172,7 +173,7 @@ export default {
         this.recorder = RecordRTC(camera, {
           type: 'video',
           mimeType: 'video/webm\;codecs=vp9',
-          bitsPerSecond: 64000
+          bitsPerSecond: this.bitrate
         })
         this.recorder.camera = camera
       }).catch(function (error) {
