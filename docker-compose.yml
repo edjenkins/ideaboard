@@ -37,6 +37,7 @@ services:
       - mongodata
     ports:
       - "27018:27017"
+    command: --auth
 
   mongoui:
     image: twnel/mongo-express
@@ -58,11 +59,19 @@ services:
 
   mongobackup:
     build: ./utilities/backup
-    env_file: 
-      - ./.env
-      - ./api/.env
-    volumes:
-      - ./utilities/backup/start.sh:/scripts/start.sh
-      - ./utilities/backup/backup.sh:/scripts/backup.sh
     links:
       - mongo
+    ports:
+      - 27017
+    environment:
+      - MONGO_HOST
+      - MONGO_DB
+      - MONGO_PORT
+      - S3_BUCKET
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      #- DATE_FORMAT
+      #- FILE_PREFIX
+      - MONGODB_APPLICATION_USER
+      - MONGODB_APPLICATION_PASS
+      - BACKUP_TIME=18:02
