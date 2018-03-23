@@ -81,6 +81,10 @@ export default {
     if (this.camera) this.camera.stop()
     next()
   },
+  beforeDestroy () {
+    if (this.recorder) this.recorder.stopRecording()
+    if (this.camera) this.camera.stop()
+  },
   mounted () {
     setTimeout(() => {
       this.loadCameraStream()

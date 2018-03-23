@@ -38,7 +38,7 @@ export default {
   },
   watch: {
     capturedFile (nV, oV) {
-      if (typeof nV === 'undefined') {
+      if (nV !== oV && typeof nV === 'undefined') {
         this.reset()
       }
     }
@@ -47,6 +47,10 @@ export default {
     if (this.recorder) this.recorder.stopRecording()
     if (this.camera) this.camera.stop()
     next()
+  },
+  beforeDestroy () {
+    if (this.recorder) this.recorder.stopRecording()
+    if (this.camera) this.camera.stop()
   },
   methods: {
     uploadCapture (blob) {
@@ -66,6 +70,9 @@ export default {
     toggleCapture () {
       if (!this.isActive) {
         this.loadCameraStream()
+      } else {
+        if (this.recorder) this.recorder.stopRecording()
+        if (this.camera) this.camera.stop()
       }
       this.$emit('update:isActive', !this.isActive)
       
