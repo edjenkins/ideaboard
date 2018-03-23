@@ -1,11 +1,11 @@
 #!/bin/bash
 
-CRON_SCHEDULE=0 1 * * *
+CRON_SCHEDULE=${CRON_SCHEDULE:-0 1 * * *}
 CRON_ENVIRONMENT="
 MONGODB_ADMIN_USER=${MONGODB_ADMIN_USER:?"env variable is required"}
 MONGODB_ADMIN_PASS=${MONGODB_ADMIN_PASS:?"env variable is required"}
-AWS_ACCESS_KEY_ID=${S3_ACCESS_KEY_ID:?"env variable is required"}
-AWS_SECRET_ACCESS_KEY=${S3_SECRET_ACCESS_KEY:?"env variable is required"}
+AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:?"env variable is required"}
+AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:?"env variable is required"}
 MONGO_HOST=${MONGO_HOST:?"env variable is required"}
 MONGO_PORT=${MONGO_PORT:?"env variable is required"}
 S3_BUCKET=${S3_BUCKET:?"env variable is required"}
