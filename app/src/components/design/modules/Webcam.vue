@@ -27,7 +27,7 @@
     ul
       li(v-for="(response, index) in responses" v-bind:key="index")
         .response-preview
-          video(controls="true" autoplay="false" loop="false" v-bind:src="response.response.location")
+          video(controls="true" v-bind:src="response.response.location")
           .response-meta
             h5 Caption: {{ response.response.text }}
             p Uploaded by {{ response._user.profile.name }}

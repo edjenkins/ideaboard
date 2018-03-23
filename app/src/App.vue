@@ -26,7 +26,7 @@ export default {
     // Check if authenticated every 10 seconds
     setInterval(() => { this.$store.dispatch('checkAuthStatus') }, 10000)
     // Check for notifcations every 5 seconds
-    setInterval(() => { this.$store.dispatch('getNotifications') }, 5000)
+    setInterval(() => { this.$store.dispatch('getNotifications') }, 10000)
 
     // Load drift
     let driftScript = document.createElement('script')

@@ -25,11 +25,11 @@
             .input-wrapper
               label Banner Image
               ul.upload-options
-                li.upload-options--option(@click="uploadType = 'unsplash'" v-bind:class="{ 'active': (uploadType === 'unsplash') }") Search
-                li.upload-options--option(@click="uploadType = 'upload'" v-bind:class="{ 'active': (uploadType === 'upload') }") Upload
+                li.upload-options--option(@click="idea.uploadType = 'unsplash'" v-bind:class="{ 'active': (idea.uploadType === 'unsplash') }") Search
+                li.upload-options--option(@click="idea.uploadType = 'upload'" v-bind:class="{ 'active': (idea.uploadType === 'upload') }") Upload
                 .clearfix
-              unsplash-search(v-if="uploadType === 'unsplash'" v-bind:selected-image.sync="idea.banner")
-              file-upload(v-if="uploadType === 'upload'" v-bind:uploaded-file.sync="idea.banner")
+              unsplash-search(v-if="idea.uploadType === 'unsplash'" v-bind:selected-image.sync="idea.banner")
+              file-upload(v-if="idea.uploadType === 'upload'" v-bind:uploaded-file.sync="idea.banner")
 
         .content-block--footer
           .btn.btn-danger-subtle.pull-left(@click="startOver") Reset
@@ -76,28 +76,28 @@ export default {
   },
   mounted () {
     this.fetchCategories()
-  },
-  created () {
     if (!this.$session.exists()) this.$session.start()
     if (this.$session.has('draft-idea')) {
       const draftIdea = JSON.parse(this.$session.get('draft-idea'))
-      console.log(draftIdea)
       if (!_isEmpty(draftIdea)) {
-        this.idea = draftIdea
-        this.uploadType = draftIdea.uploadType
+        this.$set(this.idea, 'title', draftIdea.title)
+        this.$set(this.idea, 'tagline', draftIdea.tagline)
+        this.$set(this.idea, 'description', draftIdea.description)
+        this.$set(this.idea, 'banner', draftIdea.banner)
+        this.$set(this.idea, 'uploadType', draftIdea.uploadType)
       }
     }
   },
   watch: {
     'idea': {
       handler: function (nV, oV) {
+        this.ideaTile = nV
+        this.$set(this.ideaTile, nV)
         if (!this.$session.exists()) this.$session.start()
-        this.$log(nV)
         this.$log('Saving draft...')
-        nV.uploadType = this.uploadType
         this.$session.set('draft-idea', JSON.stringify(nV))
         console.log('Idea updated')
-        this.ideaTile = nV
+        console.log(JSON.parse(this.$session.get('draft-idea')))
       },
       deep: true
     }
@@ -106,7 +106,6 @@ export default {
     return {
       categories: [],
       ideaTile: undefined,
-      uploadType: undefined,
       editorOption: {
         theme: 'bubble',
         placeholder: 'Describe your idea in detail',
@@ -126,7 +125,7 @@ export default {
         tagline: undefined,
         description: undefined,
         banner: undefined,
-        uploadType: 'upload'
+        uploadType: undefined
       },
       splashmessages: []
     }
@@ -151,6 +150,7 @@ export default {
         })
     },
     startOver () {
+      this.splashmessages = []
       this.idea = {
         title: undefined,
         tagline: undefined,
@@ -166,7 +166,7 @@ export default {
       this.creatingIdea = true
       // If an idea id was passed, set the parent of the idea to be created
       this.idea._parent = this.$route.query.idea
-      API.idea.start({ idea: this.idea, uploadType: this.uploadType },
+      API.idea.start({ idea: this.idea, uploadType: this.idea.uploadType },
         (response) => {
           // Idea redirect
           this.$log(response)

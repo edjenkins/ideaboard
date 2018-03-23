@@ -44,7 +44,6 @@ export default {
     },
     selectImage (result) {
       this.selectedImage = result
-      this.results = []
       this.$emit('update:selectedImage', this.selectedImage.urls.regular)
     }
   }

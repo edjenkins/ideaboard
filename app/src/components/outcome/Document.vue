@@ -1,5 +1,7 @@
 <template lang="pug">
   #outcome-document
+    
+    splash-messages(v-if="!canEdit" v-bind:messages="[{type:'success',text:'Only the idea creator can edit this document!'}]" padded)
 
     #document-preview.ql-container.ql-snow.ql-editor(v-if="!editing && document.text" v-html="document.text")
     
@@ -39,6 +41,7 @@ import 'quill/dist/quill.snow.css'
 import Quill from 'quill'
 import { quillEditor } from 'vue-quill-editor'
 import { TaskBlot, PollBlot } from '@/quill/customblots'
+import SplashMessages from '@/components/shared/SplashMessages'
 
 TaskBlot.blotName = 'ib-task'
 TaskBlot.tagName = 'div'
@@ -54,6 +57,7 @@ export default {
   name: 'document',
   props: ['idea', 'title'],
   components: {
+    SplashMessages,
     quillEditor,
     Dropdown
   },
@@ -288,5 +292,6 @@ export default {
       font-size 1em
       text-decoration none
 
-
+  .splash-messages
+    padding 20px
 </style>

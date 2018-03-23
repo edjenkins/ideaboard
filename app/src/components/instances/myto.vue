@@ -40,7 +40,7 @@
     .row-wrapper
       .row
         .content-block
-          #ideaboard-banner(v-bind:class="align" )
+          #ideaboard-banner
             #ideaboard-banner--content(v-bind:style="[instanceBackground]")
               h2 Ideaboard
               p #[strong Ideaboard] is an online tool that allows anyone to share and discuss ideas online. #[strong Myto] is using it during a series of two day workshops to have a rich online design event.

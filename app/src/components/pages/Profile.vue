@@ -131,7 +131,7 @@ export default {
     title () {
       if (!this.user) return false
       if (!this.currentUser) return false
-      return this.ownProfile ? 'My Profile' : this.currentUser.profile.name
+      return this.ownProfile ? 'Your Profile' : this.currentUser.profile.name
     },
     subtitle () {
       if (!this.user) return false

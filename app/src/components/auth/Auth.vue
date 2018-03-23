@@ -1,47 +1,33 @@
 <template lang="pug">
-  #join(:class="{ login: (state === 'login'), join: (state === 'join') }")
-    page-header(title="Get Started" subtitle="Create an account or login to subscribe to ideas and engage in discussions")
+  #join(v-bind:style="[instanceBackground]" v-bind:class="{ join: (state === 'join') }")
+    //- page-header(title="Get Started" subtitle="Create an account or login to subscribe to ideas and engage in discussions")
     .row
-      .content-block.content-block--side.pull-up.pull-left.white-block
-        .content-block--body.auth-panel
-          .oauth-button.minimal.split(@click="state = 'login'" v-bind:class="{ active: (state === 'login') }") Login
-          .oauth-button.minimal.split(@click="state = 'join'" v-bind:class="{ active: (state === 'join') }") Sign Up
-          a.oauth-button#facebook(v-bind:href="oAuthLink('facebook')" target="_self") Continue with Facebook
-          .clearfix
-      .content-block.content-block--main.pull-up.pull-right.white-block
-        
-        .auth-form(v-if="state === 'login'")
-        
-          .content-block--body
-            form
-              splash-messages(v-bind:messages="splashmessages['login']" padded)
-              .input-wrapper
-                label Your email
-                input(v-model="user.email" name="email" placeholder="Your email")
-              .input-wrapper
-                label Your password
-                input(v-model="user.password" name="password" type="password" placeholder="Your password" v-on:keydown.enter="login")
-                p#forgot-link(@click="state = 'forgot'") Forgot your password?
-          .content-block--footer
-            .btn.btn-success.pull-right(@click="login") {{ (isAuthenticating) ? 'Please wait..' : 'Login' }}
-            .clearfix
-          
+      .content-block.content-block--main.white-block
+
         .auth-form(v-if="state === 'join'")
-        
+
           .content-block--body
+            h2 Get Started
+            a#facebook-badge(v-bind:href="oAuthLink('facebook')" target="_self")
+              i.fab.fa-facebook
+
             form
-              splash-messages(v-bind:messages="splashmessages['join']" padded)
+              splash-messages(v-bind:messages="splashmessages['join']")
               .input-wrapper
-                label Your name
-                input(v-model="user.name" name="name" placeholder="Your name")
+                label Name
+                input(v-model="user.name" v-bind:disabled="isAuthenticating" name="name" placeholder="Your name")
               .input-wrapper
-                label Your email
-                input(v-model="user.email" name="email" type="email" placeholder="Your email")
+                label Email
+                input(v-model="user.email" v-bind:disabled="isAuthenticating" name="email" type="email" placeholder="Your email")
               .input-wrapper
-                label Create a password
-                input(v-model="user.password" name="password" type="password" placeholder="Create a password" v-on:keydown.enter="join")
+                label Password
+                input(v-model="user.password" v-bind:disabled="isAuthenticating" name="password" type="password" placeholder="Your password" v-on:keydown.enter="join")
+                p#forgot-link(@click="state = 'forgot'") Forgot your password?
+
+
           .content-block--footer
-            .btn.btn-success.pull-right(@click="join") {{ (isAuthenticating) ? 'Creating account..' : 'Create Account' }}
+            p#terms-notice By continuing you agree with our #[router-link(v-bind:to="{ name: 'terms' }") terms and conditions.]
+            .btn.btn-success.pull-right(@click="join") {{ isAuthenticating ? 'Checking...' : 'Continue' }}
             .clearfix
           
         .auth-form(v-if="state === 'forgot'")
@@ -49,17 +35,18 @@
           .content-block--body
             h2 Forgot Password
             form
-              splash-messages(v-bind:messages="splashmessages['forgot']" padded)
+              splash-messages(v-bind:messages="splashmessages['forgot']")
               .input-wrapper
                 label Your email
                 input(v-model="user.email" name="email" type="email" placeholder="Your email" v-on:keydown.enter="forgotPassword")
           .content-block--footer
+            .btn.btn-warning.pull-left(@click="state = 'join'") Back
             .btn.btn-success.pull-right(@click="forgotPassword") Continue
             .clearfix
         
       .clearfix
       
-    site-footer
+    //- site-footer
 
 </template>
 
@@ -92,14 +79,13 @@ export default {
   data () {
     return {
       isAuthenticating: false,
-      state: 'login',
+      state: 'join',
       user: {
         name: config.ADMIN_NAME,
         email: config.ADMIN_EMAIL,
         password: config.ADMIN_PASSWORD
       },
       splashmessages: {
-        login: [],
         join: [],
         forgot: []
       },
@@ -108,7 +94,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'isAuthenticated'
+      'isAuthenticated', 'instanceBackground'
     ])
   },
   watch: {
@@ -122,6 +108,7 @@ export default {
     join () {
       if (this.isAuthenticating) return
       this.isAuthenticating = true
+      this.splashmessages.join = []
       API.auth.join(this.user,
         (response) => {
           // Auth redirect
@@ -135,27 +122,6 @@ export default {
           this.$log(error)
           this.isAuthenticating = false
           this.splashmessages.join = [{ text: 'Something went wrong', type: 'error' }]
-        })
-    },
-    login () {
-      if (this.isAuthenticating) return
-      this.isAuthenticating = true
-      API.auth.login(this.user,
-        (response) => {
-          // Login redirect
-          this.$log('response')
-          this.$log(response)
-          this.$store.dispatch('checkAuthStatus')
-          setTimeout(() => { this.isAuthenticating = false }, 500)
-          // if (response.data && response.data.errors) {
-          //   this.splashmessages.join = response.data.errors
-          // }
-        },
-        (error) => {
-          // Login fail
-          this.$log(error)
-          this.isAuthenticating = false
-          this.splashmessages.login = [{ text: 'Login failed', type: 'error' }]
         })
     },
     forgotPassword () {
@@ -180,33 +146,55 @@ export default {
 $side-block-width = 340px
 
 #join
+  pinned()
+  gradient()
+  top $mobile-navigation-height
   background-color $color-lighter-grey
+  position absolute
   text-align center
   .content-block--main
-    margin-bottom 30px
-    width calc(100% - 360px)
-    @media(max-width: 680px)
-      margin-top -10px
-      width 100%
-
-  .content-block--side
-    margin-bottom 30px
-    width $side-block-width
-    @media(max-width: 680px)
-      width 100%
-    .content-block--footer
-      padding 0
+    radius(10px)
+    margin 40px auto 50px auto
+    max-width 340px
+    @media(max-width: 568px)
+      margin 20px auto 50px auto
+      max-width calc(100% - 40px)
+      width calc(100% - 40px)
     
   .auth-form
     text-align left
+    input
+      border $color-border 1px solid
     h2
       reset()
-      color $text-grey
+      color $color-text-grey
       padding 10px
+    p#terms-notice
+      reset()
+      color $color-text-grey
+      padding 10px
+      padding-bottom 20px
+    .btn
+      radius(26px)
+      padding 0 30px
+    a#facebook-badge
+      radius(30px)
+      background-color $color-facebook
+      color white
+      position absolute
+      right 15px
+      top 25px
+      height 40px
+      width 40px
+      svg
+        margin 10px
+        height 20px
+        width 20px
     p#forgot-link
+      reset()
       color $color-text-grey
       font-size 0.9em
-      padding 10px 0
+      padding-top 20px
       &:hover
         cursor pointer
         text-decoration underline

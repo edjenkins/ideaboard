@@ -24,7 +24,7 @@ module.exports = function (app, passport) {
       })
     })
 
-  app.post('/signup', function (req, res, next) {
+  app.post('/signup', async function (req, res, next) {
 
     // Get form params
     const email = req.body.email
@@ -32,46 +32,58 @@ module.exports = function (app, passport) {
     // Check if user exists..
     let errors = []
 
-    // Check name exists
-    if (req.body.name.length < 3) {
-      errors.push({
-        text: 'Name should be longer than 3 characters',
-        type: 'error'
-      })
-    }
-
-    // Check password is valid
-    if (req.body.password.length < 8) {
-      errors.push({
-        text: 'Password should be longer than 8 characters',
-        type: 'error'
-      })
-    }
-
-    User.findOne({ 'local.email': email }, (err, user) => {
-      if (err) { return done(err) }
-      if (user) {
+    // Find user
+    const user = await User.findOne({ 'local.email': email })
+    
+    if (user) {
+      if (user.validPassword(req.body.password)) {
+        passport.authenticate('local-login')(req, res, function () {
+          return res.json({
+            success: true
+          })
+        })
+      } else {
         errors.push({
-          text: 'That email has already been taken',
+          text: 'Email taken / Password incorrect',
+          type: 'error'
+        })
+        return res.json({
+          errors: errors
+        })
+      }
+    } else {
+      // Check name exists
+      if (req.body.name.length < 3) {
+        errors.push({
+          text: 'Name should be longer than 3 characters',
           type: 'error'
         })
       }
+
+      // Check password is valid
+      if (req.body.password.length < 8) {
+        errors.push({
+          text: 'Password should be longer than 8 characters',
+          type: 'error'
+        })
+      }
+
       // If there are issues with the signup throw them back
       if (errors.length > 0) {
         return res.json({
           errors: errors
         })
-      }
-      
-      // Create the account and authenticate the user
-      passport.authenticate('local-signup', function(err, user) {
-        passport.authenticate('local-login')(req, res, function() {
-          return res.json({
-            success: true
+      } else {
+        // Create the account and authenticate the user
+        passport.authenticate('local-signup', function (err, user) {
+          passport.authenticate('local-login')(req, res, function () {
+            return res.json({
+              success: true
+            })
           })
-        })
-      })(req, res, next)
-    })
+        })(req, res, next)
+      }
+    }
   })
 
   app.get('/logout', (req, res) => {
