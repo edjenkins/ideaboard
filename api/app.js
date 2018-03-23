@@ -46,12 +46,12 @@ app.use(function (req, res, next) {
 mongoose.connect(configDB.url, { useMongoClient: true }) // connect to our database
 
 // set up our express application
+app.use(express.limit('200M'))
 app.use(morgan('dev')) // log every request to the console
 app.use(cookieParser()) // read cookies (needed for auth)
 app.use(bodyParser())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use(express.limit('200M'))
 
 // required for passport
 app.use(session({ secret: process.env.PASSPORT_SESSION_SECRET })) // session secret
