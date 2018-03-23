@@ -51,6 +51,7 @@ app.use(cookieParser()) // read cookies (needed for auth)
 app.use(bodyParser())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(express.limit('200M'))
 
 // required for passport
 app.use(session({ secret: process.env.PASSPORT_SESSION_SECRET })) // session secret
