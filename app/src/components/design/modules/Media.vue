@@ -4,7 +4,7 @@
 
   .media-wrapper
     // No media
-    .no-media(v-if="responses.length === 0") No media posted
+    .no-media(v-if="responses.length === 0" @click="fetchResponses") No media posted
 
     // Media
     ul.media-items(v-if="responses.length !== 0")
@@ -14,7 +14,9 @@
   // Submit a response
   .media-submission
     
-    file-upload(v-bind:uploaded-file.sync="newResponse")
+    file-upload(v-show="!webcamActive" v-bind:uploaded-file.sync="newResponse")
+
+    webcam-capture(v-bind:captured-file.sync="newResponse" v-bind:is-active.sync="webcamActive")
 
     .submit(v-if="newResponse")
       .response-composer
@@ -31,6 +33,8 @@ import API from '@/api'
 import DesignTask from '@/mixins/DesignTask'
 
 import FileUpload from '@/components/FileUpload'
+import WebcamCapture from '@/components/WebcamCapture'
+
 import Avatar from '@/components/user/Avatar'
 import MediaResponse from '@/components/design/components/MediaResponse'
 
@@ -42,13 +46,15 @@ export default {
   },
   components: {
     FileUpload,
+    WebcamCapture,
     Avatar,
     MediaResponse
   },
   data () {
     return {
       newResponse: undefined,
-      responses: []
+      responses: [],
+      webcamActive: false
     }
   },
   computed: {
@@ -58,7 +64,7 @@ export default {
     fetchResponses () {
       API.task.fetchResponses(
         'media',
-        this.task._id,
+        this.$route.params.task_id,
         (response) => {
           this.$log(response)
           this.responses = response.data
@@ -72,16 +78,18 @@ export default {
       if (!this.isAuthenticated) return
       API.task.submitResponse(
         'media',
-        this.task._id,
+        this.$route.params.task_id,
         { response: this.newResponse },
         (response) => {
           this.$log(response)
           this.responses.push(response.data)
           this.newResponse = undefined
+          this.webcamActive = false
         },
         (error) => {
           this.$log(error)
           this.newResponse = undefined
+          this.webcamActive = false
         }
       )
     }
