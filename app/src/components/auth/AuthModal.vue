@@ -7,9 +7,9 @@
       h3 Looks like you aren't signed in!
       p Please create an account or login to get started
 
-      a.oauth-button#facebook(v-bind:href="oAuthLink('facebook')" target="_self") Continue with Facebook
-      .oauth-button.minimal.split(@click="redirectToJoin") Sign Up
-      .oauth-button.minimal.split(@click="redirectToJoin") Login
+      //- a.oauth-button#facebook(v-bind:href="oAuthLink('facebook')" target="_self") Continue with Facebook
+      .oauth-button#primary(@click="redirectToJoin") Get Started
+      //- .oauth-button.minimal.split(@click="redirectToJoin") Login
       .clearfix
 
 </template>

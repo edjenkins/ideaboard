@@ -1,6 +1,6 @@
 <template lang="pug">
-  #join(v-bind:style="[instanceBackground]" v-bind:class="{ join: (state === 'join') }")
-    //- page-header(title="Get Started" subtitle="Create an account or login to subscribe to ideas and engage in discussions")
+  #join(v-bind:class="{ join: (state === 'join') }")
+    #overlay(v-bind:style="[instanceBackground]")
     .row
       .content-block.content-block--main.white-block
 
@@ -146,18 +146,22 @@ export default {
 $side-block-width = 340px
 
 #join
-  pinned()
-  gradient()
-  top $mobile-navigation-height
-  background-color $color-lighter-grey
-  position absolute
   text-align center
+  #overlay
+    pinned()
+    gradient()
+    content ''
+    position fixed
+    pointer-events none
+    top $mobile-navigation-height
   .content-block--main
     radius(10px)
-    margin 40px auto 50px auto
+    margin 180px auto 50px auto
     max-width 340px
+    @media(max-width: 980px)
+      margin 100px auto 50px auto
     @media(max-width: 568px)
-      margin 20px auto 50px auto
+      margin 80px auto 50px auto
       max-width calc(100% - 40px)
       width calc(100% - 40px)
     

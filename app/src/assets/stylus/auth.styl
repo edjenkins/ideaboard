@@ -2,7 +2,6 @@
 
 .auth-panel
   border-box()
-  border-bottom $color-border 1px solid
   margin 0 auto
   padding 20px
   text-align left
@@ -34,6 +33,10 @@
   &:hover
     cursor pointer
     background-color darken($color-dark-grey, 10%)
+  &#primary
+    background-color $color-primary
+    &:hover
+      background-color darken($color-primary, 10%)
   &#facebook
     background-color $color-facebook
     &:hover

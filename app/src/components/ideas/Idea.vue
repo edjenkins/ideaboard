@@ -62,8 +62,8 @@ export default {
       idea: undefined,
       tabs: {
         items: [
-          { title: 'Overview', route: 'idea', component: 'info-tab' },
-          { title: 'Discussions', route: 'designdashboard', component: 'design-tab' },
+          { title: 'About', route: 'idea', component: 'info-tab' },
+          { title: 'Workspace', route: 'designdashboard', component: 'design-tab' },
           { title: 'Outcome', route: 'outcomedashboard', component: 'outcome-tab' }
         ]
       }
