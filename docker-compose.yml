@@ -61,5 +61,8 @@ services:
     env_file: 
       - ./.env
       - ./api/.env
+    volumes:
+      - ./utilities/backup/start.sh:/scripts/start.sh
+      - ./utilities/backup/backup.sh:/scripts/backup.sh
     links:
       - mongo
