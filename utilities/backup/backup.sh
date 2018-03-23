@@ -1,26 +1,42 @@
 #!/bin/bash
 
-# Utility function
-get_date () {
-    date +[%Y-%m-%d\ %H:%M:%S]
-}
+set -e
 
-OUT=$BACKUP_FILENAME_PREFIX-$(date +$BACKUP_FILENAME_DATE_FORMAT).tgz
+: ${MONGO_HOST:?}
+: ${MONGO_DB:?}
+: ${MONGO_PORT:?}
+: ${S3_BUCKET:?}
+: ${AWS_ACCESS_KEY_ID:?}
+: ${AWS_SECRET_ACCESS_KEY:?}
+: ${DATE_FORMAT:?}
+: ${FILE_PREFIX:?}
+: ${MONGODB_APPLICATION_USER:?}
+: ${MONGODB_APPLICATION_PASS:?}
 
-# Script
+FOLDER=/backup
+DUMP_OUT=dump
 
-echo "$(get_date) Mongo backup started"
+FILE_NAME=${FILE_PREFIX}$(date -u +${DATE_FORMAT}).tar.gz
+S3_KEY=backups/${FILE_NAME}
 
-echo "$(get_date) [Step 1/3] Running mongodump"
-#mongodump --quiet -h $MONGO_HOST -p $MONGO_PORT
-mongodump --quiet -h $MONGO_HOST -p $MONGO_PORT --authenticationDatabase admin -u $MONGODB_ADMIN_USER -p $MONGODB_ADMIN_PASS
+echo "Creating backup folder..."
 
-echo "$(get_date) [Step 2/3] Creating tar archive"
-tar -zcvf $OUT dump/
-rm -rf dump/
+rm -fr ${FOLDER} && mkdir -p ${FOLDER} && cd ${FOLDER}
 
-echo "$(get_date) [Step 3/3] Uploading archive to S3"
-/usr/local/bin/aws s3 cp $OUT s3://$S3_BUCKET/backups/
-rm $OUT
+echo "Starting backup..."
 
-echo "$(get_date) Mongo backup completed successfully"
+mongodump --host=${MONGO_HOST} --db=${MONGO_DB} --port ${MONGO_PORT} -u ${MONGODB_APPLICATION_USER} -p${MONGODB_APPLICATION_PASS} --out=${DUMP_OUT}
+
+echo "Compressing backup..."
+
+tar -zcvf ${FILE_NAME} ${DUMP_OUT} && rm -fr ${DUMP_OUT}
+
+echo "Uploading to S3..."
+
+aws s3api put-object --bucket ${S3_BUCKET} --key ${S3_KEY} --body ${FILE_NAME}
+
+echo "Removing backup file..."
+
+rm -f ${FILE_NAME}
+
+echo "Done!"
