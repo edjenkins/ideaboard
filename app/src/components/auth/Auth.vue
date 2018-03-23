@@ -56,8 +56,10 @@
           .content-block--footer
             .btn.btn-success.pull-right(@click="forgotPassword") Continue
             .clearfix
-
+        
       .clearfix
+      
+    site-footer
 
 </template>
 
@@ -68,6 +70,7 @@ import { mapGetters } from 'vuex'
 import AuthMixin from '@/mixins/AuthMixin'
 
 import PageHeader from '@/components/PageHeader'
+import SiteFooter from '@/components/navigation/SiteFooter'
 import SplashMessages from '@/components/shared/SplashMessages'
 
 import * as config from '@/api/config'
@@ -83,6 +86,7 @@ export default {
   ],
   components: {
     PageHeader,
+    SiteFooter,
     SplashMessages
   },
   data () {
