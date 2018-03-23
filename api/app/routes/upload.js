@@ -22,10 +22,11 @@ const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: S3_BUCKET,
+    limits: {
+      fileSize: 52428800
+    },
     contentType: (req, file, cb) => {
       // console.log(req.file)
-      console.log('***file***')
-      console.log(file)
       switch (file.mimetype) {
         case 'image/svg+xml':
           return cb(null, 'image/svg+xml')
