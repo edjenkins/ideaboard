@@ -2,32 +2,35 @@
 .design-task--webcam
   p.design-task--description(v-if="task.description") {{ task.description }}
 
-  .webcam-wrapper(v-if="!newResponse.location")
-    video#video(ref="video" showcontrols="false" autoplay="true")
-  
-  .webcam-controls(v-if="!newResponse.location")
-    //- p {{ recorder ? recorder.state : 'unknown' }}
-    .btn.btn-danger(v-if="isRecording" @click="stopRecording") Stop Recording
-    .btn.btn-success(v-if="isReady" @click="startRecording") Start Recording
-  
-  .response-composer(v-if="newResponse.location")
-    .response-preview
-      video#video-preview(ref="videopreview" controls="true" autoplay="true" loop="true" v-bind:src="newResponse.location")
-      textarea(v-bind:model="newResponse.text" placeholder="Add a quote..")
-      .clearfix
+  .response-composer
+    .webcam-wrapper(v-if="isAuthenticated && !newResponse.location")
+      video#video(ref="video" showcontrols="false" autoplay="true")
+    
+    .webcam-controls(v-if="isAuthenticated && !newResponse.location")
+      //- p {{ recorder ? recorder.state : 'unknown' }}
+      .btn.btn-danger(v-if="isRecording" @click="stopRecording") Stop Recording
+      .btn.btn-success(v-if="isReady" @click="startRecording") Start Recording
+    
+    div(v-show="isAuthenticated && newResponse.location")
+      .response-preview
+        video#video-preview(ref="videopreview" controls="true" autoplay="true" loop="true" v-bind:src="newResponse.location")
+        textarea(v-model="newResponseText" placeholder="Add a quote..")
+        .clearfix
 
-    .response-controls
-      .btn.btn-danger.pull-left(@click="clearResponse") Delete
-      //- .btn.btn-primary(@click="saveToDisk") Download
-      .btn.btn-success.pull-right(@click="submitResponse") Submit video
-      .clearfix
+      .response-controls
+        .btn.btn-danger.pull-left(@click="clearResponse") Delete
+        //- .btn.btn-primary(@click="saveToDisk") Download
+        .btn.btn-success.pull-right(@click="submitResponse") Submit video
+        .clearfix
   
   .responses
     ul
       li(v-for="(response, index) in responses" v-bind:key="index")
-        h5 {{ response._user.profile.name }}
-        h5 {{ response.response.text }}
-        video(controls="true" autoplay="false" loop="false" v-bind:src="response.response.location")
+        .response-preview
+          video(controls="true" autoplay="false" loop="false" v-bind:src="response.response.location")
+          .response-meta
+            h5 Caption: {{ response.response.text }}
+            p Uploaded by {{ response._user.profile.name }}
 
 </template>
 
@@ -46,11 +49,9 @@ const RecordRTC = require('recordrtc')
 export default {
   name: 'webcam',
   mixins: [DesignTask],
-  computed: {
-    ...mapGetters(['isAuthenticated'])
-  },
   data () {
     return {
+      newResponseText: '',
       recorder: undefined,
       camera: undefined,
       responses: [],
@@ -61,6 +62,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isAuthenticated']),
     showControls () {
       const readyStates = ['stopped']
       return readyStates.indexOf(_get(this.recorder, 'state', 'unknown')) !== -1
@@ -99,6 +101,11 @@ export default {
       )
     },
     submitResponse () {
+      alert(this.newResponse.text)
+      alert(this.newResponseText)
+      this.newResponse.text = this.newResponseText
+      alert(this.newResponse.text)
+      alert(this.newResponseText)
       API.task.submitResponse(
         'webcam',
         this.$route.params.task_id,
@@ -182,6 +189,8 @@ export default {
 .design-task--webcam
   background-color white
   padding 25px
+  .response-composer
+    position relative  
   .webcam-wrapper
     position relative
     width 100%
@@ -200,35 +209,64 @@ export default {
       display block
       margin 20px 10px
       max-width 100%
-  .response-composer
-    .response-preview
-      background-color $color-lightest-grey
-      padding-left 210px
-      position relative
-      video
-        height 160px
-        position absolute
-        left 0
-        top 0
-        width 200px
-      textarea
-        border-box()
-        background-color transparent
-        border none
-        font-size 1em
-        min-height 160px
-        outline 0
-        padding 10px
-        width 100%
-    .response-controls
-      .btn
-        float left
-        margin 20px 10px 0 0
+  .response-preview
+    background-color $color-lightest-grey
+    padding-left 210px
+    position relative
+    video
+      height 160px
+      position absolute
+      left 0
+      top 0
+      width 200px
+    textarea
+      border-box()
+      background-color transparent
+      border none
+      font-size 1em
+      min-height 160px
+      outline 0
+      padding 10px
+      width 100%
+  .response-controls
+    .btn
+      float left
+      margin 20px 10px 0 0
 
 .responses
-  ul, li
+  ul
     cleanlist()
-    video
-      max-width 50%
+    li
+      cleanlist()
+      padding-top 20px
+      .response-preview
+        background-color $color-lighter-grey
+        padding-left 210px
+        position relative
+        .response-meta
+          border-box()
+          background-color transparent
+          border none
+          font-size 1em
+          min-height 160px
+          outline 0
+          padding 10px
+          width 100%
+          h5
+            reset()
+            color $color-text-darkest-grey
+            font-size 1.1em
+            margin-top 10px
+          p
+            reset()
+            color $color-text-grey
+            font-size 1em
+            margin-top 10px
+        video
+          height 160px
+          position absolute
+          left 0
+          top 0
+          width 200px
 </style>
 
