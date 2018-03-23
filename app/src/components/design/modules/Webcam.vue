@@ -170,7 +170,9 @@ export default {
         setSrcObject(camera, this.$refs.video)
         this.$refs.video.play()
         this.recorder = RecordRTC(camera, {
-          type: 'video'
+          type: 'video',
+          mimeType: 'video/webm\;codecs=vp9',
+          bitsPerSecond: 64000
         })
         this.recorder.camera = camera
       }).catch(function (error) {
