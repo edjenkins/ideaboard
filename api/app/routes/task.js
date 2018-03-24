@@ -4,6 +4,7 @@ const _find = require('lodash/find')
 
 const mail = require('../../app/services/mail')
 
+const User = require('../../app/models/user')
 const Idea = require('../../app/models/idea')
 const Task = require('../../app/models/task')
 
@@ -32,12 +33,12 @@ module.exports = function (app, passport) {
     })
   // Create task
   app.post('/task',
-    (req, res) => {
+    async (req, res) => {
       if (req.isAuthenticated()) {
         let data = req.body
         data.task._user = req.user._id
         data.task._idea = data.idea_id
-        const task = new Task(data.task)
+        const newTask = new Task(data.task)
 
         let errors = []
 
@@ -63,11 +64,23 @@ module.exports = function (app, passport) {
           })
         }
 
-        task.save((err) => {
-          if (err) console.error(err)
-          mail.sendMail(req.user.local.email, 'Task Created', 'task-created', { user: req.user, task: task, url: utilities.redirectUri(req.instance) })
-          res.json({ task })
-        })
+        let task = await newTask.save()
+        task = await Task.findOne({ _id: task._id })
+        const idea = await Idea.findOne({ _id: task._idea })
+
+        try {
+          // Loop subscribers and mail out
+          console.log('idea._subscribers')
+          console.log(idea._subscribers)
+          idea._subscribers.forEach(async (subscriber) => {
+            const currentSubscriber = await User.findOne({ _id: subscriber._user._id })
+            mail.sendMail(currentSubscriber.local.email, 'Task Created', 'task-created', { user: currentSubscriber, task: task, url: utilities.redirectUri(req.instance) })
+          })
+        } catch (error) {
+          console.error('Failed mail out')
+          console.error(error)
+        }
+        res.json({ task })
       } else {
         res.status(401)
       }

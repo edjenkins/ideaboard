@@ -6,10 +6,12 @@ block content
 
   p Hey #{ user.profile.name },
 
-  p Big news! #{ user.profile.name } has just added a new task to the idea - <a style="color: #0B9BD0" href="#{ url }/idea/#{ task._idea }">#{ task._idea }</a>.
+  p Big news! #{ task._user.profile.name } has just added a new task to the idea - <a style="color: #0B9BD0" href="#{ url }/idea/#{ task._idea._id }/info">#{ task._idea.title }</a>.
+
+  h3 <a style="color: #0B9BD0" href="#{ url }/idea/#{ task._idea._id }/#{ task.type }/#{ task._id }">#{ task.title }</a>
 
   p Don't miss out on the live conversation, head over to Ideaboard now to get involved.
 
-  p You are subscribed to this idea so you will continue to receive updates like this one. Should you wish to unsubscribe from this idea just head over to the <a style="color: #0B9BD0" href="#{ url }/idea/#{ task._idea }">idea page</a> and hot unsubscribe.
+  p You are subscribed to this idea so you will continue to receive updates like this one. Should you wish to unsubscribe from this idea just head over to the <a style="color: #0B9BD0" href="#{ url }/idea/#{ task._idea._id }/info">idea page</a> and hit unsubscribe.
 
   p Got questions? Reply to this email and we will be happy to help out.
