@@ -51,7 +51,7 @@ export default {
     responseCount () {
       if (this.task.type === 'discussion') {
         // Fetch comments
-        return this.discussionCount
+        return (this.task._responses.length === 0) ? this.discussionCount : this.task._responses.length
       } else {
         return this.task._responses.length
       }

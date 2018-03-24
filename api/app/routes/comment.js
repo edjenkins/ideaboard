@@ -5,6 +5,7 @@ const _find = require('lodash/find')
 
 const Comment = require('../../app/models/comment')
 const Task = require('../../app/models/task')
+const TaskResponse = require('../../app/models/task-response')
 
 module.exports = function (app, passport) {
   // Get comments
@@ -29,10 +30,11 @@ module.exports = function (app, passport) {
     })
   // Post comment
   app.post('/comment',
-    (req, res) => {
+    async (req, res) => {
       if (req.isAuthenticated()) {
         var data = req.body
         data._user = req.user._id
+
         const comment = new Comment(data)
 
         // If target is 'comment' then it is a reply so push to existing comment rather than saving it
@@ -60,13 +62,27 @@ module.exports = function (app, passport) {
               { _id: comment._id },
               (err, comment) => {
                 if (err) console.error(err)
-                Task.findOneAndUpdate(
-                  { _id: req.body._target },
-                  { $push: { _responses: comment } },
-                  (err, task) => {
-                    if (err) console.error(err)
-                    res.json({ comment })
-                  })
+
+                // If task comment then push response to task
+                let response = {
+                  response: comment._id,
+                  _user: req.user._id,
+                  type: 'discussion',
+                  _task: req.body._target,
+                  response_meta: {
+                    text: req.body.text
+                  }
+                }
+                const taskResponse = new TaskResponse(response)
+                taskResponse.save((err, response) => {
+                  Task.findOneAndUpdate(
+                    { _id: req.body._target },
+                    { $push: { _responses: response } },
+                    (err, task) => {
+                      if (err) console.error(err)
+                      res.json({ comment })
+                    })
+                })
               })
           })
         } else {
