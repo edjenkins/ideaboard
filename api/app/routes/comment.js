@@ -46,13 +46,44 @@ module.exports = function (app, passport) {
               { $push: { _replies: comment } },
               (err, comment) => {
                 if (err) console.error(err)
-                // Notify users of replies
-                Comment.findOne(
-                  { _id: comment._id },
-                  (err, comment) => {
-                    if (err) console.error(err)
-                    res.json({ comment })
+                
+                if (comment.type === 'task') {
+                  // If task comment then push response to task
+                  let response = {
+                    response: comment._id,
+                    _user: req.user._id,
+                    type: 'discussion',
+                    _task: req.body._target,
+                    response_meta: {
+                      text: req.body.text
+                    }
+                  }
+                  const taskResponse = new TaskResponse(response)
+                  taskResponse.save((err, response) => {
+                    Task.findOneAndUpdate(
+                      { _id: comment._target },
+                      { $push: { _responses: response } },
+                      (err, task) => {
+                        if (err) console.error(err)
+                        
+                        // Notify users of replies
+                        Comment.findOne(
+                          { _id: comment._id },
+                          (err, comment) => {
+                            if (err) console.error(err)
+                            res.json({ comment })
+                          })
+                      })
                   })
+                } else {
+                  // Notify users of replies
+                  Comment.findOne(
+                    { _id: comment._id },
+                    (err, comment) => {
+                      if (err) console.error(err)
+                      res.json({ comment })
+                    })
+                }
               })
           })
         } else if (data.type === 'task') {
