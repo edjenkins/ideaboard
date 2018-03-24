@@ -1,7 +1,11 @@
 import API from '@/api'
+import SplashMessages from '@/components/shared/SplashMessages'
 
 export default {
   props: ['title', 'idea'],
+  components: {
+    SplashMessages
+  },
   data () {
     return {
       task: undefined

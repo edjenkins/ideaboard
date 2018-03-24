@@ -2,6 +2,8 @@
 .design-task--media
   p.design-task--description(v-if="task.description") {{ task.description }}
 
+  splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
+
   .media-wrapper
     // No media
     .no-media(v-if="responses.length === 0" @click="fetchResponses") No media posted
@@ -12,7 +14,7 @@
       .clearfix
 
   // Submit a response
-  .media-submission
+  .media-submission(v-if="isAuthenticated")
     
     file-upload(v-show="!webcamActive" v-bind:uploaded-file.sync="newResponse")
 

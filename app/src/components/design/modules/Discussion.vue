@@ -3,6 +3,8 @@
 
   p.design-task--description(v-if="task && task.description") {{ task.description }}
 
+  splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
+
   .dicussion-wrapper
     // No comments
     .no-comments(v-if="comments.length === 0 && !hideNoComments") No comments posted

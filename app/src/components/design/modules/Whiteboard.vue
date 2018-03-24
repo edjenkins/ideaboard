@@ -2,7 +2,9 @@
 .design-task--whiteboard
   p.design-task--description(v-if="task.description") {{ task.description }}
 
-  .whiteboard-wrapper
+  splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
+
+  .whiteboard-wrapper(v-if="isAuthenticated")
     iframe(v-bind:src="`https://witeboard.com/${$route.params.task_id}`" frameborder="0" width="100%" height="600")
   
 </template>
