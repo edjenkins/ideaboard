@@ -3,7 +3,7 @@
   router-link.design-dashboard--task(v-bind:to="{ name: task.type, params: { id: task._idea._id, task_id: task._id } }")
     .design-dashboard--task--title {{ task.title }}
 
-    .design-dashboard--task--subtitle(v-if="task._responses.length > 0") {{ `${task._responses.length} contributon${(task._responses.length === 1) ? '' : 's'}` }}
+    .design-dashboard--task--subtitle(v-if="responseCount > 0") {{ `${responseCount} contributon${(responseCount === 1) ? '' : 's'}` }}
 
     .design-dashboard--task--meta.design-dashboard--task--status  
       i.fas.fa-thumbtack(v-if="task.pinned" title="This task is pinned")
@@ -20,6 +20,7 @@
 <script>
 import _ from 'lodash'
 import Avatar from '@/components/user/Avatar'
+import API from '@/api'
 
 export default {
   name: 'design-task-tile',
@@ -27,15 +28,51 @@ export default {
   components: {
     Avatar
   },
+  mounted () {
+    if (this.task.type === 'discussion') {
+      this.fetchDiscussionResponseCount()
+    }
+  },
+  data () {
+    return {
+      discussionCount: 0
+    }
+  },
   computed: {
     contributors () {
-      // return this.task._responses
-      return _.sortedUniqBy(_.reverse(this.task._responses), (response) => {
-        return response._user._id
-      })
+      try {
+        return _.sortedUniqBy(_.reverse(this.task._responses), (response) => {
+          return response._user._id
+        })
+      } catch (error) {
+        return []
+      }
+    },
+    responseCount () {
+      if (this.task.type === 'discussion') {
+        // Fetch comments
+        return this.discussionCount
+      } else {
+        return this.task._responses.length
+      }
     }
   },
   methods: {
+    fetchDiscussionResponseCount () {
+      API.comment.fetch(
+        {
+          target: this.task._id,
+          type: 'task'
+        },
+        (response) => {
+          this.$log(response)
+          this.discussionCount = response.data.length
+        },
+        (error) => {
+          this.$log(error)
+        }
+      )
+    },
     loadTask () {
       this.$emit('loadTask')
     },

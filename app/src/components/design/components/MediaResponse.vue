@@ -47,7 +47,7 @@ export default {
   },
   data () {
     return {
-      commentsVisible: false
+      commentsVisible: true
     }
   },
   methods: {

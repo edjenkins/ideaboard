@@ -3,7 +3,7 @@
 #outcome-dashboard
 
   router-link.idea-tool(v-bind:to="{ name: 'outcomedocument', params: { id: idea._id } }")
-    .idea-tool--title Document Idea
+    .idea-tool--title Idea Document
   router-link.idea-tool(v-bind:to="{ name: 'start', query: { idea: this.idea._id } }")
     .idea-tool--title Start follow on Idea
   //- router-link.idea-tool.internal-tool(v-bind:to="{ name: 'outcomeupdates', params: { id: idea._id } }")

@@ -62,7 +62,7 @@ export default {
     Dropdown
   },
   mounted () {
-    this.$emit('update:title', 'Document Idea')
+    this.$emit('update:title', 'Idea Document')
     this.getDocument()
     this.loadTasks()
   },
