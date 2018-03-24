@@ -3,7 +3,7 @@
   p.design-task--description(v-if="task.description") {{ task.description }}
 
   .appearin-wrapper
-    iframe(v-bind:src="`https://appear.in/${task._id}`" frameborder="0" width="100%" height="400")
+    iframe(v-bind:src="`https://appear.in/${$route.params.task_id}`" frameborder="0" width="100%" height="400")
   
 </template>
 

@@ -3,7 +3,7 @@
   p.design-task--description(v-if="task.description") {{ task.description }}
 
   .whiteboard-wrapper
-    iframe(v-bind:src="`https://witeboard.com/${task._id}`" frameborder="0" width="100%" height="600")
+    iframe(v-bind:src="`https://witeboard.com/${$route.params.task_id}`" frameborder="0" width="100%" height="600")
   
 </template>
 
