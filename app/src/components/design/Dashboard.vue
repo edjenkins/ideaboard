@@ -44,7 +44,7 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated']),
     orderedTasks () {
-      return _.sortBy(this.tasks, ['pinned', '_responses.length']).reverse()
+      return _.sortBy(this.tasks, ['created']).reverse()
     }
   },
   methods: {
