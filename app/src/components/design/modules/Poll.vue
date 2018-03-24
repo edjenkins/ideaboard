@@ -2,7 +2,7 @@
 .design-task--poll
   p.design-task--description(v-if="task.description") {{ task.description }}
 
-  splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
+  //- splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 
   .poll-wrapper
     transition-group(tag="ul" class="poll-responses" name="fade")

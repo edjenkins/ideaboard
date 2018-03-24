@@ -164,7 +164,7 @@ export default {
 
         default:
           const beforeLen = quill.getLength()
-          quill.insertEmbed(embedIndex, 'ib-task', { idea_id: embedTask._idea, task_id: embedTask._id, task_type: embedTask.type })
+          quill.insertEmbed(embedIndex, 'ib-task', { idea_id: embedTask._idea._id, task_id: embedTask._id, task_type: embedTask.type })
           const afterLen = quill.getLength()
           embedIndex += (afterLen - beforeLen)
           this.$refs.myQuillEditor.quill.setSelection(embedIndex, 0)

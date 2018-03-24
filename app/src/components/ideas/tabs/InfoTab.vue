@@ -5,7 +5,7 @@
   .tab--footer
     subscribe-button(v-bind:idea="idea" v-on:subscribed="$emit('show-design')")
 
-  //- #general-discussion
+  #general-discussion
     discussion(v-bind:idea="idea" v-bind:hide-no-comments="true" v-bind:task="{ title: 'discussion', component: 'discussion' }")
 
   //- #design-banner(@click="viewDesign()")
