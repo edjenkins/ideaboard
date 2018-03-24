@@ -21,14 +21,14 @@
           li.comment--action(hidden)
             | like
           li.comment--action(@click="reportOrDestroy('comment', comment._id, comment._user)")
-            | {{ (isModerator || user._id === comment._user) ? 'delete' : 'report' }}
-          li.comment--action(@click="replyTarget = (replyTarget) ? undefined : comment._id" v-bind:class="{ active: (replyTarget === comment._id) }")
+            | {{ (isModerator || user._id === comment._user._id) ? 'delete' : 'report' }}
+          li.comment--action(v-if="comment._replies.length === 0" @click="replyTarget = (replyTarget) ? undefined : comment._id" v-bind:class="{ active: (replyTarget === comment._id) }")
             | {{ (replyTarget && (replyTarget === comment._id)) ? 'cancel' : 'reply' }}
           .clearfix
 
       // Replies
       ul.replies
-        li.comment.reply(v-for="(reply, index) in comment._replies" v-bind:key="index")
+        li.comment.reply(v-for="(reply, replyIndex) in comment._replies" v-bind:key="replyIndex")
           avatar.comment--avatar(v-bind:profile="reply._user.profile")
           .comment--user {{ reply._user.profile.name }} 
             span replied to {{ comment._user.profile.name }}
@@ -39,7 +39,9 @@
             li.comment--action(hidden)
               | like
             li.comment--action(@click="reportOrDestroy('comment', reply._id, reply._user)")
-              | {{ (isModerator || user._id === reply._user) ? 'delete' : 'report' }}
+              | {{ (isModerator || user._id === reply._user._id) ? 'delete' : 'report' }}
+            li.comment--action(v-if="(comment._replies.length - 1) === replyIndex" @click="replyTarget = (replyTarget) ? undefined : comment._id" v-bind:class="{ active: (replyTarget === comment._id) }")
+              | {{ (replyTarget && (replyTarget === comment._id)) ? 'cancel' : 'reply' }}
             .clearfix
 
       // Reply composer

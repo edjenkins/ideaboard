@@ -134,13 +134,11 @@ module.exports = function (app, passport) {
   // Destroy comment
   app.post('/comment/destroy',
     async (req, res) => {
-      // TODO: Check if user can destroy comment
-      const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
-      if (!isModerator) return res.status(401)
-
       let comment = await Comment.findOne({ _id: req.body.id })
-      console.log('comment')
-      console.log(comment)
+
+      const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
+      const canDestroy = (isModerator || comment._user._id === req.user._id)
+      if (!canDestroy) return res.status(401)
       
       Comment.findOneAndUpdate(
         { _id: req.body.id },

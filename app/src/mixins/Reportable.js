@@ -7,21 +7,24 @@ export default {
   },
   methods: {
     reportOrDestroy (type, id, user) {
-      const action = this.isModerator ? 'destroy' : 'report'
-      // const action = this.isModerator || (user._id === this.user._id) ? 'destroy' : 'report'
+      const canDestroy = (this.isModerator || user._id === this.user._id)
+      const action = canDestroy ? 'delete' : 'report'
+
+      const confirmed = confirm(`Are your sure you want to ${action} ${type}?`)
+
+      if (!confirmed) return
 
       switch (action) {
         case 'report':
           this.reportContent(type, id)
           break
 
-        case 'destroy':
+        case 'delete':
           this.destroyContent(type, id)
           break
       }
     },
     destroyContent (type, id) {
-      if (!this.isModerator) return
       API[type].destroy(
         { type: type, id: id },
         (response) => {
