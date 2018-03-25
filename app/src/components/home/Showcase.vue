@@ -21,11 +21,11 @@ export default {
     return {
       showcases: [
         {
-          title: 'WEA',
-          description: 'Ideaboard proved to be a great way to connect with our adult learners.',
-          link: 'https://wea.ideaboard.co.uk',
-          image: 'https://s3.amazonaws.com/xmovement/ideaboard/assets/stock/linkedin-sales-navigator-406827-unsplash.jpg',
-          color: '#006172'
+          title: 'Myto',
+          description: 'A series of workshop events for people with mitochondrial disease.',
+          link: 'https://myto.ideaboard.co.uk',
+          image: 'https://ideaboard.s3.eu-west-2.amazonaws.com/uploads/a68b29a221a668b78754d3819b16df821521974551654.png',
+          color: '#0B9BD0'
         },
         {
           title: 'CityLit',
