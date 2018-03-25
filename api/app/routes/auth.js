@@ -11,6 +11,23 @@ const PROD_API_URL = 'https://api.ideaboard.co.uk'
 
 module.exports = function (app, passport) {
 
+  app.post('/auth/exists', async function (req, res, next) {
+
+    // Get form params
+    const email = req.body.email
+
+    // Check if user exists..
+    let errors = []
+
+    // Find user
+    const user = await User.findOne({ 'local.email': email })
+    if (user) {
+      res.json({ exists: true })
+    } else {
+      res.json({ exists: false })
+    }
+  })
+
   app.post('/login',
     passport.authenticate('local-login'),
     (req, res) => {

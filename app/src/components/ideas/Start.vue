@@ -1,6 +1,6 @@
 <template lang="pug">
   #start-idea
-    page-header(title="Start an Idea" subtitle="This is where it begins, start an Idea, invite some friends and begin designing!")
+    page-header(title="Create an Idea" subtitle="This is where it begins, start an Idea, invite some friends and begin designing!")
     .row
       .content-block.content-block--main.pull-up.pull-left.white-block
         .content-block--body

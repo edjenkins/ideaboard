@@ -7,22 +7,22 @@
         .auth-form(v-if="state === 'join'")
 
           .content-block--body
-            h2 Get Started
+            h2 Get started
             a#facebook-badge(v-bind:href="oAuthLink('facebook')" target="_self")
               i.fab.fa-facebook
 
             form
               splash-messages(v-bind:messages="splashmessages['join']")
               .input-wrapper
-                label Name
-                input(v-model="user.name" v-bind:disabled="isAuthenticating" name="name" placeholder="Your name")
-              .input-wrapper
                 label Email
                 input(v-model="user.email" v-bind:disabled="isAuthenticating" name="email" type="email" placeholder="Your email")
               .input-wrapper
                 label Password
                 input(v-model="user.password" v-bind:disabled="isAuthenticating" name="password" type="password" placeholder="Your password" v-on:keydown.enter="join")
-                p#forgot-link(@click="state = 'forgot'") Forgot your password?
+                p#forgot-link(v-if="userExists" @click="state = 'forgot'") Forgot your password?
+              .input-wrapper(v-if="!userExists")
+                label Name
+                input(v-model="user.name" v-bind:disabled="isAuthenticating" name="name" placeholder="Your name")
 
 
           .content-block--footer
@@ -62,7 +62,6 @@ import SplashMessages from '@/components/shared/SplashMessages'
 
 import * as config from '@/api/config'
 
-console.log(config)
 export default {
   name: 'auth',
   metaInfo: {
@@ -76,9 +75,13 @@ export default {
     SiteFooter,
     SplashMessages
   },
+  mounted () {
+    this.checkEmail()
+  },
   data () {
     return {
       isAuthenticating: false,
+      userExists: false,
       state: 'join',
       user: {
         name: config.ADMIN_NAME,
@@ -102,9 +105,29 @@ export default {
       if (nV) {
         this.$router.push('/profile')
       }
+    },
+    'user.email': {
+      handler: function (nV, oV) {
+        this.checkEmail()
+      },
+      deep: true
     }
   },
   methods: {
+    checkEmail () {
+      if (this.user.email.length < 5) return
+      API.auth.exists(
+        { email: this.user.email },
+        (response) => {
+          // Auth redirect
+          this.$log(response)
+          this.userExists = response.data.exists
+        },
+        (error) => {
+          // Auth fail
+          this.$log(error)
+        })
+    },
     join () {
       if (this.isAuthenticating) return
       this.isAuthenticating = true

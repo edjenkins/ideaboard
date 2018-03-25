@@ -5,9 +5,9 @@
       hamburger(v-bind:active.sync="active")
       #menu-underlay(v-bind:class="{ active: active }" @click="active = false")
       #menu(v-bind:class="{ active: active }" v-bind:style="[instanceBackground]")
-        router-link(to="/start") Start
+        router-link(to="/start") Create
         router-link(to="/explore") Explore
-        router-link(to="/auth" v-if="!isAuthenticated") Login
+        router-link(to="/auth" v-if="!isAuthenticated") Get Started
         router-link(to="/profile" v-if="isAuthenticated" v-bind:class="{ 'has-notifications': hasNotifications }")
           | Profile
           span.notification-bubble(v-if="hasNotifications") {{ notifications.unread.length }}
@@ -143,7 +143,9 @@ export default {
       margin 20px 5px
       padding 0 20px
       position relative
+      overflow hidden
       text-decoration none
+      white-space nowrap
       &.has-notifications
         padding-right 40px
         span.notification-bubble
@@ -166,7 +168,13 @@ export default {
         background-color alpha(black, 0.1)
       @media(max-width: 568px)
         border-box()
-        margin 10px 5px 
+        margin 10px
         text-align center
-        width calc( calc( calc(100% - 20px) / 3) - 10px )
+        margin 10px
+        padding 0 20px
+        width calc(calc(100% - 80px) / 3)
+      @media(max-width: 440px)
+        width calc(50% - 30px)
+        &:nth-child(3)
+          width calc(100% - 40px)
 </style>

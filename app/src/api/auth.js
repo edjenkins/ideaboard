@@ -49,5 +49,13 @@ export default {
       .catch((error) => {
         errorCb(error)
       })
+  },
+  exists (data, cb, errorCb) {
+    axios.post(`${config.API_ADDRESS}/auth/exists`, data, { withCredentials: true }).then((response) => {
+      cb(response)
+    })
+      .catch((error) => {
+        errorCb(error)
+      })
   }
 }
