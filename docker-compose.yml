@@ -18,6 +18,7 @@ services:
 
   api:
     build: ./api
+    restart: always
     volumes:
       - ./api:/app
     ports:
@@ -30,6 +31,7 @@ services:
 
   mongo:
     build: ./docker/mongo
+    restart: always
     environment:
       - MONGODB_ADMIN_USER
       - MONGODB_ADMIN_PASS
@@ -62,6 +64,7 @@ services:
 
   mongobackup:
     build: ./utilities/backup
+    restart: always
     links:
       - mongo
     ports:
@@ -81,6 +84,7 @@ services:
 
   redis:
     image: redis:4.0.5-alpine
+    restart: always
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - redis-data:/data
