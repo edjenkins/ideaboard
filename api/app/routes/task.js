@@ -3,12 +3,11 @@ const _get = require('lodash/get')
 const _find = require('lodash/find')
 
 const mail = require('../../app/services/mail')
+const utilities = require('../../app/utilities')
 
 const User = require('../../app/models/user')
 const Idea = require('../../app/models/idea')
 const Task = require('../../app/models/task')
-
-const utilities = require('../../app/utilities')
 
 module.exports = function (app, passport) {
   // Get tasks
@@ -74,7 +73,9 @@ module.exports = function (app, passport) {
           console.log(idea._subscribers)
           idea._subscribers.forEach(async (subscriber) => {
             const currentSubscriber = await User.findOne({ _id: subscriber._user._id })
-            mail.sendMail(currentSubscriber.local.email, 'Task Created', 'task-created', { user: currentSubscriber, task: task, url: utilities.redirectUri(req.instance) })
+            if (currentSubscriber._id !== req.user._id) {
+              mail.sendMail(currentSubscriber.local.email, 'Task Created', 'task-created', { user: currentSubscriber, task: task, url: utilities.redirectUri(req.instance) })
+            }
           })
         } catch (error) {
           console.error('Failed mail out')

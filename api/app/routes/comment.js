@@ -3,7 +3,11 @@ const async = require('async')
 const _get = require('lodash/get')
 const _find = require('lodash/find')
 
+const mail = require('../../app/services/mail')
+const utilities = require('../../app/utilities')
+
 const Comment = require('../../app/models/comment')
+const User = require('../../app/models/user')
 const Task = require('../../app/models/task')
 const TaskResponse = require('../../app/models/task-response')
 
@@ -30,7 +34,7 @@ module.exports = function (app, passport) {
     })
   // Post comment
   app.post('/comment',
-    async (req, res) => {
+    (req, res) => {
       if (req.isAuthenticated()) {
         var data = req.body
         data._user = req.user._id
@@ -39,7 +43,7 @@ module.exports = function (app, passport) {
 
         // If target is 'comment' then it is a reply so push to existing comment rather than saving it
         if (data.type === 'comment') {
-          comment.save((err, comment) => {
+          comment.save((err, reply) => {
             if (err) console.error(err)
             Comment.findOneAndUpdate(
               { _id: data._target },
@@ -65,13 +69,24 @@ module.exports = function (app, passport) {
                       { $push: { _responses: response } },
                       (err, task) => {
                         if (err) console.error(err)
-                        
-                        // Notify users of replies
                         Comment.findOne(
-                          { _id: comment._id },
-                          (err, comment) => {
+                          { _id: reply._id },
+                          (err, reply) => {
                             if (err) console.error(err)
-                            res.json({ comment })
+                            Comment.findOne(
+                              { _id: comment._id },
+                              (err, comment) => {
+                                if (err) console.error(err)
+                                // Notify users of replies
+                                User.findOne({ _id: comment._user }, (err, user) => {
+                                  if (err) console.error(err)
+                                  if (comment._user._id !== reply._user) {
+                                    console.log(`Sending mail to - ${user.local.email}`)
+                                    mail.sendMail(user.local.email, 'Comment Reply', 'comment-reply', { user: user, task: task, reply: reply, comment: comment, url: utilities.redirectUri(req.instance) })
+                                  }
+                                  res.json({ comment })
+                                })
+                              })
                           })
                       })
                   })

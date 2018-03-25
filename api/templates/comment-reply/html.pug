@@ -1,0 +1,25 @@
+extends ../main
+
+block content
+
+  h1(style="margin-bottom: 30px") Comment Reply!
+
+  p Hey #{ user.profile.name },
+
+  p Big news! #{ reply._user.profile.name } has just replied to your comment on Ideaboard.
+
+  p
+    strong Original comment:
+  
+  p #{ comment.text }
+  
+  p
+    strong Their reply:
+  
+  p #{ reply.text }
+
+  h3 <a style="color: #0B9BD0" href="#{ url }/idea/#{ task._idea }/#{ task.type }/#{ task._id }">Read the discussion</a>
+
+  p Don't miss out on the live conversation, head over to Ideaboard now to get involved.
+
+  p Got questions? Reply to this email and we will be happy to help out.
