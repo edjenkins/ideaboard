@@ -32,6 +32,19 @@ app.use(cors({
 
 // Instance middleware
 app.use(function (req, res, next) {
+  if (req.method != "OPTIONS") {
+    app.use(session({
+      store: new RedisStore({
+        // client: ,
+        // socket: ,
+        // url: ,
+        host: 'redis',
+        port: 6379
+      }),
+      secret: process.env.PASSPORT_SESSION_SECRET || 'not_very_secret',
+      resave: false
+    }))
+  }
   const url = req.get('Referrer')
   let instance = 'ideaboard'
   if (url) {
@@ -57,18 +70,6 @@ app.use(bodyParser.urlencoded({
   limit: '200mb'
 }))
 app.use(bodyParser.json())
-
-app.use(session({
-  store: new RedisStore({
-    // client: ,
-    // socket: ,
-    // url: ,
-    host: 'redis',
-    port: 6379
-  }),
-  secret: process.env.PASSPORT_SESSION_SECRET || 'not_very_secret',
-  resave: false
-}))
 
 // required for passport
 app.use(passport.initialize())
