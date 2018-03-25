@@ -215,7 +215,8 @@ export default {
       margin 20px 10px
       max-width 100%
   .response-preview
-    background-color $color-lightest-grey
+    height 160px
+    overflow hidden
     padding-left 210px
     position relative
     video
@@ -229,9 +230,10 @@ export default {
       background-color transparent
       border none
       font-size 1em
-      min-height 160px
+      height 160px
       outline 0
       padding 10px
+      resize none
       width 100%
   .response-controls
     .btn
@@ -246,8 +248,12 @@ export default {
       padding-top 20px
       .response-preview
         background-color $color-lighter-grey
+        height 160px
+        overflow hidden
         padding-left 210px
         position relative
+        textarea
+          resize none
         .response-meta
           border-box()
           background-color transparent
