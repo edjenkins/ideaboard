@@ -1,13 +1,13 @@
 <template lang="pug">
 .dicussion-container(v-bind:class="{ 'no-padding': notPadded }")
 
-  p.design-task--description(v-if="task && task.description") {{ task.description }}
+  p.design-task--description(v-if="task && task.description && task.type !== 'media'") {{ task.description }}
 
   //- splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 
   .dicussion-wrapper
     // No comments
-    .no-comments(v-if="comments.length === 0 && !hideNoComments") No comments posted
+    .no-comments(v-if="comments.length === 0 && !hideNoComments") Be the first to comment
 
     // Comments
     ul.comment-thread(v-for="(comment, index) in comments" v-bind:key="index" v-bind:class="{ 'has-replies': ((comment._replies.length > 0) || (replyTarget === comment._id)), 'is-replying': (replyTarget === comment._id) }")
@@ -139,6 +139,7 @@ export default {
       position absolute
       right 0
       bottom 0
+      top 0
       line-height 40px
       opacity 0
       padding 0

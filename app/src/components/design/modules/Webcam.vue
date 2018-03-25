@@ -6,7 +6,7 @@
 
   .response-composer
     .webcam-wrapper(v-if="isAuthenticated && !newResponse.location")
-      video#video(ref="video" showcontrols="false" autoplay="true")
+      video#video(ref="video" showcontrols="false" autoplay="true" muted="muted")
     
     .webcam-controls(v-if="isAuthenticated && !newResponse.location")
       //- p {{ recorder ? recorder.state : 'unknown' }}

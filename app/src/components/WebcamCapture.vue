@@ -4,7 +4,7 @@
     img(ref="photo")
   .webcam-wrapper(v-if="isActive && !localCapturedFile")
     canvas(ref="canvas")
-    video#video(ref="video" showcontrols="false" autoplay="true")  
+    video#video(ref="video" showcontrols="false" autoplay="true" muted="muted")  
   .clearfix
 
   .btn.btn-warning(v-if="localCapturedFile" @click="reset") Clear
@@ -132,7 +132,7 @@ export default {
 @import '~stylus/shared'
 
 .webcam-capture
-  margin 40px auto
+  margin 20px auto 30px auto
   .btn
     display block
     margin 20px 0
@@ -160,13 +160,13 @@ export default {
     background-color white
     box-sizing border-box
     color $color-text-grey
-    padding 10px 10px
+    padding 20px 10px
     position relative
     cursor pointer
     p
+      reset()
       font-size 1.2em
       text-align center
-      padding 30px 0
     &:hover
       background-color $color-lightest-grey
 </style>

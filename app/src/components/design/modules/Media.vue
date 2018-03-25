@@ -6,7 +6,7 @@
 
   .media-wrapper
     // No media
-    .no-media(v-if="responses.length === 0" @click="fetchResponses") No media posted
+    //- .no-media(v-if="responses.length === 0" @click="fetchResponses") Be the first to share
 
     // Media
     ul.media-items(v-if="responses.length !== 0")
@@ -16,9 +16,8 @@
   // Submit a response
   .media-submission(v-if="isAuthenticated")
     
-    file-upload(v-show="!webcamActive" v-bind:uploaded-file.sync="newResponse")
-
     webcam-capture(v-bind:captured-file.sync="newResponse" v-bind:is-active.sync="webcamActive")
+    file-upload(v-show="!webcamActive" v-bind:uploaded-file.sync="newResponse")
 
     .submit(v-if="newResponse")
       .response-composer
@@ -110,7 +109,7 @@ export default {
     .no-media
       color $color-text-grey
       margin 0 0 20px 0
-      padding 28px 20px
+      padding 60px 20px
       text-align center
     ul.media-items
       cleanlist()

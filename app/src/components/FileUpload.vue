@@ -4,7 +4,7 @@
     .dropbox
       input(type="file" multiple v-bind:name="uploadFieldName" v-bind:disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".rtf,.doc,.docx,.pdf,image/*,video/*" class="input-file")
       p(v-if="isInitial")
-        | Drop files here or click to browse
+        | Click to upload a file
       p(v-if="isSaving")
         | Uploading files...
 
@@ -126,13 +126,13 @@ export default {
     background-color white
     box-sizing border-box
     color $color-text-grey
-    padding 10px 10px
+    padding 0 10px
     position relative
     cursor pointer
     p
       font-size 1.2em
       text-align center
-      padding 30px 0
+      padding 0
     &:hover
       background-color $color-lightest-grey
 
@@ -151,6 +151,7 @@ export default {
   
   ul#upload-list
     cleanlist()
+    margin-bottom 10px
     li
       cleanlist()
       position relative

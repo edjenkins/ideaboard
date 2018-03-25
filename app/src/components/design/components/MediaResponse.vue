@@ -12,7 +12,7 @@ li.media-item(v-bind:class="{ 'comments-visible': commentsVisible }")
       li.action
         a(v-bind:href="response.response" target="_blank")
           i.fas.fa-external-link-alt
-      li.action(@click="toggleComments")
+      //- li.action(@click="toggleComments")
         .icon
           i.fas.fa-comments
       .clearfix

@@ -1,6 +1,7 @@
 <template lang="pug">
 
-.video-thumbnail(v-bind:style="{ 'background-image': `url('${file.location}')` }")
+.video-thumbnail
+  video(v-bind:src="file.location" controls)
 
 </template>
 
@@ -16,7 +17,10 @@ export default {
 @import '~stylus/shared'
 
 .video-thumbnail
-  background-image($color-lightest-grey)
-  height 120px
+  reset()
   width 100%
+  video
+    reset()
+    background-color $color-lightest-grey
+    width 100%
 </style>
