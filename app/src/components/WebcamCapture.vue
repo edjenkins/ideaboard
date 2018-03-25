@@ -8,7 +8,7 @@
   .clearfix
 
   .btn.btn-warning(v-if="localCapturedFile" @click="reset") Clear
-  .btn.btn-success(v-if="isActive && !localCapturedFile" @click="capture") Capture
+  .btn.btn-success(v-if="isActive && !localCapturedFile" @click="capturing = true; capture()") {{ capturing ? 'Capturing...' : 'Capture' }} 
   div(v-if="!localCapturedFile" @click="toggleCapture")
     .btn.btn-danger(v-if="isActive") Cancel
     .activate-btn(v-if="!isActive")
@@ -17,6 +17,7 @@
 
 <script>
 /* eslint-disable */
+import Vue from 'vuex'
 import API from '@/api'
 import { mapGetters } from 'vuex'
 
@@ -27,6 +28,7 @@ export default {
   props: ['capturedFile', 'isActive'],
   data () {
     return {
+      capturing: false,
       localCapturedFile: false,
       bitrate: 200000,
       recorder: undefined,
@@ -83,20 +85,22 @@ export default {
       this.loadCameraStream()
     },
     capture () {
-      var canvas = this.$refs.canvas
-      var context = canvas.getContext('2d')
-      const height = this.$refs.video.clientHeight * 4
-      const width = this.$refs.video.clientWidth * 4
-      this.$refs.canvas.width = width
-      this.$refs.canvas.height = height
-      context.drawImage(video, 0, 0, width, height)
-    
-      var data = this.$refs.canvas.toDataURL('image/png')
-      this.$refs.canvas.toBlob((blob) => {
-        this.uploadCapture(blob)
-      }, 'image/jpeg', 0.95)
-      this.$refs.photo.setAttribute('src', data)
-
+      setTimeout(() => {        
+        const canvas = this.$refs.canvas
+        const context = canvas.getContext('2d')
+        const height = this.$refs.video.clientHeight * 5
+        const width = this.$refs.video.clientWidth * 5
+        this.$refs.canvas.width = width
+        this.$refs.canvas.height = height
+        context.drawImage(video, 0, 0, width, height)
+      
+        const data = this.$refs.canvas.toDataURL('image/png')
+        this.$refs.photo.setAttribute('src', data)
+        this.$refs.canvas.toBlob((blob) => {
+          this.uploadCapture(blob)
+        }, 'image/jpeg', 0.95)
+        this.capturing = false
+      }, 50)
     },
     captureCamera (callback) {
       if (this.camera) callback(this.camera)
@@ -110,7 +114,7 @@ export default {
     loadCameraStream () {
       navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((camera) => {
         this.camera = camera
-        setSrcObject(camera, this.$refs.video)
+        this.$refs.video.srcObject = this.camera
         this.$refs.video.play()
         this.recorder = RecordRTC(camera, {
           type: 'video',
@@ -146,6 +150,10 @@ export default {
     width 100%
     height 0
     padding-bottom 75%
+    canvas
+      position absolute
+      left -9999px
+      z-index -9999
     video
       border none
       position absolute

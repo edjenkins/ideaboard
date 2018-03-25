@@ -170,7 +170,7 @@ export default {
     loadCameraStream () {
       navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((camera) => {
         this.camera = camera
-        setSrcObject(camera, this.$refs.video)
+        this.$refs.video.srcObject = this.camera
         this.$refs.video.play()
         this.recorder = RecordRTC(camera, {
           type: 'video',
