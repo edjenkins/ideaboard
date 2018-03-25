@@ -22,6 +22,7 @@
     "pug": "^2.0.0-rc.3",
     "recordrtc": "^5.4.6",
     "unsplash-api": "^1.2.0",
+    "video.js": "^6.7.3",
     "vue": "^2.3.3",
     "vue-analytics": "^5.8.0",
     "vue-awesome": "^2.3.1",
