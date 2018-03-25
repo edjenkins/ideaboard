@@ -12,7 +12,8 @@
     // Comments
     ul.comment-thread(v-for="(comment, index) in comments" v-bind:key="index" v-bind:class="{ 'has-replies': ((comment._replies.length > 0) || (replyTarget === comment._id)), 'is-replying': (replyTarget === comment._id) }")
       li.comment
-        avatar.comment--avatar(v-bind:profile="comment._user.profile")
+        router-link.avatar-wrapper(tag="div" v-bind:to="{ name: 'profile', params: { id: comment._user._id }}" v-bind:title="comment._user.profile.name")
+          avatar.comment--avatar(v-bind:profile="comment._user.profile")
         .comment--user {{ comment._user.profile.name }}
         .comment--text {{ comment.text }}
 
@@ -29,7 +30,8 @@
       // Replies
       ul.replies
         li.comment.reply(v-for="(reply, replyIndex) in comment._replies" v-bind:key="replyIndex")
-          avatar.comment--avatar(v-bind:profile="reply._user.profile")
+          router-link.avatar-wrapper(tag="div" v-bind:to="{ name: 'profile', params: { id: reply._user._id }}" v-bind:title="reply._user.profile.name")
+            avatar.comment--avatar(v-bind:profile="reply._user.profile")
           .comment--user {{ reply._user.profile.name }} 
             span replied to {{ comment._user.profile.name }}
           .comment--text {{ reply.text }}
@@ -179,6 +181,8 @@ export default {
       padding-left 50px
       position relative
 
+      .avatar-wrapper:hover
+        cursor pointer
       .comment--avatar
         radius(50%)
         background-image($color-lighter-grey)

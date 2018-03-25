@@ -12,7 +12,7 @@
     .design-dashboard--task--meta.design-dashboard--task--type(v-bind:title="`${task.type} task`")
       i.fas(v-bind:class="[getTaskIcon(task.type)]")
     .design-dashboard--task--meta.design-dashboard--task--contributors
-      avatar(v-for="(contributor, index) in contributors" v-bind:key="index" v-bind:profile="contributor._user.profile" v-if="index < 4")
+      avatar(v-for="(contributor, index) in contributors" v-bind:key="index" v-bind:profile="contributor._user.profile" v-if="index < 4" v-bind:title="contributor._user.profile.name")
       span(v-if="contributors.length > 1") {{ `+${(contributors.length - 1)} ${(contributors.length === 2) ? 'other' : 'others'}` }}
   
 </template>

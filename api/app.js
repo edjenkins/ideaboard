@@ -12,6 +12,7 @@ const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const RedisStore = require('connect-redis')(session)
 
 const config = require('./config.js')
 const configDB = require('./config/database.js')
@@ -56,8 +57,19 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
+app.use(session({
+  store: new RedisStore({
+    // client: ,
+    // socket: ,
+    // url: ,
+    host: 'redis',
+    port: 6379
+  }),
+  secret: process.env.PASSPORT_SESSION_SECRET || 'not_very_secret',
+  resave: false
+}))
+
 // required for passport
-app.use(session({ secret: process.env.PASSPORT_SESSION_SECRET })) // session secret
 app.use(passport.initialize())
 app.use(passport.session()) // persistent login sessions
 app.use(flash()) // use connect-flash for flash messages stored in session
