@@ -45,6 +45,12 @@ export default {
       margin-left 50%
     .splash-image--image
       margin-right 50%
+  &.center
+    .splash-image--content
+      margin 0 auto
+      max-width 480px
+    .splash-image--image
+      margin-right 0%
   .splash-image--image
     position absolute
     text-align center

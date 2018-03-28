@@ -43,6 +43,15 @@ openlab.ideaboard.co.uk {
   }
 }
 
+sensemystreet.ideaboard.co.uk {
+  root /var/www/html
+  tls sensemystreet@ideaboard.co.uk
+
+  rewrite {
+    to {path} {path}/ /index.html
+  }
+}
+
 myto.ideaboard.co.uk {
   root /var/www/html
   tls myto@ideaboard.co.uk

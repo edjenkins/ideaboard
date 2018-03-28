@@ -1,7 +1,7 @@
 module.exports = {
   domain: 'ideaboard.co.uk',
   instances: {
-    default: 'myto',
+    default: 'sensemystreet',
     master: {
       color: '#0099D0'
     },
@@ -20,6 +20,10 @@ module.exports = {
     openlab: {
       color: '#0099D0',
       subdomain: 'openlab'
+    },
+    sensemystreet: {
+      color: '#00AAB2',
+      subdomain: 'sensemystreet'
     },
     myto: {
       color: '#7DCE82',

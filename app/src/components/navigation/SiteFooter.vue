@@ -20,7 +20,7 @@ export default {
 
 #site-footer
   height $footer-height
-  margin 20px 0
+  padding 20px 0
   ul
     cleanlist()
     line-height $footer-height
