@@ -106,7 +106,7 @@ export default {
       animate()
       border-box()
       radius(30px)
-      background-color $color-primary
+      background-color $color-success
       color white
       display block
       height 60px
