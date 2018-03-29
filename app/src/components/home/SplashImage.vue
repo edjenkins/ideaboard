@@ -30,7 +30,6 @@ export default {
 
 .row-wrapper
   background-image(white)
-  border-bottom $color-border 1px solid
   position relative
 .splash-image
   padding 80px 0px !important
