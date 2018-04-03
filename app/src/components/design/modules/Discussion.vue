@@ -49,25 +49,32 @@
       // Reply composer
       .comment-composer.reply-composer(v-if="replyTarget === comment._id")
         .input-wrapper(@click="checkAuth")
-          input(v-bind:disabled="!isAuthenticated" type="text" v-model="newReply.text" placeholder="Write a reply.." v-on:keyup.enter="postComment")
-          .btn.btn-primary(v-bind:class="{ active: (newReply.text && newReply.text.length > 1) }" @click="postComment") Reply
+          textarea-autosize(v-bind:disabled="!isAuthenticated" name="composer-textarea" ref="textarea" rows="1" @keydown.native.enter.prevent.stop="postComment" placeholder="Write your reply..." v-model="newReply.text" v-bind:min-height="10" v-bind:max-height="200")
+          .btn.btn-primary(v-bind:class="{ active: (newReply.text && newReply.text.length > 1) }" @click="postComment")
+            i.fas.fa-arrow-right
 
     // Compose comment
     .comment-composer(v-bind:class="{ subtle: replyTarget }")
       .input-wrapper(@click="checkAuth")
-        input(v-bind:disabled="!isAuthenticated" type="text" v-model="newComment.text" placeholder="Write a comment.." @focus="replyTarget = undefined" v-on:keyup.enter="postComment")
-        .btn(v-bind:class="{ active: (newComment.text && newComment.text.length > 1), 'btn-primary': !replyTarget }" @click="postComment") Post
+        textarea-autosize(v-bind:disabled="!isAuthenticated" name="composer-textarea" ref="textarea" rows="1" @keydown.native.enter.prevent.stop="postComment" placeholder="Write a comment..." v-model="newComment.text" v-bind:min-height="10" v-bind:max-height="200" @focus.native="replyTarget = undefined")
+        .btn(v-bind:class="{ active: (newComment.text && newComment.text.length > 1), 'btn-primary': !replyTarget }" @click="postComment")
+          i.fas.fa-arrow-right
 </template>
 
 <script>
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import _replace from 'lodash/replace'
+
+import VueTextareaAutosize from 'vue-textarea-autosize'
 
 import DesignTask from '@/mixins/DesignTask'
 import Commentable from '@/mixins/Commentable'
 import Reportable from '@/mixins/Reportable'
 import Avatar from '@/components/user/Avatar'
+
+Vue.use(VueTextareaAutosize)
 
 export default {
   name: 'dicussion',
@@ -78,6 +85,7 @@ export default {
     Reportable
   ],
   components: {
+    VueTextareaAutosize,
     Avatar
   },
   computed: {
@@ -136,28 +144,31 @@ export default {
     &.reply-composer
       margin-top 10px
     .btn
+      radius(50%)
+      pinned()
       position absolute
-      right 0
-      bottom 0
-      top 0
+      left auto
+      top auto
       line-height 40px
       opacity 0
       padding 0
       pointer-events none
-      width 80px
+      width 40px
       &.active
         opacity 1
         pointer-events all
     .input-wrapper
       border $color-border 1px solid
-      input
+      margin-right 50px
+      input, textarea
+        border-box()
         border none
-        box-sizing border-box
-        line-height 30px
+        display block
+        line-height 20px
         outline 0
-        padding 5px 10px
-        padding-right 80px
-        width calc(100% - 80px)
+        margin 0
+        padding 10px
+        width 100%
 
   ul.comment-thread
     cleanlist()

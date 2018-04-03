@@ -6,6 +6,7 @@
         router-link.is-link(tag="li" to="/learn") About
         router-link.is-link(tag="li" to="/terms") Terms
         router-link.is-link(tag="li" to="/privacy") Privacy
+        li#google_translate_element
       .clearfix
 </template>
 
@@ -38,4 +39,13 @@ export default {
         cursor pointer
         color alpha(black, 0.4)
         text-decoration underline
+
+      &#google_translate_element
+        line-height 20px !important
+        padding 0 10px 10px 10px
+        text-align center
+        .skiptranslate.goog-te-gadget
+          display inline-block !important
+          white-space normal !important
+
 </style>

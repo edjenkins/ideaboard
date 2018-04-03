@@ -34,6 +34,7 @@
     "vue-router": "^2.6.0",
     "vue-session": "^0.9.5",
     "vue-social-sharing": "^2.2.3",
+    "vue-textarea-autosize": "^1.0.4",
     "vuex": "^2.3.1",
     "vuex-router-sync": "^4.2.0"
   },
