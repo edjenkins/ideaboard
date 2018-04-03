@@ -30,7 +30,7 @@ export default {
   background-image()
   background-color $color-primary
   box-sizing border-box
-  padding 160px 20px 60px 20px
+  padding 140px 20px 60px 20px
   position relative
   text-align left
   @media(max-width: 680px)

@@ -56,13 +56,13 @@ export default {
     color $color-text-light-grey
     position absolute
     height 30px
-    line-height 40px
+    line-height 30px
     text-align center
     &:hover
       cursor pointer
       color darken($color-text-light-grey, 20%)
     svg
-      height 40px
+      height 30px
       width 20px
     &.like
       bottom auto

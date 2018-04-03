@@ -70,8 +70,8 @@ export default {
         bottom 16px
         top auto
       &.middle-bar
-        left 16px 
-        right 16px
+        left 14px 
+        right 14px
         bottom 24px
         top auto
 
@@ -99,5 +99,7 @@ export default {
         transform rotate(45deg)
       .middle-bar
         opacity 0
+        left 24px !important
+        right 24px !important
 
 </style>

@@ -17,13 +17,14 @@
       .input-wrapper
         label(title="Give your task a snappy title") Title
         input(type="text" v-model="task.title" name="title")
-      .input-wrapper
+      .input-wrapper(v-show="task.title.length > 3")
         label(title="Futher details that will help people particpate") Description 
         input(v-model="task.description" name="description" v-on:keyup.enter="addTask")
-      .input-wrapper
+      .input-wrapper(v-show="task.title.length > 3")
         label.clickable(@click="showAdvancedOptions = !showAdvancedOptions")
           | Advanced options
-          i.fas(v-bind:class="[showAdvancedOptions ? 'fa-chevron-up' : 'fa-chevron-down']")
+          i.fas.fa-chevron-up(v-show="showAdvancedOptions")
+          i.fas.fa-chevron-down(v-show="!showAdvancedOptions")
         #advanced-options(v-if="showAdvancedOptions")
           label Pin this task
             input(type="checkbox" v-model="task.pinned")
@@ -34,7 +35,8 @@
             span This means only you will be able to add responses to it
 
       .input-wrapper
-        .btn.btn-success.pull-left#add-task-btn(@click="addTask") {{ (addingTask) ? 'Please wait...' : 'Add Task' }}
+        .btn.btn-warning.pull-left Cancel
+        .btn.btn-success.pull-right#add-task-btn(@click="addTask") {{ (addingTask) ? 'Please wait...' : 'Add Task' }}
         .clearfix
 </template>
 

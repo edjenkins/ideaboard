@@ -1,5 +1,5 @@
 <template lang="pug">
-  #navbar(v-bind:class="authState" v-bind:style="[instanceBackground]")
+  #navbar(v-bind:class="[{ scrolled: hasScrolled }, authState]" v-bind:style="[instanceBackground]")
     .row
       router-link#logo(to="/") Ideaboard
       hamburger(v-bind:active.sync="active")
@@ -25,8 +25,12 @@ export default {
   components: {
     Hamburger
   },
+  mounted () {
+    window.addEventListener('scroll', this.updateScroll)
+  },
   data () {
     return {
+      hasScrolled: false,
       active: false,
       authState: undefined
     }
@@ -47,6 +51,11 @@ export default {
         this.authState = nV ? 'authenticated' : 'unauthenticated'
       }, 1000)
     }
+  },
+  methods: {
+    updateScroll () {
+      this.hasScrolled = (window.scrollY > 10)
+    }
   }
 }
 </script>
@@ -59,11 +68,12 @@ export default {
   gradient()
   pinned()
   background-color $color-primary
-  border-bottom alpha(black, 0.1) 1px solid
   bottom auto
   min-height $navigation-height
   position fixed
   z-index 2
+  &.scrolled
+    nav-shadow()
   @media(max-width: 568px)
     min-height $mobile-navigation-height
   &.authenticating

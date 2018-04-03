@@ -16,7 +16,7 @@
     // Submit a response
     .response-composer
       .input-wrapper(@click="checkAuth")
-        input(v-bind:disabled="!isAuthenticated" type="text" v-model="newResponse.text" placeholder="Write your response here.." v-on:keyup.enter="submitResponse")
+        input(v-bind:disabled="!isAuthenticated" type="text" v-model="newResponse.text" placeholder="Add a poll option..." v-on:keyup.enter="submitResponse")
         .btn.btn-primary(@click="submitResponse") Post
 </template>
 
@@ -155,12 +155,12 @@ export default {
       cleanlist()
       li.poll-response
         cleanlist()
-        border-bottom $color-border 1px solid
+        border-bottom $color-border 1px dashed
         line-height 24px
         min-height 24px
-        padding 28px 10px
-        margin-left 30px
-        padding-left 20px
+        padding 23px 10px
+        margin-left 50px
+        padding-left 0px
         padding-right 60px
         position relative
         &:last-child
@@ -173,14 +173,14 @@ export default {
           height 40px
           width 40px
           position absolute
-          top 20px
-          left -30px
+          top 15px
+          left -50px
         .poll-response--votes
           color $color-text-dark-grey
           font-weight bold
-          height 80px
+          height 70px
           width 60px
-          line-height 80px
+          line-height 70px
           position absolute
           top 0
           right 0

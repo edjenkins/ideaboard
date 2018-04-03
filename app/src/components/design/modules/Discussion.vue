@@ -56,7 +56,7 @@
     // Compose comment
     .comment-composer(v-bind:class="{ subtle: replyTarget }")
       .input-wrapper(@click="checkAuth")
-        textarea-autosize(v-bind:disabled="!isAuthenticated" name="composer-textarea" ref="textarea" rows="1" @keydown.native.enter.prevent.stop="postComment" placeholder="Comment here..." v-model="newComment.text" v-bind:min-height="10" v-bind:max-height="200" @focus.native="replyTarget = undefined")
+        textarea-autosize(v-bind:disabled="!isAuthenticated" name="composer-textarea" ref="textarea" rows="1" @keydown.native.enter.prevent.stop="postComment" placeholder="Join the discussion..." v-model="newComment.text" v-bind:min-height="10" v-bind:max-height="200" @focus.native="replyTarget = undefined")
         .btn(v-bind:class="{ active: (newComment.text && newComment.text.length > 1), 'btn-primary': !replyTarget }" @click="postComment")
           i.fas.fa-arrow-right
 </template>
@@ -162,6 +162,7 @@ export default {
       margin-right 50px
       input, textarea
         border-box()
+        background-color transparent
         border none
         display block
         line-height 20px

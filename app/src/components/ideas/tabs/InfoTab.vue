@@ -2,6 +2,8 @@
 .tab-content--info
   .tab--content
     rendered-content(v-bind:content="idea.description")
+    .btn-edit-fab
+      i.fas.fa-pencil-alt
   .tab--footer
     subscribe-button(v-bind:idea="idea" v-on:subscribed="$emit('show-design')")
 
@@ -54,19 +56,37 @@ export default {
   background-color white
   text-align left
   .tab--content
-    min-height 240px
     padding 25px
+    position relative
     p
       reset()
+    .btn-edit-fab
+      radius(50%)
+      background-color $color-grey
+      height 50px
+      position absolute
+      bottom 15px
+      right 15px
+      width 50px
+      text-align center
+      &:hover
+        background-color darken($color-grey, 10%)
+        cursor pointer
+      svg
+        color white
+        height 50px
+        width 20px
+
   .tab--footer
       display none
       padding 20px
   @media(max-width: 680px)
     .tab--footer
+      padding-top 0
       display block
 
   #general-discussion
-    border-top $color-border 1px solid
+    border-top $color-border 1px dashed
 
   #design-banner
     animate()

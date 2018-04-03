@@ -178,6 +178,9 @@ export default {
         (response) => {
           console.log(response)
           this.document = response.data
+          if (this.document.text.length === 0) {
+            this.editing = true
+          }
         },
         (response) => {
           console.log(response)
