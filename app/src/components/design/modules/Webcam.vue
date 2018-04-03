@@ -15,7 +15,8 @@
   
   splash-messages(v-bind:messages="splashmessages")
   
-  .btn.btn-primary.full-width(v-if="!camera" @click="loadCameraStream") Record from webcam
+  .btn.btn-primary.full-width(v-if="!camera && (splashmessages.length === 0)" @click="loadCameraStream") Record from webcam
+
   .response-composer(v-show="camera && splashmessages.length === 0")
     .webcam-wrapper(v-if="isAuthenticated && !newResponse.location")
       video#video(ref="video" showcontrols="false" autoplay="true" muted="muted")

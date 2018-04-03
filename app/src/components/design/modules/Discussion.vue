@@ -49,14 +49,14 @@
       // Reply composer
       .comment-composer.reply-composer(v-if="replyTarget === comment._id")
         .input-wrapper(@click="checkAuth")
-          textarea-autosize(v-bind:disabled="!isAuthenticated" name="composer-textarea" ref="textarea" rows="1" @keydown.native.enter.prevent.stop="postComment" placeholder="Write your reply..." v-model="newReply.text" v-bind:min-height="10" v-bind:max-height="200")
+          textarea-autosize(v-bind:disabled="!isAuthenticated" name="composer-textarea" ref="textarea" rows="1" @keydown.native.enter.prevent.stop="postComment" placeholder="Reply here..." v-model="newReply.text" v-bind:min-height="10" v-bind:max-height="200")
           .btn.btn-primary(v-bind:class="{ active: (newReply.text && newReply.text.length > 1) }" @click="postComment")
             i.fas.fa-arrow-right
 
     // Compose comment
     .comment-composer(v-bind:class="{ subtle: replyTarget }")
       .input-wrapper(@click="checkAuth")
-        textarea-autosize(v-bind:disabled="!isAuthenticated" name="composer-textarea" ref="textarea" rows="1" @keydown.native.enter.prevent.stop="postComment" placeholder="Write a comment..." v-model="newComment.text" v-bind:min-height="10" v-bind:max-height="200" @focus.native="replyTarget = undefined")
+        textarea-autosize(v-bind:disabled="!isAuthenticated" name="composer-textarea" ref="textarea" rows="1" @keydown.native.enter.prevent.stop="postComment" placeholder="Comment here..." v-model="newComment.text" v-bind:min-height="10" v-bind:max-height="200" @focus.native="replyTarget = undefined")
         .btn(v-bind:class="{ active: (newComment.text && newComment.text.length > 1), 'btn-primary': !replyTarget }" @click="postComment")
           i.fas.fa-arrow-right
 </template>

@@ -18,6 +18,7 @@
           li.response--action(@click="reportOrDestroy('taskresponse', response._id, response._user._id)")
             | {{ (isModerator || user._id === response._user._id) ? 'delete' : 'report' }}
         .clearfix
+
   .richtext-wrapper(v-if="isAuthenticated")
     quill-editor(v-if="editing" v-model="newResponse" ref="myQuillEditor" v-bind:options="editorOption")
     br
@@ -140,7 +141,7 @@ export default {
       &:first-child
         margin-top 20px
       .response-footer
-        padding 10px
+        padding 10px 0
         
         ul.response--actions
           cleanlist()
@@ -162,11 +163,11 @@ export default {
           width 40px
         p
           reset()
-          color $color-text-grey
+          color $color-text-light-grey
           font-size 0.9em
-          font-weight bold
+          font-weight normal
           a
-            color $color-text-grey
+            color $color-text-light-grey
             text-decoration none
 
       .response-body
