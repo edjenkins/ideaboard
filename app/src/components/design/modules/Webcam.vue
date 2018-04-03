@@ -3,8 +3,20 @@
   p.design-task--description(v-if="task.description") {{ task.description }}
 
   splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
-
-  .response-composer
+  
+  .responses
+    ul
+      li(v-for="(response, index) in responses" v-bind:key="index")
+        .response-preview
+          video(controls="true" v-bind:src="response.response.location")
+          .response-meta
+            h5 {{ response.response.text || 'No caption' }}
+            p Uploaded by {{ response._user.profile.name }}
+  
+  splash-messages(v-bind:messages="splashmessages")
+  
+  .btn.btn-primary.full-width(v-if="!camera" @click="loadCameraStream") Record from webcam
+  .response-composer(v-show="camera && splashmessages.length === 0")
     .webcam-wrapper(v-if="isAuthenticated && !newResponse.location")
       video#video(ref="video" showcontrols="false" autoplay="true" muted="muted")
     
@@ -15,8 +27,9 @@
     
     div(v-show="isAuthenticated && newResponse.location")
       .response-preview
-        video#video-preview(ref="videopreview" controls="true" autoplay="true" loop="true" v-bind:src="newResponse.location")
-        textarea(v-model="newResponseText" placeholder="Add a quote..")
+        .webcam-wrapper
+          video#video-preview(ref="videopreview" controls="true" autoplay="true" loop="true" v-bind:src="newResponse.location")
+        textarea-autosize(name="composer-textarea" ref="textarea" rows="1" @keydown.native.enter.prevent.stop="submitResponse" placeholder="Caption video..." v-model="newResponseText" v-bind:min-height="10" v-bind:max-height="200")
         .clearfix
 
       .response-controls
@@ -24,15 +37,6 @@
         //- .btn.btn-primary(@click="saveToDisk") Download
         .btn.btn-success.pull-right(@click="submitResponse") Submit video
         .clearfix
-  
-  .responses
-    ul
-      li(v-for="(response, index) in responses" v-bind:key="index")
-        .response-preview
-          video(controls="true" v-bind:src="response.response.location")
-          .response-meta
-            h5 Caption: {{ response.response.text }}
-            p Uploaded by {{ response._user.profile.name }}
 
 </template>
 
@@ -41,18 +45,25 @@
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import API from '@/api'
-
 import _get from 'lodash/get'
 
 import DesignTask from '@/mixins/DesignTask'
+
+import VueTextareaAutosize from 'vue-textarea-autosize'
 
 const RecordRTC = require('recordrtc')
 
 export default {
   name: 'webcam',
-  mixins: [DesignTask],
+  mixins: [
+    DesignTask
+  ],
+  components: {
+    VueTextareaAutosize
+  },
   data () {
     return {
+      splashmessages: [],
       bitrate: 200000,
       newResponseText: '',
       recorder: undefined,
@@ -88,9 +99,6 @@ export default {
     if (this.camera) this.camera.stop()
   },
   mounted () {
-    setTimeout(() => {
-      this.loadCameraStream()
-    }, 2000)
     this.fetchResponses()
   },
   methods: {
@@ -119,6 +127,7 @@ export default {
           this.newResponse.text = undefined
           this.newResponse.location = undefined
           this.fetchResponses()
+          this.loadCameraStream()
         },
         (error) => {
           this.$log(error)
@@ -178,7 +187,9 @@ export default {
           bitsPerSecond: this.bitrate
         })
         this.recorder.camera = camera
-      }).catch(function (error) {
+        this.splashmessages = []
+      }).catch((error) => {
+        this.splashmessages = [{ text: 'Could not access your camera, please check the connection', type: 'error' }]
         console.log('Camera unavailable!')
         console.error(error)
       })
@@ -195,13 +206,16 @@ export default {
   background-color white
   padding 25px
   .response-composer
+    padding-top 20px
     position relative  
   .webcam-wrapper
+    height 0
+    margin-bottom 20px
+    padding-bottom 75%
     position relative
     width 100%
-    height 0
-    padding-bottom 75%
     video
+      background-color $color-lightest-grey
       border none
       position absolute
       width 100%
@@ -212,27 +226,32 @@ export default {
     margin 0px -10px -20px -10px
     .btn
       display block
-      margin 20px 10px
+      margin 0 10px 20px 10px
       max-width 100%
   .response-preview
-    height 160px
     overflow hidden
-    padding-left 210px
     position relative
-    video
-      height 160px
-      position absolute
-      left 0
-      top 0
-      width 200px
+    .webcam-wrapper
+      height 0
+      margin-bottom 0
+      padding-bottom 75%
+      position relative
+      width 100%
+      video
+        background-color $color-lightest-grey
+        border none
+        position absolute
+        width 100%
+        height 100%
+        left 0
+        top 0
     textarea
       border-box()
-      background-color transparent
-      border none
+      border $color-border 1px solid
       font-size 1em
-      height 160px
       outline 0
-      padding 10px
+      margin-top 10px
+      padding 15px
       resize none
       width 100%
   .response-controls
@@ -245,23 +264,23 @@ export default {
     cleanlist()
     li
       cleanlist()
-      padding-top 20px
+      &:not(:first-child)
+        border-top $color-border 1px solid
+        margin-top 20px
+        padding 20px 0
       .response-preview
-        background-color $color-lighter-grey
         height 160px
         overflow hidden
         padding-left 210px
         position relative
-        textarea
-          resize none
         .response-meta
           border-box()
           background-color transparent
           border none
           font-size 1em
-          min-height 160px
+          min-height 150px
           outline 0
-          padding 10px
+          padding 5px 10px
           width 100%
           h5
             reset()

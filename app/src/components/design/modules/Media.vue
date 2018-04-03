@@ -16,12 +16,16 @@
   // Submit a response
   .media-submission(v-if="isAuthenticated")
     
-    webcam-capture(v-bind:captured-file.sync="newResponse" v-bind:is-active.sync="webcamActive")
     file-upload(v-show="!webcamActive" v-bind:uploaded-file.sync="newResponse")
+    .btn-webcam(v-show="!webcamActive && !newResponse" @click="toggleWebcam")
+      p
+        i.fas.fa-camera
+    .clearfix
+    webcam-capture(v-show="webcamActive && !newResponse" v-bind:captured-file.sync="newResponse" v-bind:is-active.sync="webcamActive")
 
     .submit(v-if="newResponse")
       .response-composer
-        .input-wrapper(@click="")
+        .input-wrapper
           input(v-bind:disabled="!isAuthenticated" type="text" v-model="newResponse.text" placeholder="Describe your upload.." v-on:keyup.enter="submitResponse")
           .btn.btn-primary(@click="submitResponse") Submit
         
@@ -62,6 +66,9 @@ export default {
     ...mapGetters(['isAuthenticated'])
   },
   methods: {
+    toggleWebcam () {
+      this.webcamActive = !this.webcamActive
+    },
     fetchResponses () {
       API.task.fetchResponses(
         'media',
@@ -115,6 +122,9 @@ export default {
       cleanlist()
       margin 0 -10px 20px -10px
   
+  .media-submission
+    max-width 540px
+
   .response-composer
     animate()
     margin-top 0
@@ -137,4 +147,27 @@ export default {
         padding 5px 10px
         padding-right 80px
         width calc(100% - 80px)
+
+  .file-upload
+    float left
+    width calc(100% - 90px)
+  .btn-webcam
+    animate()
+    radius(20px)
+    border $color-border 2px dashed
+    background-color white
+    box-sizing border-box
+    color $color-text-grey
+    cursor pointer
+    float left
+    margin-left 20px
+    padding 20px 0
+    position relative
+    width 70px
+    p
+      reset()
+      font-size 1.2em
+      text-align center
+    &:hover
+      background-color $color-lightest-grey
 </style>

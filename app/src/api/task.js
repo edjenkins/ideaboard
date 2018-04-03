@@ -65,5 +65,13 @@ export default {
       .catch((error) => {
         errorCb(error)
       })
+  },
+  destroyResponse (postData, cb, errorCb) {
+    axios.post(`${config.API_ADDRESS}/task/response/destroy`, postData, { withCredentials: true }).then((response) => {
+      cb(response)
+    })
+      .catch((error) => {
+        errorCb(error)
+      })
   }
 }

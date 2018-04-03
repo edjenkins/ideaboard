@@ -25,7 +25,12 @@ export default {
       }
     },
     destroyContent (type, id) {
-      API[type].destroy(
+      let action = 'destroy'
+      if (type === 'taskresponse') {
+        type = 'task'
+        action = 'destroyResponse'
+      }
+      API[type][action](
         { type: type, id: id },
         (response) => {
           this.$log(response)

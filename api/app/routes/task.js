@@ -88,21 +88,20 @@ module.exports = function (app, passport) {
     })
   // Update task
   app.post('/task/destroy',
-    (req, res) => {
-      // Check permissions
-      if (req.isAuthenticated()) {
-        const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
-        if (!isModerator) return res.status(401)
-        Task.findOneAndUpdate(
-          { _id: req.body.id },
-          { destroyed: new Date() },
-          { upsert: true },
-          (err, task) => {
-            if (err) console.error(err)
-            res.json({ task })
-          })
-      } else {
-        res.status(401)
-      }
+    async (req, res) => {
+      let task = await Task.findOne({ _id: req.body.id })
+
+      const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
+      const canDestroy = (isModerator || task._user._id === req.user._id)
+      if (!canDestroy) return res.status(401)
+
+      Task.findOneAndUpdate(
+        { _id: req.body.id },
+        { destroyed: new Date() },
+        { upsert: true },
+        (err, task) => {
+          if (err) console.error(err)
+          res.json({ task })
+        })
     })
 }

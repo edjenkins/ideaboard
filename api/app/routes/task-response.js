@@ -1,4 +1,6 @@
 const async = require('async')
+const _get = require('lodash/get')
+const _find = require('lodash/find')
 
 const TaskResponse = require('../../app/models/task-response')
 const Task = require('../../app/models/task')
@@ -148,5 +150,24 @@ module.exports = function (app, passport) {
       } else {
         res.status(401)
       }
+    })
+
+  // Destroy task response
+  app.post('/task/response/destroy',
+    async (req, res) => {
+      let taskresponse = await TaskResponse.findOne({ _id: req.body.id })
+
+      const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
+      const canDestroy = (isModerator || taskresponse._user._id === req.user._id)
+      if (!canDestroy) return res.status(401)
+
+      TaskResponse.findOneAndUpdate(
+        { _id: req.body.id },
+        { destroyed: new Date() },
+        { upsert: true },
+        (err, taskresponse) => {
+          if (err) console.error(err)
+          res.json({ taskresponse })
+        })
     })
 }

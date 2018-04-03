@@ -80,6 +80,8 @@ export default {
       switch (type) {
         case 'poll':
           return 'fa-list-ul'
+        case 'richtext':
+          return 'fa-font'
         case 'discussion':
           return 'fa-comments'
         case 'media':

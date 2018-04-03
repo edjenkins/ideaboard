@@ -16,10 +16,10 @@
 
       .input-wrapper
         label(title="Give your task a snappy title") Title
-        input(type="text" v-model="task.title" name="title" placeholder="Task title")
+        input(type="text" v-model="task.title" name="title")
       .input-wrapper
         label(title="Futher details that will help people particpate") Description 
-        input(v-model="task.description" name="description" placeholder="Task description" v-on:keyup.enter="addTask")
+        input(v-model="task.description" name="description" v-on:keyup.enter="addTask")
       .input-wrapper
         label.clickable(@click="showAdvancedOptions = !showAdvancedOptions")
           | Advanced options
@@ -53,11 +53,12 @@ export default {
       showAdvancedOptions: false,
       addingTask: false,
       types: {
-        discussion: { name: 'Chat', icon: 'fa-comments', description: 'A Discussion is great for having free flowing conversations with your community. It can be used to guage opinions or just to have a chat!' },
-        media: { name: 'Media', icon: 'fa-images', description: 'The Media task is useful when you want people to share images and documents.' },
-        poll: { name: 'Poll', icon: 'fa-list-ul', description: 'A Poll is great for tasks where there is a defined question with a set of options that you would like to gather the communities opinions around.' },
-        appearin: { name: 'Video Call', icon: 'fa-users', description: 'Perfect for hosting a live video chat via Appear.in.' },
-        whiteboard: { name: 'Whiteboard', icon: 'fa-paint-brush', description: 'An interactive whiteboard for sketching ideas together.' },
+        discussion: { name: 'Chat', icon: 'fa-comments', description: 'Chats are great for having free flowing conversations with your community. They can be used to voice opinions or just have a natter!' },
+        media: { name: 'Media', icon: 'fa-images', description: 'A place to share images, videos and documents with your community.' },
+        poll: { name: 'Poll', icon: 'fa-list-ul', description: 'Polls are great when you have a set question with a set of options for which you would like to gather opinions.' },
+        richtext: { name: 'Rich Text', icon: 'fa-font', description: 'Need to jot something down? The \'Rich Text\' task gives you a notepad for your ideas which everyone can see.' },
+        appearin: { name: 'Video Call', icon: 'fa-users', description: 'Have a live video chat with someone via Appear.in.' },
+        whiteboard: { name: 'Whiteboard', icon: 'fa-paint-brush', description: 'Sketch ideas on an interactive whiteboard.' },
         webcam: { name: 'Record Video', icon: 'fa-video', description: 'Record videos through your webcam and share them.' }
       },
       task: {

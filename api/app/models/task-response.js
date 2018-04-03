@@ -8,6 +8,7 @@ const taskResponseSchema = mongoose.Schema({
   response: mongoose.Schema.Types.Mixed,
   response_meta: mongoose.Schema.Types.Mixed,
   created: Date,
+  destroyed: Date,
   _likes: [{
     _user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     likedAt: Date
@@ -25,6 +26,7 @@ taskResponseSchema.pre('save', function (next) {
 })
 
 taskResponseSchema.pre('findOne', function (next) {
+  this.where({ destroyed: null })
   this.populate('_user', 'profile')
   this.populate('_task')
   this.populate({
@@ -41,6 +43,7 @@ taskResponseSchema.pre('findOne', function (next) {
 })
 
 taskResponseSchema.pre('find', function (next) {
+  this.where({ destroyed: null })
   this.populate('_user', 'profile')
   this.populate('_task')
   next()

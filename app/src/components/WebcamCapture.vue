@@ -1,18 +1,19 @@
 <template lang="pug">
 .webcam-capture
+  splash-messages(v-bind:messages="splashmessages")
   .webcam-output(v-show="localCapturedFile")
     img(ref="photo")
-  .webcam-wrapper(v-if="isActive && !localCapturedFile")
+  .webcam-wrapper(v-if="isActive && !localCapturedFile && (splashmessages.length === 0)")
     canvas(ref="canvas")
     video#video(ref="video" showcontrols="false" autoplay="true" muted="muted")  
   .clearfix
 
-  .btn.btn-warning(v-if="localCapturedFile" @click="reset") Clear
-  .btn.btn-success(v-if="isActive && !localCapturedFile" @click="capturing = true; capture()") {{ capturing ? 'Capturing...' : 'Capture' }} 
-  div(v-if="!localCapturedFile" @click="toggleCapture")
-    .btn.btn-danger(v-if="isActive") Cancel
-    .activate-btn(v-if="!isActive")
-      p Capture from webcam
+  .webcam-actions
+    .btn(v-if="!localCapturedFile" v-bind:class="{ 'btn-danger': isActive, 'btn-primary full-width': !isActive }" @click="toggleCapture") {{ isActive ? 'Cancel' : 'Capture from webcam' }}
+    .btn.btn-success(v-if="isActive && !localCapturedFile && (splashmessages.length === 0)" @click="capturing = true; capture()") {{ capturing ? 'Capturing...' : 'Capture' }} 
+    .btn.btn-warning(v-if="localCapturedFile" @click="reset") Clear
+    //- activate-btn
+    .clearfix
 </template>
 
 <script>
@@ -21,13 +22,19 @@ import Vue from 'vuex'
 import API from '@/api'
 import { mapGetters } from 'vuex'
 
+import SplashMessages from '@/components/shared/SplashMessages'
+
 const RecordRTC = require('recordrtc')
 
 export default {
   name: 'webcam-capture',
   props: ['capturedFile', 'isActive'],
+  components: {
+    SplashMessages
+  },
   data () {
     return {
+      splashmessages: [],
       capturing: false,
       localCapturedFile: false,
       bitrate: 200000,
@@ -39,6 +46,11 @@ export default {
     ...mapGetters(['isAuthenticated'])
   },
   watch: {
+    isActive (nV, oV) {
+      if (nV) {
+        this.loadCameraStream()
+      }
+    },
     capturedFile (nV, oV) {
       if (nV !== oV && typeof nV === 'undefined') {
         this.reset()
@@ -122,7 +134,9 @@ export default {
           bitsPerSecond: this.bitrate
         })
         this.recorder.camera = camera
-      }).catch(function (error) {
+        this.splashmessages = []
+      }).catch((error) => {
+        this.splashmessages = [{ text: 'Could not access your camera, please check the connection', type: 'error' }]
         console.log('Camera unavailable!')
         console.error(error)
       })
@@ -136,7 +150,7 @@ export default {
 @import '~stylus/shared'
 
 .webcam-capture
-  margin 20px auto 30px auto
+  margin 0 auto
   .btn
     display block
     margin 20px 0
@@ -155,26 +169,19 @@ export default {
       left -9999px
       z-index -9999
     video
+      background-color $color-lightest-grey
       border none
       position absolute
       width 100%
       height 100%
       left 0
       top 0
-  .activate-btn
-    animate()
-    radius(20px)
-    border $color-border 2px dashed
-    background-color white
-    box-sizing border-box
-    color $color-text-grey
-    padding 20px 10px
-    position relative
-    cursor pointer
-    p
-      reset()
-      font-size 1.2em
-      text-align center
-    &:hover
-      background-color $color-lightest-grey
+  .webcam-actions
+    margin 0 -10px
+    .btn
+      float left
+      margin 20px 10px 0 10px
+      width calc(50% - 20px)
+    .btn.full-width
+      width calc(100% - 20px)
 </style>

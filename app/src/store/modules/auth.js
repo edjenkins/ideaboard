@@ -34,7 +34,7 @@ const getters = {
     return state.notifications
   },
   permissions () {
-    return state.user.permissions
+    return _get(state.user, 'permissions')
   },
   isAdmin () {
     return _get(state.user, 'permissions') ? _find(state.user.permissions, { type: 'admin' }) : undefined

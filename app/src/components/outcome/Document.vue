@@ -8,7 +8,6 @@
     quill-editor(v-if="editing" v-model="document.text" ref="myQuillEditor" v-bind:options="editorOption")
 
     #editor-actions
-      .btn.btn-primary(v-if="canEdit" @click="editing = true") Start Editing
       
       dropdown(v-if="editing" ref="dropdown" v-bind:class-name="'custom'")
         template(slot="btn") Embed a task
@@ -23,9 +22,9 @@
                     li.dropdown-option(v-for="(task, index) in embeddableTasks[key]" @click="selectTask(task)")
                       label {{ `${task.title}${(task._user) ? ` - ${task._user.profile.name}` : ''}` }}
 
-      .btn.btn-danger(v-if="editing" @click="undoChanges") Undo
-      .btn.btn-success(v-if="editing" @click="updateDocument") Save Changes
-
+      .btn.pull-left(v-if="canEdit" v-bind:class="{ 'btn-primary full-width': !editing, 'btn-danger': editing }" @click="undoChanges") {{ editing ? 'Undo' : 'Start Editing' }}
+      .btn.btn-success.pull-right(v-if="editing" @click="updateDocument") Save Changes
+      .clearfix
 
 </template>
 
@@ -80,7 +79,7 @@ export default {
     ...mapGetters(['user']),
     canEdit () {
       if ((typeof this.idea === 'undefined') || (typeof this.user === 'undefined') || (typeof this.idea._user === 'undefined')) return false
-      return !this.editing && this.idea._user._id === this.user._id
+      return this.idea._user._id === this.user._id
     },
     embeddableTasks () {
       return _groupBy(this.tasks, 'type')
@@ -201,8 +200,10 @@ export default {
       )
     },
     undoChanges () {
-      this.editing = false
-      this.getDocument()
+      this.editing = !this.editing
+      if (!this.editing) {
+        this.getDocument()
+      }
     },
     updateDocument () {
       API.document.update(
@@ -277,20 +278,6 @@ export default {
       display inline-block
       margin-top 10px
       margin-right 10px
-
-  // Quill editor
-  .quill-editor
-    padding 10px
-    .ql-toolbar.ql-snow, .ql-container.ql-snow
-      border none
-    .ql-toolbar.ql-snow
-      border-bottom $color-border 1px solid
-  .ql-snow a
-    font-size 1em
-    text-decoration none
-    .btn
-      font-size 1em
-      text-decoration none
 
   .splash-messages
     padding 20px

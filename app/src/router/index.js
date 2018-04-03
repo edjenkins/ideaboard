@@ -27,6 +27,7 @@ import AddDesignTask from '@/components/design/AddTask'
 import Discussion from '@/components/design/modules/Discussion'
 import Poll from '@/components/design/modules/Poll'
 import Media from '@/components/design/modules/Media'
+import RichText from '@/components/design/modules/RichText'
 import Appearin from '@/components/design/modules/Appearin'
 import Whiteboard from '@/components/design/modules/Whiteboard'
 import Webcam from '@/components/design/modules/Webcam'
@@ -139,6 +140,11 @@ const router = new Router({
               name: 'media',
               path: 'media/:task_id',
               component: Media
+            },
+            {
+              name: 'richtext',
+              path: 'richtext/:task_id',
+              component: RichText
             },
             {
               name: 'appearin',

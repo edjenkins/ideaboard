@@ -6,7 +6,7 @@
       i.fas.fa-arrow-left
     .tab--header--title
       | {{ title || '' }}
-    .tab--header--action(v-if="isModerator && $route.params.task_id" @click="destroyTask")
+    .tab--header--action(v-if="canDestroy && $route.params.task_id" @click="destroyTask")
       i.fas.fa-trash
 
   router-view(v-bind:idea="idea" v-bind:title.sync="title" v-on:back="returnToDash")
@@ -26,7 +26,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'isModerator', 'user'])
+    ...mapGetters(['isAuthenticated', 'isModerator', 'user']),
+    canDestroy () {
+      return this.isModerator
+    }
   },
   methods: {
     returnToDash () {
