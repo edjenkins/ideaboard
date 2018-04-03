@@ -15,13 +15,16 @@
 
             .input-wrapper
               label Title
-              input(type="text" v-model="idea.title" name="title" placeholder="A catchy title for your idea")
+              input(type="text" v-model="idea.title" name="title" placeholder="Give your idea a title")
+            
             .input-wrapper
               label Tagline
-              input(type="text" v-model="idea.tagline" name="tagline" placeholder="A snappy tagline for your idea")
+              input(type="text" v-model="idea.tagline" name="tagline" placeholder="A short summary of your idea")
+            
             .input-wrapper
               label Description
               quill-editor(v-model="idea.description" ref="myQuillEditor" v-bind:options="editorOption")
+            
             .input-wrapper
               label Banner Image
               ul.upload-options
@@ -108,7 +111,7 @@ export default {
       ideaTile: undefined,
       editorOption: {
         theme: 'bubble',
-        placeholder: 'Describe your idea in detail',
+        placeholder: 'Describe your idea in more detail',
         modules: {
           toolbar: [
             [{ 'size': ['small', false, 'large'] }],
@@ -210,6 +213,7 @@ export default {
 
   .quill-editor
     border $color-border 1px solid
+    padding 2px
 
   ul.upload-options
     cleanlist()

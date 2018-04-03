@@ -2,9 +2,9 @@
   .idea-tile
     .idea-tile--banner(v-if="idea.banner" v-bind:style="{ 'background-image': `url(${(idea.banner && idea.banner.location) ? idea.banner.location : idea.banner})` }")
     .idea-tile--body
-      .idea-tile--title(v-bind:class="{ 'is-placeholder': !idea.title }") {{ idea.title || 'Title...' }}
+      .idea-tile--title(v-bind:class="{ 'is-placeholder': !idea.title }") {{ idea.title || 'Example Idea' }}
       .idea-tile--author(v-if="idea._user") {{ idea._user.profile.name }}
-      .idea-tile--tagline(v-bind:class="{ 'is-placeholder': !idea.tagline }") {{ idea.tagline || 'Tagline...' }}
+      .idea-tile--tagline(v-bind:class="{ 'is-placeholder': !idea.tagline }") {{ idea.tagline || 'This is an example tagline' }}
     .idea-tile--footer {{ idea._subscribers ? `${idea._subscribers.length} Subscribers` : 'No Subscribers' }} 
 </template>
 

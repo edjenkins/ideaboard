@@ -1,9 +1,15 @@
 <template lang="pug">
 .tab-content--info
   .tab--content
-    rendered-content(v-bind:content="idea.description")
-    .btn-edit-fab
-      i.fas.fa-pencil-alt
+    .ql-container.ql-bubble.ql-editor(v-if="!editing" v-html="idea.description")
+
+    quill-editor(v-if="editing" v-model="idea.description" ref="myQuillEditor" v-bind:options="editorOption")
+
+    //- .btn-edit-fab(v-show="!editing" @click="editing = true")
+    //-   i.fas.fa-pencil-alt
+    //- .btn-edit-fab(v-show="editing" @click="editing = false")
+    //-   i.fas.fa-times
+
   .tab--footer
     subscribe-button(v-bind:idea="idea" v-on:subscribed="$emit('show-design')")
 
@@ -20,7 +26,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import RenderedContent from '@/components/shared/RenderedContent'
+
+import 'quill/dist/quill.bubble.css'
+import { quillEditor } from 'vue-quill-editor'
+
 import SubscribeButton from '@/components/ideas/actions/SubscribeButton'
 import Discussion from '@/components/design/modules/Discussion'
 import IdeaTile from '@/components/ideas/IdeaTile'
@@ -29,10 +38,26 @@ export default {
   name: 'info-tab',
   props: ['idea'],
   components: {
-    RenderedContent,
+    quillEditor,
     SubscribeButton,
     Discussion,
     IdeaTile
+  },
+  data () {
+    return {
+      editing: false,
+      editorOption: {
+        theme: 'bubble',
+        placeholder: 'Describe your idea in more detail',
+        modules: {
+          toolbar: [
+            [{ 'size': ['small', false, 'large'] }],
+            ['bold', 'italic'],
+            ['link']
+          ]
+        }
+      }
+    }
   },
   computed: {
     ...mapGetters(['isAuthenticated', 'user', 'instanceBackground']),
@@ -56,7 +81,7 @@ export default {
   background-color white
   text-align left
   .tab--content
-    padding 25px
+    padding 15px
     position relative
     p
       reset()
@@ -114,5 +139,10 @@ export default {
       background-color darken($color-design, 5%)
       svg
         right -5px
+
+  // Edit mode
+  .quill-editor
+    border-left $color-primary 3px solid
+    padding 0
 
 </style>
