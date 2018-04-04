@@ -1,7 +1,7 @@
 <template lang="pug">
 .tab-content--bio
   h1.tab--header.no-parent(v-bind:class="{ editing: isEditing }" v-if="editedProfile && ownProfile")
-    input(v-model="editedProfile.name" placeholder="your name" v-bind:readonly="!isEditing || !ownProfile")
+    input(v-model="editedProfile.name" placeholder="Your name" v-bind:readonly="!isEditing || !ownProfile")
     .tab--header--action(v-if="ownProfile")
       span#success(v-if="isEditing" @click="updateProfile()") Done
       span(v-if="!isEditing" @click="toggleEditMode()") Edit
@@ -14,10 +14,10 @@
       .input-wrapper(v-if="isEditing")
         label Avatar
         file-upload(v-bind:uploaded-file="editedProfile.avatar" v-bind:uploaded-file.sync="editedAvatar")
-      .input-wrapper
-        p(v-if="!isEditing") {{ (editedProfile.bio) ? editedProfile.bio : 'No bio added yet' }}
+      .input-wrapper(v-if="!isEditing && !(ownProfile && !editedProfile.bio)")
+        p {{ (editedProfile.bio) ? editedProfile.bio : 'No bio added yet' }}
 
-    //- .profile--actions(v-if="!isEditing && ownProfile")
+    .profile--actions(v-if="!isEditing && ownProfile")
       .action(v-if="!editedProfile.avatar || !editedProfile.bio")
         .action--banner(@click="isEditing = true") Add an avatar or bio
 
@@ -37,14 +37,13 @@ import IdeaTile from '@/components/ideas/IdeaTile'
 
 export default {
   name: 'bio-tab',
-  props: ['currentUser'],
+  props: ['currentUser', 'ownProfile'],
   components: {
     FileUpload,
     IdeaTile
   },
   created () {
     this.editedProfile = JSON.parse(JSON.stringify(this.currentUser.profile))
-    console.log(this.currentUser)
     API.user.ideas(
       this.currentUser._id,
       (response) => {
@@ -82,10 +81,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user']),
-    ownProfile () {
-      return this.user._id === this.currentUser._id
-    }
+    ...mapGetters(['user'])
   },
   methods: {
     cancelUpdate () {
@@ -104,6 +100,7 @@ export default {
           this.$log(response.data)
           this.$store.commit(types.UPDATE_PROFILE, response.data.profile)
           this.toggleEditMode()
+          this.editedProfile = response.data.profile
         },
         (error) => {
           this.$log(error)

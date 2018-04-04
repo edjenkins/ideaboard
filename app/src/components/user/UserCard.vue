@@ -1,6 +1,6 @@
 <template lang="pug">
 .user-card
-  router-link.avatar-wrapper(tag="div" v-bind:to="profileLink")
+  router-link.avatar-wrapper(tag="div" v-bind:to="{ name: 'profile', params: { id: this.id } }")
     avatar(v-bind:profile="profile")
   h1.user--name {{ profile.name }}
   h5.user--account {{ accountType }}
@@ -18,10 +18,6 @@ export default {
   computed: {
     accountType () {
       return 'Standard Account'
-    },
-    profileLink () {
-      if (!this.id) return '/'
-      return `/profile/${this.id}`
     }
   }
 }

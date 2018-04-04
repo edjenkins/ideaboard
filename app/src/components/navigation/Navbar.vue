@@ -1,14 +1,14 @@
 <template lang="pug">
   #navbar(v-bind:class="[{ scrolled: hasScrolled }, authState]" v-bind:style="[instanceBackground]")
     .row
-      router-link#logo(to="/") Ideaboard
+      router-link#logo(v-bind:to="{ name: 'home' }") Ideaboard
       hamburger(v-bind:active.sync="active")
       #menu-underlay(v-bind:class="{ active: active }" @click="active = false")
       #menu(v-bind:class="{ active: active }" v-bind:style="[instanceBackground]")
-        router-link(to="/start") Create
-        router-link(to="/explore") Explore
-        router-link(to="/auth" v-if="!isAuthenticated") Get Started
-        router-link(to="/profile" v-if="isAuthenticated" v-bind:class="{ 'has-notifications': hasNotifications }")
+        router-link(v-bind:to="{ name: 'start' }") Create
+        router-link(v-bind:to="{ name: 'explore' }") Explore
+        router-link(v-bind:to="{ name: 'auth' }" v-if="!isAuthenticated") Get Started
+        router-link(v-bind:to="{ name: 'profile' }" v-else v-bind:class="{ 'has-notifications': hasNotifications }")
           | Profile
           span.notification-bubble(v-if="hasNotifications") {{ notifications.unread.length }}
         .clearfix

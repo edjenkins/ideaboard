@@ -13,7 +13,7 @@
             .tabs--selector--item(v-for="(tab, index) in tabItems" v-bind:class="{ active: (tab.component === tabs.activeComponent) }" @click="tabs.activeComponent = tab.component") {{ tab.title }}
             .clearfix
           .tabs--page
-            component(v-bind:is="tabs.activeComponent" v-bind:edited-profile.sync="editedProfile" v-bind:current-user="currentUser")
+            component(v-bind:is="tabs.activeComponent" v-bind:edited-profile.sync="editedProfile" v-bind:current-user="currentUser" v-bind:own-profile="ownProfile")
 
         .notifications(v-if="ownProfile && tabs.activeComponent === 'bio-tab'")
           notifications-list(type="unread" v-bind:notifications="notifications.unread")
@@ -52,7 +52,8 @@ export default {
   },
   mounted () {
     this.loadProfile()
-
+  },
+  created () {
     if (this.$session.has('auth-redirect')) {
       const redirect = this.$session.get('auth-redirect')
       this.$session.remove('auth-redirect')
@@ -60,25 +61,28 @@ export default {
     }
   },
   watch: {
+    '$route.params.id': {
+      handler: function (nV, oV) {
+        if (nV === oV) return
+        this.loadProfile()
+      },
+      deep: true
+    },
     isAuthenticated (nV) {
       if (!nV) {
         this.$router.push('/')
       }
-    },
-    'currentUser': {
-      handler: function (nV) {
-        this.editedProfile = {
-          name: nV.profile.name,
-          bio: nV.profile.bio,
-          avatar: nV.profile.avatar
-        }
-      },
-      deep: true
     }
   },
   data () {
     return {
-      currentUser: undefined,
+      currentUser: {
+        profile: {
+          name: '',
+          avatar: '',
+          bio: ''
+        }
+      },
       editedProfile: {
         name: '',
         avatar: '',
@@ -137,6 +141,14 @@ export default {
         (response) => {
           console.log(response)
           this.currentUser = response.data
+          this.$set(this.currentUser.profile, 'name', response.data.profile.name)
+          this.$set(this.currentUser.profile, 'avatar', response.data.profile.avatar)
+          this.$set(this.currentUser.profile, 'bio', response.data.profile.bio)
+          if (this.ownProfile) {
+            this.$set(this.editedProfile, 'name', response.data.profile.name)
+            this.$set(this.editedProfile, 'avatar', response.data.profile.avatar)
+            this.$set(this.editedProfile, 'bio', response.data.profile.bio)
+          }
         },
         (error) => {
           console.error(error)
