@@ -1,12 +1,12 @@
 <template lang="pug">
 .unsplash-search
   .input-wrapper
-    input(type="text" v-model="searchQuery" placeholder="Tech, People, Cats etc." @keyup.enter="search()")
+    input(type="text" v-model="searchQuery" placeholder="Tech, people, health etc." @keyup.enter="search()")
     .btn.btn-primary(@click="search")
-      span(v-if="loading")
-        | Wait...
-      span(v-else)
-        | Search
+      div(v-show="loading")
+        i.fas.fa-circle-notch.fa-spin
+      div(v-show="!loading")
+        i.fas.fa-search
   ul.unsplash-search--results
     li.unsplash-search--results--result(v-for="(result, index) in results" v-bind:key="index" v-bind:class="{ active: (selectedImage && (selectedImage.id === result.id)) }" v-bind:style="{ 'background-image': `url(${result.urls.thumb})` }" @click="selectImage(result)")
       a.credit(v-bind:href="result.user.links.self" target="_blank") Credit - {{ result.user.first_name }} {{ result.user.last_name }}
@@ -30,6 +30,7 @@ export default {
   methods: {
     search () {
       this.loading = true
+      this.results = []
       API.unsplash.search(this.searchQuery,
         (response) => {
           this.$log(response)
@@ -59,7 +60,6 @@ export default {
     margin 20px 0 15px 0
     // max-width 360px
     padding 0
-    padding-right 100px
     position relative
     input 
       box-sizing border-box
@@ -67,14 +67,14 @@ export default {
       width calc(100% - 15px)
     .btn
       pinned()
-      line-height 47px
+      line-height 52px
       position absolute
       left auto
       padding 0
       text-align center
-      width 100px
+      width 52px
       svg
-        margin-left 8px
+        height 52px
   ul.unsplash-search--results
     cleanlist()
     margin 0 -10px

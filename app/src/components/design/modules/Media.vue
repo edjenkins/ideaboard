@@ -123,7 +123,7 @@ export default {
       margin 0 -10px 20px -10px
   
   .media-submission
-    max-width 540px
+    max-width 600px
 
   .response-composer
     animate()
