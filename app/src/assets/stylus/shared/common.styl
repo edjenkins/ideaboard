@@ -99,13 +99,14 @@ svg
   margin 20px 0 0 0
   position relative
   &.pull-up
+    margin-bottom -40px
     margin-top -40px
   &.white-block
     background-color white
   .content-block--body
     padding 20px
   .content-block--footer
-      border-top $color-border 1px solid
+      border-top $color-border 1px dashed
       padding 15px
 
 // Tabs
@@ -134,7 +135,7 @@ svg
       padding 0 25px
       position relative
       text-align center
-      text-decoration: none
+      text-decoration none
       z-index 1
       @media(max-width: 680px)
         padding 0

@@ -144,11 +144,9 @@ export default {
     &.reply-composer
       margin-top 10px
     .btn
-      radius(50%)
       pinned()
       position absolute
       left auto
-      top auto
       line-height 40px
       opacity 0
       padding 0
@@ -159,7 +157,6 @@ export default {
         pointer-events all
     .input-wrapper
       border $color-border 1px solid
-      margin-right 50px
       input, textarea
         border-box()
         background-color transparent

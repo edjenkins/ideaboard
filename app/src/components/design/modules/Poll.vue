@@ -17,7 +17,8 @@
     .response-composer
       .input-wrapper(@click="checkAuth")
         input(v-bind:disabled="!isAuthenticated" type="text" v-model="newResponse.text" placeholder="Add a poll option..." v-on:keyup.enter="submitResponse")
-        .btn.btn-primary(@click="submitResponse") Post
+        .btn.btn-primary(@click="submitResponse")
+          i.fas.fa-arrow-right
 </template>
 
 <script>
@@ -199,12 +200,12 @@ export default {
     opacity 1
     position relative
     .btn
+      pinned()
       position absolute
-      right 0
-      bottom 0
+      left auto
       line-height 40px
       padding 0
-      width 80px
+      width 40px
     .input-wrapper
       border $color-border 1px solid
       input
@@ -213,6 +214,6 @@ export default {
         line-height 30px
         outline 0
         padding 5px 10px
-        padding-right 80px
+        padding-right 50px
         width calc(100% - 80px)
 </style>

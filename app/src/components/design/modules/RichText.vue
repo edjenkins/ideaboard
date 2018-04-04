@@ -16,7 +16,7 @@
           avatar.response--avatar(v-bind:profile="response._user.profile")
         ul.response--actions.pull-right(v-if="isAuthenticated")
           li.response--action(@click="reportOrDestroy('taskresponse', response._id, response._user._id)")
-            | {{ (isModerator || user._id === response._user._id) ? 'delete' : 'report' }}
+            | {{ (isModerator || user._id === response._user._id) ? 'Delete' : 'Report' }}
         .clearfix
 
   .richtext-wrapper(v-if="isAuthenticated")
@@ -141,7 +141,7 @@ export default {
       &:first-child
         margin-top 20px
       .response-footer
-        padding 10px 0
+        padding 10px
         
         ul.response--actions
           cleanlist()
@@ -171,6 +171,8 @@ export default {
             text-decoration none
 
       .response-body
+        border none
+        border-left $color-primary 3px solid
         padding 10px
 
 </style>

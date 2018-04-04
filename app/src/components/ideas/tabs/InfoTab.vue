@@ -3,12 +3,16 @@
   .tab--content
     .ql-container.ql-bubble.ql-editor(v-if="!editing" v-html="idea.description")
 
-    quill-editor(v-if="editing" v-model="idea.description" ref="myQuillEditor" v-bind:options="editorOption")
+    quill-editor(v-if="editing" v-model="newDescription" ref="myQuillEditor" v-bind:options="editorOption")
 
-    //- .btn-edit-fab(v-show="!editing" @click="editing = true")
-    //-   i.fas.fa-pencil-alt
-    //- .btn-edit-fab(v-show="editing" @click="editing = false")
-    //-   i.fas.fa-times
+    .info-actions
+      .btn-fab(@click="toggleEditing" v-bind:class="[editing ? 'btn-danger' : 'btn-grey']")
+        span(v-show="!editing")
+          i.fas.fa-pencil-alt
+        span(v-show="editing")
+          i.fas.fa-undo
+      .btn-fab.btn-success(v-show="editing" @click="updatedIdea")
+        i.fas.fa-check
 
   .tab--footer
     subscribe-button(v-bind:idea="idea" v-on:subscribed="$emit('show-design')")
@@ -21,10 +25,10 @@
     span(v-else) Join the discussion
     i.fas.fa-long-arrow-alt-right
     
-
 </template>
 
 <script>
+import API from '@/api'
 import { mapGetters } from 'vuex'
 
 import 'quill/dist/quill.bubble.css'
@@ -46,6 +50,7 @@ export default {
   data () {
     return {
       editing: false,
+      newDescription: '',
       editorOption: {
         theme: 'bubble',
         placeholder: 'Describe your idea in more detail',
@@ -66,8 +71,25 @@ export default {
     }
   },
   methods: {
+    toggleEditing () {
+      this.editing = !this.editing
+      this.newDescription = this.idea.description
+    },
     viewDesign () {
       this.$emit('show-design')
+    },
+    updatedIdea () {
+      API.idea.update(
+        { _id: this.$route.params.id, description: this.newDescription },
+        (response) => {
+          this.$log(response)
+          this.idea.description = response.data.idea.description
+          this.editing = false
+        },
+        (error) => {
+          this.$log(error)
+        }
+      )
     }
   }
 }
@@ -82,32 +104,35 @@ export default {
   text-align left
   .tab--content
     padding 15px
+    padding-bottom 60px
     position relative
+    .ql-container
+      min-height 46px
     p
       reset()
-    .btn-edit-fab
-      radius(50%)
-      background-color $color-grey
-      height 50px
-      position absolute
+    .info-actions
       bottom 15px
       right 15px
-      width 50px
-      text-align center
-      &:hover
-        background-color darken($color-grey, 10%)
-        cursor pointer
-      svg
-        color white
-        height 50px
-        width 20px
+      position absolute
+      .btn-fab
+        radius(50%)
+        float left
+        height 40px
+        margin 5px
+        width 40px
+        text-align center
+        &:hover
+          cursor pointer
+        svg
+          color white
+          height 40px
+          width 20px
 
   .tab--footer
-      display none
-      padding 20px
-  @media(max-width: 680px)
-    .tab--footer
-      padding-top 0
+    display none
+    // border-top none !important
+    padding 20px
+    @media(max-width: 680px)
       display block
 
   #general-discussion

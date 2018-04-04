@@ -151,7 +151,5 @@ export default {
       width 100%
       .content-block--banner
         height 0
-      // .tabs .tabs--selector
-        // display none
 
 </style>

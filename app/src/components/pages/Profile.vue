@@ -98,7 +98,7 @@ export default {
         activeComponent: 'bio-tab',
         items: [
           { title: 'Profile', component: 'bio-tab', permission: undefined },
-          { title: 'Ideas', component: 'ideas-tab', permission: undefined },
+          // { title: 'Ideas', component: 'ideas-tab', permission: undefined },
           { title: 'Categories', component: 'categories-tab', permission: 'organiser' },
           { title: 'Admin', component: 'admin-tab', permission: 'admin' }
         ]
@@ -173,8 +173,8 @@ $side-block-width = 260px
       width calc(100% - 240px)
     @media(max-width: 660px)
       float none
-      margin 0 20px
-      width calc(100% - 40px)
+      margin 0
+      width 100%
 
   .content-block--side
     margin-bottom 30px
@@ -184,9 +184,9 @@ $side-block-width = 260px
       width calc($side-block-width - 40px)
     @media(max-width: 660px)
       float none
-      margin -40px 20px 20px 20px
+      margin -40px 0 20px 0
       max-width none
-      width calc(100% - 40px)
+      width 100%
     .content-block--footer
       padding 0
       .btn

@@ -31,10 +31,11 @@ export default {
       reset()
       animate()
       color alpha(black, 0.2)
-      display inline
+      display inline-block
       line-height $footer-height
       padding 0 15px
       text-decoration none
+      white-space nowrap
       &.is-link:hover
         cursor pointer
         color alpha(black, 0.4)

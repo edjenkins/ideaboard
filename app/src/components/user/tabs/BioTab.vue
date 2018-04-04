@@ -9,18 +9,22 @@
   .tab--content(v-if="editedProfile")
     form.profile-form(v-bind:class="{ editing: isEditing }")
       .input-wrapper(v-if="isEditing")
-        label Avatar
-        
-        file-upload(v-bind:uploaded-file="editedProfile.avatar" v-bind:uploaded-file.sync="editedAvatar")
-      .input-wrapper(v-if="isEditing")
         label(v-if="isEditing") Bio
         textarea(v-model="editedProfile.bio" v-if="isEditing" rows="6")
+      .input-wrapper(v-if="isEditing")
+        label Avatar
+        file-upload(v-bind:uploaded-file="editedProfile.avatar" v-bind:uploaded-file.sync="editedAvatar")
       .input-wrapper
         p(v-if="!isEditing") {{ (editedProfile.bio) ? editedProfile.bio : 'No bio added yet' }}
 
     //- .profile--actions(v-if="!isEditing && ownProfile")
       .action(v-if="!editedProfile.avatar || !editedProfile.bio")
         .action--banner(@click="isEditing = true") Add an avatar or bio
+
+    .ideas-wrapper
+      router-link.content-block.content-block--tile.pull-left(tag="div" v-for="(idea, index) in ideas" v-bind:key="index" v-bind:to="{ name: 'idea', params: { id: idea._id } }")
+        idea-tile.bordered(v-bind:idea="idea")
+      .clearfix
 
 </template>
 
@@ -29,15 +33,30 @@ import * as types from '@/store/mutation-types'
 import API from '@/api'
 import { mapGetters } from 'vuex'
 import FileUpload from '@/components/FileUpload'
+import IdeaTile from '@/components/ideas/IdeaTile'
 
 export default {
   name: 'bio-tab',
   props: ['currentUser'],
   components: {
-    FileUpload
+    FileUpload,
+    IdeaTile
   },
   created () {
     this.editedProfile = JSON.parse(JSON.stringify(this.currentUser.profile))
+    console.log(this.currentUser)
+    API.user.ideas(
+      this.currentUser._id,
+      (response) => {
+        // Idea success
+        this.$log(response)
+        this.ideas = response.data
+      },
+      (error) => {
+        // Idea fail
+        this.$log(error)
+        this.ideas = []
+      })
   },
   watch: {
     'editedProfile': {
@@ -58,7 +77,8 @@ export default {
       editedProfile: undefined,
       originalProfile: undefined,
       isEditing: false,
-      editedAvatar: undefined
+      editedAvatar: undefined,
+      ideas: []
     }
   },
   computed: {
@@ -155,4 +175,17 @@ export default {
       &.editing
         .input-wrapper
           textarea
+    
+    .ideas-wrapper
+      .content-block--tile
+        box-sizing border-box
+        margin 10px
+        padding 0
+        width calc((100% / 3) - 20px)
+        @media(max-width: 860px)
+          width calc((100% / 2) - 20px)
+        @media(max-width: 480px)
+          width calc((100% / 1) - 20px)
+        .bordered
+          border $color-border 1px solid
 </style>

@@ -70,16 +70,16 @@ export default {
 
 #myto-info.row-wrapper
   reset()
-  padding 10px
+  padding 10px 0
   margin-top -80px
   .row
     .content-block
       gradient()
-      radius(20px)
+      // radius(20px)
       background-color #EE3746
       margin 0 auto
       max-width 800px
-      padding 4% 8%
+      padding 5%
       h1, p
         reset()
         color white
