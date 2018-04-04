@@ -1,6 +1,6 @@
 <template lang="pug">
 
-  router-link.design-dashboard--task(v-bind:to="{ name: task.type, params: { id: task._idea._id, task_id: task._id } }")
+  router-link.design-dashboard--task(v-bind:to="{ name: task.type, params: { id: task._idea._id, task_id: task._id } }" v-bind:class="{ list: listLayout }")
     .design-dashboard--task--title {{ task.title }}
 
     .design-dashboard--task--subtitle(v-if="responseCount > 0") {{ `${responseCount} contributon${(responseCount === 1) ? '' : 's'}` }}
@@ -24,7 +24,7 @@ import API from '@/api'
 
 export default {
   name: 'design-task-tile',
-  props: ['task'],
+  props: ['task', 'listLayout'],
   components: {
     Avatar
   },
@@ -107,7 +107,6 @@ export default {
 .design-dashboard--task
   animate()
   border-box()
-  radius(10px)
   border 1px solid $color-border
   height 150px
   margin 10px
@@ -120,6 +119,9 @@ export default {
     flex 1 100%
   &:not(:first-child)
     flex 1 200px
+  &.list
+    flex 1 100%
+    height 120px
   .design-dashboard--task--title, .design-dashboard--task--subtitle
     animate()
     reset()

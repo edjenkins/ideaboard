@@ -166,7 +166,7 @@ export default {
         outline 0
         margin 0
         padding 10px
-        width 100%
+        width calc(100% - 40px)
 
   ul.comment-thread
     cleanlist()
@@ -212,6 +212,7 @@ export default {
         color $color-text-grey
         font-size 1em
         font-weight normal
+        word-break break-word
 
     // Replies
     ul.replies

@@ -5,6 +5,7 @@
     source(v-bind:src="file.location" type="video/webm")
     //- source(src="example.mp4" type="video/mp4")
     //- source(src="example.ogv" type="video/ogg")
+    
     p.vjs-no-js To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
 
 </template>
@@ -19,7 +20,6 @@ export default {
     var options = {}
     videojs('video-player', options, function onPlayerReady () {
       videojs.log('Your player is ready!')
-      this.play()
       this.on('ended', function () {
         videojs.log('Video ended!')
       })

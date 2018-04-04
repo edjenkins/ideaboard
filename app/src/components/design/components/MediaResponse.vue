@@ -80,7 +80,7 @@ li.media-item
   cleanlist()
   // border $color-border 1px solid
   margin 20px 10px 40px 10px
-  max-width 600px
+  // max-width 600px
   position relative
   .details
     padding 10px 0

@@ -230,6 +230,11 @@ export default {
 
 #outcome-document
   
+  .quill-editor
+    border $color-border 1px solid
+    margin 20px
+    padding 0
+
   .ib-poll
     background-color $color-lightest-grey
     border-left $color-primary 4px solid

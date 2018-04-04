@@ -214,6 +214,5 @@ export default {
         line-height 30px
         outline 0
         padding 5px 10px
-        padding-right 50px
-        width calc(100% - 80px)
+        width calc(100% - 40px)
 </style>

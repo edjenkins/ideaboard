@@ -1,25 +1,28 @@
 <template lang="pug">
 .design-task--add
   form
-    .input-wrapper
-      ul.task-types
-        li.task-types--type(v-for="(type, key) in types" v-bind:key="key" v-bind:value="key" @click="task.type = key" v-bind:class="{ active: task.type && key === task.type }")
-          i.fas(v-bind:class="type.icon")
-          | {{ type.name }}
-        .clearfix
 
-    .task-wrapper(v-if="task.type")
-
-      p.type-tip(v-if="task.type") {{ types[task.type].description }}
+    .task-wrapper
 
       splash-messages(v-if="task.type && splashmessages['task'].length" v-bind:messages="splashmessages['task']" padded)
 
       .input-wrapper
         label(title="Give your task a snappy title") Title
-        input(type="text" v-model="task.title" name="title")
+        input(type="text" v-model="task.title" placeholder="Give your task a name" name="title")
       .input-wrapper(v-show="task.title.length > 3")
         label(title="Futher details that will help people particpate") Description 
-        input(v-model="task.description" name="description" v-on:keyup.enter="addTask")
+        input(v-model="task.description" name="description" placeholder="Add a detailed description to your task" v-on:keyup.enter="addTask")
+
+      .input-wrapper
+        label(title="Type of task") Type
+        ul.task-types
+          li.task-types--type(v-for="(type, key) in types" v-bind:key="key" v-bind:value="key" @click="task.type = key" v-bind:class="{ active: task.type && key === task.type }")
+            i.fas(v-bind:class="type.icon")
+            | {{ type.name }}
+          .clearfix
+
+        p.type-tip(v-if="task.type") {{ types[task.type].description }}
+
       .input-wrapper(v-show="task.title.length > 3")
         label.clickable(@click="showAdvancedOptions = !showAdvancedOptions")
           | Advanced options
@@ -35,8 +38,8 @@
             span This means only you will be able to add responses to it
 
       .input-wrapper
-        .btn.btn-warning.pull-left Cancel
-        .btn.btn-success.pull-right#add-task-btn(@click="addTask") {{ (addingTask) ? 'Please wait...' : 'Add Task' }}
+        router-link.btn.btn-danger.pull-left(tag="div" v-bind:to="{ name: 'designdashboard' }") Back
+        .btn.btn-success.pull-right#add-task-btn(@click="addTask" v-if="task.type") {{ (addingTask) ? 'Please wait...' : 'Add Task' }}
         .clearfix
 </template>
 
@@ -50,6 +53,9 @@ export default {
     SplashMessages
   },
   props: ['idea'],
+  mounted () {
+    this.$emit('update:title', 'Add Task')
+  },
   data () {
     return {
       showAdvancedOptions: false,

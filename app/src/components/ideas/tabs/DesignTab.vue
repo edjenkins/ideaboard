@@ -1,15 +1,15 @@
 <template lang="pug">
 
 .tab-content--design
-  h1.tab--header(v-bind:class="{ 'no-parent': (!$route.params.task_id) }")
-    .tab--header--previous(name="home" @click="returnToDash")
+  h1.tab--header(v-bind:class="{ 'no-parent': (!$route.params.task_id && $route.name !== 'addtask') }")
+    router-link.tab--header--previous(v-bind:to="{ name: 'designdashboard' }")
       i.fas.fa-arrow-left
     .tab--header--title
       | {{ title || '' }}
     .tab--header--action(v-if="canDestroy && $route.params.task_id" @click="destroyTask")
       i.fas.fa-trash
 
-  router-view(v-bind:idea="idea" v-bind:title.sync="title" v-on:back="returnToDash")
+  router-view(v-bind:idea="idea" v-bind:title.sync="title")
 
 </template>
 

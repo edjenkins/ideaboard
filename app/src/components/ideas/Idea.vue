@@ -20,7 +20,7 @@
               .notification-bubble(v-if="getNotificationCount(tab.route) > 0") {{ getNotificationCount(tab.route) }}
             .clearfix
           .tabs--page
-            router-view(v-bind:idea="idea" v-on:show-design="showDesign(0)" v-on:toggle-maximise="maximisedView = !maximisedView" keep-alive)
+            router-view(v-bind:idea="idea" v-on:show-design="showDesign(0)" v-on:toggle-maximise="maximisedView = !maximisedView")
       .clearfix
 
 </template>

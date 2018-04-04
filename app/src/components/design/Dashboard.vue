@@ -1,19 +1,29 @@
 <template lang="pug">
 .design-dashboard
 
+  ul.dashboard-controls
+    li(@click="listLayout = !listLayout")
+      p List View
+      span(v-show="listLayout")
+        i.fas.fa-toggle-on
+      span(v-show="!listLayout")
+        i.fas.fa-toggle-off
+    .clearfix
+
   .design-dashboard--tasks
 
     // No tasks
-    .no-tasks(v-if="orderedTasks.length === 0") No tasks added yet!
+    .no-tasks(v-if="orderedTasks.length === 0") {{ loadingTasks ? 'Please wait...' : 'No tasks added yet!' }}
     
-    design-task-tile(v-for="(task, index) in orderedTasks" v-bind:key="index" v-bind:task="task" v-on:loadTask="loadTask(task)")
+    design-task-tile(v-for="(task, index) in orderedTasks" v-bind:key="index" v-bind:task="task" v-on:loadTask="loadTask(task)" v-bind:list-layout="listLayout")
 
     .clearfix
 
   .actions-wrapper
-
-    router-link#add-task(v-if="isAuthenticated" v-bind:to="{ name: 'addtask', params: { id: idea._id} }") Add new task
-    #add-task(v-else @click="checkAuth") Add new task
+    router-link#add-task(v-if="isAuthenticated" v-bind:to="{ name: 'addtask', params: { id: idea._id} }")
+      i.fas.fa-plus
+    #add-task(v-else @click="checkAuth")
+      i.fas.fa-plus
 
 </template>
 
@@ -37,6 +47,7 @@ export default {
   },
   data () {
     return {
+      listLayout: false,
       loadingTasks: false,
       tasks: []
     }
@@ -44,7 +55,7 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated']),
     orderedTasks () {
-      return _.sortBy(this.tasks, ['_responses']).reverse()
+      return _.sortBy(this.tasks, ['pinned', '_responses']).reverse()
     }
   },
   methods: {
@@ -82,14 +93,32 @@ export default {
 
 .design-dashboard
   background-color white
-  padding 25px
   position relative
+
+  ul.dashboard-controls
+    cleanlist()
+    display block
+    padding 10px 10px 0 10px
+    li
+      cleanlist()
+      display inline-block
+      color $color-text-grey
+      text-align right
+      padding 5px 15px
+      p
+        reset()
+        display inline-block
+        line-height 40px
+        margin-right 5px
+      &:hover
+        cursor pointer
 
   .design-dashboard--tasks
     display flex
     justify-content space-between
     flex-wrap wrap
     margin -10px
+    padding 10px 25px 25px 25px
 
     .no-tasks
       color $color-text-grey
@@ -98,39 +127,23 @@ export default {
       text-align center
   
   .actions-wrapper
-    display flex
-    justify-content space-between
-    flex-wrap wrap
-    margin 10px -10px -10px -10px
+    background-color $color-success
     #add-task
       animate()
       border-box()
-      radius(30px)
-      background-color $color-success
       color white
       display block
-      height 60px
-      line-height 60px
-      margin 10px
       overflow hidden
-      padding 0 60px
       position relative
       text-align center
-      flex-basis 100%
       text-decoration none
       svg
         animate()
-        display none
-        color $color-text-grey
-        height 20px
-        right 0
-        padding 19px
-        position absolute
+        color white
+        height 60px
         width 20px
       &:hover
         cursor pointer
         svg
-          background-color $color-primary
-          border-color $color-primary
           color white
 </style>
