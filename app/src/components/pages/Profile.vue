@@ -41,7 +41,6 @@ export default {
   metaInfo: {
     title: 'Profile'
   },
-  props: ['id'],
   components: {
     PageHeader,
     UserCard,
@@ -66,12 +65,6 @@ export default {
         this.$router.push('/')
       }
     },
-    'user': {
-      handler: function (nV, oV) {
-        this.currentUser = this.user
-      },
-      deep: true
-    },
     'currentUser': {
       handler: function (nV) {
         this.editedProfile = {
@@ -81,9 +74,6 @@ export default {
         }
       },
       deep: true
-    },
-    id () {
-      this.loadProfile()
     }
   },
   data () {
@@ -123,11 +113,6 @@ export default {
         }
       })
     },
-    ownProfile () {
-      if (!this.user) return false
-      if (!this.currentUser) return false
-      return this.user._id === this.currentUser._id
-    },
     title () {
       if (!this.user) return false
       if (!this.currentUser) return false
@@ -137,6 +122,9 @@ export default {
       if (!this.user) return false
       if (!this.currentUser) return false
       return this.ownProfile ? 'Here you can update your bio, check out your ideas and much more' : `Check out ${this.currentUser.profile.name}'s profile and their recent activity`
+    },
+    ownProfile () {
+      return !this.$route.params.id || (this.$route.params.id === this.user._id)
     }
   },
   methods: {
@@ -145,7 +133,7 @@ export default {
     },
     loadProfile () {
       API.user.fetch(
-        this.id ? this.id : this.user._id,
+        this.$route.params.id ? this.$route.params.id : this.user._id,
         (response) => {
           console.log(response)
           this.currentUser = response.data

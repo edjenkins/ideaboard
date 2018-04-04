@@ -1,10 +1,10 @@
 <template lang="pug">
 .tab-content--bio
   h1.tab--header.no-parent(v-bind:class="{ editing: isEditing }" v-if="editedProfile && ownProfile")
-    input(v-model="editedProfile.name" v-bind:readonly="!isEditing || !ownProfile")
+    input(v-model="editedProfile.name" placeholder="your name" v-bind:readonly="!isEditing || !ownProfile")
     .tab--header--action(v-if="ownProfile")
-      span#success(v-if="isEditing" @click="isEditing = false; updateProfile()") Save
-      span(v-bind:class="{ editing: isEditing }" @click="toggleEditMode(); cancelUpdate()") {{ (isEditing) ? 'Cancel' : 'Edit' }}
+      span#success(v-if="isEditing" @click="updateProfile()") Done
+      span(v-if="!isEditing" @click="toggleEditMode()") Edit
 
   .tab--content(v-if="editedProfile")
     form.profile-form(v-bind:class="{ editing: isEditing }")
@@ -103,6 +103,7 @@ export default {
         (response) => {
           this.$log(response.data)
           this.$store.commit(types.UPDATE_PROFILE, response.data.profile)
+          this.toggleEditMode()
         },
         (error) => {
           this.$log(error)
@@ -124,6 +125,7 @@ export default {
   text-align left
   
   h1.tab--header
+    padding-right 80px
     .tab--header--action
       span
         margin-left 15px
