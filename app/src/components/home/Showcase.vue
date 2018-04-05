@@ -6,7 +6,7 @@
         ul.showcase
           li(v-for="(showcase, index) in showcases" v-bind:key="index")
             a(v-bind:href="showcase.link")
-              .showcase--image(v-bind:style="{ 'background-image': `url(${ showcase.image })`, 'border-bottom-color': showcase.color }")
+              .showcase--image(v-bind:style="showcase.image | resize('320', '180') | background")
               .showcase--title {{ showcase.title }}
               .showcase--description {{ showcase.description }}
           .clearfix

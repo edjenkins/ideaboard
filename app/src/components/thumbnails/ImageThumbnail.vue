@@ -4,7 +4,7 @@
   .svg(v-if="isSvg")
     img(v-bind:src="file.location")
 
-  .jpg(v-else v-bind:style="[thumbnailStyles, { 'background-image': `url('${file.location}')` }]")
+  .jpg(v-else v-bind:style="thumbnailStyles")
 
 </template>
 
@@ -36,12 +36,15 @@ export default {
       return this.file.mimetype === 'image/svg+xml'
     },
     thumbnailStyles () {
+      // Resize
+      let styles = [this.$options.filters.background(this.$options.filters.resize(this.file.location, '800'))]
       if (typeof this.file.dimensions !== 'undefined' && this.isExpanded) {
         const aspectRatio = (this.file.dimensions.height / this.file.dimensions.width)
-        return {
+        styles.push({
           'padding-bottom': `${aspectRatio * 100}%`
-        }
+        })
       }
+      return styles
     }
   }
 }

@@ -7,7 +7,7 @@ ul#idea-updates
   li.idea-update(v-for="(update, index) in orderedUpdates" v-bind:key="index")
     .user-wrapper
       .user-wrapper--name {{ update._user.profile.name }}
-      .user-wrapper--avatar(v-bind:style="{ 'background-image': `url(${update._user.profile.avatar})` }")
+      .user-wrapper--avatar(v-bind:style="update._user.profile.avatar | resize('80') | background")
     .update-wrapper
       p {{ update.text }}
   li.idea-update

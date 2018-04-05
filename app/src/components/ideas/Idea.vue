@@ -1,6 +1,6 @@
 <template lang="pug">
   #idea(v-bind:class="{ maximised: maximised }")
-    page-header(v-if="idea" v-bind:title="idea.title" v-bind:subtitle="`Started by ${idea._user.profile.name}`" v-bind:image="idea.banner")
+    page-header(v-if="idea" v-bind:title="idea.title" v-bind:subtitle="`Started by ${idea._user.profile.name}`")
     page-header(v-else title="Loading" subtitle="Please wait just a moment...")
     .row(v-if="idea")
 
@@ -12,7 +12,7 @@
           subscribe-button(v-bind:idea="idea" v-on:subscribed="showDesign(2000)")
 
       .content-block.content-block--main.pull-up.pull-left
-        .content-block--banner(v-if="idea.banner" v-bind:style="{ 'background-image': `url(${idea.banner})` }")
+        .content-block--banner(v-if="idea.banner" v-bind:style="idea.banner | resize('720', '200') | background")
         .tabs
           .tabs--selector
             router-link.tabs--selector--item(v-for="(tab, index) in tabs.items" v-bind:key="index" v-bind:to="{ name: tab.route }")

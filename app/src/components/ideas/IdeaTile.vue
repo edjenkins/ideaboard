@@ -1,6 +1,6 @@
 <template lang="pug">
   .idea-tile
-    .idea-tile--banner(v-if="idea.banner" v-bind:style="{ 'background-image': `url(${(idea.banner && idea.banner.location) ? idea.banner.location : idea.banner})` }")
+    .idea-tile--banner(v-if="idea.banner" v-bind:style="(idea.banner && idea.banner.location) ? idea.banner.location : idea.banner | resize('220', '140') | background")
     .idea-tile--body
       .idea-tile--title(v-bind:class="{ 'is-placeholder': !idea.title }") {{ idea.title || 'Example Idea' }}
       .idea-tile--author(v-if="idea._user") {{ idea._user.profile.name }}

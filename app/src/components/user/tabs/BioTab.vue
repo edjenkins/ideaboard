@@ -44,18 +44,9 @@ export default {
   },
   created () {
     this.editedProfile = JSON.parse(JSON.stringify(this.currentUser.profile))
-    API.user.ideas(
-      this.currentUser._id,
-      (response) => {
-        // Idea success
-        this.$log(response)
-        this.ideas = response.data
-      },
-      (error) => {
-        // Idea fail
-        this.$log(error)
-        this.ideas = []
-      })
+    setTimeout(() => {
+      this.fetchIdeas()
+    }, 500)
   },
   watch: {
     'editedProfile': {
@@ -84,6 +75,20 @@ export default {
     ...mapGetters(['user'])
   },
   methods: {
+    fetchIdeas () {
+      API.user.ideas(
+        this.currentUser._id,
+        (response) => {
+          // Idea success
+          this.$log(response)
+          this.ideas = response.data
+        },
+        (error) => {
+          // Idea fail
+          this.$log(error)
+          this.ideas = []
+        })
+    },
     cancelUpdate () {
       this.editedProfile = {
         name: this.user.profile.name,

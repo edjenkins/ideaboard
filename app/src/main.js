@@ -41,6 +41,15 @@ Vue.use(VueAnalytics, {
   }
 })
 
+Vue.filter('resize', function (input, height, width) {
+  width = (!width) ? height : width
+  return `${input.replace(/(.)*ideaboard(.)*.com\//i, `${config.cloudfront}/${height}x${width}/`)}`
+})
+
+Vue.filter('background', function (input) {
+  return { 'background-image': `url(${input})` }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

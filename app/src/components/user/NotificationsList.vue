@@ -1,7 +1,7 @@
 <template lang="pug">
-  .notifications-list-wrapper(v-if="notifications && notifications.length !== 0" v-bind:class="type")
+  .notifications-list-wrapper(v-if="notifications && notifications.length !== 0")
     .notifications-list
-      .notification(v-for="(notification, index) in notifications")
+      .notification(v-for="(notification, index) in notifications" v-bind:class="notification.status")
         h5 {{ notification.text }}
         //- Invitation
         .response-options(v-if="canRespond(notification)")
@@ -52,6 +52,8 @@ export default {
         display inline-block
         line-height 20px
         padding 20px
+      &.read h5
+        color $color-text-grey
       .response-options
         display inline-block
         float right
@@ -60,13 +62,5 @@ export default {
           height 40px
           line-height 40px
           margin 10px
-  &.unread
-    .notifications-list
-      background-color white
-  &.read
-    .notifications-list
-      background-color $color-lightest-grey
-      .notification h5
-        color $color-text-light-grey
 
 </style>

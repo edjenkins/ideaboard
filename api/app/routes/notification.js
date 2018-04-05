@@ -9,14 +9,21 @@ module.exports = function (app, passport) {
   // Get notifications
   app.get('/notifications',
     (req, res) => {
-      Notification.find({ _user: req.user }).exec((err, notifications) => {
-        if (err) { return console.error(err) }
-        res.json({
-          unread: _.filter(notifications, { status: 'unread' }),
-          read: _.chain(notifications).filter({ status: 'read' }).take(3),
-          deleted: _.chain(notifications).filter({ status: 'deleted' }).take(3)
-        })
+      const notifications = [
+        {
+          label: 'joined',
+          text: 'You joined Ideaboard!',
+          status: 'read'
+        }
+      ]
+      // Notification.find({ _user: req.user }).exec((err, notifications) => {
+      //   if (err) { return console.error(err) }
+      res.json({
+        unread: _.filter(notifications, { status: 'unread' }),
+        read: _.chain(notifications).filter({ status: 'read' }).take(3),
+        deleted: _.chain(notifications).filter({ status: 'deleted' }).take(3)
       })
+      // })
     })
   // Get notification
   app.get('/notification/:id',

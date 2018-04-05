@@ -1,6 +1,6 @@
 <template lang="pug">
 .avatar
-  .avatar--image(v-if="typeof profile.avatar !== 'undefined'" v-bind:style="{ 'background-image': `url(${profile.avatar})` }")
+  .avatar--image(v-if="typeof profile.avatar !== 'undefined'" v-bind:style="profile.avatar | resize('120') | background")
   .avatar--icon(v-else)
     svg
       circle(cx="50%" cy="50%" r="50%" v-bind:fill="instanceColor")

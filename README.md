@@ -56,3 +56,10 @@ Add the appropriate configuration to the Caddyfile, this will create a subdomain
 Add a homepage component to the instances directory - /app/src/components/instances/example.vue.
 
 Add configuration for instance - app/src/config.js.
+
+
+## Articles
+
+Serverless image handler (AWS)
+``` https://docs.aws.amazon.com/solutions/latest/serverless-image-handler/deployment.html
+```

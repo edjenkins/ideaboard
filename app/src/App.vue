@@ -23,6 +23,7 @@ export default {
   },
   created () {
     this.$store.dispatch('checkAuthStatus')
+    this.$store.dispatch('getNotifications')
     // Check if authenticated every 10 seconds
     setInterval(() => { this.$store.dispatch('checkAuthStatus') }, 10000)
     // Check for notifcations every 5 seconds
