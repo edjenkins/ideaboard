@@ -169,6 +169,7 @@ export default {
           reset()
           color $color-border
           font-weight bold
+          word-break break-all
         svg
           color $color-border
 

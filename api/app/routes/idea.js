@@ -1,4 +1,4 @@
-const configS3 = require('../../config/s3.js')
+const configAWS = require('../../config/aws.js')
 
 var fetchUrl = require('fetch').fetchUrl
 
@@ -10,12 +10,13 @@ const aws = require('aws-sdk')
 const crypto = require('crypto')
 
 const s3 = new aws.S3({
-  accessKeyId: configS3.accessKeyId,
-  secretAccessKey: configS3.secretAccessKey
+  accessKeyId: configAWS.accessKeyId,
+  secretAccessKey: configAWS.secretAccessKey,
+  region: configAWS.s3Region
 })
 
-const S3_DIR = configS3.dir
-const S3_BUCKET = configS3.bucket
+const S3_DIR = configAWS.s3Dir
+const S3_BUCKET = configAWS.s3Bucket
 
 const Idea = require('../../app/models/idea')
 const Document = require('../../app/models/document')

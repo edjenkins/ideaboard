@@ -90,9 +90,10 @@ export default {
         { response: this.newResponse },
         (response) => {
           this.$log(response)
-          this.responses.push(response.data)
+          // this.responses.push(response.data)
           this.newResponse = undefined
           this.webcamActive = false
+          this.fetchResponses()
         },
         (error) => {
           this.$log(error)

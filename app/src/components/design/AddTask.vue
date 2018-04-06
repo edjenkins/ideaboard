@@ -8,7 +8,7 @@
 
       .input-wrapper
         label(title="Give your task a snappy title") Title
-        input(type="text" v-model="task.title" placeholder="Give your task a name" name="title")
+        input(type="text" v-model="task.title" placeholder="Give your task a name" name="title" autofocus="autofocus")
       .input-wrapper(v-show="task.title.length > 3")
         label(title="Futher details that will help people particpate") Description 
         input(v-model="task.description" name="description" placeholder="Add a detailed description to your task" v-on:keyup.enter="addTask")
