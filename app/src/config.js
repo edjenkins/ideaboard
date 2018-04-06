@@ -1,8 +1,8 @@
 export default {
   domain: 'ideaboard.co.uk',
   driftkey: 'msffsx6pi5gb',
-  cloudfront: 'https://d3dlplqhblvjbc.cloudfront.net',
-  // cloudfront: 'https://cdn.ideaboard.co.uk',
+  cdn1: 'https://cdn.ideaboard.co.uk',
+  cdn2: 'https://cdn2.ideaboard.co.uk',
   gakey: 'UA-44963053-17',
   instances: {
     default: 'myto',

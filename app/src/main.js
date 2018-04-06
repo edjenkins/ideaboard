@@ -43,7 +43,7 @@ Vue.use(VueAnalytics, {
 
 Vue.filter('resize', function (input, height, width) {
   width = (!width) ? height : width
-  return `${input.replace(/(.)*ideaboard(.)*.com\//i, `${config.cloudfront}/${height}x${width}/`)}`
+  return `${input.replace(/(.)*ideaboard(.)*.com\//i, `${config.cdn1}/${height}x${width}/`)}`
 })
 
 Vue.filter('background', function (input) {

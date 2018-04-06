@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import config from '@/config'
 const videojs = require('video.js')
 
 export default {
@@ -25,12 +26,12 @@ export default {
   },
   methods: {
     getLocation (location, type) {
-      location = location.replace('https://ideaboard.s3.eu-west-2.amazonaws.com/uploads/', 'https://s3.eu-west-2.amazonaws.com/ideaboard/encoded/')
+      location = location.replace(`${location.substr(0, location.lastIndexOf('/'))}`, `${config.cdn2}/encoded`)
       location = `${location.substr(0, location.lastIndexOf('.'))}.${type}`
       return location
     },
     getThumbnail (location) {
-      location = location.replace('https://ideaboard.s3.eu-west-2.amazonaws.com/uploads/', 'https://s3.eu-west-2.amazonaws.com/ideaboard/encoded/')
+      location = location.replace(`${location.substr(0, location.lastIndexOf('/'))}`, `${config.cdn2}/encoded`)
       location = `${location.substr(0, location.lastIndexOf('.'))}-00001.png`
       return location
     }

@@ -131,7 +131,7 @@ module.exports = function (app, passport) {
           Playlists: [
             {
               Format: 'MPEG-DASH', // Format: 'HLSv3|HLSv4|MPEG-DASH|Smooth',
-              Name: 'mpegdash',
+              Name: `${key}-mpeg-dash`,
               OutputKeys: [
                 `${key}.fmp4`
               ]
