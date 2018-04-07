@@ -8,7 +8,10 @@
     ul
       li(v-for="(response, index) in responses" v-bind:key="index")
         .response-preview
-          video(controls="true" v-bind:src="response.response.location")
+          video(v-bind:id="`${response.response._id}-video-player`" class="video-js" controls preload="auto")
+            source(v-bind:src="getLocation(response.response.location, 'webm')" type="video/webm")
+            source(v-bind:src="getLocation(response.response.location, 'mp4')" type="video/mp4")
+            source(v-bind:src="getLocation(response.response.location, 'fmp4')" type="video/fmp4")
           .response-meta
             h5 {{ response.response.text || 'No caption' }}
             p Uploaded by {{ response._user.profile.name }}
@@ -48,6 +51,7 @@ import { mapGetters } from 'vuex'
 import API from '@/api'
 import _get from 'lodash/get'
 
+import VideoMixin from '@/mixins/VideoMixin'
 import DesignTask from '@/mixins/DesignTask'
 
 import VueTextareaAutosize from 'vue-textarea-autosize'
@@ -57,6 +61,7 @@ const RecordRTC = require('recordrtc')
 export default {
   name: 'webcam',
   mixins: [
+    VideoMixin,
     DesignTask
   ],
   components: {
@@ -261,6 +266,7 @@ export default {
       margin 20px 10px 0 0
 
 .responses
+  margin-bottom 20px
   ul
     cleanlist()
     li
@@ -299,5 +305,13 @@ export default {
           left 0
           top 0
           width 200px
+        @media(max-width: 458px)
+          height auto
+          padding-left 0
+          .response-meta
+            min-height 0
+          video
+            position relative
+            width 100%
 </style>
 

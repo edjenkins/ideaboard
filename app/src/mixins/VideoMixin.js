@@ -1,0 +1,21 @@
+import config from '@/config'
+
+const videojs = require('video.js')
+
+export default {
+  mounted () {
+    videojs(`${this.file._id}-video-player`, {}, function onPlayerReady () {})
+  },
+  methods: {
+    getLocation (location, type) {
+      location = location.replace(`${location.substr(0, location.lastIndexOf('/'))}`, `${config.cdn2}/encoded`)
+      location = `${location.substr(0, location.lastIndexOf('.'))}.${type}`
+      return location
+    },
+    getThumbnail (location) {
+      location = location.replace(`${location.substr(0, location.lastIndexOf('/'))}`, `${config.cdn2}/encoded`)
+      location = `${location.substr(0, location.lastIndexOf('.'))}-00001.png`
+      return location
+    }
+  }
+}
