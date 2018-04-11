@@ -1,4 +1,4 @@
-version: "2"
+version: "2.3"
 
 services:
 
@@ -19,24 +19,10 @@ services:
 
   api:
     build: ./api
+    scale: 2
     restart: always
     volumes:
       - ./api:/app
-    ports:
-      - "3000:3000"
-    links:
-      - redis
-      - mongo
-    depends_on:
-      - redis
-
-  api2:
-    build: ./api
-    restart: always
-    volumes:
-      - ./api:/app
-    ports:
-      - "3001:3000"
     links:
       - redis
       - mongo
