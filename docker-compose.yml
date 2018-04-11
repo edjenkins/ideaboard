@@ -5,7 +5,7 @@ services:
   app:
     image: zzrot/alpine-caddy
     ports:
-      - 80:80 #8083:80
+      - 80:80
       - 443:443
     environment:
       - API_ADDRESS
@@ -23,6 +23,19 @@ services:
       - ./api:/app
     ports:
       - "3000:3000"
+    links:
+      - redis
+      - mongo
+    depends_on:
+      - redis
+
+  api2:
+    build: ./api
+    restart: always
+    volumes:
+      - ./api:/app
+    ports:
+      - "3001:3000"
     links:
       - redis
       - mongo
