@@ -15,6 +15,12 @@ npm install
 # Run npm build process
 npm run build
 
+# Empty serve dir
+rm -r serve/*
+
+# Copy built app into serve dir
+cp -R dist/* serve
+
 # Move back out of app dir
 cd ..
 
