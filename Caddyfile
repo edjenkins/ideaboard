@@ -72,7 +72,7 @@ wingrove.ideaboard.co.uk {
 
 api.ideaboard.co.uk {
   proxy / api_1:3000 api_2:3000 {
-    health_check /
+    health_check /health
     health_check_interval 10s
   }
 }
