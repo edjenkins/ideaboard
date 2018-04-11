@@ -3,7 +3,8 @@
     h1.tab--header.no-parent
       .tab--header--title Manage Permissions
       .tab--header--action(@click="expanded = !expanded")
-        i.fas(v-bind:class="[expanded ? 'fa-angle-up' : 'fa-angle-down']")
+        span(v-show="expanded") #[i.fas.fa-angle-up]
+        span(v-show="!expanded") #[i.fas.fa-angle-down]
 
     .tab--content(v-if="expanded")
       table(border="0")
@@ -17,7 +18,8 @@
           td(v-bind:title="user.local.email")
             strong {{ user.profile.name }}
           td(v-for="(permission, index) in permissions" v-bind:class="{ 'has-permission': hasPermission(user, permission) }" align="center")
-            i.fas(v-bind:class="[hasPermission(user, permission) ? 'fa-check' : 'fa-times']")
+            span(v-show="hasPermission(user, permission)") #[i.fas.fa-check]
+            span(v-show="!hasPermission(user, permission)") #[i.fas.fa-times]
             
           td(align="center")
             i.fas.fa-ban

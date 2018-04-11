@@ -4,7 +4,7 @@
       .row
         .content-block
           .content-block--body
-            h1 Sense My Street
+            h1 Wingrove
             h3 A place for idea development
     
     splash-image(align="center" title="Collaborative" subtitle="Ideaboard brings people together in an online space to ask questions and make decisions." action="Learn More" link="/learn" image="")

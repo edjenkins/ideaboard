@@ -2,6 +2,7 @@
   #explore
     page-header(title="Explore Ideas" subtitle="Find something that interests you and begin an engaging design process with friends.")
     idea-filter(v-on:reload="fetchIdeas" v-bind:sort-type.sync="sortType" v-bind:current-category.sync="currentCategory" v-bind:search-query.sync="searchQuery")
+    .no-results(v-if="orderedIdeas.length === 0") No results
     .row#explore-row
       .passcode-block(v-if="currentCategory && currentCategory.passcode && (userPasscode !== currentCategory.passcode)")
         h2 Passcode required
@@ -91,9 +92,20 @@ export default {
     reset()
     color $color-text-grey
     font-weight normal 
+
+  .no-results
+    background alpha(white, 0.2)
+    color $color-text-grey
+    margin 20px auto
+    max-width $page-width - 40px
+    padding 100px 20px
+    @media(max-width: 1040px)
+      width calc(100% - 80px)
+
   .row#explore-row
     padding 10px
     max-width $page-width + 20px
+
     .content-block--tile
       box-sizing border-box
       margin 10px

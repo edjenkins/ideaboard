@@ -3,7 +3,8 @@
     h1.tab--header.no-parent
       .tab--header--title Invitations
       .tab--header--action(@click="expanded = !expanded")
-        i.fas(v-bind:class="[expanded ? 'fa-angle-up' : 'fa-angle-down']")
+        span(v-show="expanded") #[i.fas.fa-angle-up]
+        span(v-show="!expanded") #[i.fas.fa-angle-down]
 
     .tab--content(v-if="expanded")
       

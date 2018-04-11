@@ -5,7 +5,7 @@ export default {
   cdn2: 'https://cdn2.ideaboard.co.uk',
   gakey: 'UA-44963053-17',
   instances: {
-    default: 'myto',
+    default: 'master',
     master: {
       color: '#0099D0'
     },
@@ -30,8 +30,12 @@ export default {
       subdomain: 'sensemystreet'
     },
     myto: {
-      color: '#0B9BD0', // '#EE3746', // '#AA2250', // 62C2BE // AA2250
+      color: '#0B9BD0',
       subdomain: 'myto'
+    },
+    wingrove: {
+      color: '#096c90',
+      subdomain: 'wingrove'
     }
   }
 }

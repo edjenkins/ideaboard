@@ -5,18 +5,19 @@
 
         .sort-wrapper
           ul#sort-tabs
-            li(@click="toggleCategories()")
+            li.category-dropdown(@click="toggleCategories()" v-bind:class="{ 'has-categories': categories.length > 0 }")
               | {{ currentCategory ? currentCategory.name : '' }}
               i.fas.fa-angle-down
               
             //- li(@click="toggleSortType()") {{ sortType }}
-          #search(v-bind:class="{ active: searchVisible }" @click="toggleSearch()") {{ searchVisible ? 'Cancel' : 'Search' }}
+          #search(v-bind:class="{ active: searchVisible }" @click="toggleSearch()")
+            i.fas.fa-search
           .clearfix
 
         category-filter(v-bind:categories.sync="categories")
 
         .search-wrapper
-          input(ref="search" v-model="searchQuery" type="text" placeholder="Search Ideas...")
+          input(ref="search" v-model="searchQuery" type="text" placeholder="What are you looking for?")
 
         .clearfix
 
@@ -137,6 +138,14 @@ export default {
             position absolute
             top 9px
             right 10px
+          &.category-dropdown
+            pointer-events none
+            svg
+              display none
+            &.has-categories
+              pointer-events all
+              svg
+                display block
           @media(max-width: 568px)
             max-width 180px
           &:hover
@@ -152,7 +161,8 @@ export default {
         float right
         line-height $filter-height - 26px
         margin (26px / 2) 15px
-        padding 0 15px
+        padding 0
+        width $filter-height - 26px
         &:hover
           background-color alpha(black, 0.1)
           cursor pointer

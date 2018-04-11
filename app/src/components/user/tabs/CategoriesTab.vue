@@ -4,7 +4,8 @@
   h1.tab--header.no-parent
     .tab--header--title Manage
     .tab--header--action(@click="viewCategories")
-      i.fas(v-bind:class="[viewingCategories ? 'fa-angle-up' : 'fa-angle-down']")
+      span(v-show="viewingCategories") #[i.fas.fa-angle-up]
+      span(v-show="!viewingCategories") #[i.fas.fa-angle-down]
 
   .tab--content(v-if="viewingCategories")
 
@@ -18,7 +19,8 @@
   h1.tab--header.no-parent
     .tab--header--title Add new
     .tab--header--action(@click="addCategory")
-      i.fas(v-bind:class="[addingCategory ? 'fa-angle-up' : 'fa-angle-down']")
+      span(v-show="addingCategory") #[i.fas.fa-angle-up]
+      span(v-show="!addingCategory") #[i.fas.fa-angle-down]
 
   .tab--content(v-if="addingCategory")
     .tab-section--body
