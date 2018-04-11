@@ -152,7 +152,9 @@ module.exports = function (app, passport) {
       let comment = await Comment.findOne({ _id: req.body.id })
 
       const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
-      const canDestroy = (isModerator || comment._user._id === req.user._id)
+      const canDestroy = (isModerator || (comment._user._id.toString() === req.user._id.toString()))
+      console.log(canDestroy)
+      
       if (!canDestroy) return res.status(401)
       
       Comment.findOneAndUpdate(
@@ -160,6 +162,8 @@ module.exports = function (app, passport) {
         { destroyed: new Date() },
         { upsert: true },
         (err, comment) => {
+          if (err) console.error(err)
+          
           res.json({ comment: comment })
         })
     })

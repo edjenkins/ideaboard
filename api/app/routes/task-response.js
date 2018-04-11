@@ -158,7 +158,7 @@ module.exports = function (app, passport) {
       let taskresponse = await TaskResponse.findOne({ _id: req.body.id })
 
       const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
-      const canDestroy = (isModerator || taskresponse._user._id === req.user._id)
+      const canDestroy = (isModerator || taskresponse._user._id.toString() === req.user._id.toString())
       if (!canDestroy) return res.status(401)
 
       TaskResponse.findOneAndUpdate(

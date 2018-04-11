@@ -174,7 +174,7 @@ module.exports = function (app, passport) {
       let idea = await Idea.findOne({ _id: req.body.id })
 
       const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
-      const canEdit = (isModerator || idea._user._id === req.user._id)
+      const canEdit = (isModerator || idea._user._id.toString() === req.user._id.toString())
       if (!canEdit) return res.status(401)
       
       idea = await Idea.findOneAndUpdate({ _id: req.body._id, instance: req.instance }, req.body)
