@@ -15,6 +15,7 @@ services:
       - ./.caddy:/root/.caddy
     links:
       - api
+      - api2
 
   api:
     build: ./api
