@@ -71,5 +71,7 @@ wingrove.ideaboard.co.uk {
 }
 
 api.ideaboard.co.uk {
-  proxy / api:3000 api2:3001
+  proxy / api:3000 api2:3001 {
+    health_check /
+  }
 }
