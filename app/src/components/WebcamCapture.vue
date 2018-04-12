@@ -177,7 +177,7 @@ export default {
       left 0
       top 0
   .webcam-actions
-    margin 0 -10px
+    margin 0 -10px 20px -10px
     .btn
       float left
       margin 20px 10px 0 10px

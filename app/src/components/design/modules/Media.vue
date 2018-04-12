@@ -21,7 +21,7 @@
       p
         i.fas.fa-camera
     .clearfix
-    webcam-capture(v-show="webcamActive && !newResponse" v-bind:captured-file.sync="newResponse" v-bind:is-active.sync="webcamActive")
+    webcam-capture(v-show="webcamActive" v-bind:captured-file.sync="newResponse" v-bind:is-active.sync="webcamActive")
 
     .submit(v-if="newResponse")
       .response-composer
