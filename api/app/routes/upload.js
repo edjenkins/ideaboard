@@ -30,7 +30,7 @@ const upload = multer({
       fileSize: 52428800
     },
     contentType: (req, file, cb) => {
-      // console.log(req.file)
+      console.log(req.file)
       switch (file.mimetype) {
         case 'image/svg+xml':
           return cb(null, 'image/svg+xml')
