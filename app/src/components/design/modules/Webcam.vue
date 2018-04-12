@@ -22,7 +22,7 @@
 
   .response-composer(v-show="camera && splashmessages.length === 0")
     .webcam-wrapper(v-if="isAuthenticated && !newResponse.location")
-      video#video(ref="video" showcontrols="false" autoplay="true" muted="muted")
+      video#video(ref="video" showcontrols="false" autoplay muted)
     
     .webcam-controls(v-if="isAuthenticated && !newResponse.location")
       //- p {{ recorder ? recorder.state : 'unknown' }}
@@ -33,7 +33,7 @@
       .response-preview
         .webcam-wrapper
           video#video-preview(ref="videopreview" controls="true" autoplay="true" loop="true" v-bind:src="newResponse.location")
-        textarea-autosize(name="composer-textarea" ref="textarea" rows="1" @keydown.native.enter.prevent.stop="submitResponse" placeholder="Caption video..." v-model="newResponseText" v-bind:min-height="10" v-bind:max-height="200")
+        textarea-autosize(name="composer-textarea" ref="textarea" rows="1" @keydown.native.enter.prevent.stop="submitResponse" placeholder="Caption video..." v-model="newResponseText" v-bind:min-height="49" v-bind:max-height="200")
         .clearfix
 
       .response-controls
@@ -96,13 +96,13 @@ export default {
     }
   },
   beforeRouteLeave (to, from, next) {
-    this.recorder.stopRecording()
-    this.camera.stop()
+    if (this.recorder) this.recorder.stopRecording()
+    if (this.camera) this.camera.stop()
     next()
   },
   beforeDestroy () {
-    this.recorder.stopRecording()
-    this.camera.stop()
+    if (this.recorder) this.recorder.stopRecording()
+    if (this.camera) this.camera.stop()
   },
   mounted () {
     this.fetchResponses()
@@ -187,6 +187,7 @@ export default {
         this.camera = camera
         this.$refs.video.srcObject = this.camera
         this.$refs.video.play()
+        this.$refs.video.muted = true
         this.recorder = RecordRTC(camera, {
           type: 'video',
           mimeType: 'video/webm\;codecs=vp9',

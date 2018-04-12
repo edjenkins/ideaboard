@@ -1,11 +1,11 @@
 <template lang="pug">
 .webcam-capture
   splash-messages(v-bind:messages="splashmessages")
-  .webcam-output(v-show="localCapturedFile")
+  .webcam-output(v-show="captured")
     img(ref="photo")
   .webcam-wrapper(v-if="isActive && !localCapturedFile && (splashmessages.length === 0)")
-    canvas(ref="canvas")
-    video#video(ref="video" showcontrols="false" autoplay="true" muted="muted")  
+    canvas(ref="canvas" v-show="!captured")
+    video#video(ref="video" showcontrols="false" autoplay muted v-show="!captured")
   .clearfix
 
   .webcam-actions
@@ -36,6 +36,7 @@ export default {
     return {
       splashmessages: [],
       capturing: false,
+      captured: false,
       localCapturedFile: false,
       bitrate: 200000,
       recorder: undefined,
@@ -58,13 +59,13 @@ export default {
     }
   },
   beforeRouteLeave (to, from, next) {
-    this.recorder.stopRecording()
-    this.camera.stop()
+    if (this.recorder) this.recorder.stopRecording()
+    if (this.camera) this.camera.stop()
     next()
   },
   beforeDestroy () {
-    this.recorder.stopRecording()
-    this.camera.stop()
+    if (this.recorder) this.recorder.stopRecording()
+    if (this.camera) this.camera.stop()
   },
   methods: {
     uploadCapture (blob) {
@@ -94,6 +95,8 @@ export default {
     reset () {
       this.$emit('update:capturedFile', undefined)
       this.localCapturedFile = undefined
+      this.captured = false
+      this.capturing = false
       this.loadCameraStream()
     },
     capture () {
@@ -112,6 +115,7 @@ export default {
           this.uploadCapture(blob)
         }, 'image/jpeg', 0.95)
         this.capturing = false
+        this.captured = true
       }, 50)
     },
     captureCamera (callback) {
@@ -124,7 +128,7 @@ export default {
       })
     },
     loadCameraStream () {
-      navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((camera) => {
+      navigator.mediaDevices.getUserMedia({ audio: false, video: true }).then((camera) => {
         this.camera = camera
         this.$refs.video.srcObject = this.camera
         this.$refs.video.play()
