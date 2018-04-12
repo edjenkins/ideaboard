@@ -45,6 +45,10 @@ const upload = multer({
     acl: 'public-read',
     cacheControl: 'max-age=31536000', // Cache for a year
     metadata: function (req, file, cb) {
+      console.log('2 ->')
+      console.log(file)
+      console.log(req.file)
+      console.log('<- 2')
       cb(null, { fieldName: file.fieldname })
     },
     key: function (req, file, cb) {
@@ -61,10 +65,10 @@ module.exports = function (app, passport) {
     async (req, res, next) => {
 
       // Log uploaded file details
-      console.log('2 ->')
+      console.log('3 ->')
       console.log(req.file)
       console.log(req.file.mimetype)
-      console.log('<- 2')
+      console.log('<- 3')
       
       // Images
       if (req.file.mimetype.startsWith('image')) {
