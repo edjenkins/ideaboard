@@ -4,11 +4,10 @@
     .row
       .content-block.pull-up.white-block
         .content-block--body
-          p Say goodbye to surveys!
-          p Ideaboard is a revolutionary new way of involving your audience in shaping your latest idea. More than just a feedback tool, Ideaboard lets a community come together to collaboratively design any project.
-          p Want to involve your students in the design of a course? How about planning your upcoming event with the help of attendees? Or do you simply want a place where your bookclub buddies can hang out, chat and plan meetups? Ideaboard does all this and more.
-          p Getting started on Ideaboard is easy, with a few clicks you can launch your idea page and start inviting people to collaborate and subscribe.
-          p Start the conversation straight away in the general discussion, and use custom polls, schedulers and other talking points to start involving your subscribers in shaping your idea.
+          p Ideaboard is a new way of involving your friends/community/colleagues in shaping your latest idea. More than just a feedback tool, Ideaboard is a collaborative space to develop any project.
+          p Want to involve students in the design of a course? How about planning your upcoming event with the help of attendees? Or do you simply want a place where your bookclub buddies can hang out, chat and plan meetups? Ideaboard does all this and more.
+          p Getting started on Ideaboard is easy, with a few clicks you can launch an idea page and start inviting people to subscribe and collaborate.
+          p Start the conversation straight away in the general discussion, then you and your community can add 'tasks' such as polls and discussions to help shape your idea.
           p You can post regular updates to keep everyone notified, and use our custom planning tools to organise your idea. 
           p What makes Ideaboard different?
           p Unlike other platforms, Ideaboard is designed with community at its heart. We believe that any idea can be improved by including more passionate voices. That’s why all our tools are open for everyone to use.
@@ -36,7 +35,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-@import '~stylus/shared'
-</style>
