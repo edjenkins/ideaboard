@@ -30,7 +30,9 @@ const upload = multer({
       fileSize: 52428800
     },
     contentType: (req, file, cb) => {
+      console.log('1 ->')
       console.log(file)
+      console.log('<- 1')
       
       switch (file.mimetype) {
         case 'image/svg+xml':
@@ -59,8 +61,10 @@ module.exports = function (app, passport) {
     async (req, res, next) => {
 
       // Log uploaded file details
+      console.log('2 ->')
       console.log(req.file)
       console.log(req.file.mimetype)
+      console.log('<- 2')
       
       // Images
       if (req.file.mimetype.startsWith('image')) {
@@ -79,7 +83,7 @@ module.exports = function (app, passport) {
                 resolve()
               }
             }).on('error', function (err) {
-              console.log(err)
+              console.error(err)
               resolve()
             })
           })
@@ -146,6 +150,7 @@ module.exports = function (app, passport) {
           if (err) console.error(err)
           console.log(data)
         })
+        console.log('jobResult')
         console.log(jobResult)
       }
 
