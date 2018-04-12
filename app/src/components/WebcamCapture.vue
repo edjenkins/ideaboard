@@ -52,19 +52,19 @@ export default {
       }
     },
     capturedFile (nV, oV) {
-      if (nV !== oV && typeof nV === 'undefined') {
+      if (nV !== oV && typeof nV === 'undefined' && this.isActive) {
         this.reset()
       }
     }
   },
   beforeRouteLeave (to, from, next) {
-    if (this.recorder) this.recorder.stopRecording()
-    if (this.camera) this.camera.stop()
+    this.recorder.stopRecording()
+    this.camera.stop()
     next()
   },
   beforeDestroy () {
-    if (this.recorder) this.recorder.stopRecording()
-    if (this.camera) this.camera.stop()
+    this.recorder.stopRecording()
+    this.camera.stop()
   },
   methods: {
     uploadCapture (blob) {
@@ -85,8 +85,8 @@ export default {
       if (!this.isActive) {
         this.loadCameraStream()
       } else {
-        if (this.recorder) this.recorder.stopRecording()
-        if (this.camera) this.camera.stop()
+        this.recorder.stopRecording()
+        this.camera.stop()
       }
       this.$emit('update:isActive', !this.isActive)
       
