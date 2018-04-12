@@ -2,7 +2,7 @@
   #explore
     page-header(title="Explore Ideas" subtitle="Find something that interests you and begin an engaging design process with friends.")
     idea-filter(v-on:reload="fetchIdeas" v-bind:sort-type.sync="sortType" v-bind:current-category.sync="currentCategory" v-bind:search-query.sync="searchQuery")
-    .no-results(v-if="orderedIdeas.length === 0") No results
+    .no-results(v-if="orderedIdeas.length === 0") {{ loading ? 'Loading...' : 'No results' }}
     .row#explore-row
       .passcode-block(v-if="currentCategory && currentCategory.passcode && (userPasscode !== currentCategory.passcode)")
         h2 Passcode required
@@ -41,7 +41,8 @@ export default {
       sortType: 'Recent',
       passcodeRequired: false,
       searchQuery: '',
-      ideas: []
+      ideas: [],
+      loading: false
     }
   },
   computed: {
@@ -63,6 +64,7 @@ export default {
   methods: {
     fetchIdeas () {
       const categoryId = (this.currentCategory) ? this.currentCategory._id : undefined
+      this.loading = true
       API.idea.explore(
         categoryId,
         (response) => {
@@ -73,10 +75,12 @@ export default {
           } else {
             this.ideas = response.data
           }
+          this.loading = false
         },
         (error) => {
           // Idea fail
           this.$log(error)
+          this.loading = false
         })
     }
   }
