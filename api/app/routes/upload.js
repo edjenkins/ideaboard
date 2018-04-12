@@ -30,7 +30,6 @@ const upload = multer({
       fileSize: 52428800
     },
     contentType: (req, file, cb) => {
-      console.log(req)
       console.log(file)
       
       switch (file.mimetype) {
@@ -90,6 +89,8 @@ module.exports = function (app, passport) {
         req.file.dimensions = await dimensionsPromise
       }
 
+      console.log(`req.file.mimetype - ${req.file.mimetype}`)
+
       // Videos
       if (req.file.mimetype.startsWith('video')) {
         aws.config.update({ region: ELASTIC_REGION })
@@ -101,6 +102,8 @@ module.exports = function (app, passport) {
         const inputKey = req.file.key
         let key = inputKey.substr(0, inputKey.lastIndexOf('.'))
         key = key.replace('uploads/', '')
+
+        console.log('Creating elastic transcoder job...')
         
         const jobResult = await transcoder.createJob({
           PipelineId: ELASTIC_PIPELINE,
