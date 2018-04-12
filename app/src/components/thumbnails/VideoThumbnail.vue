@@ -1,7 +1,7 @@
 <template lang="pug">
 
 .video-thumbnail
-  video(v-bind:id="`${file._id}-video-player`" class="video-js" controls preload="auto")
+  video(class="video-js" controls preload="auto")
     source(v-bind:src="getLocation(file.location, 'mp4')" type="video/mp4")
     source(v-bind:src="getLocation(file.location, 'fmp4')" type="video/fmp4")
     source(v-bind:src="getLocation(file.location, 'webm')" type="video/webm")

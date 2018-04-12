@@ -4,7 +4,10 @@ const videojs = require('video.js')
 
 export default {
   mounted () {
-    videojs(`${this.file._id}-video-player`, {}, function onPlayerReady () {})
+    const videos = document.getElementsByClassName('video-js')
+    for (var i = 0; i < videos.length; i++) {
+      videojs(videos[i]).ready(function () { })
+    }
   },
   methods: {
     getLocation (location, type) {

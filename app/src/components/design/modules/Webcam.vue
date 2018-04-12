@@ -8,7 +8,7 @@
     ul
       li(v-for="(response, index) in responses" v-bind:key="index")
         .response-preview
-          video(v-bind:id="`${response.response._id}-video-player`" class="video-js" controls preload="auto")
+          video(class="video-js" controls preload="auto")
             source(v-bind:src="getLocation(response.response.location, 'mp4')" type="video/mp4")
             source(v-bind:src="getLocation(response.response.location, 'fmp4')" type="video/fmp4")
             source(v-bind:src="getLocation(response.response.location, 'webm')" type="video/webm")
