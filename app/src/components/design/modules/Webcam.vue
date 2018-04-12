@@ -96,13 +96,13 @@ export default {
     }
   },
   beforeRouteLeave (to, from, next) {
-    if (this.recorder) this.recorder.stopRecording()
-    if (this.camera) this.camera.stop()
+    this.recorder.stopRecording()
+    this.camera.stop()
     next()
   },
   beforeDestroy () {
-    if (this.recorder) this.recorder.stopRecording()
-    if (this.camera) this.camera.stop()
+    this.recorder.stopRecording()
+    this.camera.stop()
   },
   mounted () {
     this.fetchResponses()
