@@ -50,13 +50,13 @@ mongoose.connect(configDB.url, { useMongoClient: true }) // connect to our datab
 // set up our express application
 app.use(morgan('dev')) // log every request to the console
 app.use(cookieParser()) // read cookies (needed for auth)
-app.use(bodyParser())
-app.use(bodyParser.urlencoded({
-  extended: true,
-  parameterLimit: 100000,
-  limit: '200mb'
-}))
-app.use(bodyParser.json())
+// app.use(bodyParser())
+// app.use(bodyParser.urlencoded({
+//   extended: true,
+//   parameterLimit: 100000,
+//   limit: '200mb'
+// }))
+// app.use(bodyParser.json())
 
 app.use(session({
   store: new RedisStore({
