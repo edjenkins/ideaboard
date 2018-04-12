@@ -71,9 +71,9 @@ wingrove.ideaboard.co.uk {
 }
 
 api.ideaboard.co.uk {
+  timeouts 10m
   proxy / api_1:3000 api_2:3000 api_3:3000 api_4:3000 api_5:3000 {
     health_check /health
     health_check_interval 10s
-    timeouts 10m
   }
 }
