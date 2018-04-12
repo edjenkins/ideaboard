@@ -1,3 +1,10 @@
+timeouts {
+	read 1m
+	header 1m
+	write 10m
+	idle 1m
+}
+
 ideaboard.co.uk {
   root /var/www/html
   tls hello@ideaboard.co.uk
