@@ -26,14 +26,7 @@ const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: S3_BUCKET,
-    limits: {
-      fileSize: 52428800
-    },
     contentType: (req, file, cb) => {
-      console.log('1 ->')
-      console.log(file)
-      console.log('<- 1')
-      
       switch (file.mimetype) {
         case 'image/svg+xml':
           return cb(null, 'image/svg+xml')
@@ -45,14 +38,10 @@ const upload = multer({
     acl: 'public-read',
     cacheControl: 'max-age=31536000', // Cache for a year
     metadata: function (req, file, cb) {
-      console.log('2 ->')
-      console.log(file)
-      console.log(req.file)
-      console.log('<- 2')
       cb(null, { fieldName: file.fieldname })
     },
     key: function (req, file, cb) {
-      crypto.pseudoRandomBytes(16, function (err, raw) {
+      crypto.pseudoRandomBytes(16, (err, raw) => {
         if (err) console.error(err)
         cb(null, S3_DIR + '/' + raw.toString('hex') + Date.now() + '.' + mime.extension(file.mimetype))
       })
