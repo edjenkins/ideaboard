@@ -21,6 +21,7 @@
 import Vue from 'vuex'
 import API from '@/api'
 import { mapGetters } from 'vuex'
+import MobileDetect from 'mobile-detect'
 
 import SplashMessages from '@/components/shared/SplashMessages'
 
@@ -31,6 +32,20 @@ export default {
   props: ['capturedFile', 'isActive'],
   components: {
     SplashMessages
+  },
+  beforeRouteLeave (to, from, next) {
+    if (this.recorder) this.recorder.stopRecording()
+    if (this.camera) this.camera.stop()
+    next()
+  },
+  beforeDestroy () {
+    if (this.recorder) this.recorder.stopRecording()
+    if (this.camera) this.camera.stop()
+  },
+  mounted () {
+    if (this.isMobile) {
+      this.splashmessages = [{ text: 'Mobile device recording not yet supported!', type: 'error' }]
+    }
   },
   data () {
     return {
@@ -44,7 +59,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuthenticated'])
+    ...mapGetters(['isAuthenticated']),
+    isMobile () {
+      const md = new MobileDetect(window.navigator.userAgent)
+      return md.mobile()
+    }
   },
   watch: {
     isActive (nV, oV) {
@@ -57,15 +76,6 @@ export default {
         this.reset()
       }
     }
-  },
-  beforeRouteLeave (to, from, next) {
-    if (this.recorder) this.recorder.stopRecording()
-    if (this.camera) this.camera.stop()
-    next()
-  },
-  beforeDestroy () {
-    if (this.recorder) this.recorder.stopRecording()
-    if (this.camera) this.camera.stop()
   },
   methods: {
     uploadCapture (blob) {
@@ -86,8 +96,8 @@ export default {
       if (!this.isActive) {
         this.loadCameraStream()
       } else {
-        this.recorder.stopRecording()
-        this.camera.stop()
+        if (this.recorder) this.recorder.stopRecording()
+        if (this.camera) this.camera.stop()
       }
       this.$emit('update:isActive', !this.isActive)
       
@@ -119,7 +129,9 @@ export default {
       }, 50)
     },
     captureCamera (callback) {
+      if (this.isMobile) return
       if (this.camera) callback(this.camera)
+
       navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((camera) => {
         callback(camera)
       }).catch(function (error) {
@@ -128,6 +140,8 @@ export default {
       })
     },
     loadCameraStream () {
+      if (this.isMobile) return
+
       navigator.mediaDevices.getUserMedia({ audio: false, video: true }).then((camera) => {
         this.camera = camera
         this.$refs.video.srcObject = this.camera

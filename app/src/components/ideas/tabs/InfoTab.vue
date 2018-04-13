@@ -3,7 +3,13 @@
   .tab--content
     .ql-container.ql-bubble.ql-editor(v-if="!editing" v-html="idea.description")
 
-    quill-editor(v-if="editing" v-model="newDescription" ref="myQuillEditor" v-bind:options="editorOption")
+    .edit-view(v-if="editing")
+      .input-wrapper
+        label Title
+        input(v-if="editing" v-model="editedIdea.title")
+      
+      .input-wrapper
+        quill-editor(v-if="editing" v-model="editedIdea.description" ref="myQuillEditor" v-bind:options="editorOption")
 
     .info-actions
       .btn-fab(@click="toggleEditing" v-bind:class="[editing ? 'btn-danger' : 'btn-grey']")
@@ -11,7 +17,7 @@
           i.fas.fa-pencil-alt
         span(v-show="editing")
           i.fas.fa-undo
-      .btn-fab.btn-success(v-show="editing" @click="updatedIdea")
+      .btn-fab.btn-success(v-show="editing" @click="updateIdea")
         i.fas.fa-check
 
   .tab--footer
@@ -50,7 +56,10 @@ export default {
   data () {
     return {
       editing: false,
-      newDescription: '',
+      editedIdea: {
+        title: undefined,
+        description: undefined
+      },
       editorOption: {
         theme: 'bubble',
         placeholder: 'Describe your idea in more detail',
@@ -73,18 +82,19 @@ export default {
   methods: {
     toggleEditing () {
       this.editing = !this.editing
-      this.newDescription = this.idea.description
+      this.editedIdea.title = this.idea.title
+      this.editedIdea.description = this.idea.description
     },
     viewDesign () {
       this.$emit('show-design')
     },
-    updatedIdea () {
+    updateIdea () {
       API.idea.update(
-        { _id: this.$route.params.id, description: this.newDescription },
+        { _id: this.$route.params.id, title: this.editedIdea.title, description: this.editedIdea.description },
         (response) => {
           this.$log(response)
-          this.idea.description = response.data.idea.description
           this.editing = false
+          this.$emit('update:idea', response.data.idea)
         },
         (error) => {
           this.$log(error)

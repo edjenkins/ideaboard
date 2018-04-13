@@ -4,6 +4,9 @@ import FeaturedIdeas from '@/components/ideas/FeaturedIdeas'
 import Showcase from '@/components/home/Showcase'
 import SplashImage from '@/components/home/SplashImage'
 
+import Collaborate from '@/components/home/Collaborate'
+import Ready from '@/components/home/Ready'
+
 import PageHeader from '@/components/PageHeader'
 import SiteFooter from '@/components/navigation/SiteFooter'
 
@@ -15,6 +18,8 @@ export default {
     FeaturedIdeas,
     Showcase,
     SplashImage,
+    Collaborate,
+    Ready,
     PageHeader,
     SiteFooter
   },

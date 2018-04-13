@@ -8,7 +8,7 @@
       p Please create an account or login to get started
 
       //- a.oauth-button#facebook(v-bind:href="oAuthLink('facebook')" target="_self") Continue with Facebook
-      .oauth-button#primary(@click="redirectToJoin") Get Started
+      .oauth-button#success(@click="redirectToJoin") Get Started
       //- .oauth-button.minimal.split(@click="redirectToJoin") Login
       .clearfix
 

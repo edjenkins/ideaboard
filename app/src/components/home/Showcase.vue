@@ -55,6 +55,7 @@ export default {
 @import '~stylus/home'
 
 #showcase
+  background-color $color-lightest-grey
   .content-block
     ul.showcase
       cleanlist()

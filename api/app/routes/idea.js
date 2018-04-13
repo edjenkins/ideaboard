@@ -178,7 +178,8 @@ module.exports = function (app, passport) {
       if (!canEdit) return res.status(401)
       
       idea = await Idea.findOneAndUpdate({ _id: req.body._id, instance: req.instance }, req.body)
-      idea = await Idea.findOne({ _id: req.body.id })
+      console.log(idea)
+      idea = await Idea.findOne({ _id: req.body._id })
       res.json({ idea })
     })
   // Subscribe authenticated user to idea

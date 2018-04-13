@@ -18,7 +18,7 @@
   
   splash-messages(v-bind:messages="splashmessages")
   
-  .btn.btn-primary.full-width(v-if="!camera && (splashmessages.length === 0)" @click="loadCameraStream") Record from webcam
+  .btn.btn-primary.full-width(v-if="isAuthenticated && !camera && (splashmessages.length === 0)" @click="loadCameraStream") Record from webcam
 
   .response-composer(v-show="camera && splashmessages.length === 0")
     .webcam-wrapper(v-if="isAuthenticated && !newResponse.location")
@@ -50,6 +50,7 @@ import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import API from '@/api'
 import _get from 'lodash/get'
+import MobileDetect from 'mobile-detect'
 
 import VideoMixin from '@/mixins/VideoMixin'
 import DesignTask from '@/mixins/DesignTask'
@@ -93,6 +94,10 @@ export default {
     isReady () {
       const readyStates = ['inactive', 'stopped']
       return readyStates.indexOf(_get(this.recorder, 'state', 'unknown')) !== -1
+    },
+    isMobile () {
+      const md = new MobileDetect(window.navigator.userAgent)
+      return md.mobile()
     }
   },
   beforeRouteLeave (to, from, next) {
@@ -106,6 +111,10 @@ export default {
   },
   mounted () {
     this.fetchResponses()
+
+    if (this.isMobile) {
+      this.splashmessages = [{ text: 'Mobile device recording not yet supported!', type: 'error' }]
+    }
   },
   methods: {
     fetchResponses () {
@@ -167,14 +176,16 @@ export default {
       this.uploadVideo(video)
     },
     stopRecording () {
-      this.camera.stop()
-      this.recorder.stopRecording(this.stopRecordingCallback)
+      if (this.camera) this.camera.stop()
+      if (this.recorder) this.recorder.stopRecording(this.stopRecordingCallback)
     },
     startRecording () {
       this.recorder.startRecording()
     },
     captureCamera (callback) {
+      if (this.isMobile) return
       if (this.camera) callback(this.camera)
+      
       navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((camera) => {
         callback(camera)
       }).catch(function (error) {
@@ -183,6 +194,8 @@ export default {
       })
     },
     loadCameraStream () {
+      if (this.isMobile) return
+
       navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((camera) => {
         this.camera = camera
         this.$refs.video.srcObject = this.camera
@@ -267,7 +280,7 @@ export default {
       margin 20px 10px 0 0
 
 .responses
-  margin-bottom 20px
+  margin 20px 0
   ul
     cleanlist()
     li

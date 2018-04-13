@@ -4,7 +4,7 @@
 
   splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 
-  .whiteboard-wrapper(v-if="isAuthenticated")
+  .whiteboard-wrapper(v-bind:class="{ authenticated: isAuthenticated }")
     iframe(v-bind:src="`https://witeboard.com/${$route.params.task_id}`" frameborder="0" width="100%" height="600")
   
 </template>
@@ -35,6 +35,9 @@ export default {
     width 100%
     height 0
     padding-bottom 75%
+    pointer-events none
+    &.authenticated
+      pointer-events all
     iframe
       border none
       position absolute
