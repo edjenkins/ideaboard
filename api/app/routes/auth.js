@@ -175,12 +175,12 @@ module.exports = function (app, passport) {
   // FACEBOOK ROUTES
 
   app.get('/auth/facebook/login/:instance', function (req, res, next) {
-    passport.authenticate('facebook', { callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.instance}` })(req, res, next);
+    passport.authenticate('facebook', { callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}` })(req, res, next);
   });
 
   app.get('/auth/facebook/callback/:instance', function (req, res, next) {
     passport.authenticate('facebook', {
-      callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.instance}`,
+      callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`,
       successRedirect: `${utilities.redirectUri(req.instance)}/profile`,
       failureRedirect: `${utilities.redirectUri(req.instance)}/auth`
     })(req, res, next);
