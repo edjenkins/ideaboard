@@ -37,13 +37,8 @@
             router-link.btn.btn-rounded.get-involved(v-bind:to="{ name: 'explore', params: { category: 'rome' } }") Explore Ideas
           .clearfix
 
-    //- .row-wrapper#ideaboard
-      .row
-        .content-block
-          h2 Ideaboard
-          p #[strong Ideaboard] is an online tool that allows anyone to share and discuss ideas online. #[strong Myto] is using it during a series of two day workshops to have a rich online design event.
-          //- router-link#ideaboard-banner--action(v-bind:to="{ name: 'about' }") Learn more
-
+    collaborate(align="right" title="Collaborate" subtitle="An online space to form ideas, ask questions and make decisions." action="Learn More" link="/learn")
+    ready(title="Ready?" subtitle="When you've had a good look around and you're ready to start your own idea just click the button below." action="Start an Idea" link="/start")
     site-footer
 </template>
 

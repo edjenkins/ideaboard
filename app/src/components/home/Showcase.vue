@@ -56,16 +56,20 @@ export default {
 
 #showcase
   background-color $color-lightest-grey
+  background-color white
   .content-block
     ul.showcase
       cleanlist()
       margin 0 -10px
       li
+        radius(10px)
         cleanlist()
         border-box()
+        nav-shadow()
         background-color white
         float left
         margin 20px
+        overflow hidden
         width calc(calc(100% / 3) - 40px)
         @media(max-width: 640px)
           width calc(calc(100% / 2) - 40px)
