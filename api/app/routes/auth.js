@@ -181,8 +181,8 @@ module.exports = function (app, passport) {
   app.get('/auth/facebook/callback/:instance', function (req, res, next) {
     passport.authenticate('facebook', {
       callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`,
-      successRedirect: `${utilities.redirectUri(req.instance)}/profile`,
-      failureRedirect: `${utilities.redirectUri(req.instance)}/auth`
+      successRedirect: `${utilities.redirectUri(req.params.instance)}/profile`,
+      failureRedirect: `${utilities.redirectUri(req.params.instance)}/auth`
     })(req, res, next);
   });
 }
