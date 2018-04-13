@@ -8,9 +8,9 @@
               .example {{ examples[exampleIndex] }}
             h3 A place for suggesting ideas for events (and more!) in the lab.
     
-    splash-image(align="right" title="Collaborative" subtitle="Ideaboard brings people together in an online space to ask questions and make decisions." action="Learn More" link="/learn" image="")
     featured-ideas
-    splash-image(align="left" title="Ready when you are." subtitle="When you've had a good look around the site and you're ready to start your own idea just click the button below." action="Start an Idea" link="/start" image="")
+    collaborate(align="right" title="Collaborate" subtitle="An online space to form ideas, ask questions and make decisions." action="Learn More" link="/learn")
+    ready(title="Ready?" subtitle="When you've had a good look around and you're ready to start your own idea just click the button below." action="Start an Idea" link="/start")
 
     site-footer
 </template>
