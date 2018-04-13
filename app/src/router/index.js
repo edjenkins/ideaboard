@@ -231,11 +231,4 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.path === '/_=_') {
-    return next(false)
-  }
-  next()
-})
-
 export default router
