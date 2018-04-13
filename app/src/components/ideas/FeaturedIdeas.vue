@@ -46,7 +46,7 @@ export default {
 
 #featured-ideas
   &.no-content
-    padding 0
+    padding 0 !important
     .content-block
       background-color alpha(black, 0.2)
       height 1px
