@@ -1,8 +1,8 @@
 <template lang="pug">
- .row-wrapper#collaborate
+ .row-wrapper#collaborate(v-bind:style="[instanceBackground]")
   .row
     .content-block
-      .collaborate(v-bind:class="align" )
+      .collaborate
         .collaborate--image
           img(src="~images/illustrations/design.svg")
         .collaborate--content
@@ -16,7 +16,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'collaborate',
-  props: ['align', 'title', 'subtitle', 'action', 'link'],
+  props: ['title', 'subtitle', 'action', 'link'],
   computed: {
     ...mapGetters(['instanceBackground'])
   }
@@ -35,30 +35,18 @@ export default {
   padding 80px 0px !important
   position relative
   width 100%
-  &.left
-    .collaborate--content
-      margin-right 50%
-    .collaborate--image
-      margin-left 50%
-  &.right
-    .collaborate--content
-      margin-left 50%
-    .collaborate--image
-      margin-right 50%
-  &.center
-    .collaborate--content
-      margin 0 auto
-      max-width 480px
-    .collaborate--image
-      margin-right 0%
   .collaborate--image
+    margin-right 50%
     position absolute
     text-align center
     width 50%
     img
       height 320px
+      max-width 100%
   .collaborate--content
+    margin-left 50%
     padding 50px 30px
+    text-align center
     h2
       reset()
       color white
@@ -87,7 +75,13 @@ export default {
   @media(max-width: 640px)
     padding 0 !important
     .collaborate--image
-      display none
+      margin 40px auto 20px auto
+      position relative
+      text-align center
+      max-width calc(100% - 120px)
+      width 100%
+      img
+        height auto
     .collaborate--content
       margin-right auto !important
       margin-left auto !important

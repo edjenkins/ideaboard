@@ -1,5 +1,5 @@
 <template lang="pug">
-.row-wrapper#featured-ideas
+.row-wrapper#featured-ideas(v-bind:class="{ 'no-content': (ideas.length === 0) }")
   .row
     .content-block
       .content-block--body
@@ -45,6 +45,15 @@ export default {
 @import '~stylus/home'
 
 #featured-ideas
+  &.no-content
+    padding 0
+    .content-block
+      background-color alpha(black, 0.2)
+      height 1px
+      margin-top -1px
+    #ideas
+      display none
+    
   #ideas
     margin -10px -10px
     @media(max-width: $page-width)

@@ -4,7 +4,7 @@
       .row
         .content-block
           .content-block--body
-            h1 CityLit 
+            h1 CityLit : 
               .example {{ examples[exampleIndex] }}
             h3 Start an idea and begin building a strong community through discussion.
     
