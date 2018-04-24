@@ -3,41 +3,41 @@ import Router from 'vue-router'
 import Store from '@/store'
 
 // Auth
-import Auth from '@/components/auth/Auth'
-import Reset from '@/components/auth/Reset'
+const Auth = () => import('@/components/auth/Auth')
+const Reset = () => import('@/components/auth/Reset')
 
 // Pages
-import Terms from '@/components/pages/Terms'
-import Privacy from '@/components/pages/Privacy'
-import Profile from '@/components/pages/Profile'
+const Terms = () => import('@/components/pages/Terms')
+const Privacy = () => import('@/components/pages/Privacy')
+const Profile = () => import('@/components/pages/Profile')
 
 // Ideas
-import Start from '@/components/ideas/Start'
-import Explore from '@/components/ideas/Explore'
-import Idea from '@/components/ideas/Idea'
+const Start = () => import('@/components/ideas/Start')
+const Explore = () => import('@/components/ideas/Explore')
+const Idea = () => import('@/components/ideas/Idea')
 
 // Idea Tabs
-import InfoTab from '@/components/ideas/tabs/InfoTab'
-import DesignTab from '@/components/ideas/tabs/DesignTab'
-import OutcomeTab from '@/components/ideas/tabs/OutcomeTab'
+const InfoTab = () => import('@/components/ideas/tabs/InfoTab')
+const DesignTab = () => import('@/components/ideas/tabs/DesignTab')
+const OutcomeTab = () => import('@/components/ideas/tabs/OutcomeTab')
 
 // Idea Design Tab
-import DesignDashboard from '@/components/design/Dashboard'
-import AddDesignTask from '@/components/design/AddTask'
-import Discussion from '@/components/design/modules/Discussion'
-import Poll from '@/components/design/modules/Poll'
-import Media from '@/components/design/modules/Media'
-import RichText from '@/components/design/modules/RichText'
-import Appearin from '@/components/design/modules/Appearin'
-import Whiteboard from '@/components/design/modules/Whiteboard'
-import Webcam from '@/components/design/modules/Webcam'
+const DesignDashboard = () => import('@/components/design/Dashboard')
+const AddDesignTask = () => import('@/components/design/AddTask')
+const Discussion = () => import('@/components/design/modules/Discussion')
+const Poll = () => import('@/components/design/modules/Poll')
+const Media = () => import('@/components/design/modules/Media')
+const RichText = () => import('@/components/design/modules/RichText')
+const Appearin = () => import('@/components/design/modules/Appearin')
+const Whiteboard = () => import('@/components/design/modules/Whiteboard')
+const Webcam = () => import('@/components/design/modules/Webcam')
 
 // Idea Outcome Tab
-import OutcomeDashboard from '@/components/outcome/Dashboard'
-import OutcomeMedia from '@/components/outcome/Media'
-import OutcomeSubscribers from '@/components/outcome/Subscribers'
-import OutcomeUpdates from '@/components/outcome/Updates'
-import OutcomeDocument from '@/components/outcome/Document'
+const OutcomeDashboard = () => import('@/components/outcome/Dashboard')
+const OutcomeMedia = () => import('@/components/outcome/Media')
+const OutcomeSubscribers = () => import('@/components/outcome/Subscribers')
+const OutcomeUpdates = () => import('@/components/outcome/Updates')
+const OutcomeDocument = () => import('@/components/outcome/Document')
 
 import config from '@/config'
 
