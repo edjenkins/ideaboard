@@ -17,9 +17,10 @@ ul#idea-updates
 </template>
 
 <script>
-import _ from 'lodash'
 import API from '@/api'
 import { mapGetters } from 'vuex'
+
+import _orderBy from 'lodash/orderBy'
 
 import Avatar from '@/components/user/Avatar'
 
@@ -44,7 +45,7 @@ export default {
   computed: {
     ...mapGetters(['user']),
     orderedUpdates () {
-      return _.orderBy(this.updates, ['created'], ['desc'])
+      return _orderBy(this.updates, ['created'], ['desc'])
     },
     ownIdea () {
       return this.isAuthenticated && (this.user._id === this.idea._user._id)

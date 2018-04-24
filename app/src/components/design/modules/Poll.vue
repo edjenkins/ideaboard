@@ -22,7 +22,10 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import _each from 'lodash/each'
+import _find from 'lodash/find'
+import _sortBy from 'lodash/sortBy'
+
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
@@ -54,7 +57,7 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'user']),
     orderedResponses () {
-      return _.sortBy(this.responses, (response) => {
+      return _sortBy(this.responses, (response) => {
         return response._likes.length - response._dislikes.length
       }).reverse()
     }
@@ -62,7 +65,7 @@ export default {
   methods: {
     hasVoted (votes) {
       if (!this.user) return false
-      return _.find(votes, (vote) => {
+      return _find(votes, (vote) => {
         return vote._user._id === this.user._id
       })
     },
@@ -102,7 +105,7 @@ export default {
         responseId,
         (response) => {
           this.$log(response)
-          _.each(this.responses, (existingResponse, index) => {
+          _each(this.responses, (existingResponse, index) => {
             if (existingResponse._id === responseId) {
               Vue.set(this.responses, index, response.data) // Update existing response
             }
@@ -121,7 +124,7 @@ export default {
         responseId,
         (response) => {
           this.$log(response)
-          _.each(this.responses, (existingResponse, index) => {
+          _each(this.responses, (existingResponse, index) => {
             if (existingResponse._id === responseId) {
               Vue.set(this.responses, index, response.data) // Update existing response
             }

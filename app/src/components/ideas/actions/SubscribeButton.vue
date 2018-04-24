@@ -27,7 +27,8 @@ import Vue from 'vue'
 import API from '@/api'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
-import _ from 'lodash'
+
+import _find from 'lodash/find'
 
 var SocialSharing = require('vue-social-sharing')
 Vue.use(SocialSharing)
@@ -49,7 +50,7 @@ export default {
     isSubscribed () {
       if (!this.isAuthenticated) return false
       if (!this.user) return false
-      return _.find(this.idea._subscribers, (subscriber) => {
+      return _find(this.idea._subscribers, (subscriber) => {
         this.$log(subscriber)
         if (!subscriber._user) return false
         return subscriber._user._id === this.user._id

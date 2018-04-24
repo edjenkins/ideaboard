@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Moment from 'moment'
+import Moment from 'moment-mini'
 import Avatar from '@/components/user/Avatar'
 
 export default {

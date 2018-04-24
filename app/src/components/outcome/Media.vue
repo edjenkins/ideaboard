@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Moment from 'moment'
+import Moment from 'moment-mini'
 
 export default {
   name: 'media',

@@ -13,8 +13,9 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import API from '@/api'
+
+import _sortBy from 'lodash/sortBy'
 
 import PageHeader from '@/components/PageHeader'
 import IdeaFilter from '@/components/navigation/IdeaFilter'
@@ -47,7 +48,7 @@ export default {
   },
   computed: {
     orderedIdeas () {
-      let ideas = _.sortBy(this.ideas, (idea) => {
+      let ideas = _sortBy(this.ideas, (idea) => {
         switch (this.sortType.toLowerCase()) {
           case 'recent':
             return idea.created

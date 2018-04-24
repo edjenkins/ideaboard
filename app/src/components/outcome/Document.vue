@@ -34,8 +34,6 @@ import { mapGetters } from 'vuex'
 import Dropdown from 'bp-vuejs-dropdown'
 import _groupBy from 'lodash/groupBy'
 
-import Promise from 'bluebird'
-
 import 'quill/dist/quill.snow.css'
 import Quill from 'quill'
 import { quillEditor } from 'vue-quill-editor'
@@ -130,35 +128,29 @@ export default {
 
       switch (embedTask.type) {
         case 'poll':
-          const responsesPromise = new Promise((resolve) => {
-            API.task.fetchResponses(
-              embedTask.type,
-              embedTask._id,
-              (response) => {
-                console.log(response)
-                resolve(response.data)
-              },
-              (error) => {
-                console.log(error)
-                resolve([])
+          API.task.fetchResponses(
+            embedTask.type,
+            embedTask._id,
+            (response) => {
+              console.log(response)
+              const responses = response.data
+              if (responses.length === 0) {
+                const message = 'No responses!'
+                quill.insertText(embedIndex, `${message}\n\n`, { 'color': 'red', 'size': 'normal' })
+                embedIndex += message.length + 2
               }
-            )
-          })
-
-          responsesPromise.then((responses) => {
-            if (responses.length === 0) {
-              const message = 'No responses!'
-              quill.insertText(embedIndex, `${message}\n\n`, { 'color': 'red', 'size': 'normal' })
-              embedIndex += message.length + 2
+              responses.forEach((embedResponse) => {
+                const beforeLen = quill.getLength()
+                quill.insertEmbed(embedIndex, 'ib-poll', { user: embedResponse._user.profile.name, avatar: embedResponse._user.profile.avatar, text: embedResponse.response.text })
+                const afterLen = quill.getLength()
+                embedIndex += (afterLen - beforeLen)
+              })
+              this.$refs.myQuillEditor.quill.setSelection(embedIndex, 0)
+            },
+            (error) => {
+              console.log(error)
             }
-            responses.forEach((embedResponse) => {
-              const beforeLen = quill.getLength()
-              quill.insertEmbed(embedIndex, 'ib-poll', { user: embedResponse._user.profile.name, avatar: embedResponse._user.profile.avatar, text: embedResponse.response.text })
-              const afterLen = quill.getLength()
-              embedIndex += (afterLen - beforeLen)
-            })
-            this.$refs.myQuillEditor.quill.setSelection(embedIndex, 0)
-          })
+          )
           break
 
         default:

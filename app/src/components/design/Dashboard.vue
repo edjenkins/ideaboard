@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import _sortBy from 'lodash/sortBy'
 import API from '@/api'
 import Avatar from '@/components/user/Avatar'
 import DesignTaskTile from '@/components/design/components/DesignTaskTile'
@@ -55,7 +55,7 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated']),
     orderedTasks () {
-      return _.sortBy(this.tasks, ['pinned', '_responses']).reverse()
+      return _sortBy(this.tasks, ['pinned', '_responses']).reverse()
     }
   },
   methods: {

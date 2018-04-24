@@ -18,7 +18,9 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import _reverse from 'lodash/reverse'
+import _sortedUniqBy from 'lodash/sortedUniqBy'
+
 import Avatar from '@/components/user/Avatar'
 import API from '@/api'
 
@@ -41,7 +43,7 @@ export default {
   computed: {
     contributors () {
       try {
-        return _.sortedUniqBy(_.reverse(this.task._responses), (response) => {
+        return _sortedUniqBy(_reverse(this.task._responses), (response) => {
           return response._user._id
         })
       } catch (error) {

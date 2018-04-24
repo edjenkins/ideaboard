@@ -7,8 +7,9 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import { mapGetters } from 'vuex'
+
+import _find from 'lodash/find'
 
 export default {
   name: 'voting-buttons',
@@ -17,7 +18,7 @@ export default {
     ...mapGetters(['user']),
     hasLiked () {
       if (!this.user) return false
-      return _.find(this.response._likes, (vote) => {
+      return _find(this.response._likes, (vote) => {
         console.log(vote._user._id)
         console.log(this.user._id)
         return (vote._user._id === this.user._id)
@@ -25,7 +26,7 @@ export default {
     },
     hasDisliked () {
       if (!this.user) return false
-      return _.find(this.response._dislikes, (vote) => {
+      return _find(this.response._dislikes, (vote) => {
         console.log(vote._user._id)
         console.log(this.user._id)
         return (vote._user._id === this.user._id)
