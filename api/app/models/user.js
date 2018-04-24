@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema({
   code: String,
   created: Date
 
-})
+}, { usePushEach: true })
 
 userSchema.index({ 'local.email': 'text', 'profile.name': 'text' });
 
