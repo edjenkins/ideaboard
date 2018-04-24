@@ -45,6 +45,7 @@ export default {
 @import '~stylus/home'
 
 #featured-ideas
+  background-color white
   &.no-content
     padding 0 !important
     .content-block
@@ -55,12 +56,13 @@ export default {
       display none
     
   #ideas
-    margin -10px -10px
+    margin 20px -10px
     @media(max-width: $page-width)
       margin -10px -30px
     @media(max-width: 660px)
       margin -10px -10px
     .content-block--tile
+      nav-shadow()
       box-sizing border-box
       margin 10px
       padding 0
