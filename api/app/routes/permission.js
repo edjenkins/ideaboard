@@ -35,42 +35,32 @@ module.exports = function (app, passport) {
     })
   // Update user permissions
   app.put('/permissions',
-    (req, res) => {
-      if (req.isAuthenticated()) {
-        console.log('req.body.userId')
-        console.log(req.body.userId)
-        User.findOne(
-          { $and: [ { _id: req.body.userId }, { _id: { $ne: req.user._id } } ] },
-          (err, user) => {
-            if (err) console.error(err)
-            console.log('user._id')
-            console.log(user._id)
-            user._permissions = []
-            _forEach(req.body.permissions, (value, key) => {
-              if (value) {
-                user._permissions.push(key)
-              }
-            });
-            user.save((err, user) => {
+    async (req, res) => {
+      if (!req.isAuthenticated()) return res.status(401)
 
-              // Create notification
-              const notification = new Notification({
-                _user: req.body.userId,
-                type: 'permissions',
-                text: 'Your permissions have been updated by ' + req.user.profile.name,
-                instance: req.instance
-              })
+      let user = await User.findOne({ $and: [ { _id: req.body.userId }, { _id: { $ne: req.user._id } } ] })
 
-              notification.save((err, invitation) => {
-                if (err) console.error(err)
-                mail.sendMail(user.local.email, 'Permissions Updated', 'permissions', { user: req.user, recipient: user, url: utilities.redirectUri(req.instance) })
-                res.json({ msg: 'done' })
-              })
-            })
-          })
+      user._permissions = []
 
-      } else {
-        res.status(401)
-      }
+      _forEach(req.body.permissions, (value, key) => {
+        if (value) {
+          user._permissions.push(key)
+        }
+      })
+
+      user = await user.save()
+
+      // Create notification
+      const notificationObj = new Notification({
+        _user: req.body.userId,
+        type: 'permissions',
+        text: 'Your permissions have been updated by ' + req.user.profile.name,
+        instance: req.instance
+      })
+
+      const notification = await notificationObj.save()
+      
+      mail.sendMail(user.local.email, 'Permissions Updated', 'permissions', { user: req.user, recipient: user, url: utilities.redirectUri(req.instance) })
+      res.json({ msg: 'done' })
     })
 }
