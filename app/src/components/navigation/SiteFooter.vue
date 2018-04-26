@@ -20,7 +20,7 @@ export default {
 @import '~stylus/shared'
 
 #site-footer
-  height $footer-height
+  min-height $footer-height
   padding 20px 0
   ul
     cleanlist()

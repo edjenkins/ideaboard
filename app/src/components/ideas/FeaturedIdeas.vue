@@ -47,13 +47,7 @@ export default {
 #featured-ideas
   background-color white
   &.no-content
-    padding 0 !important
-    .content-block
-      background-color alpha(black, 0.2)
-      height 1px
-      margin-top -1px
-    #ideas
-      display none
+    display none
     
   #ideas
     margin 20px -10px

@@ -1,5 +1,5 @@
 <template lang="pug">
- .row-wrapper#collaborate(v-bind:style="[instanceBackground]")
+ .row-wrapper#collaborate(v-bind:style="[styles || instanceBackground]")
   .row
     .content-block
       .collaborate
@@ -16,7 +16,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'collaborate',
-  props: ['title', 'subtitle', 'action', 'link'],
+  props: ['title', 'subtitle', 'action', 'link', 'styles'],
   computed: {
     ...mapGetters(['instanceBackground'])
   }

@@ -99,7 +99,7 @@ export default {
     font-weight normal 
 
   .no-results
-    background alpha(white, 0.2)
+    background white
     color $color-text-grey
     margin 20px auto
     max-width $page-width - 40px

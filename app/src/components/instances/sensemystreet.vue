@@ -4,11 +4,10 @@
       .row
         .content-block
           .content-block--body
-            h1 Sense My Street
-            h3 A place for idea development
+            img(src="~images/logos/sms/logo-white.svg")
     
     featured-ideas
-    collaborate(align="right" title="Collaborate" subtitle="An online space to form ideas, ask questions and make decisions." action="Learn More" link="/learn")
+    collaborate(align="right" title="Collaborate" subtitle="An online space to form ideas, ask questions and make decisions." action="Learn More" link="/learn" v-bind:styles="{ 'background-color': '#041e41' }")
     ready(title="Ready?" subtitle="When you've had a good look around and you're ready to start your own idea just click the button below." action="Start an Idea" link="/start")
     
     site-footer(v-bind:style="{ 'background-color': 'white' }")
@@ -28,4 +27,8 @@ export default {
 
 <style lang="stylus" scoped>
 @import '~stylus/home'
+
+img
+  height 280px
+  max-width 100%
 </style>
