@@ -6,8 +6,8 @@
           .content-block--body
             img(src="~images/logos/sms/logo-white.svg")
     
-    featured-ideas
     collaborate(align="right" title="Collaborate" subtitle="An online space to form ideas, ask questions and make decisions." action="Learn More" link="/learn" v-bind:styles="{ 'background-color': '#041e41' }")
+    featured-ideas
     ready(title="Ready?" subtitle="When you've had a good look around and you're ready to start your own idea just click the button below." action="Start an Idea" link="/start")
     
     site-footer(v-bind:style="{ 'background-color': 'white' }")
