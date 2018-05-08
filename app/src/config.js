@@ -36,6 +36,10 @@ export default {
     wingrove: {
       color: '#096c90',
       subdomain: 'wingrove'
+    },
+    purdue: {
+      color: '#0099D0',
+      subdomain: 'purdue'
     }
   }
 }

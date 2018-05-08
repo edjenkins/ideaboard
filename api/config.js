@@ -43,6 +43,9 @@ module.exports = {
     },
     "wingrove": {
       "subdomain": "wingrove"
+    },
+    "purdue": {
+      "subdomain": "purdue"
     }
   }
 }
