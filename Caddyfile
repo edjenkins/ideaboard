@@ -70,9 +70,9 @@ wingrove.ideaboard.co.uk {
   }
 }
 
-purdue.ideaboard.co.uk {
+purdueux.ideaboard.co.uk {
   root /var/www/html
-  tls purdue@ideaboard.co.uk
+  tls purdueux@ideaboard.co.uk
 
   rewrite {
     to {path} {path}/ /index.html

@@ -18,7 +18,7 @@
 import Home from '@/mixins/Home'
 
 export default {
-  name: 'purdue',
+  name: 'purdueux',
   metaInfo: {
     title: 'PurdueUX'
   },
