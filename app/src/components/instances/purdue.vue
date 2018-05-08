@@ -5,6 +5,7 @@
         .content-block
           .content-block--body
             h1 PurdueUX
+            h3 Purdue University | Newcastle University
 
     collaborate(align="right" title="Collaborate" subtitle="An online space to form ideas, ask questions and make decisions." action="Learn More" link="/learn" v-bind:styles="{ 'background-color': '#041e41' }")
     featured-ideas
