@@ -7,8 +7,10 @@ const Auth = () => import('@/components/auth/Auth')
 const Reset = () => import('@/components/auth/Reset')
 
 // Pages
-const Terms = () => import('@/components/pages/Terms')
+const Cookies = () => import('@/components/pages/Cookies')
 const Privacy = () => import('@/components/pages/Privacy')
+const Research = () => import('@/components/pages/Research')
+const Terms = () => import('@/components/pages/Terms')
 const Profile = () => import('@/components/pages/Profile')
 
 // Ideas
@@ -78,14 +80,24 @@ const router = new Router({
       }
     },
     {
-      path: '/terms',
-      name: 'terms',
-      component: Terms
+      path: '/cookies',
+      name: 'cookies',
+      component: Cookies
     },
     {
       path: '/privacy',
       name: 'privacy',
       component: Privacy
+    },
+    {
+      path: '/research',
+      name: 'research',
+      component: Research
+    },
+    {
+      path: '/terms',
+      name: 'terms',
+      component: Terms
     },
     {
       path: '/profile/:id?',
@@ -218,10 +230,7 @@ router.beforeEach((to, from, next) => {
     console.log(Store.getters.isAuthenticated)
     if (!Store.getters.isAuthenticated) {
       next({
-        path: '/auth',
-        query: {
-          redirect: to.fullPath
-        }
+        name: 'auth'
       })
     } else {
       next()

@@ -8,7 +8,6 @@ import Collaborate from '@/components/home/Collaborate'
 import Ready from '@/components/home/Ready'
 
 import PageHeader from '@/components/PageHeader'
-import SiteFooter from '@/components/navigation/SiteFooter'
 
 export default {
   metaInfo: {
@@ -20,8 +19,7 @@ export default {
     SplashImage,
     Collaborate,
     Ready,
-    PageHeader,
-    SiteFooter
+    PageHeader
   },
   created () {
     setInterval(() => {

@@ -1,5 +1,5 @@
 <template lang="pug">
-.row-wrapper#featured-ideas(v-bind:class="{ 'no-content': (ideas.length === 0) }")
+.row-wrapper#featured-ideas(v-bind:class="{ 'no-content': (ideas.length === 0) }")()
   .row
     .content-block
       .content-block--body

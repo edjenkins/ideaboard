@@ -32,6 +32,13 @@ module.exports = function (passport) {
           newUser.local.email = email
           newUser.local.password = newUser.generateHash(password)
 
+          // Assume consent at this stage
+          newUser.consent = {
+            research: Date.now(),
+            privacy: Date.now(),
+            terms: Date.now()
+          }
+
           newUser.save((saveErr) => {
             if (saveErr) { throw saveErr }
             return done(null, newUser)

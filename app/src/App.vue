@@ -1,15 +1,17 @@
 <template lang="pug">
   #app
-    cookie-law
     navbar
     router-view
     auth-modal
+    consent-modal
+    site-footer
 </template>
 
 <script>
-import CookieLaw from 'vue-cookie-law'
 import Navbar from '@/components/navigation/Navbar'
+import SiteFooter from '@/components/navigation/SiteFooter'
 import AuthModal from '@/components/auth/AuthModal'
+import ConsentModal from '@/components/auth/ConsentModal'
 
 export default {
   name: 'app',
@@ -17,9 +19,10 @@ export default {
     titleTemplate: 'Ideaboard - %s'
   },
   components: {
-    CookieLaw,
     Navbar,
-    AuthModal
+    SiteFooter,
+    AuthModal,
+    ConsentModal
   },
   created () {
     this.$store.dispatch('checkAuthStatus')

@@ -1,6 +1,6 @@
 <template lang="pug">
   #about
-    page-header(title="Privacy Policy" subtitle="")
+    page-header(title="Cookie Policy" subtitle="")
     .row
       .content-block.pull-up.white-block
         .content-block--body
@@ -15,10 +15,10 @@ import VueMarkdown from 'vue-markdown'
 import PageHeader from '@/components/PageHeader'
 
 export default {
-  name: 'privacy',
+  name: 'cookies',
   metaInfo: {
-    title: 'Privacy Policy',
-    description: 'Read our privacy policy.'
+    title: 'Cookie Policy',
+    description: 'Read our cookies policy.'
   },
   components: {
     VueMarkdown,
@@ -30,7 +30,7 @@ export default {
     }
   },
   mounted () {
-    const url = `${config.legal}/privacy.md`
+    const url = `${config.legal}/cookies.md`
     this.$http.get(url).then(response => {
       this.markdown = response.body
     }, response => {

@@ -18,13 +18,11 @@
             start-button
 
         .clearfix
-    site-footer
 </template>
 
 <script>
 import PageHeader from '@/components/PageHeader'
 import StartButton from '@/components/shared/StartButton'
-import SiteFooter from '@/components/navigation/SiteFooter'
 
 export default {
   name: 'about',
@@ -34,8 +32,7 @@ export default {
   },
   components: {
     PageHeader,
-    StartButton,
-    SiteFooter
+    StartButton
   }
 }
 </script>

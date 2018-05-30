@@ -1,5 +1,5 @@
 <template lang="pug">
-.row-wrapper#showcase
+.row-wrapper#showcase(v-bind:style="[instanceBackground]")
   .row
     .content-block
       .content-block--body
@@ -55,8 +55,7 @@ export default {
 @import '~stylus/home'
 
 #showcase
-  background-color $color-lightest-grey
-  background-color white
+  gradient()
   .content-block
     ul.showcase
       cleanlist()

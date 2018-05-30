@@ -12,7 +12,8 @@ const state = {
       avatar: undefined,
       bio: undefined
     },
-    permissions: []
+    permissions: [],
+    hasConsented: false
   },
   notifications: [],
   status: 'unauthenticated',
@@ -23,6 +24,9 @@ const state = {
 const getters = {
   user () {
     return state.user
+  },
+  hasConsented () {
+    return _get(state.user, 'hasConsented', false)
   },
   isAuthenticated () {
     return (state.status === 'authenticated')
@@ -94,6 +98,7 @@ const mutations = {
   }) {
     state.status = response.data.status
     state.user = response.data.user
+    state.user.hasConsented = response.data.user.consented
   },
   [types.CHECK_AUTH_STATUS_FAILURE] () {
     state.status = 'unauthenticated'

@@ -1,10 +1,11 @@
 <template lang="pug">
   #about
-    page-header(title="Privacy Policy" subtitle="")
+    page-header(title="Research Policy" subtitle="")
     .row
       .content-block.pull-up.white-block
         .content-block--body
           vue-markdown(v-if="markdown") {{ markdown }}
+    site-footer
 </template>
 
 <script>
@@ -15,10 +16,10 @@ import VueMarkdown from 'vue-markdown'
 import PageHeader from '@/components/PageHeader'
 
 export default {
-  name: 'privacy',
+  name: 'research',
   metaInfo: {
-    title: 'Privacy Policy',
-    description: 'Read our privacy policy.'
+    title: 'Research Policy',
+    description: 'Read our research policy.'
   },
   components: {
     VueMarkdown,
@@ -30,7 +31,7 @@ export default {
     }
   },
   mounted () {
-    const url = `${config.legal}/privacy.md`
+    const url = `${config.legal}/research.md`
     this.$http.get(url).then(response => {
       this.markdown = response.body
     }, response => {

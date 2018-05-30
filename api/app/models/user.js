@@ -9,6 +9,11 @@ const userSchema = mongoose.Schema({
     bio: String,
     subscription: String
   },
+  consent: {
+    privacy: { type: Date, default: null },
+    research: { type: Date, default: null },
+    terms: { type: Date, default: null }
+  },
   local: {
     email: String,
     password: String

@@ -15,7 +15,7 @@
           .tabs--page
             component(v-bind:is="tabs.activeComponent" v-bind:edited-profile.sync="editedProfile" v-bind:current-user="currentUser" v-bind:own-profile="ownProfile")
 
-        .notifications(v-if="ownProfile && tabs.activeComponent === 'bio-tab'")
+        //- .notifications(v-if="ownProfile && tabs.activeComponent === 'bio-tab'")
           notifications-list(type="unread" v-bind:notifications="notifications.unread")
           notifications-list(type="read" v-bind:notifications="notifications.read")
       .clearfix
@@ -188,6 +188,7 @@ $side-block-width = 260px
       max-width none
       width 100%
     .content-block--footer
+      border-top-style solid
       padding 0
       .btn
         max-width none

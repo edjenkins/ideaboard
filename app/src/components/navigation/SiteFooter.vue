@@ -1,18 +1,25 @@
 <template lang="pug">
-  #site-footer
+  #site-footer(v-bind:class="{ light: isHome }")
     .row
       ul
-        li Copyright 2018
         router-link.is-link(tag="li" to="/learn") About
-        router-link.is-link(tag="li" to="/terms") Terms
+        router-link.is-link(tag="li" to="/cookies") Cookies
         router-link.is-link(tag="li" to="/privacy") Privacy
-        li#google_translate_element
+        router-link.is-link(tag="li" to="/research") Research
+        router-link.is-link(tag="li" to="/terms") Terms
+        li © Open Lab
       .clearfix
+      #google_translate_element
 </template>
 
 <script>
 export default {
-  name: 'site-footer'
+  name: 'site-footer',
+  computed: {
+    isHome () {
+      return this.$route.name === 'home'
+    }
+  }
 }
 </script>
 
@@ -22,6 +29,9 @@ export default {
 #site-footer
   min-height $footer-height
   padding 20px 0
+  &.light
+    background-color white
+    border-top $color-lightest-grey 1px solid
   ul
     cleanlist()
     line-height $footer-height
@@ -41,12 +51,12 @@ export default {
         color alpha(black, 0.4)
         text-decoration underline
 
-      &#google_translate_element
-        line-height 20px !important
-        padding 0 10px 10px 10px
-        text-align center
-        .skiptranslate.goog-te-gadget
-          display inline-block !important
-          white-space normal !important
+  #google_translate_element
+    line-height 20px !important
+    padding 0 10px 10px 10px
+    text-align center
+    .skiptranslate.goog-te-gadget
+      display inline-block !important
+      white-space normal !important
 
 </style>

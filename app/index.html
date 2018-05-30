@@ -6,7 +6,10 @@
     <title>Ideaboard</title>
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
     <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
     <style type="text/css">
       body {
         top: 0px !important;
@@ -16,6 +19,34 @@
         top: auto !important;
       }
     </style>
+
+    <script>
+      window.addEventListener("load", function () {
+        window.cookieconsent.initialise({
+          "palette": {
+            "popup": {
+              "background": "#f2f2f2"
+            },
+            "button": {
+              "background": "#0099d0",
+              "text": "#ffffff"
+            }
+          },
+          "position": "bottom-right",
+          "type": "opt-in",
+          "revokable": true,
+          "content": {
+            "message": "This website uses cookies to track your session. We use Google Analytics and our own tools to understand how you use the site. This is for research purposes and to provide a better experience.",
+            "dismiss": "Deny cookies",
+            "href": "/cookies"
+          },
+          onStatusChange: function (status) {
+            var event = new CustomEvent('consent-updated', {})
+            window.dispatchEvent(event)
+          }
+        })
+      })
+    </script>
   </head>
   <body>
     <div id="app"></div>

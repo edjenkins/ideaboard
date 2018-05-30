@@ -3,6 +3,7 @@ export default {
   driftkey: 'msffsx6pi5gb',
   cdn1: 'https://cdn.ideaboard.co.uk',
   cdn2: 'https://cdn2.ideaboard.co.uk',
+  legal: 'https://raw.githubusercontent.com/digitalinteraction/legal/master/ideaboard',
   gakey: 'UA-44963053-17',
   instances: {
     default: 'master',

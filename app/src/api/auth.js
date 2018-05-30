@@ -2,16 +2,16 @@ import axios from 'axios'
 import * as config from '@/api/config'
 
 export default {
-  login (user, cb, errorCb) {
-    axios.post(`${config.API_ADDRESS}/login`, user, { withCredentials: true }).then((response) => {
+  join (user, cb, errorCb) {
+    axios.post(`${config.API_ADDRESS}/signup`, user, { withCredentials: true }).then((response) => {
       cb(response)
     })
       .catch((error) => {
         errorCb(error)
       })
   },
-  join (user, cb, errorCb) {
-    axios.post(`${config.API_ADDRESS}/signup`, user, { withCredentials: true }).then((response) => {
+  consent (body, cb, errorCb) {
+    axios.post(`${config.API_ADDRESS}/consent`, body, { withCredentials: true }).then((response) => {
       cb(response)
     })
       .catch((error) => {

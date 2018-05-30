@@ -47,12 +47,10 @@
 
       .clearfix
 
-    site-footer
 </template>
 
 <script>
 import PageHeader from '@/components/PageHeader'
-import SiteFooter from '@/components/navigation/SiteFooter'
 
 export default {
   name: 'about',
@@ -61,8 +59,7 @@ export default {
     description: 'Learn about Ideaboard and the service it provides.'
   },
   components: {
-    PageHeader,
-    SiteFooter
+    PageHeader
   }
 }
 </script>

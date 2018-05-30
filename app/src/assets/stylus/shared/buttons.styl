@@ -16,7 +16,13 @@ a.btn
   max-width 260px
   text-align center
   text-decoration none
+.btn-rounded
+  radius(25px)
 .btn, .btn-fab
+  &[disabled]
+    opacity 0.5
+    cursor not-allowed
+
   &:hover
     background-color darken($color-darker-grey, 10%)
     cursor pointer

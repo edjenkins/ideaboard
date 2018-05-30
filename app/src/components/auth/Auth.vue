@@ -20,14 +20,17 @@
                 label Password
                 input(v-model="user.password" v-bind:disabled="isAuthenticating" name="password" type="password" placeholder="Your password" v-on:keydown.enter="join")
                 p#forgot-link(v-if="userExists" @click="state = 'forgot'") Forgot your password?
-              .input-wrapper(v-if="!userExists")
-                label Name
-                input(v-model="user.name" v-bind:disabled="isAuthenticating" name="name" placeholder="Your name")
 
 
           .content-block--footer
-            p#terms-notice By continuing you agree with our #[router-link(v-bind:to="{ name: 'terms' }") terms and conditions.]
-            .btn.btn-success.pull-right(@click="join") {{ isAuthenticating ? 'Checking...' : 'Continue' }}
+            .input-wrapper(v-if="!userExists")
+              label Name
+              input(v-model="user.name" v-bind:disabled="isAuthenticating" name="name" placeholder="Your name")
+            .consent(v-if="!userExists")
+              p.consent-notice #[input(v-model="user.researchConsent" type="checkbox")] I understand this service is provided by Open Lab as a research project and agree to the #[router-link(v-bind:to="{ name: 'research' }") Research Policy]
+              p.consent-notice #[input(v-model="user.privacyConsent" type="checkbox")] I accept the #[router-link(v-bind:to="{ name: 'privacy' }") Privacy Policy]
+              p.consent-notice #[input(v-model="user.termsConsent" type="checkbox")] I accept the #[router-link(v-bind:to="{ name: 'terms' }") Terms of Use]
+            .btn.btn-success.pull-right(v-bind:disabled="!hasConsented" @click="join") {{ isAuthenticating ? 'Checking...' : 'Continue' }}
             .clearfix
           
         .auth-form(v-if="state === 'forgot'")
@@ -46,8 +49,6 @@
         
       .clearfix
       
-    //- site-footer
-
 </template>
 
 <script>
@@ -57,7 +58,6 @@ import { mapGetters } from 'vuex'
 import AuthMixin from '@/mixins/AuthMixin'
 
 import PageHeader from '@/components/PageHeader'
-import SiteFooter from '@/components/navigation/SiteFooter'
 import SplashMessages from '@/components/shared/SplashMessages'
 
 import * as config from '@/api/config'
@@ -72,7 +72,6 @@ export default {
   ],
   components: {
     PageHeader,
-    SiteFooter,
     SplashMessages
   },
   mounted () {
@@ -86,7 +85,10 @@ export default {
       user: {
         name: config.ADMIN_NAME,
         email: config.ADMIN_EMAIL,
-        password: config.ADMIN_PASSWORD
+        password: config.ADMIN_PASSWORD,
+        researchConsent: false,
+        privacyConsent: false,
+        termsConsent: false
       },
       splashmessages: {
         join: [],
@@ -98,7 +100,10 @@ export default {
   computed: {
     ...mapGetters([
       'isAuthenticated', 'instanceBackground'
-    ])
+    ]),
+    hasConsented () {
+      return this.user.researchConsent && this.user.privacyConsent && this.user.termsConsent
+    }
   },
   watch: {
     isAuthenticated (nV) {
@@ -130,6 +135,7 @@ export default {
     },
     join () {
       if (this.isAuthenticating) return
+      // if (!this.hasConsented) return
       this.isAuthenticating = true
       this.splashmessages.join = []
       API.auth.join(this.user,
@@ -196,11 +202,12 @@ $side-block-width = 340px
       reset()
       color $color-text-grey
       padding 10px
-    p#terms-notice
+    p.consent-notice
       reset()
       color $color-text-grey
-      padding 10px
-      padding-bottom 20px
+      padding 10px 10px 5px 10px
+      a
+        color darken($color-text-grey, 20%)
     .btn
       radius(26px)
       padding 0 30px

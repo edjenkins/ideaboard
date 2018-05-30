@@ -9,7 +9,7 @@
 
       //- a.oauth-button#facebook(v-bind:href="oAuthLink('facebook')" target="_self") Continue with Facebook
       .oauth-button#success(@click="redirectToJoin") Get Started
-      //- .oauth-button.minimal.split(@click="redirectToJoin") Login
+      //- .oauth-button.minimal.split(@click="redir.ectToJoin") Login
       .clearfix
 
 </template>

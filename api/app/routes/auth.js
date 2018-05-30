@@ -28,31 +28,57 @@ module.exports = function (app, passport) {
     }
   })
 
-  app.post('/login',
-    passport.authenticate('local-login'),
-    (req, res) => {
-      res.json({
-        status: 'authenticated',
-        user: {
-          _id: req.user._id,
-          created: req.user.created,
-          profile: req.user.profile
-        }
+  app.post('/consent', async function (req, res, next) {
+
+    // Init errors array
+    let errors = []
+
+    // Check consent
+    if (!(req.body.researchConsent && req.body.privacyConsent && req.body.termsConsent)) {
+      errors.push({
+        text: 'Please agree to the Research Policy, Privacy Policy and Terms of Use',
+        type: 'error'
       })
-    })
+    }
+
+    // If there are issues with the signup throw them back
+    if (errors.length > 0) {
+      return res.json({
+        errors: errors
+      })
+    } else {
+      User.findOne({ _id: req.user._id }).exec((err, user) => {
+        if (err) console.error(err)
+        user.consent = {
+          research: Date.now(),
+          privacy: Date.now(),
+          terms: Date.now()
+        }
+        user.save((saveErr) => {
+          if (saveErr) { throw saveErr }
+          res.json({
+            status: 'success'
+          })
+        })
+      })
+    
+    }
+  })
 
   app.post('/signup', async function (req, res, next) {
 
     // Get form params
     const email = req.body.email
 
-    // Check if user exists..
+    // Init errors array
     let errors = []
 
     // Find user
     const user = await User.findOne({ 'local.email': email })
     
+    // User exists
     if (user) {
+
       if (user.validPassword(req.body.password)) {
         passport.authenticate('local-login')(req, res, function () {
           return res.json({
@@ -81,6 +107,14 @@ module.exports = function (app, passport) {
       if (req.body.password.length < 8) {
         errors.push({
           text: 'Password should be longer than 8 characters',
+          type: 'error'
+        })
+      }
+
+      // Check consent
+      if (!(req.body.researchConsent && req.body.privacyConsent && req.body.termsConsent)) {
+        errors.push({
+          text: 'Please agree to the Research Policy, Privacy Policy and Terms of Use',
           type: 'error'
         })
       }
@@ -160,7 +194,8 @@ module.exports = function (app, passport) {
             _id: req.user._id,
             created: req.user.created,
             profile: req.user.profile,
-            permissions: user._permissions
+            permissions: user._permissions,
+            consented: user.consent.research && user.consent.privacy && user.consent.terms
           }
         })
       })
