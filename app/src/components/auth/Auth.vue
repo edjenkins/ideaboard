@@ -21,7 +21,6 @@
                 input(v-model="user.password" v-bind:disabled="isAuthenticating" name="password" type="password" placeholder="Your password" v-on:keydown.enter="join")
                 p#forgot-link(v-if="userExists" @click="state = 'forgot'") Forgot your password?
 
-
           .content-block--footer
             .input-wrapper(v-if="!userExists")
               label Name
@@ -30,7 +29,7 @@
               p.consent-notice #[input(v-model="user.researchConsent" type="checkbox")] I understand this service is provided by Open Lab as a research project and agree to the #[router-link(v-bind:to="{ name: 'research' }") Research Policy]
               p.consent-notice #[input(v-model="user.privacyConsent" type="checkbox")] I accept the #[router-link(v-bind:to="{ name: 'privacy' }") Privacy Policy]
               p.consent-notice #[input(v-model="user.termsConsent" type="checkbox")] I accept the #[router-link(v-bind:to="{ name: 'terms' }") Terms of Use]
-            .btn.btn-success.pull-right(v-bind:disabled="!hasConsented" @click="join") {{ isAuthenticating ? 'Checking...' : 'Continue' }}
+            .btn.btn-success.pull-right(v-bind:disabled="!userExists && !hasConsented" @click="join") {{ isAuthenticating ? 'Checking...' : 'Continue' }}
             .clearfix
           
         .auth-form(v-if="state === 'forgot'")
