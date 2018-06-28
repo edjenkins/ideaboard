@@ -7,7 +7,7 @@
         router-link.is-link(tag="li" to="/privacy") Privacy
         router-link.is-link(tag="li" to="/research") Research
         router-link.is-link(tag="li" to="/terms") Terms
-        li © 2018 Open Lab
+        li © Open Lab
       .clearfix
       #google_translate_element
 </template>
