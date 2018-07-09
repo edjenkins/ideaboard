@@ -13,9 +13,9 @@ module.exports = function (app, passport) {
   // Get tasks
   app.get('/tasks/:idea_id',
     (req, res) => {
-      Task.find({ _idea: req.params.idea_id }).exec((err, ideas) => {
+      Task.find({ _idea: req.params.idea_id }).exec((err, tasks) => {
         if (err) { return console.error(err) }
-        res.json(ideas)
+        res.json(tasks)
       })
     })
   // Get task
