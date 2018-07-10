@@ -13,6 +13,23 @@ module.exports = function (app, passport) {
   // Get tasks
   app.get('/tasks/:idea_id',
     (req, res) => {
+
+      let errors = []
+
+      // Check title length
+      if (!req.params.idea_id) {
+        errors.push({
+          text: 'Please provide valid idea id',
+          type: 'error'
+        })
+      }
+
+      if (errors.length > 0) {
+        return res.json({
+          errors: errors
+        })
+      }
+
       Task.find({ _idea: req.params.idea_id }).exec((err, tasks) => {
         if (err) { return console.error(err) }
         res.json(tasks)
@@ -25,7 +42,7 @@ module.exports = function (app, passport) {
       let errors = []
 
       // Check title length
-      if (typeof req.params.id === 'undefined') {
+      if (!req.params.id) {
         errors.push({
           text: 'Please provide valid task id',
           type: 'error'
