@@ -12,16 +12,19 @@ export default {
     }
   },
   created () {
-    API.task.view(
-      this.$route.params.task_id,
-      (response) => {
-        this.$log(response)
-        this.task = response.data.task
-        this.$emit('update:title', this.task.title)
-      },
-      (error) => {
-        this.$log(error)
-      }
-    )
+    // Ensure this task is in dashboard before fetching
+    if (this.$route.params.task_id) {
+      API.task.view(
+        this.$route.params.task_id,
+        (response) => {
+          this.$log(response)
+          this.task = response.data.task
+          this.$emit('update:title', this.task.title)
+        },
+        (error) => {
+          this.$log(error)
+        }
+      )
+    }
   }
 }
