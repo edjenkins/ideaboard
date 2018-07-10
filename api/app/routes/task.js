@@ -21,6 +21,23 @@ module.exports = function (app, passport) {
   // Get task
   app.get('/task/:id',
     (req, res) => {
+
+      let errors = []
+
+      // Check title length
+      if (typeof req.params.id === 'undefined') {
+        errors.push({
+          text: 'Please provide valid task id',
+          type: 'error'
+        })
+      }
+
+      if (errors.length > 0) {
+        return res.json({
+          errors: errors
+        })
+      }
+
       async.series({
         task: function (callback) {
           Task.findOne({ _id: req.params.id }).exec(callback)
