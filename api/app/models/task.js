@@ -37,7 +37,7 @@ taskSchema.pre('find', function (next) {
   this.where({ destroyed: null })
   this.populate('_user', 'profile')
   this.populate('_idea')
-  this.populate('_responses', '_user')
+  // this.populate('_responses', '_user')
   next()
 })
 
