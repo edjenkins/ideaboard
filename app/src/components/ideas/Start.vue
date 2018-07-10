@@ -155,10 +155,12 @@ export default {
     startOver () {
       this.splashmessages = []
       this.idea = {
+        category: undefined,
         title: undefined,
         tagline: undefined,
         description: undefined,
-        banner: undefined
+        banner: undefined,
+        uploadType: undefined
       }
     },
     startIdea () {
