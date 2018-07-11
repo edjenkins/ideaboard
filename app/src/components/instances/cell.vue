@@ -4,8 +4,8 @@
       .row
         .content-block
           .content-block--body
-            h1 CELL Youth Group
-            h3 with Open Lab, Newcastle University
+            h1 CELL Youth Forum
+            h3 Cresswell, Ellington, Linton and Lynemouth
 
     collaborate(align="right" title="Collaborate" subtitle="An online space to form ideas, ask questions and make decisions." action="Learn More" link="/learn" v-bind:styles="{ 'background-color': '#041e41' }")
     featured-ideas
@@ -20,7 +20,7 @@ import Home from '@/mixins/Home'
 export default {
   name: 'cell',
   metaInfo: {
-    title: 'CELL Youth Group'
+    title: 'CELL Youth Forum'
   },
   mixins: [Home]
 }
