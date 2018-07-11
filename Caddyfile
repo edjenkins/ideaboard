@@ -89,7 +89,7 @@ cell.ideaboard.co.uk {
 }
 
 cellyouthforum.ideaboard.co.uk {
-  redir cell.ideaboard.co.uk
+  redir https://cell.ideaboard.co.uk
 }
 
 api.ideaboard.co.uk {
