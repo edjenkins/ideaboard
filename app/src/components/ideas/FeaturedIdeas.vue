@@ -4,7 +4,7 @@
     .content-block
       .content-block--body
         #ideas
-          router-link.content-block.content-block--tile.pull-left(v-for="(idea, index) in ideas" v-bind:to="`/idea/${idea._id}`" tag="div" v-bind:key="index" v-if="index < 3")
+          router-link.content-block.content-block--tile.pull-left(v-for="(idea, index) in ideas" v-bind:to="{ name: 'idea', params: { id: idea._id } }" tag="div" v-bind:key="index" v-if="index < 3")
             idea-tile(v-bind:idea="idea")
           .clearfix
 </template>
