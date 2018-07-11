@@ -79,6 +79,15 @@ purdueux.ideaboard.co.uk {
   }
 }
 
+cell.ideaboard.co.uk {
+  root /var/www/html
+  tls cell@ideaboard.co.uk
+
+  rewrite {
+    to {path} {path}/ /index.html
+  }
+}
+
 api.ideaboard.co.uk {
   timeouts 10m
   proxy / api_1:3000 api_2:3000 api_3:3000 api_4:3000 api_5:3000 {

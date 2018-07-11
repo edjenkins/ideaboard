@@ -46,6 +46,9 @@ module.exports = {
     },
     "purdueux": {
       "subdomain": "purdueux"
+    },
+    "cell": {
+      "subdomain": "cell"
     }
   }
 }

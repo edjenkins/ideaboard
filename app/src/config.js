@@ -41,6 +41,10 @@ export default {
     purdueux: {
       color: '#D6AE58',
       subdomain: 'purdueux'
+    },
+    cell: {
+      color: '#0099D0',
+      subdomain: 'cell'
     }
   }
 }
