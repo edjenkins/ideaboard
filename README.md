@@ -25,7 +25,9 @@ Users can create ideas which are then collaboratively designed in a workspace. T
 - Record video
 
 ### Outcome
-Once an idea has been designed it is possi
+Once an idea has been designed it, users can perform a series of actions from the outcome panel. These include the following:
+- Create a rich outcome document summarising the idea
+- Link the idea to a new idea, thus continuing the design process
 
 ## Deployments
 | Name | Description | Link |
