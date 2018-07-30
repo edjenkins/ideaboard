@@ -45,7 +45,7 @@ app.use(function (req, res, next) {
   next()
 })
 
-mongoose.connect(configDB.url, { useMongoClient: true }) // connect to our database
+mongoose.connect(configDB.url, { useNewUrlParser: true }) // connect to our database
 
 // set up our express application
 app.use(morgan('dev')) // log every request to the console
@@ -61,7 +61,8 @@ app.use(session({
     port: 6379
   }),
   secret: process.env.PASSPORT_SESSION_SECRET || 'not_very_secret',
-  resave: false
+  resave: false,
+  saveUninitialized: false
 }))
 
 // required for passport
