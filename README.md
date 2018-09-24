@@ -1,6 +1,6 @@
 # Ideaboard
 
-> Ideaboard is an online tool for having rich discussions around a topic. It can be used for an extensive range of activites such as designing products, organising events or gathering feedback from customers.
+> Ideaboard is an online tool for having rich discussions around a topic. It can be used for an extensive range of activities such as designing products, organising events or gathering feedback from customers.
 
 > Developed at Open Lab, Newcastle University as an open-source project to support new and upcoming research projects.
 
@@ -8,6 +8,24 @@
 | Name | Contribution | Contact |
 | --- | --- | --- |
 | `Edward Jenkins` | `Lead developer` | [edjenkins.co.uk](https://edjenkins.co.uk), [@edjenkins91](https://twitter.com/edjenkins91)|
+
+## Repository Structure
+
+**Caddyfile** - contains the configuration for Caddy Server (subdomains for various instances).
+
+**docker-compose.yml** - contains the docker configuration for the app, api, mongo, redis and other services.
+
+### /api
+Directory containing the back end for the system, this is a node application consisting of an [Express.js](https://expressjs.com) server.
+
+### /app
+A standalone [Vue.js](http://vuejs.org) frontend which integrates with the back end.
+
+### /docker
+Docker specific files for running [MongoDB](https://www.mongodb.com) in a container. Includes script which can be used to set the user password.
+
+### /utilities
+Contains a backup script for dumping the contents of the [MongoDB](https://www.mongodb.com) and uploading to an [AWS S3](https://aws.amazon.com/s3) bucket.
 
 ## Features
 
@@ -88,7 +106,7 @@ npm run dev
 ```
 
 ## Adding an instance
-Ideaboard supports multiple subdomains/instances. New instances can be added quite simply.
+Ideaboard supports multiple subdomains/instances. New instances can be added quite easily. The backend serves content based on the domain of each request for simplicity.
 
 There are several steps to adding a new instance:
 
