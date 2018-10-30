@@ -45,6 +45,10 @@ export default {
     cell: {
       color: '#0099D0',
       subdomain: 'cell'
+    },
+    comtech: {
+      color: '#000000',
+      subdomain: 'cell'
     }
   }
 }
