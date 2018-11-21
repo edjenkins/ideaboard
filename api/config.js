@@ -51,7 +51,24 @@ module.exports = {
       "subdomain": "cell"
     },
     "comtech": {
-      "subdomain": "comtech"
+      "subdomain": "comtech",
+      "admin": {
+        "name": "ComTech Admin", 
+        "bio": "Admin of this site. Please get in touch if you have any issues.",
+        "email": "dalia.alshahrabi@gmail.com"
+      },
+      "tasks": [
+        { "type": "poll", "title": "References & Related Work", "description": "Remember to include references to prior works and related activities." },
+        { "type": "richtext", "title": "Public Description", "description": "Develop a 200-word description that will be posted on the conference site to recruit participants for your workshop." },
+        { "type": "richtext", "title": "Call for Participation", "description": "You will need to develop a short Call for Participation for your workshop. Are you going to ask your participants to write position papers or statement of interest?" },
+        { "type": "richtext", "title": "Additional Resources Needed", "description": "Space to think about the types of resources you will need to run the workshop." },
+        { "type": "richtext", "title": "Organisers", "description": "Provide short biographical descriptions of the workshop organisers." },
+        { "type": "richtext", "title": "Post-Workshop Plans", "description": "State your plans for follow-up and creation of tangible outcomes and goals." },
+        { "type": "richtext", "title": "Schedule", "description": "Explain in detail the workshop structure, including activities, timing, and resources." },
+        { "type": "richtext", "title": "Pre-Workshop Plans", "description": "State your plans for recruiting workshop participants and community-building ahead of the planned workshop." },
+        { "type": "richtext", "title": "Workshop Activities", "description": "Formulate ideas for possible activities to run on the day and issues to be addressed." },
+        { "type": "discussion", "title": "General Discussion", "description": "Talk about anything relating to the proposed workshop." }
+      ]
     }
   }
 }

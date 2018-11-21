@@ -29,6 +29,29 @@ export default new Vuex.Store({
     },
     instanceBackground () {
       return { 'background-color': config.instances[Store.getters.instance].color }
+    },
+    instanceLogoTitle () {
+      return config.instances[Store.getters.instance].logoTitle || 'Ideaboard'
+    },
+    instanceOutcome () {
+      return config.instances[Store.getters.instance].outcome || {title: 'Outcome', ideaDocument: {title: 'Idea Document'}, followIdea: {title: 'Start follow on Idea'}}
+    },
+    instanceCreateIdea () {
+      return config.instances[Store.getters.instance].createIdea || {
+        title: 'Create an Idea',
+        subtitle: 'This is where it begins, start an Idea, invite some friends and begin designing!',
+        inputFields: {
+          title: {
+            name: 'Title', placeholder: 'Give your idea a title'
+          },
+          tagline: {
+            name: 'Tagline', placeholder: 'A short summary of your idea'
+          },
+          description: {
+            name: 'Description', placeholder: 'Describe your idea in more detail'
+          }
+        }
+      }
     }
   }
 })

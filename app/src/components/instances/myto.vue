@@ -4,7 +4,7 @@
       .row
         .content-block
           .content-block--body
-            img(src="~images/logos/myto/logo-white.svg")
+            img(src="https://ideaboard.co.uk/static/images/logos/myto/logo-white.svg")
     
     .row-wrapper#myto-info
       .row

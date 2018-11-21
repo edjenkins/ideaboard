@@ -1,6 +1,6 @@
 <template lang="pug">
   #start-idea
-    page-header(title="Create an Idea" subtitle="This is where it begins, start an Idea, invite some friends and begin designing!")
+    page-header(v-bind:title="instanceCreateIdea.title" v-bind:subtitle="instanceCreateIdea.subtitle") 
     .row
       .content-block.content-block--main.pull-up.pull-left.white-block
         .content-block--body
@@ -14,15 +14,15 @@
               category-selector(v-bind:category.sync="idea.category" v-bind:category_name.sync="idea.category_name" v-bind:categories="categories")
 
             .input-wrapper
-              label Title
-              input(type="text" v-model="idea.title" name="title" placeholder="Give your idea a title")
+              label {{ instanceCreateIdea.inputFields.title.name }}
+              input(type="text" v-model="idea.title" name="title" v-bind:placeholder="instanceCreateIdea.inputFields.title.placeholder")
             
             .input-wrapper
-              label Tagline
-              input(type="text" v-model="idea.tagline" name="tagline" placeholder="A short summary of your idea")
+              label {{ instanceCreateIdea.inputFields.tagline.name }}
+              input(type="text" v-model="idea.tagline" name="tagline" v-bind:placeholder="instanceCreateIdea.inputFields.tagline.placeholder")
             
             .input-wrapper
-              label Description
+              label {{ instanceCreateIdea.inputFields.description.name }}
               quill-editor(v-model="idea.description" ref="myQuillEditor" v-bind:options="editorOption")
             
             .input-wrapper
@@ -134,7 +134,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuthenticated']),
+    ...mapGetters(['isAuthenticated', 'instanceCreateIdea']),
     editor () {
       return this.$refs.myQuillEditor.quill
     }

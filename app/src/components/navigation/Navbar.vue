@@ -1,7 +1,7 @@
 <template lang="pug">
   #navbar(v-bind:class="[{ scrolled: hasScrolled }, authState]" v-bind:style="[instanceBackground]")
     .row
-      router-link#logo(v-bind:to="{ name: 'home' }") Ideaboard
+      router-link#logo(v-bind:to="{ name: 'home' }") {{ instanceLogoTitle }}
       hamburger(v-bind:active.sync="active")
       #menu-underlay(v-bind:class="{ active: active }" @click="active = false")
       #menu(v-bind:class="{ active: active }" v-bind:style="[instanceBackground]")
@@ -36,7 +36,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'instanceBackground', 'notifications']),
+    ...mapGetters(['isAuthenticated', 'instanceBackground', 'notifications', 'instanceLogoTitle']),
     hasNotifications () {
       return this.notifications && this.notifications.unread && (this.notifications.unread.length > 0)
     }
