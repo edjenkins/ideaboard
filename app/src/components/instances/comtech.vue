@@ -4,7 +4,7 @@
       .row
         .content-block
           .content-block--body
-            img(src="~images/logos/comtech/cntlogo3.png" style="height: 150px; margin-bottom: 10px;")
+            img(src="https://ideaboard.co.uk/static/images/logos/comtech/cntlogo3.png" style="height: 150px; margin-bottom: 10px;")
             h1 Communities and Technologies
             h3 3 - 7 June 2019, TU Wien, Vienna, Austria
 

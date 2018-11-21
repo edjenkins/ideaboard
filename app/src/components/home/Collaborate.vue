@@ -4,7 +4,7 @@
     .content-block
       .collaborate
         .collaborate--image(v-bind:id="align == 'left'? 'left' : 'right'")
-          img(src="~images/illustrations/design.svg")
+          img(src="https://ideaboard.co.uk/static/images/illustrations/design.svg")
         .collaborate--content(v-bind:id="align == 'left'? 'left' : 'right'")
           h2(v-bind:class="{'dark': theme==='dark'}") {{ title }}
           p(v-bind:class="{'dark': theme==='dark'}") {{ subtitle }}
