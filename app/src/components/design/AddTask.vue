@@ -65,7 +65,7 @@ export default {
         media: { name: 'Media', icon: 'fa-images', description: 'A place to share images, videos and documents with your community.' },
         poll: { name: 'Poll', icon: 'fa-list-ul', description: 'Polls are great when you have a set question with a set of options for which you would like to gather opinions.' },
         richtext: { name: 'Rich Text', icon: 'fa-font', description: 'Need to jot something down? The \'Rich Text\' task gives you a notepad for your ideas which everyone can see.' },
-        appearin: { name: 'Video Call', icon: 'fa-users', description: 'Have a live video chat with someone via Appear.in.' },
+        appearin: { name: 'Video Call', icon: 'fa-users', description: 'Have a live video chat with someone via Jitsi.' },
         whiteboard: { name: 'Whiteboard', icon: 'fa-paint-brush', description: 'Sketch ideas on an interactive whiteboard.' },
         webcam: { name: 'Record Video', icon: 'fa-video', description: 'Record videos through your webcam and share them.' }
       },

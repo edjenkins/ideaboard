@@ -5,7 +5,8 @@
   splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 
   .appearin-wrapper(v-if="isAuthenticated")
-    iframe(v-bind:src="`https://appear.in/${$route.params.task_id}`" frameborder="0" width="100%" height="400")
+    iframe(v-bind:src="`https://meet.jit.si/${$route.params.task_id}`" frameborder="0" width="100%" height="400" allow="microphone; camera")
+    //- iframe(v-bind:src="`https://appear.in/${$route.params.task_id}`" frameborder="0" width="100%" height="400")
   
 </template>
 

@@ -6,7 +6,7 @@
         .ready--content
           h2 {{ title }}
           p {{ subtitle }}
-          start-button
+          start-button(v-bind:action="action")
 </template>
 
 <script>
