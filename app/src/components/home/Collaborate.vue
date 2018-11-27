@@ -4,8 +4,8 @@
     .content-block
       .collaborate
         .collaborate--image(v-bind:id="align == 'left'? 'left' : 'right'")
-          img(src="https://ideaboard.co.uk/static/images/illustrations/design.svg")
-        .collaborate--content(v-bind:id="align == 'left'? 'left' : 'right'")
+          img(v-bind:src=" imageSrc || 'https://ideaboard.co.uk/static/images/illustrations/design.svg'")
+        .collaborate--content(v-bind:id="align == 'left'? 'left' : 'right'" v-bind:style="!clickaction && !link && !action? {padding: '80px 30px'} : {padding: '50px 30px'} ")
           h2(v-bind:class="{'dark': theme==='dark'}") {{ title }}
           p(v-bind:class="{'dark': theme==='dark'}") {{ subtitle }}
           router-link.collaborate--action(v-if="!clickaction" v-bind:to="link" v-bind:class="{'dark': theme==='dark'}") {{ action }}
@@ -18,7 +18,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'collaborate',
-  props: ['title', 'subtitle', 'action', 'link', 'styles', 'align', 'theme', 'clickaction'],
+  props: ['title', 'subtitle', 'action', 'link', 'styles', 'align', 'theme', 'clickaction', 'imageSrc'],
   computed: {
     ...mapGetters(['instanceBackground'])
   }
@@ -78,9 +78,9 @@ export default {
         color #444
       display inline-block
       font-weight bold
-      line-height 60px
+      // line-height 60px
       margin 0 20px
-      padding 0 30px
+      padding 20px 30px
       text-align center
       text-decoration none
       &:hover

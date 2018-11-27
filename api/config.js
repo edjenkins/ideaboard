@@ -53,9 +53,9 @@ module.exports = {
     "comtech": {
       "subdomain": "comtech",
       "admin": {
-        "name": "ComTech Admin", 
+        "name": "Kyle Montague", 
         "bio": "Admin of this site. Please get in touch if you have any issues.",
-        "email": "dalia.alshahrabi@gmail.com"
+        "email": "kyle.montague@ncl.ac.uk"
       },
       "tasks": [
         { "type": "poll", "title": "References & Related Work", "description": "Remember to include references to prior works and related activities." },

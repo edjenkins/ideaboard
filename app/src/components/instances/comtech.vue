@@ -54,10 +54,10 @@
               h3 June 3-7, 2019
               h4 Workshops and conference in Vienna
 
-    collaborate(align="left" id="w-propose-workshop" title="Propose your workshop topic" subtitle="Write a short description of your proposed workshop topic and post it on the site." action="Next Step" link="" v-bind:styles="{ 'background-color': '#222'}" v-bind:clickaction="scrollToSection('w-collaborate')")
-    collaborate(align="right" id="w-collaborate" title="Collaborate" subtitle="Share your idea with the wider community and invite others to help you shape the workshop." action="Next Step" v-bind:clickaction="scrollToSection('w-design')" v-bind:styles="{ 'background-color': 'rgb(200, 67, 69)' }")
-    collaborate(align="left" id="w-design" title="Design the workshop" subtitle="Use the online space to form ideas, ask questions and make decisions about the workshop proposal." action="Next Step"  v-bind:clickaction="scrollToSection('w-produce')" v-bind:styles="{ 'background-color': '#f7f7f7'}" theme="dark")
-    collaborate(align="right" id="w-produce" title="Produce your workshop proposal" subtitle="When you’ve made all your decisions it’s time to draft the workshop proposal and submit to C&T." action="Propose a Workshop" link="/start"  v-bind:styles="{ 'background-color': '#93a0ae'}" )
+    collaborate(align="left" id="w-propose-workshop" title="Propose your workshop topic" subtitle="Write a short description of your proposed workshop topic and post it on the site."  v-bind:styles="{ 'background-color': '#222'}" imageSrc="/static/images/illustrations/comtech/idea2.svg" )
+    collaborate(align="right" id="w-collaborate" title="Collaborate" subtitle="Share your idea with the wider community and invite others to help you shape the workshop."  v-bind:styles="{ 'background-color': 'rgb(200, 67, 69)' }" imageSrc="/static/images/illustrations/comtech/share2.svg")
+    collaborate(align="left" id="w-design" title="Design the workshop" subtitle="Use the online space to form ideas, ask questions and make decisions about the workshop proposal." v-bind:styles="{ 'background-color': '#f7f7f7'}" theme="dark" imageSrc="/static/images/illustrations/comtech/design2.svg")
+    collaborate(align="right" id="w-produce" title="Produce your workshop proposal" subtitle="When you’ve made all your decisions it’s time to draft the workshop proposal and submit to C&T." action="Propose a Workshop" link="/start" imageSrc="/static/images/illustrations/comtech/produce2.svg"  v-bind:styles="{ 'background-color': '#93a0ae'}" )
     featured-ideas
     ready(title="Ready?" subtitle="When you've had a good look around and you're ready to start your own idea just click the button below." action="Propose a Workshop" link="/start")
     
@@ -82,31 +82,32 @@ export default {
     },
     scrollToElement (element, scrollDuration = 500) {
       var doc = document.documentElement
+      var frameDuration = 15
       const left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0)
-      const scrollHeight = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0)
-      const scrollStep = Math.PI / (scrollDuration / 15)
-      const cosParameter = scrollHeight / 2
-      var scrollCount = 0
+      const startingPosition = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0)
+      const endingPosition = document.querySelector('#' + element).offsetTop
+      const scrollDistance = endingPosition - startingPosition
+      const totalFrames = scrollDuration / frameDuration
+      var currentFrame = 0
       var scrollMargin
-      var scrollDirection = (scrollHeight < document.querySelector('#' + element).offsetTop) ? 1 : -1
-      var scrollInterval = setInterval(function () {
-        var scrollY = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0)
-        if (scrollCount > 100) {
-          document.getElementById(element).scrollIntoView()
+      var scrollInterval = setInterval(() => {
+        var normalizedDistance = currentFrame / totalFrames
+        if (normalizedDistance < 0.5) {
+          scrollMargin = this.easing(normalizedDistance * 2) * scrollDistance / 2
+        } else {
+          scrollMargin = scrollDistance - this.easing((1 - normalizedDistance) * 2) * scrollDistance / 2
+        }
+        window.scrollTo(left, (startingPosition + scrollMargin))
+        if (currentFrame >= totalFrames) {
+          // document.getElementById(element).scrollIntoView()
           clearInterval(scrollInterval)
           return
         }
-        if (scrollY - scrollDirection * document.querySelector('#' + element).offsetTop <= 0) {
-          scrollCount = scrollCount + 1
-          scrollMargin = scrollDirection * (cosParameter - cosParameter * Math.cos(scrollCount * scrollStep))
-          if ((scrollHeight + scrollMargin) - scrollDirection * scrollDirection * document.querySelector('#' + element).offsetTop > 0) {
-            document.getElementById(element).scrollIntoView()
-            clearInterval(scrollInterval)
-            return
-          }
-          window.scrollTo(left, (scrollHeight + scrollMargin))
-        } else clearInterval(scrollInterval)
-      }, 15)
+        currentFrame = currentFrame + 1
+      }, frameDuration)
+    },
+    easing (x) {
+      return 1.0 - Math.sin(Math.PI * 0.5 * (1 - x))
     }
   }
 }
