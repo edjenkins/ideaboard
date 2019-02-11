@@ -4,7 +4,7 @@
       .row
         .content-block
           .content-block--body
-            img(src="~images/logos/sms/logo-white.svg")
+            img(src="https://ideaboard.co.uk/static/images/logos/sms/logo-white.svg")
     
     collaborate(align="right" title="Collaborate" subtitle="An online space to form ideas, ask questions and make decisions." action="Learn More" link="/learn" v-bind:styles="{ 'background-color': '#041e41' }")
     featured-ideas

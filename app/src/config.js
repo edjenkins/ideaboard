@@ -45,6 +45,35 @@ export default {
     cell: {
       color: '#0099D0',
       subdomain: 'cell'
+    },
+    demvr: {
+      color: '#0099D0',
+      subdomain: 'cell',
+      logoTitle: 'DemVR'
+    },
+    comtech: {
+      color: '#000000',
+      subdomain: 'cell',
+      logoTitle: 'C&T',
+      outcome: {
+        ideaDocument: {title: 'Workshop Submission'},
+        followIdea: {title: 'Start follow on Idea', hide: true}
+      },
+      createIdea: {
+        title: 'Propose a new workshop',
+        subtitle: '',
+        inputFields: {
+          title: {
+            name: 'Topic', placeholder: 'State your workshop topic / theme'
+          },
+          tagline: {
+            name: 'Tagline', placeholder: 'A snappy one-liner about your proposal'
+          },
+          description: {
+            name: 'Description', placeholder: 'Describe your workshop proposal in more detail'
+          }
+        }
+      }
     }
   }
 }

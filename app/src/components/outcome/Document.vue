@@ -59,7 +59,7 @@ export default {
     Dropdown
   },
   mounted () {
-    this.$emit('update:title', 'Idea Document')
+    this.$emit('update:title', this.instanceOutcome.ideaDocument.title)
     this.getDocument()
     this.loadTasks()
   },
@@ -74,7 +74,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user']),
+    ...mapGetters(['user', 'instanceOutcome']),
     canEdit () {
       if ((typeof this.idea === 'undefined') || (typeof this.user === 'undefined') || (typeof this.idea._user === 'undefined')) return false
       return this.idea._user._id === this.user._id

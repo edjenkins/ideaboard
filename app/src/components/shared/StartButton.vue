@@ -1,10 +1,11 @@
 <template lang="pug">
-  router-link.start-button(v-bind:to="{ name: 'start' }") Start an Idea
+  router-link.start-button(v-bind:to="{ name: 'start' }") {{action}}
 </template>
 
 <script>
 export default {
-  name: 'start-button'
+  name: 'start-button',
+  props: ['action']
 }
 </script>
 

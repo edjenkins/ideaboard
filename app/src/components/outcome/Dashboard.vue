@@ -2,22 +2,27 @@
   
 #outcome-dashboard
 
-  router-link.idea-tool(v-bind:to="{ name: 'outcomedocument', params: { id: idea._id } }")
+  router-link.idea-tool(v-bind:to="{ name: 'outcomedocument', params: { id: idea._id } }" v-if="!instanceOutcome.ideaDocument.hide")
     .idea-tool--icon
       i.fas.fa-file-alt
-    .idea-tool--title Idea Document
-  router-link.idea-tool(v-bind:to="{ name: 'start', query: { idea: this.idea._id } }")
+    .idea-tool--title {{ instanceOutcome.ideaDocument.title}}
+  router-link.idea-tool(v-bind:to="{ name: 'start', query: { idea: this.idea._id } }" v-if="!instanceOutcome.followIdea.hide")
     .idea-tool--icon
       i.fas.fa-lightbulb
-    .idea-tool--title Start follow on Idea
+    .idea-tool--title {{ instanceOutcome.followIdea.title}}
   .clearfix
 
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
   export default {
     name: 'dashboard',
-    props: ['activeTool', 'idea']
+    props: ['activeTool', 'idea'],
+    computed: {
+      ...mapGetters(['instanceOutcome'])
+    }
   }
 </script>
 
@@ -25,14 +30,20 @@
 
 @import '~stylus/shared'
 
+
 // Tools
 #outcome-dashboard
   padding 15px
+  display flex
+  flex-direction row
+  flex-wrap wrap
   .idea-tool
     border-box()
     border $color-border 1px solid
     display block
-    float left
+    // float left
+    flex 1
+    flex-basis 200px
     margin 10px
     overflow hidden
     padding 20px

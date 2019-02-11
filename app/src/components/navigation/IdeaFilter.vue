@@ -1,9 +1,9 @@
 <template lang="pug">
-  #idea-filter(v-bind:class="{ categories: categoriesVisible, search: searchVisible }")
+  #idea-filter(v-bind:class="{ categories: categoriesVisible, search: categories.length > 0 ? searchVisible : true, searchOnly: categories.length === 0 }")
     .row
       .content-block.pull-up.white-block
 
-        .sort-wrapper
+        .sort-wrapper(v-show="categories.length > 0")
           ul#sort-tabs
             li.category-dropdown(@click="toggleCategories()" v-bind:class="{ 'has-categories': categories.length > 0 }")
               | {{ currentCategory ? currentCategory.name : '' }}
@@ -14,7 +14,7 @@
             i.fas.fa-search
           .clearfix
 
-        category-filter(v-bind:categories.sync="categories")
+        category-filter(v-bind:categories.sync="categories" v-show="categories.length > 0")
 
         .search-wrapper
           input(ref="search" v-model="searchQuery" type="text" placeholder="What are you looking for?")
@@ -77,9 +77,9 @@ export default {
       this.categoriesVisible = !this.categoriesVisible
       this.searchVisible = this.categoriesVisible ? false : this.searchVisible
     },
-    toggleSearch () {
+    toggleSearch (to) {
       this.searchQuery = '' // Reset search query
-      this.searchVisible = !this.searchVisible // Toggle search
+      this.searchVisible = to || !this.searchVisible // Toggle search
       this.categoriesVisible = this.searchVisible ? false : this.categoriesVisible
       this.$refs.search.focus()
     },
@@ -204,4 +204,9 @@ export default {
     .search-wrapper
       top $filter-height
       pointer-events all
+  &.searchOnly
+    height $filter-height
+    .search-wrapper
+      top 0 !important
+    
 </style>
