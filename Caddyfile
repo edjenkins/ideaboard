@@ -92,6 +92,16 @@ cellyouthforum.ideaboard.co.uk {
   redir https://cell.ideaboard.co.uk
 }
 
+demvr.ideaboard.co.uk {
+  root /var/www/html
+  tls demvr@ideaboard.co.uk
+
+  rewrite {
+    to {path} {path}/ /index.html
+  }
+}
+
+
 comtech.ideaboard.co.uk {
   root /var/www/html
   tls comtech@ideaboard.co.uk

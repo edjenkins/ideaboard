@@ -46,6 +46,11 @@ export default {
       color: '#0099D0',
       subdomain: 'cell'
     },
+    demvr: {
+      color: '#0099D0',
+      subdomain: 'cell',
+      logoTitle: 'DemVR'
+    },
     comtech: {
       color: '#000000',
       subdomain: 'cell',

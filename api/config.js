@@ -50,6 +50,9 @@ module.exports = {
     "cell": {
       "subdomain": "cell"
     },
+    "demvr": {
+      "subdomain": "demvr"
+    },
     "comtech": {
       "subdomain": "comtech",
       "admin": {
