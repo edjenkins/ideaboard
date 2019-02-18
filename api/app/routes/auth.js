@@ -137,6 +137,82 @@ module.exports = function (app, passport) {
     }
   })
 
+  app.post('/demvr-signup', async function (req, res, next) {
+
+    // Get form params
+    const email = req.body.email
+
+    // Init errors array
+    let errors = []
+
+    // Find user
+    const user = await User.findOne({ 'local.email': email })
+    
+    // User exists
+    if (user) {
+      mail.sendMail(user.local.email, `Welcome to DemVR - Ideaboard`, `welcome-demvr`, { user: user, url: utilities.redirectUri(req.instance) })
+
+      return res.json({
+        success: true
+      })
+
+    } else {
+      // Check name exists
+      if (req.body.name.length < 3) {
+        errors.push({
+          text: 'Name should be longer than 3 characters',
+          type: 'error'
+        })
+      }
+
+      // Check consent
+      if (!(req.body.researchConsent && req.body.privacyConsent && req.body.termsConsent)) {
+        errors.push({
+          text: 'Please agree to the Research Policy, Privacy Policy and Terms of Use',
+          type: 'error'
+        })
+      }
+
+      req.body.password = "";
+      let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    
+      for (var i = 0; i < 8; i++)
+        req.body.password  += possible.charAt(Math.floor(Math.random() * possible.length));
+      
+      // If there are issues with the signup throw them back
+      if (errors.length > 0) {
+        return res.json({
+          errors: errors
+        })
+      } else {
+        // Create the account and authenticate the user
+        passport.authenticate('local-signup', function (err, user) {
+          crypto.pseudoRandomBytes(16, function (err, raw) {
+            if (err) console.error(err)
+            const resetCode = raw.toString('hex')
+            let resetLink = `${utilities.redirectUri(req.instance)}/reset/${resetCode}`
+            User.findOneAndUpdate({ 'local.email': req.body.email.toLowerCase() }, { code: resetCode }).exec((err, user) => {
+              if (err) console.error(err)
+              if (!user) {
+                return res.json({
+                  errors: [
+                    { type: 'error', text: 'User not found!' }
+                  ]
+                })
+              }
+              mail.sendMail(user.local.email, `Welcome to DemVR - Ideaboard`, `new-user-demvr`, { user: user, resetLink: resetLink, url: utilities.redirectUri(req.instance) })
+              res.json({
+                status: 'success'
+              })
+            })
+          })
+        })(req, res, next)
+      }
+    }
+  })
+
+  
+
   app.get('/logout', (req, res) => {
     req.logout()
     res.json({

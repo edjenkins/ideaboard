@@ -1,11 +1,11 @@
 <template lang="pug">
-  router-link.start-button(v-bind:to="{ name: 'start' }") {{action}}
+  router-link.start-button(v-bind:to="{ name: 'start' }" v-bind:style="backgroundColor ? {'background-color': backgroundColor, color: buttonTextColor || 'white'} : {}") {{action}}
 </template>
 
 <script>
 export default {
   name: 'start-button',
-  props: ['action']
+  props: ['action', 'backgroundColor', 'buttonTextColor']
 }
 </script>
 
@@ -27,6 +27,6 @@ export default {
   text-decoration none
   &:hover
     cursor pointer
-    background-color darken($color-success, 10%)
+    background-color darken($color-success, 10%) !important
 
 </style>
