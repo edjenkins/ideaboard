@@ -1,8 +1,8 @@
 <template lang="pug">
   #page-header(v-bind:style="[instanceBackground]")
     .row
-      h1(v-if="title") {{ title }}
-      h4(v-if="subtitle") {{ subtitle }}
+      h1(v-if="title" v-bind:style="{color: instanceLogoColor}") {{ title }}
+      h4(v-if="subtitle" v-bind:style="{color: instanceLogoColor}") {{ subtitle }}
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['instanceBackground'])
+    ...mapGetters(['instanceBackground', 'instanceLogoColor'])
   }
 }
 </script>
@@ -37,12 +37,10 @@ export default {
     padding 100px 20px 60px 20px
   h1
     reset()
-    color white
     font-weight bold 
     padding 0
   h4
     reset()
-    color white
     font-weight normal 
     padding 0
 </style>

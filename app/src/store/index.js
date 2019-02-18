@@ -33,6 +33,9 @@ export default new Vuex.Store({
     instanceLogoTitle () {
       return config.instances[Store.getters.instance].logoTitle || 'Ideaboard'
     },
+    instanceLogoColor () {
+      return config.instances[Store.getters.instance].logoColor || 'white'
+    },
     instanceOutcome () {
       return config.instances[Store.getters.instance].outcome || {title: 'Outcome', ideaDocument: {title: 'Idea Document'}, followIdea: {title: 'Start follow on Idea'}}
     },

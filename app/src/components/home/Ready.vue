@@ -6,7 +6,7 @@
         .ready--content
           h2 {{ title }}
           p {{ subtitle }}
-          start-button(v-bind:action="action")
+          start-button(v-bind:action="action" v-bind:backgroundColor="backgroundColor" v-bind:buttonTextColor="buttonTextColor")
 </template>
 
 <script>
@@ -16,7 +16,7 @@ import StartButton from '@/components/shared/StartButton'
 
 export default {
   name: 'ready',
-  props: ['align', 'title', 'subtitle', 'action', 'link', 'image'],
+  props: ['align', 'title', 'subtitle', 'action', 'link', 'image', 'backgroundColor', 'buttonTextColor'],
   components: {
     StartButton
   },
