@@ -150,7 +150,7 @@ module.exports = function (app, passport) {
     
     // User exists
     if (user) {
-      mail.sendMail(user.local.email, `Welcome to DemVR - Ideaboard`, `welcome-demvr`, { user: user, url: utilities.redirectUri(req.instance) })
+      mail.sendMail(user.local.email, `Welcome to DemVR - Ideaboard`, `welcome-demvr`, { user: user, url: utilities.redirectUri('demvr') })
 
       return res.json({
         success: true
@@ -190,7 +190,7 @@ module.exports = function (app, passport) {
           crypto.pseudoRandomBytes(16, function (err, raw) {
             if (err) console.error(err)
             const resetCode = raw.toString('hex')
-            let resetLink = `${utilities.redirectUri(req.instance)}/reset/${resetCode}`
+            let resetLink = `${utilities.redirectUri('demvr')}/reset/${resetCode}`
             User.findOneAndUpdate({ 'local.email': req.body.email.toLowerCase() }, { code: resetCode }).exec((err, user) => {
               if (err) console.error(err)
               if (!user) {
@@ -200,7 +200,7 @@ module.exports = function (app, passport) {
                   ]
                 })
               }
-              mail.sendMail(user.local.email, `Welcome to DemVR - Ideaboard`, `new-user-demvr`, { user: user, resetLink: resetLink, url: utilities.redirectUri(req.instance) })
+              mail.sendMail(user.local.email, `Welcome to DemVR - Ideaboard`, `new-user-demvr`, { user: user, resetLink: resetLink, url: utilities.redirectUri('demvr') })
               res.json({
                 status: 'success'
               })
