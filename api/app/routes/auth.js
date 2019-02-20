@@ -150,7 +150,7 @@ module.exports = function (app, passport) {
     
     // User exists
     if (user) {
-      mail.sendMail(user.local.email, `Welcome to DemVR - Ideaboard`, `welcome-demvr`, { user: user, url: utilities.redirectUri('demvr') })
+      mail.sendMail(user.local.email, `Welcome to DemVR - Ideaboard`, `welcome-demvr`, { user: user, url: utilities.redirectUri('demvr')}, `"James Hodge" <j.hodge1@newcastle.ac.uk>` )
 
       return res.json({
         success: true
@@ -200,7 +200,7 @@ module.exports = function (app, passport) {
                   ]
                 })
               }
-              mail.sendMail(user.local.email, `Welcome to DemVR - Ideaboard`, `new-user-demvr`, { user: user, resetLink: resetLink, url: utilities.redirectUri('demvr') })
+              mail.sendMail(user.local.email, `Welcome to DemVR - Ideaboard`, `new-user-demvr`, { user: user, resetLink: resetLink, url: utilities.redirectUri('demvr') }, `"James Hodge" <j.hodge1@newcastle.ac.uk>`)
               res.json({
                 status: 'success'
               })
