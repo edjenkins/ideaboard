@@ -45,13 +45,29 @@ module.exports = {
       "subdomain": "wingrove"
     },
     "purdueux": {
-      "subdomain": "purdueux"
+      "subdomain": "purdueux",
+      "admin": {
+        "name": "PurdueUX Admin", 
+        "bio": "Admin of this site. Please get in touch if you have any issues.",
+        "email": "dalya.ali@newcastle.ac.uk"
+      },
     },
     "cell": {
       "subdomain": "cell"
     },
     "demvr": {
-      "subdomain": "demvr"
+      "subdomain": "demvr",
+      "admin": {
+        "name": "James Hodge", 
+        "bio": "",
+        "email": "j.hodge1@ncl.ac.uk"
+      },
+      "tasks": [
+        { "type": "richtext", "title": "Twitter Summary", "description": "Lets create a twitter summary of this idea." },
+        { "type": "discussion", "title": "General Discussion", "description": "Talk about anything relating to the proposed idea." },
+        { "type": "poll", "title": "Related Work", "description": "References to prior works and related activities." },
+        { "type": "richtext", "title": "Additional Resources Needed", "description": "Space to think about the types of resources needed for this idea." }
+      ]
     },
     "comtech": {
       "subdomain": "comtech",

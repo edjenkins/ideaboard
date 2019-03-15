@@ -55,7 +55,7 @@ module.exports = function (app, passport) {
       if (!isAdmin) return res.status(401)
       
       Idea.findOneAndUpdate(
-        { _id: req.body._id },
+        { _id: req.body._id || req.body.id },
         { destroyed: new Date() },
         { upsert: true },
         (err, idea) => {
