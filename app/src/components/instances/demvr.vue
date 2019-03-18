@@ -24,17 +24,17 @@
             li 
               h2 
                 i.fas.fa-calendar-alt
-              h3 March 15th, 2019
+              h3 March 20th, 2019
               h4 Submit an outline of your proposed idea
             li 
               h2 
                 i.fas.fa-calendar-alt
-              h3 March 22nd, 2019 
+              h3 March 27th, 2019 
               h4 Experts will provide feedback for your ideas
             li 
               h2 
                 i.fas.fa-calendar-alt
-              h3 March 29th, 2019
+              h3 April 3rd, 2019
               h4 Teams respond to the expert feedback
             li 
               h2 
