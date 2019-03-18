@@ -50,7 +50,7 @@ module.exports = {
         "name": "PurdueUX Admin", 
         "bio": "Admin of this site. Please get in touch if you have any issues.",
         "email": "dalya.ali@newcastle.ac.uk"
-      },
+      }
     },
     "cell": {
       "subdomain": "cell"
