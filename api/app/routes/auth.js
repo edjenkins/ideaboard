@@ -108,7 +108,7 @@ module.exports = function (app, passport) {
       }
     } else {
       // Check name exists
-      if (req.body.name.length < 3) {
+      if (!req.body.name || req.body.name.length < 3) {
         errors.push({
           text: 'Name should be longer than 3 characters',
           type: 'error'
@@ -116,7 +116,7 @@ module.exports = function (app, passport) {
       }
 
       // Check password is valid
-      if (req.body.password.length < 8) {
+      if (!req.body.password || req.body.password.length < 8) {
         errors.push({
           text: 'Password should be longer than 8 characters',
           type: 'error'
