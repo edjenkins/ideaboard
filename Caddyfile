@@ -79,6 +79,15 @@ purdueux.ideaboard.co.uk {
   }
 }
 
+healthchecks.ideaboard.co.uk {
+  root /var/www/html
+  tls healthchecks@ideaboard.co.uk
+
+  rewrite {
+    to {path} {path}/ /index.html
+  }
+}
+
 cell.ideaboard.co.uk {
   root /var/www/html
   tls cell@ideaboard.co.uk

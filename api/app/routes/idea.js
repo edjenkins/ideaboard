@@ -162,7 +162,7 @@ module.exports = function (app, passport) {
 
         console.log(outcomeDocument)
 
-        mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea })
+        mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance) })
         res.json({ idea })
       }
     })

@@ -42,6 +42,10 @@ export default {
       color: '#D6AE58',
       subdomain: 'purdueux'
     },
+    healthchecks: {
+      color: '#1f3369',
+      subdomain: 'healthchecks'
+    },
     cell: {
       color: '#0099D0',
       subdomain: 'cell'
