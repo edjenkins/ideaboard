@@ -52,6 +52,14 @@ module.exports = {
         "email": "dalya.ali@newcastle.ac.uk"
       }
     },
+    "healthchecks": {
+      "subdomain": "healthcheaks",
+      "admin": {
+        "name": "Health Checks Admin", 
+        "bio": "Admin of this site. Please get in touch if you have any issues.",
+        "email": "dalya.ali@newcastle.ac.uk"
+      }
+    },
     "cell": {
       "subdomain": "cell"
     },
