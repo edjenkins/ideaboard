@@ -55,7 +55,7 @@ module.exports = function (app, passport) {
       if (!isAdmin) return res.status(401)
       
       Idea.findOneAndUpdate(
-        { _id: req.body.id },
+        { _id: req.body._id || req.body.id },
         { destroyed: new Date() },
         { upsert: true },
         (err, idea) => {
@@ -162,7 +162,7 @@ module.exports = function (app, passport) {
 
         console.log(outcomeDocument)
 
-        mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea })
+        mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance) })
         res.json({ idea })
       }
     })
@@ -172,7 +172,7 @@ module.exports = function (app, passport) {
       if (!req.isAuthenticated()) return res.status(401)
 
       let idea = await Idea.findOne({ _id: req.body.id })
-
+      
       const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
       const canEdit = (isModerator || idea._user._id.toString() === req.user._id.toString())
       if (!canEdit) return res.status(401)

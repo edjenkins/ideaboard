@@ -42,14 +42,24 @@ export default {
       color: '#D6AE58',
       subdomain: 'purdueux'
     },
+    healthchecks: {
+      color: '#1f3369',
+      subdomain: 'healthchecks'
+    },
     cell: {
       color: '#0099D0',
       subdomain: 'cell'
     },
     demvr: {
-      color: '#0099D0',
+      color: '#fff',
       subdomain: 'cell',
-      logoTitle: 'DemVR'
+      logoColor: '#363636'
+    },
+    involvenottshc: {
+      color: '#fff',
+      subdomain: 'cell',
+      logoColor: '#363636',
+      logoTitle: 'InvolveNottsHC'
     },
     comtech: {
       color: '#000000',

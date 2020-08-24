@@ -32,17 +32,19 @@ let transporter = nodemailer.createTransport({
 })
 
 module.exports = {
-  sendMail: function (to, subject, template, data) {
+  sendMail: function (to, subject, template, data, from) {
     console.log('Sending mail...')
 
     var emailTemplate = new EmailTemplate(path.join(templatesDir, template))
+    if (!from)
+      from = `"${MAIL_FROM_NAME}" <${MAIL_FROM_ADDRESS}>`;
 
     emailTemplate.render(data, function (err, results) {
       if (err) return console.error(err)
 
         // setup email data with unicode symbols
       let mailOptions = {
-        from: `"${MAIL_FROM_NAME}" <${MAIL_FROM_ADDRESS}>`, // sender address
+        from: from, // sender address
         to: to, // list of receivers CSV
         subject: subject,
         html: results.html,

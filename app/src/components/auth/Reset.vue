@@ -7,13 +7,13 @@
         
           .content-block--body
             h2 Reset
-            form
-              .input-wrapper
-                label Reset code
-                input(disabled v-model="code" name="code" placeholder="Your code")
+            form(v-on:submit.prevent="reset")
+              //- .input-wrapper
+                //- label Reset code
+              input(disabled v-model="code" name="code" placeholder="Your code" type="hidden")
               .input-wrapper
                 label Your new password
-                input(v-model="password" name="password" placeholder="Your new password")
+                input(v-model="password" name="password" placeholder="Your new password" type="password")
           .content-block--footer
             .btn.btn-success.pull-right(@click="reset") {{ (isAuthenticating) ? 'Please wait..' : 'Reset Password' }}
             .clearfix

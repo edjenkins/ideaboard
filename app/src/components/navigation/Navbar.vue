@@ -1,14 +1,14 @@
 <template lang="pug">
   #navbar(v-bind:class="[{ scrolled: hasScrolled }, authState]" v-bind:style="[instanceBackground]")
     .row
-      router-link#logo(v-bind:to="{ name: 'home' }") {{ instanceLogoTitle }}
+      router-link#logo(v-bind:to="{ name: 'home' }" v-bind:style="{color: instanceLogoColor}") {{ instanceLogoTitle }}
       hamburger(v-bind:active.sync="active")
       #menu-underlay(v-bind:class="{ active: active }" @click="active = false")
       #menu(v-bind:class="{ active: active }" v-bind:style="[instanceBackground]")
-        router-link(v-bind:to="{ name: 'start' }") Create
-        router-link(v-bind:to="{ name: 'explore' }") Explore
-        router-link(v-bind:to="{ name: 'auth' }" v-if="!isAuthenticated") Get Started
-        router-link(v-bind:to="{ name: 'profile' }" v-else v-bind:class="{ 'has-notifications': hasNotifications }")
+        router-link(v-bind:to="{ name: 'start' }" v-bind:style="{color: instanceLogoColor}" ) Create
+        router-link(v-bind:to="{ name: 'explore' }" v-bind:style="{color: instanceLogoColor}") Explore
+        router-link(v-bind:to="{ name: 'auth' }" v-if="!isAuthenticated" v-bind:style="{color: instanceLogoColor}") Get Started
+        router-link(v-bind:to="{ name: 'profile' }" v-else v-bind:class="{ 'has-notifications': hasNotifications }" v-bind:style="{color: instanceLogoColor}")
           | Profile
           span.notification-bubble(v-if="hasNotifications") {{ notifications.unread.length }}
         .clearfix
@@ -36,7 +36,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'instanceBackground', 'notifications', 'instanceLogoTitle']),
+    ...mapGetters(['isAuthenticated', 'instanceBackground', 'notifications', 'instanceLogoTitle', 'instanceLogoColor']),
     hasNotifications () {
       return this.notifications && this.notifications.unread && (this.notifications.unread.length > 0)
     }

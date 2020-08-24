@@ -79,6 +79,15 @@ purdueux.ideaboard.co.uk {
   }
 }
 
+healthchecks.ideaboard.co.uk {
+  root /var/www/html
+  tls healthchecks@ideaboard.co.uk
+
+  rewrite {
+    to {path} {path}/ /index.html
+  }
+}
+
 cell.ideaboard.co.uk {
   root /var/www/html
   tls cell@ideaboard.co.uk
@@ -111,6 +120,14 @@ comtech.ideaboard.co.uk {
   }
 }
 
+involvenottshc.ideaboard.co.uk {
+  root /var/www/html
+  tls involvenottshc@ideaboard.co.uk
+
+  rewrite {
+    to {path} {path}/ /index.html
+  }
+}
 
 api.ideaboard.co.uk {
   timeouts 10m
