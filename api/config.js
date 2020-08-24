@@ -96,6 +96,12 @@ module.exports = {
         { "type": "richtext", "title": "Workshop Activities", "description": "Formulate ideas for possible activities to run on the day and issues to be addressed." },
         { "type": "discussion", "title": "General Discussion", "description": "Talk about anything relating to the proposed workshop." }
       ]
+    },
+    "involvenottshc": {
+      "subdomain": "involvenottshc",
+      "tasks": [
+        { "type": "discussion", "title": "General Discussion", "description": "Talk about anything relating to the proposed workshop." }
+      ]
     }
   }
 }

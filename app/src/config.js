@@ -55,6 +55,12 @@ export default {
       subdomain: 'cell',
       logoColor: '#363636'
     },
+    involvenottshc: {
+      color: '#fff',
+      subdomain: 'cell',
+      logoColor: '#363636',
+      logoTitle: 'InvolveNottsHC'
+    },
     comtech: {
       color: '#000000',
       subdomain: 'cell',

@@ -120,6 +120,14 @@ comtech.ideaboard.co.uk {
   }
 }
 
+involvenottshc.ideaboard.co.uk {
+  root /var/www/html
+  tls involvenottshc@ideaboard.co.uk
+
+  rewrite {
+    to {path} {path}/ /index.html
+  }
+}
 
 api.ideaboard.co.uk {
   timeouts 10m
