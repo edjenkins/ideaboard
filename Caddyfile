@@ -1,100 +1,103 @@
 ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls hello@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+}
+
+www.ideaboard.co.uk {
+  redir https://ideaboard.co.uk{uri}
 }
 
 citylit.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls citylit@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 wea.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls wea@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 ncl.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls ncl@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 openlab.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls openlab@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 sensemystreet.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls sensemystreet@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 myto.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls myto@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 wingrove.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls wingrove@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 purdueux.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls purdueux@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 healthchecks.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls healthchecks@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 cell.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls cell@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 cellyouthforum.ideaboard.co.uk {
@@ -102,37 +105,40 @@ cellyouthforum.ideaboard.co.uk {
 }
 
 demvr.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls demvr@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 
 comtech.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls comtech@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 involvenottshc.ideaboard.co.uk {
-  root /var/www/html
+  root * /var/www/html
+  file_server
   tls involvenottshc@ideaboard.co.uk
 
-  rewrite {
-    to {path} {path}/ /index.html
-  }
+  try_files {path} {path}/ /index.html
+
 }
 
 api.ideaboard.co.uk {
-  timeouts 10m
-  proxy / api_1:3000 api_2:3000 api_3:3000 api_4:3000 api_5:3000 {
-    health_check /health
-    health_check_interval 10s
+  header {
+    # Access-Control-Allow-Origin *
+  }
+  reverse_proxy api:3000 api_1:3000 api_2:3000 api_3:3000 api_4:3000 api_5:3000 {
+    health_path /health
+    health_interval 10s
   }
 }
+

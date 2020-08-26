@@ -25,7 +25,7 @@ require('./config/passport')(passport) // pass passport for configuration
 
 app.use(cors({
   credentials: true,
-  origin: ['http://localhost:8888', 'https://ideaboard.co.uk', /\.ideaboard\.co.uk$/],
+  origin: ['http://localhost:8888', 'https://ideaboard.co.uk', /\.ideaboard\.co.uk$/, 'https://involvenottshc.ideaboard.co.uk'],
   methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
   headers: ['X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version']
 }))

@@ -3,7 +3,8 @@ version: "2"
 services:
 
   app:
-    image: zzrot/alpine-caddy
+    #image: zzrot/alpine-caddy
+    image: openlab.ncl.ac.uk:4567/b6069731/alpine-caddy:latest
     ports:
       - 80:80
       - 443:443
@@ -12,7 +13,7 @@ services:
     volumes:
       - ./Caddyfile:/etc/Caddyfile
       - ./app/serve:/var/www/html
-      - ./.caddy:/root/.caddy
+      - ./.caddy:/root/.local/share/caddy/
     links:
       - api
 
