@@ -12,6 +12,7 @@
   "dependencies": {
     "async": "^2.5.0",
     "aws-sdk": "^2.282.1",
+    "axios": "^0.20.0",
     "bcrypt-nodejs": "latest",
     "body-parser": "^1.18.3",
     "connect-flash": "~0.1.1",
