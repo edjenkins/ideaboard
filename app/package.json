@@ -14,7 +14,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.21.1",
     "bp-vuejs-dropdown": "^2.1.1",
     "mobile-detect": "^1.4.1",
     "moment-mini": "^2.19.4",
