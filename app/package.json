@@ -18,7 +18,7 @@
     "bp-vuejs-dropdown": "^2.1.1",
     "mobile-detect": "^1.4.1",
     "moment-mini": "^2.19.4",
-    "pug": "^2.0.0-rc.3",
+    "pug": "^3.0.1",
     "recordrtc": "^5.4.6",
     "unsplash-api": "^1.2.0",
     "video.js": "^6.7.3",
