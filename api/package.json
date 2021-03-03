@@ -43,7 +43,7 @@
     "passport-local": "~0.1.6",
     "passport-twitter": "~1.0.2",
     "path": "^0.12.7",
-    "pug": "^2.0.0-rc.3",
+    "pug": "^3.0.1",
     "serve-favicon": "^2.4.5",
     "unsplash-api": "^1.2.0",
     "unsplash-js": "^4.6.0",
